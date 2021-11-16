@@ -30,15 +30,14 @@ public class MapGenPractice : MonoBehaviour
     {
         CreateTileset();
         CreateTileGroups();
-        //GenerateMap();
-        //Instantiate(tileset[0]);
+        GenerateMap();
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        GenerateMap();
+
     }
 
     void CreateTileset()
