@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Example Script.cs" />
+    <Compile Include="Assets\Scripts\MapGenPractice.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
