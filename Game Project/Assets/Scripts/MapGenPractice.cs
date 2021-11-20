@@ -30,8 +30,6 @@ public class MapGenPractice : MonoBehaviour
     {
         CreateTileset();
         CreateTileGroups();
-        //GenerateMap();
-        //Instantiate(tileset[0]);
     }
 
 
