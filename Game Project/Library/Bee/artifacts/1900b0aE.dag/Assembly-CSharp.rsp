@@ -319,6 +319,11 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
+"Assets/FolderMic/Scripts/FalloffGen.cs"
+"Assets/FolderMic/Scripts/MapDisplay.cs"
+"Assets/FolderMic/Scripts/MapGen.cs"
+"Assets/FolderMic/Scripts/Noise.cs"
+"Assets/FolderMic/Scripts/TextureGen.cs"
 "Assets/Scripts/Example Script.cs"
 "Assets/Scripts/MapGenPractice.cs"
 -langversion:8.0

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,11 +53,13 @@
     <UnityVersion>2021.1.27f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\Scripts\MapGenPractice.cs" />
     <Compile Include="Assets\Scripts\Example Script.cs" />
+    <Compile Include="Assets\FolderMic\Scripts\Noise.cs" />
+    <Compile Include="Assets\FolderMic\Scripts\FalloffGen.cs" />
+    <Compile Include="Assets\FolderMic\Scripts\MapDisplay.cs" />
+    <Compile Include="Assets\FolderMic\Scripts\MapGen.cs" />
+    <Compile Include="Assets\FolderMic\Scripts\TextureGen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
