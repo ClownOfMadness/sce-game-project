@@ -332,7 +332,7 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
-"Assets/FolderMic/Editor/MapGenEditor.cs"
+"Assets/MapGen/Editor/MapGenEditor.cs"
 -langversion:8.0
 
 /deterministic

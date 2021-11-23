@@ -53,13 +53,13 @@
     <UnityVersion>2021.1.27f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\MapGenPractice.cs" />
-    <Compile Include="Assets\Scripts\Example Script.cs" />
-    <Compile Include="Assets\FolderMic\Scripts\Noise.cs" />
-    <Compile Include="Assets\FolderMic\Scripts\FalloffGen.cs" />
-    <Compile Include="Assets\FolderMic\Scripts\MapDisplay.cs" />
-    <Compile Include="Assets\FolderMic\Scripts\MapGen.cs" />
-    <Compile Include="Assets\FolderMic\Scripts\TextureGen.cs" />
+    <Compile Include="Assets\Practice\Scripts\MapGenPractice.cs" />
+    <Compile Include="Assets\Practice\Scripts\Example Script.cs" />
+    <Compile Include="Assets\MapGen\Scripts\MapDisplay.cs" />
+    <Compile Include="Assets\MapGen\Scripts\FalloffGen.cs" />
+    <Compile Include="Assets\MapGen\Scripts\TextureGen.cs" />
+    <Compile Include="Assets\MapGen\Scripts\Noise.cs" />
+    <Compile Include="Assets\MapGen\Scripts\MapGen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
