@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371f46fd629978743bcc67790465010d, type: 3}
+  m_Name: 3007
+  m_EditorClassIdentifier: 
+  name: Pile of Sticks
+  code: 3007
+  type: 3
+  source: 01000000
+  combination_of:
+  - Card_1: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+    Card_2: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+  gathered_by: []
+  complexity: 0
+  description: It is a group of sticks
+  artwork: {fileID: 21300000, guid: 569347d8040fec449888e4ca69f517da, type: 3}

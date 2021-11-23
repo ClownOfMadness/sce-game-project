@@ -53,17 +53,17 @@
     <UnityVersion>2021.1.27f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\CardScripts\Card.cs" />
+    <Compile Include="Assets\CardScripts\DragCard.cs" />
     <Compile Include="Assets\CardScripts\CardDisplay.cs" />
     <Compile Include="Assets\Scripts\MapGenPractice.cs" />
     <Compile Include="Assets\FolderMic\Scripts\MapGen.cs" />
     <Compile Include="Assets\Scripts\Example Script.cs" />
     <Compile Include="Assets\FolderMic\Scripts\MapDisplay.cs" />
     <Compile Include="Assets\FolderMic\Scripts\FalloffGen.cs" />
+    <Compile Include="Assets\CardScripts\DropZone1.cs" />
     <Compile Include="Assets\FolderMic\Scripts\TextureGen.cs" />
     <Compile Include="Assets\FolderMic\Scripts\Noise.cs" />
-    <Compile Include="Assets\CardScripts\DragCard.cs" />
-    <Compile Include="Assets\CardScripts\Card.cs" />
-    <Compile Include="Assets\CardScripts\DropZone1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

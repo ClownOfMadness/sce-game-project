@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371f46fd629978743bcc67790465010d, type: 3}
+  m_Name: 5003
+  m_EditorClassIdentifier: 
+  name: Cabin
+  code: 5003
+  type: 4
+  source: 01000000
+  combination_of:
+  - Card_1: {fileID: 11400000, guid: 4781432241d2ec64ab855ecb93564724, type: 2}
+    Card_2: {fileID: 11400000, guid: 4781432241d2ec64ab855ecb93564724, type: 2}
+  gathered_by: []
+  complexity: 15
+  description: 
+  artwork: {fileID: 21300000, guid: 8c94285eb0f761a45ac73f049651e60f, type: 3}
