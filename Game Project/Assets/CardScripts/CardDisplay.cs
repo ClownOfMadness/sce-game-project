@@ -5,17 +5,37 @@ using UnityEngine.UI;
 
 //stores the CardDisplays that appear in the Zones
 public class CardDisplay : MonoBehaviour
-{ 
+{
     public Card card;
     public Text nameText;
     public Image artwork;
+    CardPool cards;
 
+    public CardDisplay()    //needed for DragCard extension
+    {
+
+    }
+    //might be needed later:
+    /*
     public CardDisplay(Card _card)
     {
         card = _card;
         nameText.text = card.name;
         artwork.sprite = card.artwork;
     }
+    public CardDisplay(CardDisplay _cardDisplay)
+    {
+        card = _cardDisplay.card;
+        nameText = _cardDisplay.nameText;
+        artwork = _cardDisplay.artwork;
+    }
+    public CardDisplay()
+    {
+        card = cards.getNull();
+        nameText.text = card.name;
+        artwork.sprite = card.artwork;
+    }
+    */
     public void addCard(Card _card)
     {
         card = _card;

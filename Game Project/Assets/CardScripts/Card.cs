@@ -36,7 +36,7 @@ public class Card : ScriptableObject
     }
 
     [System.Serializable]   //needed for combinations to appear in inspector
-    public struct combinations  //struct for combinations (stores 2 at a time)
+    public struct Combinations  //struct for combinations (stores 2 at a time)
     {
         public Card Card_1;
         public Card Card_2;
@@ -48,7 +48,7 @@ public class Card : ScriptableObject
     public List<sourcesList> source;
 
     //for cards you can craft (type=Combination)
-    public List<combinations> combination_of;
+    public List<Combinations> combination_of;
 
     //for cards you can gather (type=Basic,Complex,Special)
     public List<Card> gathered_by;

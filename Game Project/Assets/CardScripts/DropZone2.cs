@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//responsible for creating and filling Zone2
+//responsible for creating and storing Zone2, will need to be split into 2 zones at a later stage?
 public class DropZone2 : ZoneBehaviour
 {
-    public int ZoneSize = 2;    //default
-    public CardDisplay[] Deck;  //objects to display
-
     public void Awake()
     {
-        CardPool cards = new CardPool();
-        cards.FillDeck(ZoneSize, Deck);
+        ZoneSize = 2;
+        InstantiateZone(0, ZoneSize, Deck, this);     //create and instantiate objects in scene in runtime
     }
 }

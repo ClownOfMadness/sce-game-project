@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-//Responsible for the card drag command
-public class DragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+//responsible for the card drag command, extension of CardDisplay
+public class DragCard : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Transform parentReturnTo = null;
+    
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log ("OnBeginDrag");
         parentReturnTo = this.transform.parent;
-        this.transform.SetParent(this.transform.root);
-        //GetComponent<CanvasGroup>().blocksRaycasts = false; ->need to find a way to fix this
+        this.transform.SetParent(this.transform.parent.parent); //changes parent once the card is picked
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -24,6 +25,14 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         Debug.Log("OnEndDrag");
         this.transform.SetParent(parentReturnTo);
-        //GetComponent<CanvasGroup>().blocksRaycasts = true;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        //effect for when mouse is on card
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        //go back to normal effect
     }
 }
