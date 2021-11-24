@@ -2,22 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//responsible for creating a zone to drop the cards to
-public class DropZone2 : DropZone1
+//responsible for creating and filling Zone2
+public class DropZone2 : ZoneBehaviour
 {
-    public CardDisplay[] DeckPool;  //objects to display
+    public int ZoneSize = 2;    //default
+    public CardDisplay[] Deck;  //objects to display
 
-    public new void Awake()
+    public void Awake()
     {
-        FillCards();    //load cards from folder Resources
-
-        for (int i = 0; i < DeckPool.Length; i++)
-        {
-            int random = Random.Range(0, cardsCount);
-            Debug.Log("random " + random);
-            Debug.Log("i " + i + " random " + random + " picked " + cards[random].name);
-            DeckPool[i].addCard(cards[random]);
-        }
-        
+        CardPool cards = new CardPool();
+        cards.FillDeck(ZoneSize, Deck);
     }
 }

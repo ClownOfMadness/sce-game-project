@@ -53,6 +53,7 @@
     <UnityVersion>2021.1.27f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\CardScripts\DropZone2.cs" />
     <Compile Include="Assets\CardScripts\Card.cs" />
     <Compile Include="Assets\CardScripts\DragCard.cs" />
     <Compile Include="Assets\CardScripts\CardDisplay.cs" />
@@ -64,7 +65,8 @@
     <Compile Include="Assets\CardScripts\DropZone1.cs" />
     <Compile Include="Assets\FolderMic\Scripts\TextureGen.cs" />
     <Compile Include="Assets\FolderMic\Scripts\Noise.cs" />
-    <Compile Include="Assets\CardScripts\DropZone2.cs" />
+    <Compile Include="Assets\CardScripts\CardPool.cs" />
+    <Compile Include="Assets\CardScripts\ZoneBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

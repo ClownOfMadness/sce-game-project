@@ -409,7 +409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da58f048b11cf66439535288f545aa45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
+  card: {fileID: 11400000, guid: c8f2af8c02d866944b9d0fa97e867281, type: 2}
   nameText: {fileID: 929907862}
   artwork: {fileID: 1171508438}
 --- !u!114 &417454144
@@ -964,7 +964,7 @@ RectTransform:
   - {fileID: 9934273}
   - {fileID: 2041916631}
   m_Father: {fileID: 1244534509}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -983,7 +983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da58f048b11cf66439535288f545aa45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+  card: {fileID: 11400000, guid: c8f2af8c02d866944b9d0fa97e867281, type: 2}
   nameText: {fileID: 2041916632}
   artwork: {fileID: 9934274}
 --- !u!114 &729432238
@@ -1090,7 +1090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da58f048b11cf66439535288f545aa45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+  card: {fileID: 11400000, guid: c8f2af8c02d866944b9d0fa97e867281, type: 2}
   nameText: {fileID: 1995840807}
   artwork: {fileID: 495536510}
 --- !u!114 &769525927
@@ -1178,7 +1178,7 @@ RectTransform:
   - {fileID: 1458580335}
   - {fileID: 643559246}
   m_Father: {fileID: 1244534509}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1197,7 +1197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da58f048b11cf66439535288f545aa45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+  card: {fileID: 11400000, guid: c8f2af8c02d866944b9d0fa97e867281, type: 2}
   nameText: {fileID: 643559247}
   artwork: {fileID: 1458580336}
 --- !u!114 &877988969
@@ -1285,7 +1285,7 @@ RectTransform:
   - {fileID: 446755684}
   - {fileID: 526517875}
   m_Father: {fileID: 1244534509}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1304,7 +1304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da58f048b11cf66439535288f545aa45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+  card: {fileID: 11400000, guid: c8f2af8c02d866944b9d0fa97e867281, type: 2}
   nameText: {fileID: 526517876}
   artwork: {fileID: 446755685}
 --- !u!114 &901988407
@@ -1855,7 +1855,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1428665473}
   - {fileID: 1442063872}
   - {fileID: 1379105838}
   - {fileID: 729432236}
@@ -1863,6 +1862,7 @@ RectTransform:
   - {fileID: 1395203335}
   - {fileID: 877988967}
   - {fileID: 1871763254}
+  - {fileID: 1428665473}
   m_Father: {fileID: 1921562640}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1947,6 +1947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674f3e72e35cb434d8f9f75fffc8ecb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ZoneSize: 8
   Deck:
   - {fileID: 1428665477}
   - {fileID: 1442063873}
@@ -1956,8 +1957,6 @@ MonoBehaviour:
   - {fileID: 1395203336}
   - {fileID: 877988968}
   - {fileID: 1871763255}
-  cards: []
-  cardsCount: 0
 --- !u!1 &1317292670
 GameObject:
   m_ObjectHideFlags: 0
@@ -2067,7 +2066,7 @@ RectTransform:
   - {fileID: 1177481369}
   - {fileID: 21478493}
   m_Father: {fileID: 1244534509}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2086,7 +2085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da58f048b11cf66439535288f545aa45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 30e52b99fe6431c4dba7eecf0457173b, type: 2}
+  card: {fileID: 11400000, guid: c8f2af8c02d866944b9d0fa97e867281, type: 2}
   nameText: {fileID: 21478494}
   artwork: {fileID: 1177481370}
 --- !u!114 &1379105840
@@ -2271,7 +2270,7 @@ RectTransform:
   - {fileID: 1676425083}
   - {fileID: 1609787377}
   m_Father: {fileID: 1244534509}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2290,7 +2289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da58f048b11cf66439535288f545aa45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+  card: {fileID: 11400000, guid: c8f2af8c02d866944b9d0fa97e867281, type: 2}
   nameText: {fileID: 1609787378}
   artwork: {fileID: 1676425084}
 --- !u!114 &1395203337
@@ -2378,7 +2377,7 @@ RectTransform:
   - {fileID: 928520340}
   - {fileID: 278952476}
   m_Father: {fileID: 1244534509}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2448,7 +2447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da58f048b11cf66439535288f545aa45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
+  card: {fileID: 11400000, guid: c8f2af8c02d866944b9d0fa97e867281, type: 2}
   nameText: {fileID: 278952477}
   artwork: {fileID: 928520341}
 --- !u!1 &1442063871
@@ -2485,7 +2484,7 @@ RectTransform:
   - {fileID: 1317292671}
   - {fileID: 1941136552}
   m_Father: {fileID: 1244534509}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2504,7 +2503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da58f048b11cf66439535288f545aa45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+  card: {fileID: 11400000, guid: c8f2af8c02d866944b9d0fa97e867281, type: 2}
   nameText: {fileID: 1941136553}
   artwork: {fileID: 1317292672}
 --- !u!114 &1442063874
@@ -2909,7 +2908,7 @@ RectTransform:
   - {fileID: 1897741144}
   - {fileID: 1158264769}
   m_Father: {fileID: 1244534509}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2928,7 +2927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da58f048b11cf66439535288f545aa45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+  card: {fileID: 11400000, guid: c8f2af8c02d866944b9d0fa97e867281, type: 2}
   nameText: {fileID: 1158264770}
   artwork: {fileID: 1897741145}
 --- !u!114 &1871763256
@@ -3110,10 +3109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148d36fd7c53b47498075d2b06dc05a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Deck: []
-  cards: []
-  cardsCount: 0
-  DeckPool:
+  ZoneSize: 2
+  Deck:
   - {fileID: 417454143}
   - {fileID: 769525926}
 --- !u!114 &1910727825
