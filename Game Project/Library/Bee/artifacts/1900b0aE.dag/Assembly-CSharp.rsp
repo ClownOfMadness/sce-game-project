@@ -323,6 +323,7 @@
 "Assets/CardScripts/CardDisplay.cs"
 "Assets/CardScripts/DragCard.cs"
 "Assets/CardScripts/DropZone1.cs"
+"Assets/CardScripts/DropZone2.cs"
 "Assets/FolderMic/Scripts/FalloffGen.cs"
 "Assets/FolderMic/Scripts/MapDisplay.cs"
 "Assets/FolderMic/Scripts/MapGen.cs"

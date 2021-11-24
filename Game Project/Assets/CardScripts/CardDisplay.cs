@@ -7,11 +7,13 @@ public class CardDisplay : MonoBehaviour
 { 
     public Card card;
     public Text nameText;
-    public Image artwok;
-    void Start()
-    {   //allows you to connect the card data to the ui
-        nameText.text = card.name;
-        artwok.sprite = card.artwork;
-        
+    public Image artwork;
+
+    public void addCard(Card _card)
+    {
+        card = _card;
+        nameText.text = _card.name;
+        artwork.sprite = _card.artwork;
+
     }
 }
