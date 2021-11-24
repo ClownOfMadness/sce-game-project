@@ -63,6 +63,7 @@
     <Compile Include="Assets\AI\Scripts\Cell.cs" />
     <Compile Include="Assets\AI\Scripts\FlowField.cs" />
     <Compile Include="Assets\AI\Scripts\GridController.cs" />
+    <Compile Include="Assets\AI\Scripts\GridDebug.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

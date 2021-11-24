@@ -7,6 +7,7 @@ public class GridController : MonoBehaviour
     public Vector2Int gridSize;
     public float cellRadius = 0.5f;
     public FlowField curFlowField;
+    public GridDebug gridDebug;
 
     public void InitializeFlowField()
     {
@@ -19,6 +20,8 @@ public class GridController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             InitializeFlowField();
+
+            gridDebug.DrawFlowField();
         }
     }
 }
