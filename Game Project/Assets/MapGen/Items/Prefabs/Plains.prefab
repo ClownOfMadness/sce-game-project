@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4882801836120022651}
   - component: {fileID: 7451566840838503004}
   - component: {fileID: 1353456140013980116}
-  m_Layer: 0
+  - component: {fileID: 7815413806143227686}
+  m_Layer: 6
   m_Name: Plains
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,3 +98,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &7815413806143227686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2687492343798803848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff57fb16e4b22c498caf4a769f07c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Plains
+  cost: 1
+  bestCost: 65535

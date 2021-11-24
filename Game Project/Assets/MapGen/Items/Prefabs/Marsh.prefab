@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 466442647262516957}
   - component: {fileID: 7186377448411796055}
   - component: {fileID: 1538018645675775367}
-  m_Layer: 0
+  - component: {fileID: 5966865832039324808}
+  m_Layer: 6
   m_Name: Marsh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,3 +98,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &5966865832039324808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2870205533342557427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff57fb16e4b22c498caf4a769f07c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Marsh
+  cost: 5
+  bestCost: 65535
