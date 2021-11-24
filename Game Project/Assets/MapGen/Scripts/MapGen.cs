@@ -47,8 +47,7 @@ public class MapGen : MonoBehaviour
         float[,] noiseMap = Noise.noiseMapGen(mapSize, mapSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
         Color[] colorMap = new Color[mapSize * mapSize];
 
-        if (GameObject.Find(string.Format("tile_x{0}_y{1}", 0, 0)))
-            deleteTileMap();
+        deleteTileMap();
 
         for (int y = 0; y < mapSize; y++)
         {
@@ -69,6 +68,8 @@ public class MapGen : MonoBehaviour
                         {
                             GameObject tile = Instantiate(regions[i].tile);
                             tile.transform.position = new Vector3(10 * x , 1, 10 * y);
+                            tile.transform.rotation = Quaternion.Euler(0, 180, 0);
+                            tile.transform.parent = this.transform;
                             tile.name = string.Format("tile_x{0}_y{1}", x, y);
                         }
                         colorMap[y * mapSize + x] = regions[i].colour;
@@ -89,12 +90,11 @@ public class MapGen : MonoBehaviour
 
     public void deleteTileMap()
     {
-        for (int y = 0; y < 100; y++)
+        while (this.transform.childCount != 0)
         {
-            for (int x = 0; x < 100; x++)
+            foreach (Transform child in this.transform)
             {
-                GameObject tile = GameObject.Find(string.Format("tile_x{0}_y{1}", x, y));
-                DestroyImmediate(tile);
+                GameObject.DestroyImmediate(child.gameObject);
             }
         }
     }

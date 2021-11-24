@@ -16,5 +16,8 @@ public class MapGenEditor : Editor
 
         if (GUILayout.Button("Generate"))
             MapGenerator.generateMap();
+
+        if (GUILayout.Button("Delete All"))
+            MapGenerator.deleteTileMap();
     }
 }
