@@ -23,12 +23,30 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-
+        if (eventData.pointerDrag == null)
+        {
+            return;
+        }
+        DragCard d = eventData.pointerDrag.GetComponent<DragCard>();
+        if (d != null)
+        {
+            d.placeholderParent = this.transform;
+        }
     }
+
     public void OnPointerExit(PointerEventData eventData)
     {
-
+        if (eventData.pointerDrag == null)
+        {
+            return;
+        }
+        DragCard d = eventData.pointerDrag.GetComponent<DragCard>();
+        if ((d != null)&&(d.placeholderParent==this.transform))
+        {
+            d.placeholderParent = d.parentReturnTo;
+        }
     }
+
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("OnDrop to" + gameObject.name);
@@ -44,5 +62,7 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             //add card to new Deck
             //ZoneSize-- to new Zone;
         }
+
     }
+
 }

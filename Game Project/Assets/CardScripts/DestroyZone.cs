@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 //simple script just to destroy cards on contact
 public class DestroyZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    private static GameObject placeholder;
+
+    public static GameObject Placeholder { get => placeholder; set => placeholder = value; }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
 
@@ -17,12 +21,14 @@ public class DestroyZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IP
     {
         Debug.Log("Destroying " + gameObject.name);
         DragCard d = eventData.pointerDrag.GetComponent<DragCard>();
+        // GameObject placeholder = GameObject.Find("placeholder"); //
+       // Placeholder = DragCard.placeholder;
         if (d != null)
         {
-
             Destroy(d.gameObject);
             //destroys the card that was dropped on this zone
-
+           // Destroy(Placeholder.gameObject);
+            //make sure to also destroy the placeholder
         }
     }
 }

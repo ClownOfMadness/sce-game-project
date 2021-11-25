@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,10 +53,14 @@
     <UnityVersion>2021.1.27f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\CardScripts\DropZone2.cs" />
     <Compile Include="Assets\CardScripts\Card.cs" />
     <Compile Include="Assets\CardScripts\DragCard.cs" />
     <Compile Include="Assets\CardScripts\ZoneBehaviour.cs" />
+    <Compile Include="Assets\CardScripts\DestroyZone.cs" />
     <Compile Include="Assets\CardScripts\CardDisplay.cs" />
     <Compile Include="Assets\Scripts\MapGenPractice.cs" />
     <Compile Include="Assets\FolderMic\Scripts\MapGen.cs" />
@@ -67,7 +71,6 @@
     <Compile Include="Assets\CardScripts\DropZone1.cs" />
     <Compile Include="Assets\FolderMic\Scripts\TextureGen.cs" />
     <Compile Include="Assets\FolderMic\Scripts\Noise.cs" />
-    <Compile Include="Assets\CardScripts\DestroyZone.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
