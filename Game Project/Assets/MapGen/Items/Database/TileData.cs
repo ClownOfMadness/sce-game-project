@@ -12,4 +12,5 @@ public class TileData : MonoBehaviour
     // Pathfinding data
     public byte cost = 1;
     public ushort bestCost = ushort.MaxValue;
+    //public GridDirection bestDirection;
 }

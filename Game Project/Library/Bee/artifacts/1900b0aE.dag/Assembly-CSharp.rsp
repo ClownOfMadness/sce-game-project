@@ -108,6 +108,7 @@
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
+-r:"Assets/Plugins/AstarPathfindingProject/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll"
 -r:"G:/Program Files/Unity Editor/2021.1.27f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
 -r:"G:/Program Files/Unity Editor/2021.1.27f1/Editor/Data/Managed/UnityEngine/UnityEditor.DeviceSimulatorModule.dll"
 -r:"G:/Program Files/Unity Editor/2021.1.27f1/Editor/Data/Managed/UnityEngine/UnityEditor.dll"
@@ -302,6 +303,9 @@
 -r:"G:/Program Files/Unity Editor/2021.1.27f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll"
 -r:"G:/Unity/SCE Game Project/sce-game-project/Game Project/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll"
 -r:"G:/Unity/SCE Game Project/sce-game-project/Game Project/Library/PackageCache/com.unity.visualscripting@1.6.1/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/AstarPathfindingProject.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/AstarPathfindingProjectEditor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/PackageToolsEditor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Rider.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Sysroot.Linux_x86_64.ref.dll"
@@ -322,11 +326,8 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
-"Assets/AI/Scripts/Cell.cs"
-"Assets/AI/Scripts/FlowField.cs"
-"Assets/AI/Scripts/GridController.cs"
-"Assets/AI/Scripts/GridDebug.cs"
-"Assets/AI/Scripts/MyFlowField.cs"
+-analyzer:"Assets/Plugins/AstarPathfindingProject/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll"
+"Assets/AI/Scripts/PlayerControl.cs"
 "Assets/MapGen/Items/Database/TileData.cs"
 "Assets/MapGen/Scripts/FalloffGen.cs"
 "Assets/MapGen/Scripts/MapDisplay.cs"
