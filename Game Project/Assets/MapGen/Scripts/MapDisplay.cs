@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class MapDisplay : MonoBehaviour
 {
-    public Renderer textureRenderer;
-
-    public void drawTexture(Texture2D texture)
+    // Start is called before the first frame update
+    void Start()
     {
-        textureRenderer.sharedMaterial.mainTexture = texture;
-        textureRenderer.transform.localScale = new Vector3(texture.width, 1, texture.height);
+        MapGen Map = FindObjectOfType<MapGen>();
+        Map.generateMap();
     }
 }

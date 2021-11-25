@@ -10,11 +10,8 @@ public class MapGen : MonoBehaviour
         public string name;
         public float height;
         public GameObject tile;
-        public Color colour;
     }
-    public enum MapType {noiseMap, colorMap, falloffMap, tileMap}
-    public MapType mapType;
-
+    
     public int mapSize;
     public float noiseScale;
 
@@ -23,8 +20,8 @@ public class MapGen : MonoBehaviour
     public float persistance;
     public float lacunarity;
 
-    public int falloutA;
-    public float falloutB;
+    public int falloffA;
+    public float falloffB;
 
     public int seed;
     public Vector2 offset;
@@ -39,13 +36,13 @@ public class MapGen : MonoBehaviour
 
     void Awake()
     {
-        falloffMap = FalloffGen.generateFalloffMap(mapSize, falloutA, falloutB);
+        falloffMap = FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
     }
 
-    public void generateMap()
+    public void generateMap(int seed)
     {
         float[,] noiseMap = Noise.noiseMapGen(mapSize, mapSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
-        Color[] colorMap = new Color[mapSize * mapSize];
+        //System.Random StartPosition = new System.Random();
 
         deleteTileMap();
 
@@ -54,9 +51,7 @@ public class MapGen : MonoBehaviour
             for( int x = 0; x < mapSize; x++)
             {
                 if (useFalloff)
-                {
                     noiseMap[x, y] = Mathf.Clamp01(noiseMap[x, y] - falloffMap[x, y]);
-                }
 
                 float currentHeight = noiseMap[x, y];
 
@@ -64,28 +59,16 @@ public class MapGen : MonoBehaviour
                 {
                     if(currentHeight <= regions[i].height) 
                     {
-                        if (mapType == MapType.tileMap)
-                        {
-                            GameObject tile = Instantiate(regions[i].tile);
-                            tile.transform.position = new Vector3(10 * x , 1, 10 * y);
-                            tile.transform.rotation = Quaternion.Euler(0, 180, 0);
-                            tile.transform.parent = this.transform;
-                            tile.name = string.Format("tile_x{0}_y{1}", x, y);
-                        }
-                        colorMap[y * mapSize + x] = regions[i].colour;
+                        GameObject tile = Instantiate(regions[i].tile);
+                        tile.transform.position = new Vector3(10 * x , 1, 10 * y);
+                        tile.transform.rotation = Quaternion.Euler(0, 180, 0);
+                        tile.transform.parent = this.transform;
+                        tile.name = string.Format("tile_x{0}_y{1}", x, y);
                         break;
                     }
                 }
             }
         }
-
-        MapDisplay display = FindObjectOfType<MapDisplay>();
-        if (mapType == MapType.noiseMap)
-            display.drawTexture(TextureGen.textureFromHeightMap(noiseMap));
-        else if (mapType == MapType.colorMap)
-            display.drawTexture(TextureGen.textureFromColorMap(colorMap, mapSize, mapSize));
-        else if (mapType == MapType.falloffMap)
-            display.drawTexture(TextureGen.textureFromHeightMap(FalloffGen.generateFalloffMap(mapSize, falloutA, falloutB)));
     }
 
     public void deleteTileMap()
@@ -99,6 +82,7 @@ public class MapGen : MonoBehaviour
         }
     }
 
+
     private void OnValidate()
     {
         if (mapSize < 1)
@@ -107,11 +91,11 @@ public class MapGen : MonoBehaviour
             lacunarity = 1;
         if (octaves < 0)
             octaves = 0;
-        if (falloutA < 1)
-            falloutA = 1;
-        if (falloutB < 0.1f)
-            falloutB = 0.1f;
+        if (falloffA < 1)
+            falloffA = 1;
+        if (falloffB < 0.1f)
+            falloffB = 0.1f;
 
-        falloffMap = FalloffGen.generateFalloffMap(mapSize, falloutA, falloutB);
+        falloffMap = FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
     }
 }
