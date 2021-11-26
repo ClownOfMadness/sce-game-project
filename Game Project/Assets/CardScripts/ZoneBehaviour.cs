@@ -3,66 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-//responsible for creating a Zone to drop the cards to, Parent of Zone1&Zone2
+//responsible for creating a Zone to drop the cards to, Parent of other Zones
 public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public GameObject CardPrefab;   //type of prefab for Card (attached via GUI)
-    public int ZoneSize;            //default
-    public GameObject[] Deck;       //objects in Zone
-    public void InstantiateZone(int start, int zoneSize, GameObject[] deck, ZoneBehaviour Zone)
+    [HideInInspector]
+    public int Size;                //used by other Zones
+    public GameObject CardPrefab;   //type of prefab for Card (attached via Inspector)
+    public void InstantiateZone(ZoneBehaviour Zone)
     {
-        deck = new GameObject[zoneSize];
-        for (int i = start; i < zoneSize; i++)  //create and instantiate objects in scene in runtime
+        CardPool pool = ScriptableObject.CreateInstance<CardPool>();        //open CardPool connection to use its functions
+        for (int i = Zone.transform.childCount; i < Zone.Size; i++)  
         {
-            deck[i] = Instantiate(CardPrefab, Zone.transform);
-            deck[i].name = string.Format("Card ({0})", i);
+            GameObject newCard = Instantiate(CardPrefab, Zone.transform);   //create and instantiate objects in scene in runtime
+            string newName=pool.FillObject(newCard);                        //add cards to objects + save the new card name (for displaying in Scene)
+            newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
         }
-
-        CardPool cards = new CardPool();        //open CardPool connection to use its functions
-        cards.FillDeck(zoneSize, deck);
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (eventData.pointerDrag == null)
-        {
-            return;
-        }
-        DragCard d = eventData.pointerDrag.GetComponent<DragCard>();
-        if (d != null)
-        {
-            d.placeholderParent = this.transform;
-        }
-    }
 
+    }
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (eventData.pointerDrag == null)
-        {
-            return;
-        }
-        DragCard d = eventData.pointerDrag.GetComponent<DragCard>();
-        if ((d != null)&&(d.placeholderParent==this.transform))
-        {
-            d.placeholderParent = d.parentReturnTo;
-        }
-    }
 
+    }
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("OnDrop to" + gameObject.name);
-        DragCard d = eventData.pointerDrag.GetComponent<DragCard>();
-        //GameObject c = eventData.pointerDrag.GetComponent<GameObject>();
+        CardDrag d = eventData.pointerDrag.GetComponent<CardDrag>();
         if (d != null)
         {
-            //remove card from old Deck
-            //ZoneSize-- of old Zone;
-
-            d.parentReturnTo = this.transform;
-
-            //add card to new Deck
-            //ZoneSize-- to new Zone;
+            if (this.transform.childCount < this.Size)
+                d.parentReturnTo = this.transform;  //switch parents only if there's extra space
         }
-
     }
-
 }

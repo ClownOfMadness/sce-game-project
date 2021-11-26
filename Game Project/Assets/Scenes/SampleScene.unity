@@ -200,9 +200,10 @@ GameObject:
   - component: {fileID: 648002936}
   - component: {fileID: 648002938}
   - component: {fileID: 648002937}
+  - component: {fileID: 648002940}
   - component: {fileID: 648002939}
   m_Layer: 5
-  m_Name: DestroyZone
+  m_Name: Destroy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,9 +225,9 @@ RectTransform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 459.6417, y: 217.8158}
-  m_SizeDelta: {x: -919.2834, y: -435.6216}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 21.377747, y: 19.449997}
+  m_SizeDelta: {x: 42.7594, y: 38.910004}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &648002937
 MonoBehaviour:
@@ -278,6 +279,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5803220208989468b16479318366e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &648002940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648002935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &685294014
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,10 +337,10 @@ RectTransform:
   m_Father: {fileID: 648002936}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00042725, y: -2.6554}
-  m_SizeDelta: {x: 116.72, y: 94.689}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &685294016
 MonoBehaviour:
@@ -565,8 +592,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 210}
+  m_AnchoredPosition: {x: 0, y: 38.906}
+  m_SizeDelta: {x: 0, y: 168.7546}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1244534510
 MonoBehaviour:
@@ -644,9 +671,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674f3e72e35cb434d8f9f75fffc8ecb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Size: 8
   CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
-  ZoneSize: 6
-  Deck: []
   Fill: 0
 --- !u!1 &1395006022
 GameObject:
@@ -884,9 +910,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148d36fd7c53b47498075d2b06dc05a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Size: 1
   CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
-  ZoneSize: 2
-  Deck: []
 --- !u!114 &1910727825
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,34 +9,8 @@ public class CardDisplay : MonoBehaviour
     public Card card;
     public Text nameText;
     public Image artwork;
-    CardPool cards;
 
-    public CardDisplay()    //needed for DragCard extension
-    {
-
-    }
-    //might be needed later:
-    /*
-    public CardDisplay(Card _card)
-    {
-        card = _card;
-        nameText.text = card.name;
-        artwork.sprite = card.artwork;
-    }
-    public CardDisplay(CardDisplay _cardDisplay)
-    {
-        card = _cardDisplay.card;
-        nameText = _cardDisplay.nameText;
-        artwork = _cardDisplay.artwork;
-    }
-    public CardDisplay()
-    {
-        card = cards.getNull();
-        nameText.text = card.name;
-        artwork.sprite = card.artwork;
-    }
-    */
-    public void addCard(Card _card)
+    public void AddCard(Card _card) //fill fields in card on screen according to card data
     {
         card = _card;
         nameText.text = card.name;

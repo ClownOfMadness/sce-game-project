@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "0000", menuName = "Card")] //allows you to create cards
+//allows you to create cards
+[CreateAssetMenu(fileName = "0000", menuName = "Card")]
 public class Card : ScriptableObject
 {
     public enum typesList       //enum for type menu
@@ -16,7 +17,7 @@ public class Card : ScriptableObject
         Tool,
     }
 
-    public enum sourcesList     //enum for source menu, replace with tile/buildings ScriptableObjects list when one is made
+    public enum sourcesList     //enum for source menu, replace with tile/buildings objects list when one is made
     {                           //notice! changing order changes the selection in the exisiting cards
         None,
         Combination,
@@ -39,8 +40,8 @@ public class Card : ScriptableObject
     [System.Serializable]   //needed for combinations to appear in inspector
     public struct Combinations  //struct for combinations (stores 2 at a time)
     {
-        public Card Card_1;
-        public Card Card_2;
+        public Card card1;
+        public Card card2;
     }
 
     public new string name;
@@ -49,15 +50,14 @@ public class Card : ScriptableObject
     public List<sourcesList> source;
 
     //for cards you can craft (type=Combination)
-    public List<Combinations> combination_of;
+    public List<Combinations> combinationOf;
 
     //for cards you can gather (type=Basic,Complex,Special)
-    public List<Card> gathered_by;
+    public List<Card> gatheredBy;
 
     public int complexity;
     public string description;
     public Sprite artwork;
-
 }
 
     
