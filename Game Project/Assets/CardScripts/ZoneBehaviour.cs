@@ -9,6 +9,7 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     [HideInInspector]
     public int Size;                //used by other Zones
     public GameObject CardPrefab;   //type of prefab for Card (attached via Inspector)
+
     public void InstantiateZone(ZoneBehaviour Zone)
     {
         CardPool pool = ScriptableObject.CreateInstance<CardPool>();        //open CardPool connection to use its functions
@@ -35,6 +36,7 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             if (this.transform.childCount < this.Size)
                 d.parentReturnTo = this.transform;  //switch parents only if there's extra space
+
         }
     }
 }

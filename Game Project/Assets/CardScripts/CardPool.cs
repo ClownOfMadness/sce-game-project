@@ -19,4 +19,25 @@ public class CardPool : ScriptableObject
         cardObject.GetComponent<CardDisplay>().AddCard(newCard);
         return newCard.name;
     }
+
+    public Card FindCombo(Card first, Card second)  //returns what first+second card create
+    {
+        Card CombineAttempt;
+        for (int startCard = 0; startCard < cards.Count; startCard++)
+        {
+            CombineAttempt = cards[startCard];
+            List<Card.Combinations> Combos = CombineAttempt.combinationOf;
+            if (CombineAttempt.source[0].ToString() == "Combination")    //if card can be created
+            {
+                for (int startCombo = 0; startCombo < Combos.Count; startCombo++)   //check all possible combinations of current CombineAttempt
+                {
+                    if (Combos[startCombo].card1 == first && Combos[startCombo].card2 == second)
+                        return CombineAttempt;
+                    else if (Combos[startCombo].card2 == first && Combos[startCombo].card1 == second)
+                        return CombineAttempt;
+                }
+            }
+        }
+        return null;
+    }
 }

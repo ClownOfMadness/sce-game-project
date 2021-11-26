@@ -1,36 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-//simple script just to destroy cards on contact
-public class ZoneDestroy : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+//responsible for creating Destroy zone and deleting cards on contact, extension of ZoneBehaviour
+public class ZoneDestroy : ZoneBehaviour
 {
     private static GameObject placeholder;
-
-    public static GameObject Placeholder { get => placeholder; set => placeholder = value; }
-
-    public void OnPointerEnter(PointerEventData eventData)
+    public void Awake()
     {
-
+        Size = 2;               //max Zone size
     }
-    public void OnPointerExit(PointerEventData eventData)
-    {
 
-    }
-    public void OnDrop(PointerEventData eventData)
+    public void Update()
     {
-        Debug.Log("Destroying " + gameObject.name);
-        CardDrag d = eventData.pointerDrag.GetComponent<CardDrag>();
-        // GameObject placeholder = GameObject.Find("placeholder"); //
-        // Placeholder = DragCard.placeholder;
-        if (d != null)
+        if (this.transform.childCount == this.Size)     //runs when card gets dropped in Zone
         {
-            Destroy(d.gameObject);
-
-            //destroys the card that was dropped on this zone
-            // Destroy(Placeholder.gameObject);
-            //make sure to also destroy the placeholder
+            foreach (Transform child in this.transform) //finds the card
+            {
+                if (child.GetComponent<CardDrag>())
+                {
+                    Destroy(child.gameObject);          //deletes the card
+                }
+            }
         }
     }
 }

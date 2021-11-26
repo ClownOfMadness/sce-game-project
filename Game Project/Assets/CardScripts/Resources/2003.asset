@@ -16,8 +16,8 @@ MonoBehaviour:
   code: 2003
   type: 1
   source: 0a000000090000000b000000
-  combination_of: []
-  gathered_by:
+  combinationOf: []
+  gatheredBy:
   - {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
   complexity: 0
   description: 

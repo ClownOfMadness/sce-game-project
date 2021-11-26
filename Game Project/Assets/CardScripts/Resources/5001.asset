@@ -16,10 +16,10 @@ MonoBehaviour:
   code: 5001
   type: 4
   source: 01000000
-  combination_of:
-  - Card_1: {fileID: 11400000, guid: 6c59b2aaed79d23469b3b8469b6915b4, type: 2}
-    Card_2: {fileID: 11400000, guid: 6c59b2aaed79d23469b3b8469b6915b4, type: 2}
-  gathered_by: []
+  combinationOf:
+  - card1: {fileID: 11400000, guid: 6c59b2aaed79d23469b3b8469b6915b4, type: 2}
+    card2: {fileID: 11400000, guid: 6c59b2aaed79d23469b3b8469b6915b4, type: 2}
+  gatheredBy: []
   complexity: 7
   description: 
   artwork: {fileID: 21300000, guid: b598ab1533ddce442bcb2a0a3f5c59ba, type: 3}

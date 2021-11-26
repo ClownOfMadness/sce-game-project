@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,9 +5,16 @@ using UnityEngine.EventSystems;
 public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Transform parentReturnTo = null;
-
+    public Transform oldParent;
+    public void ReturnToHand()  //return to hand after craft attempt
+    {
+        Debug.Log("Trying to change Zone");
+        this.transform.SetParent(this.oldParent);
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
+        oldParent = this.transform.parent;
+        Debug.Log("OldParent: " + oldParent.name);
         Debug.Log("OnBeginDrag");
         parentReturnTo = this.transform.parent;
         this.transform.SetParent(this.transform.parent.parent); //changes parent once the card is picked
@@ -27,12 +32,12 @@ public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHa
         this.transform.SetParent(parentReturnTo);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)      //effect for when mouse is on card
     {
-        //effect for when mouse is on card
+
     }
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData)       //go back to normal effect
     {
-        //go back to normal effect
+
     }
 }

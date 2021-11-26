@@ -16,10 +16,10 @@ MonoBehaviour:
   code: 3011
   type: 3
   source: 01000000
-  combination_of:
-  - Card_1: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
-    Card_2: {fileID: 11400000, guid: 3224aa7c34724cb44ae5a91ea7dc9ba0, type: 2}
-  gathered_by: []
+  combinationOf:
+  - card1: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+    card2: {fileID: 11400000, guid: 3224aa7c34724cb44ae5a91ea7dc9ba0, type: 2}
+  gatheredBy: []
   complexity: 1
   description: A base for a flint tool, combine it with another card to create a
     specific tool.

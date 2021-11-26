@@ -16,10 +16,10 @@ MonoBehaviour:
   code: 3007
   type: 3
   source: 01000000
-  combination_of:
-  - Card_1: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
-    Card_2: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
-  gathered_by: []
+  combinationOf:
+  - card1: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+    card2: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+  gatheredBy: []
   complexity: 0
   description: It is a group of sticks
   artwork: {fileID: 21300000, guid: 569347d8040fec449888e4ca69f517da, type: 3}

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 //responsible for creating and storing Hand zone, extension of ZoneBehaviour

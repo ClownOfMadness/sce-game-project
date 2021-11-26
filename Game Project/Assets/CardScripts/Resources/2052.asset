@@ -16,8 +16,8 @@ MonoBehaviour:
   code: 2052
   type: 2
   source: 06000000
-  combination_of: []
-  gathered_by:
+  combinationOf: []
+  gatheredBy:
   - {fileID: 11400000, guid: bb12c696065f8a848a4560f7a4120245, type: 2}
   complexity: 3
   description: 
