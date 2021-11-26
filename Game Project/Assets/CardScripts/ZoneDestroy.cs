@@ -4,11 +4,11 @@ using UnityEngine;
 public class ZoneDestroy : ZoneBehaviour
 {
     private static GameObject placeholder;
+
     public void Awake()
     {
         Size = 2;               //max Zone size
     }
-
     public void Update()
     {
         if (this.transform.childCount == this.Size)     //runs when card gets dropped in Zone

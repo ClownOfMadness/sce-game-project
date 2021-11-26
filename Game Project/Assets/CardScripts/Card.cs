@@ -16,7 +16,6 @@ public class Card : ScriptableObject
         Structure,
         Tool,
     }
-
     public enum sourcesList     //enum for source menu, replace with tile/buildings objects list when one is made
     {                           //notice! changing order changes the selection in the exisiting cards
         None,
@@ -36,7 +35,6 @@ public class Card : ScriptableObject
         House,
         Farm,
     }
-
     [System.Serializable]   //needed for combinations to appear in inspector
     public struct Combinations  //struct for combinations (stores 2 at a time)
     {

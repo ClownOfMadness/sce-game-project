@@ -10,7 +10,7 @@ public class ZoneCraft : ZoneBehaviour
 
     public void Update()
     {
-        if (this.transform.childCount == this.Size)             //runs when two cards get dropped in Zone
+        if (this.transform.GetComponentsInChildren<CardDrag>().Length == this.Size)             //runs when two cards get dropped in Zone
         {
             CardPool pool = ScriptableObject.CreateInstance<CardPool>();        //open CardPool connection to use its functions
             CardDrag[] cardObjects = this.gameObject.transform.GetComponentsInChildren<CardDrag>();
