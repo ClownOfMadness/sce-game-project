@@ -11,7 +11,8 @@ public class MapGen : MonoBehaviour
         public float height;
         public GameObject tile;
     }
-    
+    public GameObject temp1;//very very temporary
+
     public int mapSize;
     public float noiseScale;
 
@@ -23,7 +24,6 @@ public class MapGen : MonoBehaviour
     public int falloffA;
     public float falloffB;
 
-    public int seed;
     public Vector2 offset;
 
     public TerrainType[] regions;
@@ -39,10 +39,12 @@ public class MapGen : MonoBehaviour
         falloffMap = FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
     }
 
-    public void generateMap(int seed)
+    public Vector3 generateMap()
     {
+        int seed = Random.Range(int.MinValue, int.MaxValue);
         float[,] noiseMap = Noise.noiseMapGen(mapSize, mapSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
-        //System.Random StartPosition = new System.Random();
+        Dictionary<int, Vector2Int> PosiblePos = new Dictionary<int, Vector2Int>();
+        int count = 0;
 
         deleteTileMap();
 
@@ -59,6 +61,9 @@ public class MapGen : MonoBehaviour
                 {
                     if(currentHeight <= regions[i].height) 
                     {
+                        if (regions[i].height >= 0.3 && regions[i].height <= 0.55)
+                            PosiblePos.Add(count++, new Vector2Int(x, y));
+
                         GameObject tile = Instantiate(regions[i].tile);
                         tile.transform.position = new Vector3(10 * x , 1, 10 * y);
                         tile.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -69,6 +74,51 @@ public class MapGen : MonoBehaviour
                 }
             }
         }
+        return PlaceStartPos(PosiblePos);
+    }
+
+    public Vector3 PlaceStartPos(Dictionary<int, Vector2Int> PosiblePos)
+    {
+        int size = PosiblePos.Count;
+        int randNum = Random.Range(0, size - 1);
+        int k = 0;
+
+        int x = PosiblePos[randNum].x;
+        int y = PosiblePos[randNum].y;
+
+        while (regions[k].name != "P1")
+        {
+            k++;
+        }
+
+        for (int i = y - 1; i <= y + 1; i++)
+        {
+            for (int j = x - 1; j <= x + 1; j++)
+            {
+                GameObject tile;
+                        
+                tile = GameObject.Find(string.Format("tile_x{0}_y{1}", j, i));
+                if (tile.name != "P1")
+                { 
+                    Vector3 pos = tile.transform.position;
+                    GameObject.DestroyImmediate(tile);
+                    tile = Instantiate(regions[k].tile);
+                    tile.transform.position = new Vector3(j * 10, 1, i * 10);
+                    tile.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    tile.transform.parent = this.transform;
+                    tile.name = string.Format("tile_x{0}_y{1}", j, i);
+                }
+                if (j == x && i == y) {
+                    GameObject temp2;
+                    temp2 = Instantiate(temp1);
+                    temp2.transform.position = new Vector3(tile.transform.position.x, 2, tile.transform.position.z);
+                    temp2.transform.rotation = tile.transform.rotation;
+                    temp2.transform.parent = tile.transform;
+                }
+            }
+        }
+        //SpawnBuilding.Spawn();
+        return new Vector3(x * 10, 100, y * 10);
     }
 
     public void deleteTileMap()

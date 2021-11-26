@@ -7,5 +7,6 @@ public class Building : ScriptableObject
     public string BuildingName;
     [TextArea]
     public string Description;
-    public Sprite BuildingSprite;
+    //public Sprite BuildingSprite;
+    public GameObject prefab;
 }

@@ -326,6 +326,7 @@
 "Assets/AI/Scripts/MyFlowField.cs"
 "Assets/MapGen/Items/Database/Building.cs"
 "Assets/MapGen/Items/Database/BuildingDataBase.cs"
+"Assets/MapGen/Items/Database/SpawnBuilding.cs"
 "Assets/MapGen/Items/Database/TileData.cs"
 "Assets/MapGen/Scripts/FalloffGen.cs"
 "Assets/MapGen/Scripts/MapDisplay.cs"

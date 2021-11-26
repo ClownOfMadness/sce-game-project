@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class MapDisplay : MonoBehaviour
 {
+    public Camera MainCamera;
     // Start is called before the first frame update
     void Start()
     {
+        
         MapGen Map = FindObjectOfType<MapGen>();
-        Map.generateMap();
+        MainCamera.transform.position =  Map.generateMap();
     }
 }

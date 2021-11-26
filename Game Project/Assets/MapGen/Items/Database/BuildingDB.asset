@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8637d29b829129a4ca0617353fc3880d, type: 3}
   m_Name: BuildingDB
   m_EditorClassIdentifier: 
-  BuildingList:
-  - {fileID: 11400000, guid: dcd2cbc65f4bc384ba3e497b13d1e745, type: 2}
+  BuildingList: []
