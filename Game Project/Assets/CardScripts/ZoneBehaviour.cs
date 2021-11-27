@@ -31,7 +31,6 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             d.GetComponent<CanvasGroup>().alpha = 1f;        //reset effect for card, can be changed
             d.placeholderParent = this.transform;
-            d.transform.localScale = new Vector3((CardPrefab.transform.localScale.x), (CardPrefab.transform.localScale.y), 0);
         }
     }
     public void OnPointerExit(PointerEventData eventData)
@@ -55,7 +54,6 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             if (this.transform.GetComponentsInChildren<CardDrag>().Length < this.Size)
                 d.parentReturnTo = this.transform;  //switch parents only if there's extra space
-
         }
     }
 }

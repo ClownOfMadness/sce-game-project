@@ -8,7 +8,7 @@ public class CardPool : ScriptableObject
 {
     public List<Card> cards;    //list of all existing cards
 
-    public void Awake()         //fills list from Resources folder
+    void Awake()         //fills list from Resources folder
     {
         cards = Resources.LoadAll<Card>("").ToList();
     }

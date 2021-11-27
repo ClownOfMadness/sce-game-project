@@ -6,19 +6,20 @@ using UnityEngine.EventSystems;
 public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Transform parentReturnTo = null;
-    public Transform oldParent;
+    //public Transform oldParent;
     public GameObject placeholder = null;    //needed to hold the dragged card's spot
     public Transform placeholderParent = null;      //needed to hold the dragged card's spot
     public Canvas canvas;
 
-    public void Awake()
+    void Awake()
     {
         canvas = this.transform.parent.parent.GetComponent<Canvas>();
     }
     public void ReturnToHand()  //return to hand after craft attempt
     {
         Debug.Log("Trying to change Zone");
-        this.transform.SetParent(this.oldParent);
+        //this.transform.SetParent(this.oldParent);
+        this.transform.SetParent(this.parentReturnTo);
     }
     public void SavePlaceholder()   //enables card order
     {
@@ -35,8 +36,8 @@ public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHa
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        oldParent = this.transform.parent;
-        Debug.Log("OldParent: " + oldParent.name);
+        //oldParent = this.transform.parent;
+        //Debug.Log("OldParent: " + oldParent.name);
         Debug.Log("OnBeginDrag");
         parentReturnTo = this.transform.parent;
         SavePlaceholder();

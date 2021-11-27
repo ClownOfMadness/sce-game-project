@@ -1,16 +1,19 @@
 using UnityEngine;
 
-//responsible for creating and storing Craft zone, will need to be split into 2 zones at a later stage?
-public class ZoneCraft : ZoneBehaviour
+//responsible for creating Craft zone
+public class ZoneCraft : MonoBehaviour
 {
-    public void Awake()
+    public GameObject CardPrefab;   //type of prefab for Card (attached via Inspector)
+    [HideInInspector]
+    public int Size;                //used by other Zones
+    void Awake()
     {
         Size = 2;               //max Zone size
     }
 
     public void Update()
     {
-        if (this.transform.GetComponentsInChildren<CardDrag>().Length == this.Size)             //runs when two cards get dropped in Zone
+        if (this.transform.childCount == this.Size) //runs when two cards get dropped in Zone
         {
             CardPool pool = ScriptableObject.CreateInstance<CardPool>();        //open CardPool connection to use its functions
             CardDrag[] cardObjects = this.gameObject.transform.GetComponentsInChildren<CardDrag>();

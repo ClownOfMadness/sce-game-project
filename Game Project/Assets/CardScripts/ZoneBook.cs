@@ -1,38 +1,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
-//responsible for creating and storing Book zone, extension of ZoneBehaviour
-public class ZoneBook : ZoneBehaviour
+//responsible for creating and storing Book zone
+public class ZoneBook : MonoBehaviour
 {
-    int PageSize = 8;
-    public GameObject PagePrefab;
-
+    public GameObject PagePrefab;   //type of prefab for Page (attached via Inspector)
+    public GameObject CardPrefab;   //type of prefab for Card (attached via Inspector)
     public Text backButton;
     public Text nextButton;
     private int pageIndex;
     private int pagesInBook;
-
-    public void Start()
+    [HideInInspector]
+    public int Size;                //Page size
+    
+    void Start()
     {
+        Size = 8;           //max Zone size
         FillBook();
-        this.gameObject.SetActive(false);
     }
     private void FillBook()
     {
         CardPool pool = ScriptableObject.CreateInstance<CardPool>();    //open CardPool connection to use its functions
-        Size = 4;           //max Zone size
         int cardIndex = 0;  //keep track of what card we're adding
         pagesInBook = 0;    //will store maximum pages in book
         while (cardIndex < pool.cards.Count)
         {
             GameObject newPage = Instantiate(PagePrefab, this.transform);           //create and instantiate Page objects in scene
             newPage.name = string.Format("Page {0}", pagesInBook + 1);              //new Page name (for displaying in Scene)
-            for (int inPage = 0; inPage < PageSize && cardIndex < pool.cards.Count; inPage++, cardIndex++)
+            for (int inPage = 0; inPage < Size && cardIndex < pool.cards.Count; inPage++, cardIndex++)
             {
                 GameObject newCard = Instantiate(CardPrefab, newPage.transform);    //create and instantiate card objects in scene
-                newCard.GetComponent<CardDrag>().AddCard(pool.cards[cardIndex]);
+                newCard.GetComponent<CardDisplay>().AddCard(pool.cards[cardIndex]);
                 string newName = pool.cards[cardIndex].name;                        //save the new card name (for displaying in Scene)
                 Debug.Log("Card " + newName + " added to book.");
                 newCard.name = string.Format("{0} (Card)", newName);                //updates name in scene
@@ -72,7 +71,7 @@ public class ZoneBook : ZoneBehaviour
                 backButton.CrossFadeAlpha(0.0f, 0.05f, false);
         }
     }
-    private void FirstPage()
+    public void FirstPage()
     {
         nextButton.CrossFadeAlpha(1.0f, 0.05f, false);
         this.gameObject.transform.GetChild(pageIndex).gameObject.SetActive(false);  //hide last page
@@ -80,16 +79,12 @@ public class ZoneBook : ZoneBehaviour
         this.gameObject.transform.GetChild(pageIndex).gameObject.SetActive(true);   //show new page
         backButton.CrossFadeAlpha(0.0f, 0.05f, false);
     }
-    public void CreativeButton()
+    public void AddToHand(CardDisplay cardPicked, GameObject cardObject)
     {
-        if (!this.gameObject.activeSelf)         //if inactive turn on
-            this.gameObject.SetActive(true);
-        else
-        {
-            FirstPage();
-            this.gameObject.SetActive(false);  //if active turn off
-        }
+        cardObject.GetComponent<CardDrag>().AddCard(cardPicked.card);  
+        cardObject.name = string.Format("{0} (Card)", cardPicked.name);//add cards to objects + save the new card name (for displaying in Scene)
     }
+
 }
 
 

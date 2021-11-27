@@ -6,12 +6,12 @@ public class ZoneHand : ZoneBehaviour
     [Header("Fill Hand:")]
     public bool Fill = false;
 
-    public void Awake()
+    void Awake()
     {
         Size = 8;               //max Zone size
         InstantiateZone(this);  //create and instantiate objects in scene in runtime
     }
-    public void Update()
+    void Update()
     {
         if (Fill)
         {
