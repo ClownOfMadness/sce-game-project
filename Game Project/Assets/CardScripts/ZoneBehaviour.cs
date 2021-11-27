@@ -15,7 +15,7 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         CardPool pool = ScriptableObject.CreateInstance<CardPool>();        //open CardPool connection to use its functions
         for (int i = Zone.transform.childCount; i < Zone.Size; i++)
         {
-            GameObject newCard = Instantiate(CardPrefab, Zone.transform);   //create and instantiate objects in scene in runtime
+            GameObject newCard = Instantiate(CardPrefab, Zone.transform);   //create and instantiate objects in scene
             string newName = pool.FillObject(newCard);                        //add cards to objects + save the new card name (for displaying in Scene)
             newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
         }
@@ -31,6 +31,7 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             d.GetComponent<CanvasGroup>().alpha = 1f;        //reset effect for card, can be changed
             d.placeholderParent = this.transform;
+            d.transform.localScale = new Vector3((CardPrefab.transform.localScale.x), (CardPrefab.transform.localScale.y), 0);
         }
     }
     public void OnPointerExit(PointerEventData eventData)

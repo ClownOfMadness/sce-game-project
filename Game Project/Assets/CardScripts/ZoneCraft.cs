@@ -34,5 +34,14 @@ public class ZoneCraft : ZoneBehaviour
             cardObjects[0].ReturnToHand();
         }
     }
+    public void CreativeButton()
+    {
+        if (!this.gameObject.activeSelf)         //if inactive turn on
+            this.gameObject.SetActive(true);
+        else
+        {
+            this.gameObject.SetActive(false);  //if active turn off
+        }
+    }
 }
 

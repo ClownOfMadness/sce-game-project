@@ -324,6 +324,7 @@
 "Assets/CardScripts/CardDrag.cs"
 "Assets/CardScripts/CardPool.cs"
 "Assets/CardScripts/ZoneBehaviour.cs"
+"Assets/CardScripts/ZoneBook.cs"
 "Assets/CardScripts/ZoneCraft.cs"
 "Assets/CardScripts/ZoneDestroy.cs"
 "Assets/CardScripts/ZoneHand.cs"

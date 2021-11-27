@@ -112,8 +112,8 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 125, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -171,6 +171,10 @@ MonoBehaviour:
   nameText: {fileID: 5124568002829693132}
   artwork: {fileID: 4186144476944180641}
   parentReturnTo: {fileID: 0}
+  oldParent: {fileID: 0}
+  placeholder: {fileID: 0}
+  placeholderParent: {fileID: 0}
+  canvas: {fileID: 0}
 --- !u!114 &8538868132745737277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,8 +192,8 @@ MonoBehaviour:
   m_MinHeight: -1
   m_PreferredWidth: 100
   m_PreferredHeight: 200
-  m_FlexibleWidth: 0
-  m_FlexibleHeight: 0
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
   m_LayoutPriority: 1
 --- !u!225 &723373846453044056
 CanvasGroup:
