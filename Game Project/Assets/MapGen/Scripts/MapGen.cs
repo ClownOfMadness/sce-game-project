@@ -11,7 +11,6 @@ public class MapGen : MonoBehaviour
         public float height;
         public GameObject tile;
     }
-    public GameObject temp1;//very very temporary
 
     public int mapSize;
     public float noiseScale;
@@ -33,6 +32,7 @@ public class MapGen : MonoBehaviour
 
 
     float[,] falloffMap;
+    GameObject[,] TileArray;
 
     void Awake()
     {
@@ -41,11 +41,16 @@ public class MapGen : MonoBehaviour
 
     public Vector3 generateMap()
     {
-        int seed = Random.Range(int.MinValue, int.MaxValue);
+        int seed = Random.Range(int.MinValue, int.MaxValue);//Seed get a random value.
+        TileArray = new GameObject[mapSize, mapSize];
+
+        //Create a noise map.
         float[,] noiseMap = Noise.noiseMapGen(mapSize, mapSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
+        //Create a dictionary of possible possitions for the Town Hall.
         Dictionary<int, Vector2Int> PosiblePos = new Dictionary<int, Vector2Int>();
         int count = 0;
 
+        //Delete the map if such exist.
         deleteTileMap();
 
         for (int y = 0; y < mapSize; y++)
@@ -64,11 +69,10 @@ public class MapGen : MonoBehaviour
                         if (regions[i].height >= 0.3 && regions[i].height <= 0.55)
                             PosiblePos.Add(count++, new Vector2Int(x, y));
 
-                        GameObject tile = Instantiate(regions[i].tile);
-                        tile.transform.position = new Vector3(10 * x , 1, 10 * y);
-                        tile.transform.rotation = Quaternion.Euler(0, 180, 0);
-                        tile.transform.parent = this.transform;
-                        tile.name = string.Format("tile_x{0}_y{1}", x, y);
+                        //GameObject tile
+                        TileArray[x, y] = Instantiate(regions[i].tile, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
+                        TileArray[x, y].transform.parent = this.transform;
+                        TileArray[x, y].name = string.Format("tile_x{0}_y{1}", x, y);
                         break;
                     }
                 }
@@ -86,39 +90,27 @@ public class MapGen : MonoBehaviour
         int x = PosiblePos[randNum].x;
         int y = PosiblePos[randNum].y;
 
-        while (regions[k].name != "P1")
-        {
-            k++;
-        }
-
+        while (regions[k].name != "P1") { k++; }
+        
         for (int i = y - 1; i <= y + 1; i++)
         {
             for (int j = x - 1; j <= x + 1; j++)
             {
-                GameObject tile;
-                        
-                tile = GameObject.Find(string.Format("tile_x{0}_y{1}", j, i));
-                if (tile.name != "P1")
+
+                TileArray[x, y] = GameObject.Find(string.Format("tile_x{0}_y{1}", j, i));
+                if (TileArray[x, y].name != "P1")
                 { 
-                    Vector3 pos = tile.transform.position;
-                    GameObject.DestroyImmediate(tile);
-                    tile = Instantiate(regions[k].tile);
-                    tile.transform.position = new Vector3(j * 10, 1, i * 10);
-                    tile.transform.rotation = Quaternion.Euler(0, 180, 0);
-                    tile.transform.parent = this.transform;
-                    tile.name = string.Format("tile_x{0}_y{1}", j, i);
-                }
-                if (j == x && i == y) {
-                    GameObject temp2;
-                    temp2 = Instantiate(temp1);
-                    temp2.transform.position = new Vector3(tile.transform.position.x, 2, tile.transform.position.z);
-                    temp2.transform.rotation = tile.transform.rotation;
-                    temp2.transform.parent = tile.transform;
+                    Vector3 pos = TileArray[x, y].transform.position;
+                    GameObject.DestroyImmediate(TileArray[x, y]);
+                    TileArray[x, y] = Instantiate(regions[k].tile, new Vector3(j * 10, 1, i * 10), Quaternion.Euler(0, 180, 0));
+                    TileArray[x, y].transform.parent = this.transform;
+                    TileArray[x, y].name = string.Format("tile_x{0}_y{1}", j, i);
                 }
             }
         }
-        //SpawnBuilding.Spawn();
-        return new Vector3(x * 10, 100, y * 10);
+        SpawnBuilding TownHall = FindObjectOfType<SpawnBuilding>();
+        TownHall.Spawn(new Vector3(x * 10 ,2, y * 10), "BU0001", TileArray[x,y]);
+        return new Vector3(x * 10, 150, y * 10);
     }
 
     public void deleteTileMap()
