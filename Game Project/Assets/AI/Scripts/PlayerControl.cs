@@ -45,7 +45,7 @@ public class PlayerControl : MonoBehaviour
             if (Input.GetMouseButton(0))
             {
                 // Functions for when the mouse clicks on interactable layer
-                if (raycastHit.transform.gameObject.layer == 6) // if it is clicked on terrain
+                if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7) // if it is clicked on terrain or impassable
                 {
                     // [[Later make an option to switch betwenn units]]
 

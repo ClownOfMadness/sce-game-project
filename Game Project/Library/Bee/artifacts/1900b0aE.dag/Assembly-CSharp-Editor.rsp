@@ -321,6 +321,7 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/AstarPathfindingProject.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/AstarPathfindingProjectEditor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/PackageToolsEditor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.2D.Sprite.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Rider.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Sysroot.Linux_x86_64.ref.dll"
@@ -343,7 +344,6 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
--analyzer:"Assets/Plugins/AstarPathfindingProject/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll"
 "Assets/MapGen/Editor/MapGenEditor.cs"
 -langversion:8.0
 
