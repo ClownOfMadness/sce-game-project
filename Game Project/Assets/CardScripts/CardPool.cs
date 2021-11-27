@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;  //needed for ToList function
@@ -8,11 +7,11 @@ public class CardPool : ScriptableObject
 {
     public List<Card> cards;    //list of all existing cards
 
-    void Awake()         //fills list from Resources folder
+    void Awake()               
     {
-        cards = Resources.LoadAll<Card>("").ToList();
+        cards = Resources.LoadAll<Card>("").ToList();   //fills list from Resources folder
     }
-    public string FillObject(GameObject cardObject) //add card to object + return the new card name (for displaying in Scene)
+    public string FillObject(GameObject cardObject)     //add card to object + return the new card name (for displaying in Scene)
     {
         Card newCard = cards[Random.Range(0, cards.Count)];
         cardObject.GetComponent<CardDisplay>().AddCard(newCard);

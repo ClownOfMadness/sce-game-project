@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 //responsible for switching panels and button related functions
@@ -10,43 +8,58 @@ public class ZoneCanvas : MonoBehaviour
     public GameObject Book;
     public GameObject creativeButton;
     public GameObject destroyButton;
+    private bool CraftEnabled;
 
-    bool on = true;
-    bool off = false;
-
-
-    void Start()
+    void Start()    //initilizing in case something was off
     {
-        Hand.SetActive(on);
-        Book.SetActive(off);
-        Craft.SetActive(on);
-        creativeButton.SetActive(on);
-        destroyButton.SetActive(on);
-    }
+        Hand.SetActive(true);
+        Book.SetActive(false);
+        Craft.SetActive(true);
+        creativeButton.SetActive(true);
+        destroyButton.SetActive(true);
+        CraftEnabled = true;
+}
     public void SwitchCreative()
     {
-        if (!Book.activeSelf)        //open book, close craft
+        if (CraftEnabled)           //open book, close craft
         {
-            Craft.SetActive(off);
-            Book.SetActive(on);
+            Craft.SetActive(false);
+            Book.SetActive(true);
+            CraftEnabled = false;
         }
         else
         {
             Book.GetComponent<ZoneBook>().FirstPage();
-            Book.SetActive(off);  //open craft, close book
-            Craft.SetActive(on);
+            Book.SetActive(false);  //open craft, close book
+            Craft.SetActive(true);
+            CraftEnabled = true;
         }
     }
-    public void HandToCraft()
+    public void HandToCraft(CardDrag card)  //move card from Hand zone to Hand on click
     {
-        this.transform.SetParent(Craft.transform);
-    }
-    public void BookToHand()
-    {
-        if (Hand.transform.GetComponentsInChildren<CardDrag>().Length < Hand.GetComponent<ZoneHand>().Size)
+        if (CraftEnabled)
         {
-            GameObject newCard = Instantiate(Hand.GetComponent<ZoneHand>().CardPrefab, Hand.transform);   //create and instantiate object in scene
-            Book.GetComponent<ZoneBook>().AddToHand(this.GetComponent<CardDisplay>(), newCard);
+            if (card.transform.parent == Hand.transform)
+            {
+                card.transform.SetParent(Craft.transform);
+            }
+            else
+            {
+                CraftToHand(card);
+            }
+        }
+    }
+    public void CraftToHand(CardDrag card)  //move card from Craft zone to Hand on click
+    {
+        card.gameObject.transform.SetParent(Hand.transform);
+    }
+    public void BookToHand(CardDisplay pickedCard)  //adds new card from hand based on what was picked in Book
+    {
+        if (Hand.GetComponentsInChildren<CardDrag>().Length < Hand.GetComponent<ZoneHand>().Size)
+        {
+            GameObject newCard = Instantiate(Hand.GetComponent<ZoneHand>().CardPrefab, Hand.transform);     //create and instantiate object in scene
+            newCard.GetComponent<CardDrag>().AddCard(pickedCard.card);                                      //add cards to objects 
+            newCard.name = string.Format("{0}", pickedCard.name);                                           //update new card name (for displaying in Scene)
         }
     }
 }

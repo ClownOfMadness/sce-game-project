@@ -5,26 +5,24 @@ public class ZoneCraft : MonoBehaviour
 {
     public GameObject CardPrefab;   //type of prefab for Card (attached via Inspector)
     [HideInInspector]
-    public int Size;                //used by other Zones
+    private int Size;               //Zone size
+
     void Awake()
     {
-        Size = 2;               //max Zone size
+        Size = 2;                   //max Zone size
     }
 
     public void Update()
     {
-        if (this.transform.childCount == this.Size) //runs when two cards get dropped in Zone
+        if (this.transform.childCount == this.Size)             //runs when two cards get dropped in Zone
         {
             CardPool pool = ScriptableObject.CreateInstance<CardPool>();        //open CardPool connection to use its functions
             CardDrag[] cardObjects = this.gameObject.transform.GetComponentsInChildren<CardDrag>();
             Card first = cardObjects[0].card;
             Card second = cardObjects[1].card;
-            Debug.Log("Card 1 is " + first.name);
-            Debug.Log("Card 2 is " + second.name);
             Card combination = pool.FindCombo(first, second);   //find fitting combination in deck pool
             if (combination)
             {
-                Debug.Log("New card is " + combination.name);
                 Destroy(cardObjects[1].gameObject);
                 cardObjects[0].GetComponent<CardDisplay>().AddCard(combination);
                 string newName = combination.name;                              //add cards to objects + save the new card name (for displaying in Scene)
@@ -35,15 +33,6 @@ public class ZoneCraft : MonoBehaviour
                 cardObjects[1].ReturnToHand();
             }
             cardObjects[0].ReturnToHand();
-        }
-    }
-    public void CreativeButton()
-    {
-        if (!this.gameObject.activeSelf)         //if inactive turn on
-            this.gameObject.SetActive(true);
-        else
-        {
-            this.gameObject.SetActive(false);  //if active turn off
         }
     }
 }

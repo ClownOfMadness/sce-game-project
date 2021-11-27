@@ -3,11 +3,9 @@ using UnityEngine;
 //responsible for creating Destroy zone and deleting cards on contact, extension of ZoneBehaviour
 public class ZoneDestroy : ZoneBehaviour
 {
-    //private static GameObject placeholder;
-
     void Awake()
     {
-        Size = 1;               //max Zone size
+        Size = 1;       //max Zone size
     }
     void Update()   //(can be rewritten to be shorter but its refusing to work atm)
     {

@@ -207,6 +207,7 @@ MonoBehaviour:
   card: {fileID: 0}
   nameText: {fileID: 812760686621528790}
   artwork: {fileID: 8521288523641063355}
+  canvas: {fileID: 605941613585712121, guid: bfdef182fa73aa94b8a73a4e3a21b36c, type: 3}
 --- !u!114 &5640827535953018148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,9 +252,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5383793516347331127, guid: bfdef182fa73aa94b8a73a4e3a21b36c, type: 3}
-        m_TargetAssemblyTypeName: ZoneCanvas, Assembly-CSharp
-        m_MethodName: BookToHand
+      - m_Target: {fileID: 8386453439086071257}
+        m_TargetAssemblyTypeName: CardDisplay, Assembly-CSharp
+        m_MethodName: CreateCard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

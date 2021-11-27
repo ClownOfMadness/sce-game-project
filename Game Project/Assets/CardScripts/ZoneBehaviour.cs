@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,7 +14,7 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         for (int i = Zone.transform.childCount; i < Zone.Size; i++)
         {
             GameObject newCard = Instantiate(CardPrefab, Zone.transform);   //create and instantiate objects in scene
-            string newName = pool.FillObject(newCard);                        //add cards to objects + save the new card name (for displaying in Scene)
+            string newName = pool.FillObject(newCard);                      //add cards to objects + save the new card name (for displaying in Scene)
             newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
         }
     }
@@ -29,7 +27,7 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         CardDrag d = eventData.pointerDrag.GetComponent<CardDrag>();
         if (d != null)
         {
-            d.GetComponent<CanvasGroup>().alpha = 1f;        //reset effect for card, can be changed
+            d.GetComponent<CanvasGroup>().alpha = 1f;        //reset effect for card (can be changed)
             d.placeholderParent = this.transform;
         }
     }
@@ -42,13 +40,12 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         CardDrag d = eventData.pointerDrag.GetComponent<CardDrag>();
         if ((d != null) && (d.placeholderParent == this.transform))
         {
-            d.GetComponent<CanvasGroup>().alpha = .6f;      //effect for card when moved, can be changed
+            d.GetComponent<CanvasGroup>().alpha = .6f;      //effect for card when moved (can be changed)
             d.placeholderParent = d.parentReturnTo;
         }
     }
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("OnDrop to" + gameObject.name);
         CardDrag d = eventData.pointerDrag.GetComponent<CardDrag>();
         if (d != null)
         {

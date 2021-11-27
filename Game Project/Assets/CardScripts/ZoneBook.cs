@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,7 +32,6 @@ public class ZoneBook : MonoBehaviour
                 GameObject newCard = Instantiate(CardPrefab, newPage.transform);    //create and instantiate card objects in scene
                 newCard.GetComponent<CardDisplay>().AddCard(pool.cards[cardIndex]);
                 string newName = pool.cards[cardIndex].name;                        //save the new card name (for displaying in Scene)
-                Debug.Log("Card " + newName + " added to book.");
                 newCard.name = string.Format("{0} (Card)", newName);                //updates name in scene
                 newCard.transform.localScale -= new Vector3((CardPrefab.transform.localScale.x) / 3, (CardPrefab.transform.localScale.y) / 3, 0);
             }
@@ -42,10 +40,10 @@ public class ZoneBook : MonoBehaviour
             pagesInBook++;
         }
         backButton.CrossFadeAlpha(0.0f, 0.05f, false);
-        nextButton.gameObject.transform.SetAsLastSibling();     //move button to the far right
-        pageIndex = 1;  //stores what page we're on
+        nextButton.gameObject.transform.SetAsLastSibling();             //move button to the far right
+        pageIndex = 1;  //stores what Page we're on
     }
-    public void NextPage()
+    public void NextPage()  //move to next Page on click
     {
         if (pageIndex < pagesInBook)
         {
@@ -58,7 +56,7 @@ public class ZoneBook : MonoBehaviour
                 nextButton.CrossFadeAlpha(0.0f, 0.05f, false);
         }
     }
-    public void BackPage()
+    public void BackPage()  //move a Page back on click
     {
         if (pageIndex > 1)
         {
@@ -71,7 +69,7 @@ public class ZoneBook : MonoBehaviour
                 backButton.CrossFadeAlpha(0.0f, 0.05f, false);
         }
     }
-    public void FirstPage()
+    public void FirstPage()     //switch back to first page (used when Book is closed)
     {
         nextButton.CrossFadeAlpha(1.0f, 0.05f, false);
         this.gameObject.transform.GetChild(pageIndex).gameObject.SetActive(false);  //hide last page
@@ -79,12 +77,6 @@ public class ZoneBook : MonoBehaviour
         this.gameObject.transform.GetChild(pageIndex).gameObject.SetActive(true);   //show new page
         backButton.CrossFadeAlpha(0.0f, 0.05f, false);
     }
-    public void AddToHand(CardDisplay cardPicked, GameObject cardObject)
-    {
-        cardObject.GetComponent<CardDrag>().AddCard(cardPicked.card);  
-        cardObject.name = string.Format("{0} (Card)", cardPicked.name);//add cards to objects + save the new card name (for displaying in Scene)
-    }
-
 }
 
 
