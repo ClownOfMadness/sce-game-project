@@ -16,3 +16,4 @@ MonoBehaviour:
   BuildingName: Town Hall
   Description: The brighest building in the kingdom, and it got a hall inside.
   Prefab: {fileID: 9034094746195452373, guid: 67cb9a8e55611e648a782b97987f1138, type: 3}
+  ViewRadius: 3

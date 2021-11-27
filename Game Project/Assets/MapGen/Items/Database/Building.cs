@@ -8,4 +8,5 @@ public class Building : ScriptableObject
     [TextArea]
     public string Description;
     public GameObject Prefab;
+    public int ViewRadius;
 }

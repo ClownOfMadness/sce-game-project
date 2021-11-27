@@ -9,8 +9,10 @@ public class MapDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //GameObject[,] TileMap;
         MapGen Map = FindObjectOfType<MapGen>();
+        int size = Map.mapSize;
+        FogOfWar Fog = FindObjectOfType<FogOfWar>();
+        Fog.Createfog(size);
         MainCamera.transform.position = Map.generateMap();
     }
 

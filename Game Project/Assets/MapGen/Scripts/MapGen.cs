@@ -11,6 +11,8 @@ public class MapGen : MonoBehaviour
         public float height;
         public GameObject tile;
     }
+    public GameObject Abyss;
+    public GameObject Ruins;
 
     public int mapSize;
     public float noiseScale;
@@ -42,6 +44,7 @@ public class MapGen : MonoBehaviour
     public Vector3 generateMap()
     {
         int seed = Random.Range(int.MinValue, int.MaxValue);//Seed get a random value.
+        int randP1, randP2;
         TileArray = new GameObject[mapSize, mapSize];
 
         //Create a noise map.
@@ -69,8 +72,16 @@ public class MapGen : MonoBehaviour
                         if (regions[i].height >= 0.3 && regions[i].height <= 0.55)
                             PosiblePos.Add(count++, new Vector2Int(x, y));
 
-                        //GameObject tile
-                        TileArray[x, y] = Instantiate(regions[i].tile, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
+                        randP1 = Random.Range(1, 20);
+                        randP2 = Random.Range(1, 20);
+
+                        if (regions[i].name == "P1" && randP1 == 1)
+                            TileArray[x, y] = Instantiate(Abyss, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
+                        else if (regions[i].name == "P2" && randP2 == 1)
+                            TileArray[x, y] = Instantiate(Ruins, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
+                        else
+                            TileArray[x, y] = Instantiate(regions[i].tile, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
+
                         TileArray[x, y].transform.parent = this.transform;
                         TileArray[x, y].name = string.Format("tile_x{0}_y{1}", x, y);
                         break;
@@ -83,9 +94,8 @@ public class MapGen : MonoBehaviour
 
     public Vector3 PlaceStartPos(Dictionary<int, Vector2Int> PosiblePos)
     {
-        int size = PosiblePos.Count;
+        int size = PosiblePos.Count, k = 0;
         int randNum = Random.Range(0, size - 1);
-        int k = 0;
 
         int x = PosiblePos[randNum].x;
         int y = PosiblePos[randNum].y;
@@ -96,7 +106,6 @@ public class MapGen : MonoBehaviour
         {
             for (int j = x - 1; j <= x + 1; j++)
             {
-
                 TileArray[x, y] = GameObject.Find(string.Format("tile_x{0}_y{1}", j, i));
                 if (TileArray[x, y].name != "P1")
                 { 
@@ -110,6 +119,7 @@ public class MapGen : MonoBehaviour
         }
         SpawnBuilding TownHall = FindObjectOfType<SpawnBuilding>();
         TownHall.Spawn(new Vector3(x * 10 ,2, y * 10), "BU0001", TileArray[x,y]);
+
         return new Vector3(x * 10, 150, y * 10);
     }
 
@@ -123,7 +133,6 @@ public class MapGen : MonoBehaviour
             }
         }
     }
-
 
     private void OnValidate()
     {
