@@ -12,6 +12,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private LayerMask layerMask; // List of layers that the mouse can interact with
     public GameObject selectedObject;
     public AIDestinationSetter targetLocation;
+    public UnitData unitData;
 
     // Screen Panning
     public float panSpeed = 40f; // Pan speed
@@ -48,10 +49,12 @@ public class PlayerControl : MonoBehaviour
                 if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7) // if it is clicked on terrain or impassable
                 {
                     // [[Later make an option to switch betwenn units]]
+                    
 
                     selectedObject = raycastHit.transform.gameObject;
 
                     // For test purposes
+                    unitData.target = selectedObject;
                     targetLocation.target = selectedObject.transform;
                 }
             }

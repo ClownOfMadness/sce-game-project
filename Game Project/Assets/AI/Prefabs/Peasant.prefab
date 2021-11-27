@@ -214,3 +214,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e94cf23e4c20ad4d95d7b92cf707c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  path: {fileID: 6511593569209969028}
+  animator: {fileID: 4523351716890472440}
+  idleAnim: {fileID: -2004518329355668608, guid: 31a8f530832d4f94c862ab943173d83f, type: 3}
+  runAnim: {fileID: -1916803093978127743, guid: c2b85f4d876a2cc479c1740486777eca, type: 3}
+  workAnim: {fileID: -1165019848963836123, guid: 5bc51860df8b3c4489ea0cd7fbf8c247, type: 3}
+  idleCardAnim: {fileID: 6939473909145340443, guid: 978959c775ed0a14988f24860f932958, type: 3}
+  runCardAnim: {fileID: 7061692187398238963, guid: b6bd84faa831b2a4080103cf8f7888e5, type: 3}
