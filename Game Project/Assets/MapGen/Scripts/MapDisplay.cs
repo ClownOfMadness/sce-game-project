@@ -15,6 +15,4 @@ public class MapDisplay : MonoBehaviour
         Fog.Createfog(size);
         MainCamera.transform.position = Map.generateMap();
     }
-
-    
 }

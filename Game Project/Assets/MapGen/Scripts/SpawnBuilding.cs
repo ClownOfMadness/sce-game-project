@@ -4,6 +4,7 @@ public class SpawnBuilding : MonoBehaviour
 {
     public BuildingDataBase buildings;
 
+    //Create a building on the map.
     public void Spawn(Vector3 SpawnPoint, string ID, GameObject Tile)
     {
         Building BuildingType = FindBuilding(ID, buildings);
@@ -13,9 +14,9 @@ public class SpawnBuilding : MonoBehaviour
         NewBuilding.name = BuildingType.BuildingName;
         NewBuilding.transform.parent = Tile.transform;
         Fog.DeleteFogArea(BuildingType.ViewRadius, SpawnPoint);
-        //Fog.DeleteFogArea(BuildingType.ViewRadius, new Vector3(SpawnPoint.x, 1, 20));
     }
 
+    //Find the building in the buildings database.
     public static Building FindBuilding(string ID, BuildingDataBase DB)
     {
         foreach (Building building in DB.BuildingList)

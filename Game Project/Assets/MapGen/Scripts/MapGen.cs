@@ -12,7 +12,9 @@ public class MapGen : MonoBehaviour
         public GameObject tile;
     }
     public GameObject Abyss;
+    public int abyss;
     public GameObject Ruins;
+    public int ruins;
 
     public int mapSize;
     public float noiseScale;
@@ -22,6 +24,7 @@ public class MapGen : MonoBehaviour
     public float persistance;
     public float lacunarity;
 
+    //Control the falloff map.
     public int falloffA;
     public float falloffB;
 
@@ -41,6 +44,7 @@ public class MapGen : MonoBehaviour
         falloffMap = FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
     }
 
+    //Generating the map.
     public Vector3 generateMap()
     {
         int seed = Random.Range(int.MinValue, int.MaxValue);//Seed get a random value.
@@ -72,8 +76,8 @@ public class MapGen : MonoBehaviour
                         if (regions[i].height >= 0.3 && regions[i].height <= 0.55)
                             PosiblePos.Add(count++, new Vector2Int(x, y));
 
-                        randP1 = Random.Range(1, 20);
-                        randP2 = Random.Range(1, 20);
+                        randP1 = Random.Range(1, abyss);
+                        randP2 = Random.Range(1, ruins);
 
                         if (regions[i].name == "P1" && randP1 == 1)
                             TileArray[x, y] = Instantiate(Abyss, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
@@ -92,6 +96,7 @@ public class MapGen : MonoBehaviour
         return PlaceStartPos(PosiblePos);
     }
 
+    //Choosing randomly the player's starting point and adding the Town Hall to the map.
     public Vector3 PlaceStartPos(Dictionary<int, Vector2Int> PosiblePos)
     {
         int size = PosiblePos.Count, k = 0;
@@ -123,6 +128,7 @@ public class MapGen : MonoBehaviour
         return new Vector3(x * 10, 150, y * 10);
     }
 
+    //Delete all the tiles on the map.
     public void deleteTileMap()
     {
         while (this.transform.childCount != 0)
@@ -134,6 +140,7 @@ public class MapGen : MonoBehaviour
         }
     }
 
+    //Limits editing to valid values.
     private void OnValidate()
     {
         if (mapSize < 1)
@@ -146,6 +153,10 @@ public class MapGen : MonoBehaviour
             falloffA = 1;
         if (falloffB < 0.1f)
             falloffB = 0.1f;
+        if (abyss < 1)
+            abyss = 1;
+        if (ruins < 1)
+            ruins = 1;
 
         falloffMap = FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
     }

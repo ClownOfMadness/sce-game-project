@@ -4,11 +4,13 @@ using UnityEngine;
 
 public static class Noise
 {
+    //Create noise map using the given parameters.
     public static float[,] noiseMapGen(int mapWidth, int mapHeight, int seed, float scale, int octaves, float persistance, float lacunarity, Vector2 offset)
     {
         float[,] noiseMap = new float[mapWidth, mapHeight];
         System.Random prng = new System.Random(seed);
 
+        //Creating array of offsets of the size as the number of octaves.
         Vector2[] octaveOffsets = new Vector2[octaves];
         for (int i = 0; i < octaves; i++)
         {
@@ -16,17 +18,20 @@ public static class Noise
             float offsetY = prng.Next(-10000, 10000) + offset.y;
             octaveOffsets[i] = new Vector2(offsetX, offsetY);
         }
-
+        
+        //Limit the scale to prevent division by zero.
         if (scale <= 0)
             scale = 0.001f;
 
+        //Set the max as smallest float value, min as the highes float value.
         float maxNoiseHeight = float.MinValue;
         float minNoiseHeight = float.MaxValue;
 
+        //Variables for centerlizing the map.
         float halfWidth = mapWidth / 2f;
         float halfHeight = mapHeight / 2f;
 
-
+        //Create the noise map using the perlin noise function.
         for (int y = 0; y < mapHeight; y++)
         {
             for (int x = 0; x < mapWidth; x++)
@@ -46,6 +51,7 @@ public static class Noise
                     amplitude *= persistance;
                     frequency *= lacunarity;
                 }
+                //Updating the maximum and the minimum.
                 if (noiseHeight > maxNoiseHeight)
                     maxNoiseHeight = noiseHeight;
                 else if (noiseHeight < minNoiseHeight)
@@ -55,6 +61,7 @@ public static class Noise
             }
         }
 
+        //Normalize the map between the created minimum and maximum.
         for (int y = 0; y < mapHeight; y++)
         {
             for (int x = 0; x < mapWidth; x++)
