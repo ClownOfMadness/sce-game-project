@@ -336,6 +336,7 @@
 "Assets/CardScripts/ZoneCraft.cs"
 "Assets/CardScripts/ZoneDestroy.cs"
 "Assets/CardScripts/ZoneHand.cs"
+"Assets/LoginScreen.cs"
 "Assets/MapGen/Items/Database/Building.cs"
 "Assets/MapGen/Items/Database/BuildingDataBase.cs"
 "Assets/MapGen/Items/Database/TileData.cs"

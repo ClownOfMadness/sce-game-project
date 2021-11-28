@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 //responsible for switching panels and button related functions
 public class ZoneCanvas : MonoBehaviour
@@ -12,7 +13,7 @@ public class ZoneCanvas : MonoBehaviour
     public GameObject destroyButton;
     private bool CraftEnabled;
     private bool UIEnabled;
-    private bool Log_In_UI;
+    private bool LogEnabled;
 
     void Start()    //initilizing in case something was off
     {
@@ -24,21 +25,13 @@ public class ZoneCanvas : MonoBehaviour
         CraftEnabled = true;
         UIEnabled = true;
         Login.SetActive(false);
-        Log_In_UI = false;
+        LogEnabled = false;
     }
     public void LoginUI()    //open card UI on click
     {
-        if (Log_In_UI)
+        if (LogEnabled)
         {
-            Hand.SetActive(true);
-            Book.SetActive(false);
-            Craft.SetActive(true);
-            creativeButton.SetActive(true);
-            destroyButton.SetActive(true);
-            CraftEnabled = true;
-            UIEnabled = true;
-            Log_In_UI = false;
-            Login.SetActive(false);
+            SkipLogIn();
         }
         else
         {
@@ -49,10 +42,40 @@ public class ZoneCanvas : MonoBehaviour
             destroyButton.SetActive(false);
             CraftEnabled = false;
             UIEnabled = false;
-            Log_In_UI = true;
+            LogEnabled = true;
             Login.SetActive(true);
         }
     }
+
+    public void SkipLogIn()
+    {
+        Hand.SetActive(true);
+        Book.SetActive(false);
+        Craft.SetActive(true);
+        creativeButton.SetActive(true);
+        destroyButton.SetActive(true);
+        CraftEnabled = true;
+        UIEnabled = true;
+        LogEnabled = false;
+        Login.SetActive(false);
+        Debug.Log("Log in skipped"); //to delete later
+    }
+    public void TryLogin()
+    {
+        string code = Login.GetComponentInChildren<InputField>().text;
+        if (code == Login.GetComponent<LoginScreen>().Pcode)
+        {
+            Debug.Log("Log in succefull");
+            Login.GetComponent<LoginScreen>().IsLogin = true;
+            SkipLogIn();
+            LoginButton.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Incorrect Code");
+        }
+    }
+
     public void CardUI()    //open card UI on click
     {
         if (UIEnabled)
