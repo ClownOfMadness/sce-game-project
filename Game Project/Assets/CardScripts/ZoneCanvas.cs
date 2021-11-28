@@ -3,6 +3,8 @@ using UnityEngine;
 //responsible for switching panels and button related functions
 public class ZoneCanvas : MonoBehaviour
 {
+    public GameObject LoginButton;
+    public GameObject Login;
     public GameObject Hand;
     public GameObject Craft;
     public GameObject Book;
@@ -10,6 +12,7 @@ public class ZoneCanvas : MonoBehaviour
     public GameObject destroyButton;
     private bool CraftEnabled;
     private bool UIEnabled;
+    private bool Log_In_UI;
 
     void Start()    //initilizing in case something was off
     {
@@ -20,7 +23,36 @@ public class ZoneCanvas : MonoBehaviour
         destroyButton.SetActive(true);
         CraftEnabled = true;
         UIEnabled = true;
-}
+        Login.SetActive(false);
+        Log_In_UI = false;
+    }
+    public void LoginUI()    //open card UI on click
+    {
+        if (Log_In_UI)
+        {
+            Hand.SetActive(true);
+            Book.SetActive(false);
+            Craft.SetActive(true);
+            creativeButton.SetActive(true);
+            destroyButton.SetActive(true);
+            CraftEnabled = true;
+            UIEnabled = true;
+            Log_In_UI = false;
+            Login.SetActive(false);
+        }
+        else
+        {
+            Hand.SetActive(false);
+            Book.SetActive(false);
+            Craft.SetActive(false);
+            creativeButton.SetActive(false);
+            destroyButton.SetActive(false);
+            CraftEnabled = false;
+            UIEnabled = false;
+            Log_In_UI = true;
+            Login.SetActive(true);
+        }
+    }
     public void CardUI()    //open card UI on click
     {
         if (UIEnabled)
@@ -44,6 +76,7 @@ public class ZoneCanvas : MonoBehaviour
             UIEnabled = true;
         }
     }
+
     public void SwitchCreative()
     {
         if (CraftEnabled)           //open book, close craft
