@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5738152316269519982}
   - component: {fileID: 4523351716890472440}
+  - component: {fileID: 3180598046372167092}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -83,6 +84,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!95 &3180598046372167092
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4770103987596140963}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f09c87d319baefc4abacfaf570de6e30, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6511593569209969031
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,9 +235,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 6511593569209969028}
-  animator: {fileID: 4523351716890472440}
+  sprite: {fileID: 4523351716890472440}
+  animator: {fileID: 3180598046372167092}
   idleAnim: {fileID: -2004518329355668608, guid: 31a8f530832d4f94c862ab943173d83f, type: 3}
   runAnim: {fileID: -1916803093978127743, guid: c2b85f4d876a2cc479c1740486777eca, type: 3}
   workAnim: {fileID: -1165019848963836123, guid: 5bc51860df8b3c4489ea0cd7fbf8c247, type: 3}
   idleCardAnim: {fileID: 6939473909145340443, guid: 978959c775ed0a14988f24860f932958, type: 3}
   runCardAnim: {fileID: 7061692187398238963, guid: b6bd84faa831b2a4080103cf8f7888e5, type: 3}
+  target: {fileID: 0}
