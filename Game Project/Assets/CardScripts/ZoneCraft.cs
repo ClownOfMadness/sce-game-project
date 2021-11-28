@@ -3,13 +3,12 @@ using UnityEngine;
 //responsible for creating Craft zone
 public class ZoneCraft : MonoBehaviour
 {
-    public GameObject CardPrefab;   //type of prefab for Card (attached via Inspector)
-    [HideInInspector]
-    private int Size;               //Zone size
+    public GameObject CardPrefab;           //type of prefab for Card (attached via Inspector)
+    [HideInInspector] private int Size;     //Zone size
 
     void Awake()
     {
-        Size = 2;                   //max Zone size
+        Size = 2;   //max Zone size
     }
 
     public void Update()

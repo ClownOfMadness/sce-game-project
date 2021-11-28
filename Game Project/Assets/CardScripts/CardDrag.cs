@@ -5,10 +5,9 @@ using UnityEngine.EventSystems;
 //responsible for the Card Drag commands, extension of CardDisplay
 public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [HideInInspector]
-    public Transform parentReturnTo = null;         //helps snapping the card back to place
-    public GameObject placeholder = null;           //saves the dragged card's spot (for changing card order)
-    public Transform placeholderParent = null;      //saves the dragged card's parent
+    [HideInInspector] public Transform parentReturnTo = null;         //helps snapping the card back to place
+    [HideInInspector] public GameObject placeholder = null;           //saves the dragged card's spot (for changing card order)
+    [HideInInspector] public Transform placeholderParent = null;      //saves the dragged card's parent
 
     void Start()
     {
@@ -16,13 +15,13 @@ public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHa
     }
     public void ReturnToHand()          //return to hand after craft attempt
     {
-        canvas.GetComponent<ZoneCanvas>().CraftToHand(this);
+        canvas.GetComponent<ZoneCards>().CraftToHand(this);
     }
     public void SwitchCardPlace()       //move card between hand-craft on click
     {
-        canvas.GetComponent<ZoneCanvas>().HandToCraft(this);
+        canvas.GetComponent<ZoneCards>().HandToCraft(this);
     }
-    private void SavePlaceholder()       //enables card order
+    private void SavePlaceholder()      //enables card order
     {
         placeholder = new GameObject(); //initalizing the temp object to save the card's spot
         placeholder.transform.SetParent(this.transform.parent);

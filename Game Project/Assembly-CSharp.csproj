@@ -70,7 +70,6 @@
     <Compile Include="Assets\MapGen\Scripts\FogOfWar.cs" />
     <Compile Include="Assets\CardScripts\ZoneHand.cs" />
     <Compile Include="Assets\Practice\Scripts\Example Script.cs" />
-    <Compile Include="Assets\CardScripts\ZoneCanvas.cs" />
     <Compile Include="Assets\MapGen\Items\Database\BuildingDataBase.cs" />
     <Compile Include="Assets\MapGen\Scripts\MapDisplay.cs" />
     <Compile Include="Assets\CardScripts\ZoneBehaviour.cs" />
@@ -79,6 +78,8 @@
     <Compile Include="Assets\MapGen\Scripts\FalloffGen.cs" />
     <Compile Include="Assets\CardScripts\ZoneCraft.cs" />
     <Compile Include="Assets\CardScripts\CardPool.cs" />
+    <Compile Include="Assets\CardScripts\ZoneCards.cs" />
+    <Compile Include="Assets\GameBehaviour.cs" />
     <Compile Include="Assets\MapGen\Scripts\Noise.cs" />
   </ItemGroup>
   <ItemGroup>

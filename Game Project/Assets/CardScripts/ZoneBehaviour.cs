@@ -4,9 +4,8 @@ using UnityEngine.EventSystems;
 //responsible for creating a Zone to drop the cards to, Parent of other Zones
 public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [HideInInspector]
-    public int Size;                //used by other Zones
-    public GameObject CardPrefab;   //type of prefab for Card (attached via Inspector)
+    [HideInInspector] public int Size;  //used by other Zones
+    public GameObject CardPrefab;       //type of prefab for Card (attached via Inspector)
 
     public void InstantiateZone(ZoneBehaviour Zone)
     {
