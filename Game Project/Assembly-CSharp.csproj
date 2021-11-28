@@ -67,6 +67,8 @@
     <Compile Include="Assets\MapGen\Items\Database\Building.cs" />
     <Compile Include="Assets\MapGen\Scripts\FalloffGen.cs" />
     <Compile Include="Assets\MapGen\Scripts\Noise.cs" />
+    <Compile Include="Assets\AI\Scripts\UnitData.cs" />
+    <Compile Include="Assets\AI\Scripts\PlayerControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -331,6 +333,12 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.27f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.27f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.1.27f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
