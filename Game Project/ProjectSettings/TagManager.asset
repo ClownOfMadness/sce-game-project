@@ -13,8 +13,8 @@ TagManager:
   - UI
   - Terrain
   - Impassable
-  - 
-  - 
+  - Unit
+  - Building
   - 
   - 
   - 
@@ -40,4 +40,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Units
+    uniqueID: 3008369209
+    locked: 0
+  - name: Fog
+    uniqueID: 3223263343
     locked: 0

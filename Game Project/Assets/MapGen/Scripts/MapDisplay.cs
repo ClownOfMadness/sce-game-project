@@ -14,7 +14,7 @@ public class MapDisplay : MonoBehaviour
         MapGen Map = FindObjectOfType<MapGen>();
         int size = Map.mapSize;
         FogOfWar Fog = FindObjectOfType<FogOfWar>();
-        //Fog.Createfog(size);
+        Fog.Createfog(size);
         MainCamera.transform.position = Map.generateMap();
         path.Scan();
     }

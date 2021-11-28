@@ -32,20 +32,4 @@ public class FogOfWar : MonoBehaviour
             }
         }
     }
-
-    public void DeleteFogArea(int radius, Vector3 pos)
-    {
-
-        int y = (int)(pos.z / 10);
-        int x = (int)(pos.x / 10);
-
-        for (int i = y - radius; i <= y + radius; i++)
-        {
-            for (int j = x - radius; j <= x + radius; j++)
-            {
-                GameObject FogTile = GameObject.Find(string.Format("fog_x{0}_y{1}", j, i));
-                if (FogTile) DestroyImmediate(FogTile);
-            }
-        }
-    }
 }

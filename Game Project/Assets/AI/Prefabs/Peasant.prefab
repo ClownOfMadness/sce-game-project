@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5738152316269519982}
   - component: {fileID: 4523351716890472440}
   - component: {fileID: 3180598046372167092}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1186256121
+  m_SortingLayerID: -1286598087
   m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: -2004518329355668608, guid: 31a8f530832d4f94c862ab943173d83f, type: 3}
@@ -116,7 +116,8 @@ GameObject:
   - component: {fileID: 6511593569209969028}
   - component: {fileID: 6511593569209969054}
   - component: {fileID: 3045333282813804271}
-  m_Layer: 0
+  - component: {fileID: 2918633872530833086}
+  m_Layer: 8
   m_Name: Peasant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,3 +244,16 @@ MonoBehaviour:
   idleCardAnim: {fileID: 6939473909145340443, guid: 978959c775ed0a14988f24860f932958, type: 3}
   runCardAnim: {fileID: 7061692187398238963, guid: b6bd84faa831b2a4080103cf8f7888e5, type: 3}
   target: {fileID: 0}
+--- !u!135 &2918633872530833086
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6511593569209969031}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
