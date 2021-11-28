@@ -313,7 +313,6 @@
 -r:"C:/Users/helic/Documents/SemiProject/sce-game-project/Game Project/Library/PackageCache/com.unity.visualscripting@1.6.1/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
--analyzer:"Assets/Plugins/AstarPathfindingProject/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll"
 "Assets/Plugins/AstarPathfindingProject/Behaviors/AIDestinationSetter.cs"
 "Assets/Plugins/AstarPathfindingProject/Behaviors/Patrol.cs"
 "Assets/Plugins/AstarPathfindingProject/Core/AI/AIBase.cs"

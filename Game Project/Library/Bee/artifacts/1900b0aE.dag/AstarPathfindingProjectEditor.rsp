@@ -319,7 +319,6 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
--analyzer:"Assets/Plugins/AstarPathfindingProject/Plugins/DotNetZip/Pathfinding.Ionic.Zip.Reduced.dll"
 "Assets/Plugins/AstarPathfindingProject/Editor/AIBaseEditor.cs"
 "Assets/Plugins/AstarPathfindingProject/Editor/AILerpEditor.cs"
 "Assets/Plugins/AstarPathfindingProject/Editor/AnimationLinkEditor.cs"

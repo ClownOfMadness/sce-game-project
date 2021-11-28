@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637737031127214188
-    m_Hash: 2928467470
+      ticks: 637737033718900232
+    m_Hash: 3027070622
   m_LockFileStatus:
     m_FilePath: C:/Users/helic/Documents/SemiProject/sce-game-project/Game Project/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637737031127330235
-    m_Hash: 3437871172
+      ticks: 637737033718910203
+    m_Hash: 684498581
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
