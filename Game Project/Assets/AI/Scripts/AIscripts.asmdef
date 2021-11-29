@@ -1,0 +1,19 @@
+{
+    "name": "AIscripts",
+    "rootNamespace": "",
+    "references": [
+        "GUID:efa45043feb7e4147a305b73b5cea642",
+        "GUID:865575785c1524f888e47306de0c1246",
+        "GUID:774e21169c4ac4ec8a01db9cdb98d33b",
+        "GUID:c750cf8fdff905040a240bb6a1662ca5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

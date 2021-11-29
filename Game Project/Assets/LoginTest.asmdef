@@ -1,0 +1,17 @@
+{
+    "name": "LoginTest",
+    "rootNamespace": "",
+    "references": [
+        "GUID:caad78c9fdb641a438a88a181e3ba45c",
+        "GUID:c750cf8fdff905040a240bb6a1662ca5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

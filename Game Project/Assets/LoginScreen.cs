@@ -7,6 +7,6 @@ using UnityEngine.UI;
 public class LoginScreen : MonoBehaviour
 {
     [HideInInspector] public bool IsLogin = false;
-    [HideInInspector] public string Pcode = "Premium";
+    //[HideInInspector] public string [] Pcode = new string[] { "Premium", "premium", "Premium1", "premium1","Premium2","premium2" };
 
 }

@@ -7,6 +7,7 @@ public class GameBehaviour : MonoBehaviour
     public GameObject Cards;
     public GameObject loginButton;
     public GameObject cardsButton;
+    [HideInInspector] public string[] Pcode = new string[] { "Premium", "premium", "Premium1", "premium1", "Premium2", "premium2" };
 
     void Start()    //initilizing screen
     {
@@ -39,19 +40,26 @@ public class GameBehaviour : MonoBehaviour
     }
     public void TryLogin()  //try to login
     {
+        int i;
         string code = Login.GetComponentInChildren<InputField>().text;
-        if (code == Login.GetComponent<LoginScreen>().Pcode)
-        {
-            Debug.Log("Log in succefull");
-            Login.GetComponent<LoginScreen>().IsLogin = true;
-            CloseLoginOpenGame();
-            loginButton.SetActive(false);
-            Cards.GetComponent<ZoneCards>().creativeButton.SetActive(true);
+        Debug.Log(Pcode.Length);
+        for (i = 0; i < Pcode.Length; i++) {
+            if (code == Pcode[i])
+            {
+                Debug.Log("Log in succefull");
+                Login.GetComponent<LoginScreen>().IsLogin = true;
+                CloseLoginOpenGame();
+                loginButton.SetActive(false);
+                Cards.GetComponent<ZoneCards>().creativeButton.SetActive(true);
+                break;
+            }
         }
-        else
+        if (Pcode.Length==i)
         {
             Debug.Log("Incorrect Code");
         }
+
+
     }
     public void CardUI()    //open card UI on click
     {
