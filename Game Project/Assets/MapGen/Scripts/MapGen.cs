@@ -73,7 +73,7 @@ public class MapGen : MonoBehaviour
                 {
                     if(currentHeight <= regions[i].height) 
                     {
-                        if (regions[i].height >= 0.3 && regions[i].height <= 0.55)
+                        if (CheckValidPos(regions[i]))
                             PosiblePos.Add(count++, new Vector2Int(x, y));
 
                         randP1 = Random.Range(1, abyss);
@@ -94,6 +94,14 @@ public class MapGen : MonoBehaviour
             }
         }
         return PlaceStartPos(PosiblePos);
+    }
+
+    //Check if from this region there is access to the over tiles.
+    public bool CheckValidPos(TerrainType tile)
+    {
+        if (tile.height > 0.35 && tile.height < 0.60)
+            return true;
+        return false;
     }
 
     //Choosing randomly the player's starting point and adding the Town Hall to the map.
