@@ -13,7 +13,6 @@ public class SpawnBuilding : MonoBehaviour
 
         NewBuilding.name = BuildingType.BuildingName;
         NewBuilding.transform.parent = Tile.transform;
-        Fog.DeleteFogArea(BuildingType.ViewRadius, SpawnPoint);
     }
 
     //Find the building in the buildings database.
