@@ -56,29 +56,20 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\MapGen\Scripts\MapGen.cs" />
     <Compile Include="Assets\AI\Scripts\UnitData.cs" />
     <Compile Include="Assets\CardScripts\CardDisplay.cs" />
-    <Compile Include="Assets\MapGen\Scripts\SpawnBuilding.cs" />
     <Compile Include="Assets\CardScripts\ZoneBook.cs" />
     <Compile Include="Assets\CardScripts\CardDrag.cs" />
     <Compile Include="Assets\AI\Scripts\PlayerControl.cs" />
-    <Compile Include="Assets\MapGen\Items\Database\TileData.cs" />
     <Compile Include="Assets\CardScripts\Card.cs" />
     <Compile Include="Assets\Practice\Scripts\MapGenPractice.cs" />
-    <Compile Include="Assets\MapGen\Scripts\FogOfWar.cs" />
     <Compile Include="Assets\CardScripts\ZoneHand.cs" />
     <Compile Include="Assets\Practice\Scripts\Example Script.cs" />
     <Compile Include="Assets\CardScripts\ZoneCanvas.cs" />
-    <Compile Include="Assets\MapGen\Items\Database\BuildingDataBase.cs" />
-    <Compile Include="Assets\MapGen\Scripts\MapDisplay.cs" />
     <Compile Include="Assets\CardScripts\ZoneBehaviour.cs" />
-    <Compile Include="Assets\MapGen\Items\Database\Building.cs" />
     <Compile Include="Assets\CardScripts\ZoneDestroy.cs" />
-    <Compile Include="Assets\MapGen\Scripts\FalloffGen.cs" />
     <Compile Include="Assets\CardScripts\ZoneCraft.cs" />
     <Compile Include="Assets\CardScripts\CardPool.cs" />
-    <Compile Include="Assets\MapGen\Scripts\Noise.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -745,6 +736,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="MapGen.csproj">
+      <Project>{3C7F5A8F-5D3E-29D5-142F-A1183491E389}</Project>
+      <Name>MapGen</Name>
+    </ProjectReference>
     <ProjectReference Include="AstarPathfindingProject.csproj">
       <Project>{FF25A978-1E49-AC84-B06C-99D119EDB1CF}</Project>
       <Name>AstarPathfindingProject</Name>
@@ -756,6 +751,10 @@
     <ProjectReference Include="PackageToolsEditor.csproj">
       <Project>{D5F10359-7546-DDA5-443B-4E87F7BA3447}</Project>
       <Name>PackageToolsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="MapData.csproj">
+      <Project>{8A4D28ED-4969-E888-3959-0AED5512C6A9}</Project>
+      <Name>MapData</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

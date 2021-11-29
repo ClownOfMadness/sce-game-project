@@ -16,7 +16,7 @@ public class noise_map_test
             for(int j = 0; j < size; j++)
                 count++;
 
-        Assert.AreEqual(count, 20 * 20);
+        Assert.AreEqual(count, size * size);
     }
 
     //Test if the noise map between the minimus and maximum values.
@@ -31,5 +31,18 @@ public class noise_map_test
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
                 Assert.IsTrue(noiseMap[j, i] <= high && noiseMap[j, i] >= low);
+    }
+
+    // Test if the falloff map size is correct.
+    [Test]
+    public void falloff_map_size()
+    {
+        int size = 20, count = 0;
+        float[,] noiseMap = FalloffGen.generateFalloffMap(size, 3, 0.2f);
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+                count++;
+
+        Assert.AreEqual(count, size * size);
     }
 }
