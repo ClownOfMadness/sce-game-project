@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Game Project/Assets/CardScripts/ZoneMap.cs.meta
 guid: 5e3c6443ef0814d4183647cf8acc8b36
+=======
+guid: 9fe1d6173d3a5304291b142681bed1b4
+>>>>>>> Hackaton_Map:Game Project/Assets/Tests/map_gen_test.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

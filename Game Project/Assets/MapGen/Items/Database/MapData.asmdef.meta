@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Game Project/Assets/MapGen/Items/Database/MapData.asmdef.meta
 guid: 1106061ca84963b49a279913b524f9cd
+=======
+guid: 2f94898e7ff7d0e42a5e99f71df6fcdb
+>>>>>>> Hackaton_Map:Game Project/Assets/MapGen/Scripts/MapGen.asmdef.meta
 AssemblyDefinitionImporter:
   externalObjects: {}
   userData: 

@@ -16,6 +16,7 @@ public static class FalloffGen
                 float y = j / (float)size * 2 - 1;
 
                 float value = Mathf.Max(Mathf.Abs(x), Mathf.Abs(y));
+                //Decrease the range of the falloff.
                 map[i, j] = Mathf.Pow(value, A) / (Mathf.Pow(value, A) + Mathf.Pow(B - B * value, A));
             }
         }

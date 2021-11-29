@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Game Project/Assets/LoginScreen.cs.meta
 guid: 3693c81d8a0d44e428a2976b4124ac93
+=======
+guid: c6029cc10dbfd2a42bf9e5d12ce60d9a
+>>>>>>> Hackaton_Map:Game Project/Assets/Tests/noise_map_test.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
