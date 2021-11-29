@@ -757,6 +757,10 @@
       <Project>{FF25A978-1E49-AC84-B06C-99D119EDB1CF}</Project>
       <Name>AstarPathfindingProject</Name>
     </ProjectReference>
+    <ProjectReference Include="Scripts.csproj">
+      <Project>{1C0D6824-1D45-F069-03FE-70A81F0EB6BC}</Project>
+      <Name>Scripts</Name>
+    </ProjectReference>
     <ProjectReference Include="AstarPathfindingProjectEditor.csproj">
       <Project>{4A4008F5-05E0-F9DC-8F9B-5E21AD75C20C}</Project>
       <Name>AstarPathfindingProjectEditor</Name>

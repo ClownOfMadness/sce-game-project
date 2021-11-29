@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProject", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{FADE6896-39B5-E00A-CB0B-59DF97FBCA52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripts", "Scripts.csproj", "{1C0D6824-1D45-F069-03FE-70A81F0EB6BC}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProjectEditor", "AstarPathfindingProjectEditor.csproj", "{4A4008F5-05E0-F9DC-8F9B-5E21AD75C20C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{CFF6EE35-07A0-E3D6-F44A-40C21691490D}"
@@ -27,6 +29,10 @@ Global
 		{FADE6896-39B5-E00A-CB0B-59DF97FBCA52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FADE6896-39B5-E00A-CB0B-59DF97FBCA52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FADE6896-39B5-E00A-CB0B-59DF97FBCA52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C0D6824-1D45-F069-03FE-70A81F0EB6BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C0D6824-1D45-F069-03FE-70A81F0EB6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C0D6824-1D45-F069-03FE-70A81F0EB6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C0D6824-1D45-F069-03FE-70A81F0EB6BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4A4008F5-05E0-F9DC-8F9B-5E21AD75C20C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4A4008F5-05E0-F9DC-8F9B-5E21AD75C20C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A4008F5-05E0-F9DC-8F9B-5E21AD75C20C}.Release|Any CPU.ActiveCfg = Release|Any CPU
