@@ -7,7 +7,8 @@
         "AIscripts",
         "MapData",
         "MapGen",
-        "LoginTest"
+        "LoginTest",
+        "CardScripts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

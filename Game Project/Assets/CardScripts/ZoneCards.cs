@@ -29,7 +29,7 @@ public class ZoneCards : MonoBehaviour
         else
         {
             Book.GetComponent<ZoneBook>().FirstPage();
-            Book.SetActive(false);  //open craft, close book
+            Book.SetActive(false);      //open craft, close book
             Craft.SetActive(true);
             Map.SetActive(true);
         }

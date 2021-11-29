@@ -11,13 +11,13 @@ public class CardPool : ScriptableObject
     {
         cards = Resources.LoadAll<Card>("Cards").ToList();   //fills list from Resources folder
     }
-    public string FillObject(GameObject cardObject)     //add card to object + return the new card name (for displaying in Scene)
+    public string FillObject(GameObject cardObject)         //add card to object + return the new card name (for displaying in Scene)
     {
         Card newCard = cards[Random.Range(0, cards.Count)];
         cardObject.GetComponent<CardDisplay>().AddCard(newCard);
         return newCard.name;
     }
-    public Card FindCombo(Card first, Card second)  //returns what first+second card create
+    public Card FindCombo(Card first, Card second)          //returns what first+second card create
     {
         Card CombineAttempt;
         for (int startCard = 0; startCard < cards.Count; startCard++)
