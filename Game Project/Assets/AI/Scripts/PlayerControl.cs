@@ -15,13 +15,14 @@ public class PlayerControl : MonoBehaviour
     public UnitData unitData;
 
     // Screen Panning
+    public Vector3 pos;
     public float panSpeed = 40f; // Pan speed
     public float panBorderTHICCNess = 10f; // Pan offscreen border THICCness
     public Vector2 panLimit; // Screen panning limit [[Should be changed by map size]]
     public float scrollSpeed = 10f; // Scroll speed
     public float minScroll = 30f; // Min zoom
     public float maxScroll = 50f; // Max zoom
-    private float scroll = 40f; // Original zoom
+    public float scroll = 40f; // Original zoom
     private Vector3 originalCameraPos; // Stores camera original position
 
     private void Awake()
@@ -66,7 +67,7 @@ public class PlayerControl : MonoBehaviour
         // [[In future, create a script or scriptable object that will contain key settings
         // and from there draw out the correct keys to be used in game]]
         
-        Vector3 pos = camera.transform.position; // Stores original camera position
+        pos = camera.transform.position; // Stores original camera position
         if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderTHICCNess) // Up
         {
             pos.z += panSpeed * Time.deltaTime;
