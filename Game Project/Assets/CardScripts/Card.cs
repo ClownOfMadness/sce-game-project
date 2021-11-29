@@ -54,6 +54,9 @@ public class Card : ScriptableObject
     public int complexity;
     public string description;
     public Sprite artwork;
+
+    //public ScriptableObject Building;
+    public GameObject buildingPrefab;   //can interact with the map
 }
 
     

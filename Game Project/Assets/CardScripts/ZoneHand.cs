@@ -19,7 +19,16 @@ public class ZoneHand : ZoneBehaviour
             Fill = false;
         }
     }
-
+    public void InstantiateZone(ZoneBehaviour Zone)
+    {
+        CardPool pool = ScriptableObject.CreateInstance<CardPool>();        //open CardPool connection to use its functions
+        for (int i = Zone.transform.childCount; i < Zone.Size; i++)
+        {
+            GameObject newCard = Instantiate(CardPrefab, Zone.transform);   //create and instantiate objects in scene
+            string newName = pool.FillObject(newCard);                      //add cards to objects + save the new card name (for displaying in Scene)
+            newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
+        }
+    }
 }
 
 

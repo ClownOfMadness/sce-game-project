@@ -6,17 +6,8 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 {
     [HideInInspector] public int Size;  //used by other Zones
     public GameObject CardPrefab;       //type of prefab for Card (attached via Inspector)
+    public GameObject MapBlank;
 
-    public void InstantiateZone(ZoneBehaviour Zone)
-    {
-        CardPool pool = ScriptableObject.CreateInstance<CardPool>();        //open CardPool connection to use its functions
-        for (int i = Zone.transform.childCount; i < Zone.Size; i++)
-        {
-            GameObject newCard = Instantiate(CardPrefab, Zone.transform);   //create and instantiate objects in scene
-            string newName = pool.FillObject(newCard);                      //add cards to objects + save the new card name (for displaying in Scene)
-            newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
-        }
-    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null)
@@ -40,7 +31,10 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         if ((d != null) && (d.placeholderParent == this.transform))
         {
             d.GetComponent<CanvasGroup>().alpha = .6f;      //effect for card when moved (can be changed)
-            d.placeholderParent = d.parentReturnTo;
+            if (d.card.buildingPrefab == null)
+            {
+                d.placeholderParent = d.parentReturnTo;
+            }
         }
     }
     public void OnDrop(PointerEventData eventData)
@@ -48,8 +42,14 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         CardDrag d = eventData.pointerDrag.GetComponent<CardDrag>();
         if (d != null)
         {
-            if (this.transform.GetComponentsInChildren<CardDrag>().Length < this.Size)
-                d.parentReturnTo = this.transform;  //switch parents only if there's extra space
+            if (this.transform.GetComponentsInChildren<CardDrag>().Length < this.Size)  //switch parents only if there's extra space
+            {
+                if (d.card.buildingPrefab || this.transform != MapBlank.transform) //switch parents to map only if card is a building
+                {
+                    Debug.Log("Change detected");
+                    d.parentReturnTo = this.transform;  
+                }
+            }
         }
     }
 }

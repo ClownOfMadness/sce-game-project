@@ -9,7 +9,7 @@ public class CardPool : ScriptableObject
 
     void Awake()               
     {
-        cards = Resources.LoadAll<Card>("").ToList();   //fills list from Resources folder
+        cards = Resources.LoadAll<Card>("Cards").ToList();   //fills list from Resources folder
     }
     public string FillObject(GameObject cardObject)     //add card to object + return the new card name (for displaying in Scene)
     {

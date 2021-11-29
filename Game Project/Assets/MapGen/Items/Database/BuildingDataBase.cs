@@ -1,9 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;  //needed for ToList function
 
-[CreateAssetMenu(fileName = "new DataBase", menuName = "Assets/Databases/Building Database")]
+//collection of all existing buildings
 public class BuildingDataBase : ScriptableObject
 {
     public List<Building> BuildingList;
+
+    void Awake()
+    {
+        BuildingList = Resources.LoadAll<Building>("Buildings").ToList(); //fills list from Resources folder
+        Debug.Log(BuildingList[0]);
+    }
 }

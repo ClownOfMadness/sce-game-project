@@ -6,6 +6,7 @@ public class ZoneCards : MonoBehaviour
     public GameObject Hand;
     public GameObject Craft;
     public GameObject Book;
+    public GameObject Map;
     public GameObject creativeButton;
     public GameObject destroyButton;
     
@@ -22,6 +23,7 @@ public class ZoneCards : MonoBehaviour
         if (Craft.activeSelf)           //open book, close craft
         {
             Craft.SetActive(false);
+            Map.SetActive(false);
             Book.SetActive(true);
         }
         else
@@ -29,6 +31,7 @@ public class ZoneCards : MonoBehaviour
             Book.GetComponent<ZoneBook>().FirstPage();
             Book.SetActive(false);  //open craft, close book
             Craft.SetActive(true);
+            Map.SetActive(true);
         }
     }
     public void HandToCraft(CardDrag card)  //move card from Hand zone to Hand on click
