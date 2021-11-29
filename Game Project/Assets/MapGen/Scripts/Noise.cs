@@ -61,14 +61,19 @@ public static class Noise
             }
         }
 
-        //Normalize the map between the created minimum and maximum.
-        for (int y = 0; y < mapHeight; y++)
+        return Normalize(maxNoiseHeight, minNoiseHeight, mapHeight, mapWidth, noiseMap);
+    }
+
+    //Normalize the map between the created minimum and maximum.
+    public static float[,] Normalize(float high, float low, int height, int width, float[,] map)
+    {
+        for (int y = 0; y < height; y++)
         {
-            for (int x = 0; x < mapWidth; x++)
+            for (int x = 0; x < width; x++)
             {
-                noiseMap[x, y] = Mathf.InverseLerp(minNoiseHeight, maxNoiseHeight, noiseMap[x, y]);
+                map[x, y] = Mathf.InverseLerp(low, high, map[x,y]);
             }
         }
-        return noiseMap;
+        return map;
     }
 }
