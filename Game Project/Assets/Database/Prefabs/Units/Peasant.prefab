@@ -251,7 +251,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!114 &6964371378365923616
 MonoBehaviour:
@@ -268,6 +268,7 @@ MonoBehaviour:
   unitJob: Peasant
   design:
   - {fileID: 9100000, guid: f09c87d319baefc4abacfaf570de6e30, type: 2}
+  - {fileID: 9100000, guid: 4a98721d3364b334baf3f7c2a48f9e08, type: 2}
   workableTiles:
   - {fileID: 3664547000390747212, guid: 5c2142014d1be0a43adbf53fda8abaed, type: 3}
   - {fileID: 2990366420747764789, guid: 6bced68166a0856438a328677f27f7d1, type: 3}

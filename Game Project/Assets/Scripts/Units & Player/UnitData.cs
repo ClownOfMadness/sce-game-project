@@ -32,7 +32,7 @@ public class UnitData : MonoBehaviour
     private void Awake()
     {
         // Sets random design
-        animator.runtimeAnimatorController = design[Random.Range(0, (design.Count - 1))];
+        animator.runtimeAnimatorController = design[Random.Range(0, (design.Count))];
 
         // Sets AIPath
         path = GetComponent<AIPath>();
