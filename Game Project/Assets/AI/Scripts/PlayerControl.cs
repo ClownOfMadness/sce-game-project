@@ -13,6 +13,7 @@ public class PlayerControl : MonoBehaviour
     public GameObject selectedObject;
     public AIDestinationSetter targetLocation;
     public UnitData unitData;
+    public UnitList unitList;
 
     // Screen Panning
     public Vector3 pos;
@@ -55,10 +56,14 @@ public class PlayerControl : MonoBehaviour
 
                     // For test purposes
                     unitData.UpdateTargetInfo(selectedObject);
-                    targetLocation.target = selectedObject.transform;
                 }
             }
         }
+    }
+
+    private void UnitSelection()
+    {
+        //
     }
 
     private void CameraControl()

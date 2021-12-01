@@ -20,8 +20,10 @@ public class UnitData : MonoBehaviour
 
     // Navigator settings
     private AIPath path;
+    private AIDestinationSetter setter;
 
-    //public bool busy = false;
+    // Work routine
+    private bool busy = false;
 
     // Recieved from PlayerControl
     [HideInInspector] public GameObject target;
@@ -34,6 +36,7 @@ public class UnitData : MonoBehaviour
 
         // Sets AIPath
         path = GetComponent<AIPath>();
+        setter = GetComponent<AIDestinationSetter>();
     }
 
     private void Update()
@@ -64,7 +67,6 @@ public class UnitData : MonoBehaviour
             {
                 if (path.reachedDestination && CheckTile(tileData.name))
                 {
-                    Debug.Log(tileData.name);
                     animator.SetBool("working", true);
                     animator.SetBool("hasCard", true);
                 }
@@ -81,6 +83,16 @@ public class UnitData : MonoBehaviour
         // Updated from PlayerControl
         target = tile;
         tileData = tile.GetComponent<TileData>();
+        UpdateTargetLocation(tile);
+    }
+
+    public void UpdateTargetLocation(GameObject tile)
+    {
+        if (!busy)
+        {
+            busy = true;
+            setter.target = tile.transform;
+        }
     }
 
     private bool CheckTile(string name)
@@ -97,9 +109,18 @@ public class UnitData : MonoBehaviour
 
     private void WorkRoutine()
     {
-        if(path.reachedDestination)
+        if (!busy)
         {
-            //Debug.Log("Target reached");
+            // If the unit is free
+
+        }
+        else
+        {
+            // If the unit is busy
+            if (path.reachedDestination)
+            {
+                busy = false;
+            }
         }
     }
 }
