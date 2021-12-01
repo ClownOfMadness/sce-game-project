@@ -51,11 +51,10 @@ public class PlayerControl : MonoBehaviour
                 {
                     // [[Later make an option to switch betwenn units]]
                     
-
                     selectedObject = raycastHit.transform.gameObject;
 
                     // For test purposes
-                    unitData.target = selectedObject;
+                    unitData.UpdateTargetInfo(selectedObject);
                     targetLocation.target = selectedObject.transform;
                 }
             }

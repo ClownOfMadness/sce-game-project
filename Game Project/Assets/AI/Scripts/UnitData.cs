@@ -5,25 +5,41 @@ using Pathfinding;
 
 public class UnitData : MonoBehaviour
 {
-    public AIPath path;
+    // Input unit name
+    public string unitJob = "None";
+    
+    // Input unit design
+    public List<RuntimeAnimatorController> design;
+    
+    // Input unit workable tiles
+    public List<TileData> workableTiles;
+
+    // Input unit sprite
     public SpriteRenderer sprite;
     public Animator animator;
-    public Sprite idleAnim;
-    public Sprite runAnim;
-    public Sprite workAnim;
-    public Sprite idleCardAnim;
-    public Sprite runCardAnim;
 
-    public GameObject target;
+    // Navigator settings
+    private AIPath path;
+
+    //public bool busy = false;
+
+    // Recieved from PlayerControl
+    [HideInInspector] public GameObject target;
+    private TileData tileData;
 
     private void Awake()
     {
+        // Sets random design
+        animator.runtimeAnimatorController = design[Random.Range(0, (design.Count - 1))];
 
+        // Sets AIPath
+        path = GetComponent<AIPath>();
     }
 
     private void Update()
     {
         Animator();
+        WorkRoutine();
     }
 
     private void Animator()
@@ -44,15 +60,46 @@ public class UnitData : MonoBehaviour
         else
         {
             animator.SetBool("running", false);
-            if (path.reachedDestination == true && target.GetComponent<TileData>().name == "Forest")
+            if (target != null && tileData != null)
             {
-                animator.SetBool("working", true);
-                animator.SetBool("hasCard", true);
+                if (path.reachedDestination && CheckTile(tileData.name))
+                {
+                    Debug.Log(tileData.name);
+                    animator.SetBool("working", true);
+                    animator.SetBool("hasCard", true);
+                }
+                else
+                {
+                    animator.SetBool("working", false);
+                }
             }
-            else
+        }
+    }
+
+    public void UpdateTargetInfo(GameObject tile)
+    {
+        // Updated from PlayerControl
+        target = tile;
+        tileData = tile.GetComponent<TileData>();
+    }
+
+    private bool CheckTile(string name)
+    {
+        for (int i = 0; i < workableTiles.Count; i++)
+        {
+            if (name == workableTiles[i].name)
             {
-                animator.SetBool("working", false);
+                return true;
             }
+        }
+        return false;
+    }
+
+    private void WorkRoutine()
+    {
+        if(path.reachedDestination)
+        {
+            //Debug.Log("Target reached");
         }
     }
 }

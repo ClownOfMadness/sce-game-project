@@ -94,7 +94,7 @@ Animator:
   m_GameObject: {fileID: 4770103987596140963}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f09c87d319baefc4abacfaf570de6e30, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -115,9 +115,9 @@ GameObject:
   - component: {fileID: 6511593569209969029}
   - component: {fileID: 6511593569209969028}
   - component: {fileID: 6511593569209969054}
-  - component: {fileID: 3045333282813804271}
   - component: {fileID: 94282135781716703}
   - component: {fileID: 9173122112414352255}
+  - component: {fileID: 6964371378365923616}
   m_Layer: 8
   m_Name: Peasant
   m_TagString: Untagged
@@ -224,27 +224,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   target: {fileID: 0}
---- !u!114 &3045333282813804271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6511593569209969031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e94cf23e4c20ad4d95d7b92cf707c80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: {fileID: 6511593569209969028}
-  sprite: {fileID: 4523351716890472440}
-  animator: {fileID: 3180598046372167092}
-  idleAnim: {fileID: -2004518329355668608, guid: 31a8f530832d4f94c862ab943173d83f, type: 3}
-  runAnim: {fileID: -1916803093978127743, guid: c2b85f4d876a2cc479c1740486777eca, type: 3}
-  workAnim: {fileID: -1165019848963836123, guid: 5bc51860df8b3c4489ea0cd7fbf8c247, type: 3}
-  idleCardAnim: {fileID: 6939473909145340443, guid: 978959c775ed0a14988f24860f932958, type: 3}
-  runCardAnim: {fileID: 7061692187398238963, guid: b6bd84faa831b2a4080103cf8f7888e5, type: 3}
-  target: {fileID: 0}
 --- !u!135 &94282135781716703
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -274,3 +253,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6964371378365923616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6511593569209969031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e94cf23e4c20ad4d95d7b92cf707c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitJob: Peasant
+  design:
+  - {fileID: 9100000, guid: f09c87d319baefc4abacfaf570de6e30, type: 2}
+  workableTiles:
+  - {fileID: 3664547000390747212, guid: 5c2142014d1be0a43adbf53fda8abaed, type: 3}
+  - {fileID: 2990366420747764789, guid: 6bced68166a0856438a328677f27f7d1, type: 3}
+  - {fileID: 2528615082541092285, guid: 51bf1fb835ce88d48911713973f2f803, type: 3}
+  - {fileID: 5966865832039324808, guid: 9c1a8e09219149443adb28dfc57670b9, type: 3}
+  - {fileID: 7815413806143227686, guid: bd3072b6a28c34345a08cc0512df3344, type: 3}
+  - {fileID: -4272988905936674373, guid: 60d3415c3d9bd164a9c75b88b8e34f60, type: 3}
+  sprite: {fileID: 4523351716890472440}
+  animator: {fileID: 3180598046372167092}
+  target: {fileID: 0}
