@@ -4,10 +4,9 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "MapGen",
-        "LoginTest",
-        "CardScripts",
-        "AIscripts"
+        "AI_Scripts",
+        "Card_Scripts",
+        "Map_Scripts"
     ],
     "includePlatforms": [
         "Editor"
