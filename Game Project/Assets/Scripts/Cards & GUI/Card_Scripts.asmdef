@@ -1,7 +1,9 @@
 {
     "name": "Card_Scripts",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:caad78c9fdb641a438a88a181e3ba45c"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

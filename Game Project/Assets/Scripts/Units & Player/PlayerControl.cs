@@ -26,6 +26,9 @@ public class PlayerControl : MonoBehaviour
     public float scroll = 40f; // Original zoom
     private Vector3 originalCameraPos; // Stores camera original position
 
+    // Card
+    public ZoneMap zoneMap;
+
     private void Awake()
     {
         camera = Camera.main.gameObject; // Finds the main camera in game
@@ -53,11 +56,14 @@ public class PlayerControl : MonoBehaviour
                     // [[Later make an option to switch betwenn units]]
                     
                     selectedObject = raycastHit.transform.gameObject;
+                    //zoneMap.selectedTile = selectedObject;
 
                     // For test purposes
                     unitData.UpdateTargetInfo(selectedObject);
                 }
             }
+            zoneMap.selectedTile = raycastHit.transform.gameObject;
+            //zoneMap.CardToBuilding(raycastHit.transform.gameObject);
         }
     }
 

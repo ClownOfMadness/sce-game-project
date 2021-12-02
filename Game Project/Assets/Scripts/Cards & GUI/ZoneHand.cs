@@ -29,6 +29,9 @@ public class ZoneHand : ZoneBehaviour
             newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
         }
     }
+    public void EventDrop()
+    {
+    }
 }
 
 

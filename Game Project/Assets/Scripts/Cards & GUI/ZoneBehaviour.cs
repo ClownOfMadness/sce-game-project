@@ -8,7 +8,10 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     public GameObject CardPrefab;       //type of prefab for Card (attached via Inspector)
     public GameObject MapBlank;
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void EventDrop()
+    { }
+
+        public void OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null)
         {
@@ -46,6 +49,7 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             {
                 if (d.card.buildingPrefab || this.transform != MapBlank.transform) //switch parents to map only if card is a building
                 {
+                    this.EventDrop();
                     Debug.Log("Change detected");
                     d.parentReturnTo = this.transform;  
                 }

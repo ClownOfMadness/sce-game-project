@@ -39,6 +39,8 @@ public class MapGen : MonoBehaviour
     float[,] falloffMap;
     GameObject[,] TileArray;
 
+    public GameObject townHall;
+
     void Awake()
     {
         falloffMap = FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
@@ -131,7 +133,8 @@ public class MapGen : MonoBehaviour
             }
         }
         SpawnBuilding TownHall = FindObjectOfType<SpawnBuilding>();
-        TownHall.Spawn(new Vector3(x * 10 ,2, y * 10), "BU0001", TileArray[x,y]);
+        //TownHall.Spawn(new Vector3(x * 10 ,2, y * 10), "BU0001", TileArray[x,y]);
+        TownHall.Spawn(townHall, TileArray[x, y]);
 
         return new Vector3(x * 10, 150, y * 10);
     }

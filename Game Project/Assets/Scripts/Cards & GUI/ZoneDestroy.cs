@@ -9,6 +9,10 @@ public class ZoneDestroy : ZoneBehaviour
     }
     void Update()   //(can be rewritten to be shorter but its refusing to work atm)
     {
+
+    }
+    public void EventDrop()
+    {
         if (this.transform.childCount == this.Size)     //runs when card gets dropped in Zone
         {
             foreach (Transform child in this.transform) //finds the card (not needed since there's always one)
