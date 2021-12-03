@@ -1,8 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class SpawnBuilding : MonoBehaviour
 {
-
+    public AstarPath path;
+    private Vector3 buildingPosition = new Vector3(0, 1, 0);
     //Create a building on the map.
     //public void Spawn(Vector3 SpawnPoint, string ID, GameObject Tile)
     //{
@@ -15,12 +19,21 @@ public class SpawnBuilding : MonoBehaviour
     //    NewBuilding.transform.parent = Tile.transform;
     //}
 
+    private void Awake()
+    {
+        if (!(path = GameObject.Find("Pathfinder Grid").GetComponent<AstarPath>()))
+        {
+            Debug.LogError("Pathfinder Grid gameobject is not found for the SpawnBuilding script");
+        }
+    }
+
     public void Spawn(GameObject building, GameObject Tile)
     {
-        GameObject NewBuilding = Instantiate(building, Tile.transform.position ,Quaternion.Euler(0, 180, 0));
+        GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition ,Quaternion.Euler(0, 180, 0));
         NewBuilding.name = building.transform.name;
         NewBuilding.transform.parent = Tile.transform;
-        Debug.Log("Building placed in " + Tile);
+        path.Scan();
+        //Debug.Log("Building placed in " + Tile);
     }
 
     //Find the building in the buildings database.

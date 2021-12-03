@@ -114,7 +114,6 @@ GameObject:
   - component: {fileID: 6511593569209969049}
   - component: {fileID: 6511593569209969029}
   - component: {fileID: 6511593569209969028}
-  - component: {fileID: 6511593569209969054}
   - component: {fileID: 94282135781716703}
   - component: {fileID: 9173122112414352255}
   - component: {fileID: 6964371378365923616}
@@ -210,20 +209,6 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 0
   whenCloseToDestination: 0
   constrainInsideGraph: 0
---- !u!114 &6511593569209969054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6511593569209969031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  target: {fileID: 0}
 --- !u!135 &94282135781716703
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -278,4 +263,5 @@ MonoBehaviour:
   - {fileID: -4272988905936674373, guid: 60d3415c3d9bd164a9c75b88b8e34f60, type: 3}
   sprite: {fileID: 4523351716890472440}
   animator: {fileID: 3180598046372167092}
+  busy: 0
   target: {fileID: 0}

@@ -20,7 +20,9 @@ public class UnitData : MonoBehaviour
 
     // Navigator settings
     private AIPath path;
-    private AIDestinationSetter setter;
+    private float wanderRadius = 10f;
+    private float waitToWander = 10f;
+    private float nextWander = 0f;
 
     // Work routine
     public bool busy = false;
@@ -36,13 +38,13 @@ public class UnitData : MonoBehaviour
 
         // Sets AIPath
         path = GetComponent<AIPath>();
-        setter = GetComponent<AIDestinationSetter>();
     }
 
     private void Update()
     {
         Animator();
         WorkRoutine();
+        WanderAround();
     }
 
     private void Animator()
@@ -91,14 +93,39 @@ public class UnitData : MonoBehaviour
         if (!busy)
         {
             busy = true;
-            setter.target = tile.transform;
+            path.speed = 7f;
+            path.destination = tile.transform.position;
         }
     }
 
     public void RemoveTargetLocation()
     {
         busy = false;
-        setter.target = null;
+        path.speed = 3f;
+        path.destination = this.transform.position;
+    }
+
+    private void WanderAround()
+    {
+        if (!busy)
+        {
+            if (!path.pathPending && (path.reachedEndOfPath || !path.hasPath))
+            {
+                if (Time.time > nextWander)
+                {
+                    path.destination = WanderAroundLocation();
+                    nextWander = Time.time + waitToWander;
+                }
+            }
+        }
+    }
+
+    private Vector3 WanderAroundLocation()
+    {
+        Vector3 point = Random.insideUnitSphere * wanderRadius;
+        point.y = 1f;
+        point += this.transform.position;
+        return point;
     }
 
     private bool CheckTile(string name)
@@ -123,9 +150,9 @@ public class UnitData : MonoBehaviour
         else
         {
             // If the unit is busy
-            if (path.reachedDestination || !setter.target)
+            if (path.reachedDestination)
             {
-                busy = false;
+                //busy = false;
             }
         }
     }
