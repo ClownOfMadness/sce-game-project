@@ -4,7 +4,8 @@ using UnityEngine;
 public class ZoneCraft : MonoBehaviour
 {
     public GameObject CardPrefab;           //type of prefab for Card (attached via Inspector)
-    [HideInInspector] public int Size;     //Zone size
+    [HideInInspector] public int Size;      //Zone size
+    [HideInInspector] public bool success;
 
     void Awake()
     {
@@ -21,6 +22,7 @@ public class ZoneCraft : MonoBehaviour
             Card combination = CardPool.FindCombo(first, second);   //find fitting combination in deck pool
             if (combination)
             {
+                success = true;
                 Destroy(cardObjects[1].gameObject);
                 cardObjects[0].AddCard(combination);
                 string newName = combination.name;                              //add cards to objects + save the new card name (for displaying in Scene)
@@ -28,6 +30,7 @@ public class ZoneCraft : MonoBehaviour
             }
             else
             {
+                success = false;
                 cardObjects[1].ReturnToHand();
             }
             cardObjects[0].ReturnToHand();

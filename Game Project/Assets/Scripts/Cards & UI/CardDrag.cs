@@ -9,12 +9,14 @@ public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHa
     [HideInInspector] public GameObject placeholder = null;           //saves the dragged card's spot (for changing card order)
     [HideInInspector] public Transform placeholderParent = null;      //saves the dragged card's parent
     [HideInInspector] public Transform hand;
+    [HideInInspector] public Transform map;
 
     void Start()
     {
         canvas = this.transform.parent.parent.GetComponent<Canvas>();
         screen = canvas.GetComponent<ScreenCards>();
-        hand = canvas.transform.gameObject.GetComponentInChildren<ZoneHand>().transform;
+        hand = screen.Hand.GetComponentInChildren<ZoneHand>().transform;
+        map = screen.Map.GetComponentInChildren<ZoneMap>().transform;
     }
     public void ReturnToHand()          //return to hand after craft attempt
     {
@@ -22,7 +24,7 @@ public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHa
     }
     public void SwitchCardPlace()       //move card between hand-craft on click
     {
-        screen.HandToCraft(this);       //needs to happen here to get the "this" of the object
+        screen.MoveFromHand(this);       //needs to happen here to get the "this" of the object
     }
     private void SavePlaceholder()      //enables card order
     {
@@ -39,6 +41,8 @@ public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHa
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (screen.Placeable)
+            map.gameObject.SetActive(true); //only enable map if we dont have a UI window open
         parentReturnTo = this.transform.parent;
         if(parentReturnTo==hand)    //only update placefolder if we're in the Hand
             SavePlaceholder();
@@ -70,6 +74,8 @@ public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHa
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (screen.Placeable)
+            map.gameObject.SetActive(false); //only disable map if we dont have a UI window open
         this.transform.SetParent(parentReturnTo);
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().alpha = 1f;                         //reset effect for card (can be changed)

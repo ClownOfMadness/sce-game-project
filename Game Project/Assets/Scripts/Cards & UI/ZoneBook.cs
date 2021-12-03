@@ -15,9 +15,9 @@ public class ZoneBook : MonoBehaviour
     void Start()
     {
         Size = 8;           //max Zone size
-        FillBook();
+        InstantiateZone();
     }
-    private void FillBook()
+    private void InstantiateZone()
     {
         int cardIndex = 0;  //keep track of what card we're adding
         pagesInBook = 0;    //will store maximum pages in book

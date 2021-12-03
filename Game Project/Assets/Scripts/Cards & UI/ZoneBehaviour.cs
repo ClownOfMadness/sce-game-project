@@ -52,7 +52,6 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             {
                 if (d.card.buildingPrefab || this.transform != MapBlank.transform) //switch parents to map only if card is a building
                 {
-                    Debug.Log("Change detected");
                     d.parentReturnTo = this.transform;
                     d.gameObject.transform.SetParent(this.transform);
                     this.EventDrop(d);  //run response function to dropping a card (of the fitting Zone)

@@ -11,22 +11,22 @@ public class ZoneHand : ZoneBehaviour
     {
         Size = 8;               //max Zone size
         Pool = ScriptableObject.CreateInstance<CardPool>();        //open CardPool connection to use its functions
-        InstantiateZone(this);  //create and instantiate objects in scene in runtime
+        InstantiateZone();      //create and instantiate objects in scene in runtime
 
     }
     void Update()
     {
         if (Fill)
         {
-            InstantiateZone(this);   //add objects to hand up to 8 in runtime
+            InstantiateZone();   //add objects to hand up to 8 in runtime
             Fill = false;
         }
     }
-    public void InstantiateZone(ZoneBehaviour Zone)
+    public void InstantiateZone()
     {
-        for (int i = Zone.transform.childCount; i < Zone.Size; i++)
+        for (int i = this.transform.childCount; i < this.Size; i++)
         {
-            GameObject newCard = Instantiate(CardPrefab, Zone.transform);   //create and instantiate objects in scene
+            GameObject newCard = Instantiate(CardPrefab, this.transform);   //create and instantiate objects in scene
             string newName = Pool.FillObject(newCard);                      //add cards to objects + save the new card name (for displaying in Scene)
             newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
         }

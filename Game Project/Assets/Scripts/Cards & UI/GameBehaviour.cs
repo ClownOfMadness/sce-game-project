@@ -25,7 +25,7 @@ public class GameBehaviour : MonoBehaviour
     public void CloseLoginOpenGame()
     {
         Login.SetActive(false);
-        Cards.SetActive(true);
+        //Cards.SetActive(true); //is this needed?
     }
     public void CloseGameOpenLogin()
     {
@@ -47,10 +47,13 @@ public class GameBehaviour : MonoBehaviour
 
     public void Update() //
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Login.activeSelf)   //only check if login screen is open (feel free to remove if I misunderstood)
         {
-            submitButton.onClick.Invoke();
-            Debug.Log("login button clicked");
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                submitButton.onClick.Invoke();
+                Debug.Log("login button clicked");
+            }
         }
     }
     public void TryLogin()  //try to login
@@ -73,11 +76,10 @@ public class GameBehaviour : MonoBehaviour
         {
             Debug.Log("Incorrect Code");
         }
-
-
     }
     public void CardUI()    //open card UI on click
     {
+        Debug.Log("Clicked "+Cards.activeSelf);
         if (Cards.activeSelf)
         {
             Cards.SetActive(false);

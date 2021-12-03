@@ -26,14 +26,17 @@ public class CardPool : ScriptableObject
         {
             CombineAttempt = cards[startCard];
             List<Card.Combinations> Combos = CombineAttempt.combinationOf;
-            if (CombineAttempt.source[0].ToString() == "Combination")    //if card can be created
+            if (Combos.Count > 0) //failsafe - will catch bugged out cards that don't have all their fields filled out
             {
-                for (int startCombo = 0; startCombo < Combos.Count; startCombo++)   //check all possible combinations of current CombineAttempt
+                if (CombineAttempt.source[0].ToString() == "Combination")    //if card can be created
                 {
-                    if (Combos[startCombo].card1 == first && Combos[startCombo].card2 == second)
-                        return CombineAttempt;
-                    else if (Combos[startCombo].card2 == first && Combos[startCombo].card1 == second)
-                        return CombineAttempt;
+                    for (int startCombo = 0; startCombo < Combos.Count; startCombo++)   //check all possible combinations of current CombineAttempt
+                    {
+                        if (Combos[startCombo].card1 == first && Combos[startCombo].card2 == second)
+                            return CombineAttempt;
+                        else if (Combos[startCombo].card2 == first && Combos[startCombo].card1 == second)
+                            return CombineAttempt;
+                    }
                 }
             }
         }
