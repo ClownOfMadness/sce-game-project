@@ -10,6 +10,7 @@ public class GameBehaviour : MonoBehaviour
     [HideInInspector] public string[] Pcode = new string[] { "Premium", "premium", "Premium1", "premium1", "Premium2", "premium2" };
     private LoginScreen LoginS;
     private ScreenCards CardsS;
+    public Button submitButton; //
 
     void Start()    //initilizing screen
     {
@@ -41,6 +42,15 @@ public class GameBehaviour : MonoBehaviour
         else
         {
             CloseGameOpenLogin();
+        }
+    }
+
+    public void Update() //
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            submitButton.onClick.Invoke();
+            Debug.Log("login button clicked");
         }
     }
     public void TryLogin()  //try to login
