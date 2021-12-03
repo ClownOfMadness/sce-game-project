@@ -63,7 +63,6 @@ public class PlayerControl : MonoBehaviour
                 }
             }
             zoneMap.selectedTile = raycastHit.transform.gameObject;
-            //zoneMap.CardToBuilding(raycastHit.transform.gameObject);
         }
     }
 

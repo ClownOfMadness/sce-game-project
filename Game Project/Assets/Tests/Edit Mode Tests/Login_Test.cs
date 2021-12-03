@@ -59,7 +59,7 @@ public class Login_Test
     {
         GameBehaviour code = new GameBehaviour();
         LoginScreen loginField = new LoginScreen();
-        ZoneCards ZoneC = new ZoneCards();
+        ScreenCards ZoneC = new ScreenCards();
         code.loginButton.SetActive(true);
         loginField.GetComponentInChildren<InputField>().text = "Premium";
         code.TryLogin();

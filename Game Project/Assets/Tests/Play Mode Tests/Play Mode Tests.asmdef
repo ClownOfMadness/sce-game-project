@@ -6,7 +6,8 @@
         "UnityEditor.TestRunner",
         "AI_Scripts",
         "Map_Scripts",
-        "MapData_Scripts"
+        "MapData_Scripts",
+        "Card_Scripts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

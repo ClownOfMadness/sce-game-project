@@ -17,13 +17,10 @@ public class SpawnBuilding : MonoBehaviour
 
     public void Spawn(GameObject building, GameObject Tile)
     {
-        //BuildingDataBase buildings = ScriptableObject.CreateInstance<BuildingDataBase>();   //open BuildingDataBase connection to use its functions
-        //Building BuildingType = FindBuilding(ID, buildings);
         GameObject NewBuilding = Instantiate(building, Tile.transform.position ,Quaternion.Euler(0, 180, 0));
-        //FogOfWar Fog = FindObjectOfType<FogOfWar>();
-
         NewBuilding.name = building.transform.name;
         NewBuilding.transform.parent = Tile.transform;
+        Debug.Log("Building placed in " + Tile);
     }
 
     //Find the building in the buildings database.
