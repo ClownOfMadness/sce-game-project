@@ -13,11 +13,9 @@ public class PlayerControl : MonoBehaviour
     public GameObject selectedObject; // An object that the player has clicked on
     public UnitData unitData; // Data of the unit
     public UnitList unitList; // List of units script
-    public int selectedJob = 0; // Current selected unit job to command
-    private int previousJob = -1;
-    private UnitData unitInGroupData;
-    public GameObject selectedUnit;
-    private TileData selectedTileData;
+    public int selectedJob = 0; // Current selected unit job group to command
+    public GameObject selectedUnit; // Current selected unit from the job
+    private TileData selectedTileData; // Current selected tile data
 
     // Screen Panning
     public Vector3 pos; // Camera movement vector
@@ -59,6 +57,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     // Functions for when the mouse clicks on interactable layer
 
+                    // Gives order to the unit if they are available
                     selectedObject = raycastHit.transform.gameObject;
                     selectedTileData = selectedObject.GetComponent<TileData>();
                     if (!selectedTileData.GetData())
@@ -78,6 +77,7 @@ public class PlayerControl : MonoBehaviour
 
                 if (Input.GetMouseButton(1))
                 {
+                    // Cancels units current job
                     selectedObject = raycastHit.transform.gameObject;
                     selectedTileData = selectedObject.GetComponent<TileData>();
                     if (selectedTileData.GetData())
@@ -96,15 +96,7 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    private void SwitchJob()
-    {
-        if (previousJob != selectedJob)
-        {
-            previousJob = selectedJob;
-        }
-    }
-
-    private GameObject UnitSelection(int _selectedJob)
+    private GameObject UnitSelection(int _selectedJob) // Searches for a free unit in a job category
     {
         switch (_selectedJob)
         {

@@ -47,9 +47,11 @@ public class UnitData : MonoBehaviour
         WanderAround();
     }
 
-    private void Animator()
+    private void Animator() // Controls units animation
     {
-        if (path.velocity.x > 0.01)
+        sprite.sortingOrder = -(int)Mathf.Abs(this.transform.position.z); // Changes its layer order depending on its z position
+        
+        if (path.velocity.x > 0.01) // Flips the sprite if unit moves the opposite side
         {
             sprite.flipX = true;
         }
@@ -58,11 +60,11 @@ public class UnitData : MonoBehaviour
             sprite.flipX = false;
         }
         
-        if (path.velocity.magnitude > 0)
+        if (path.velocity.magnitude > 0) // Checks if the unit is moving and if so play running animation
         {
             animator.SetBool("running", true);
         }
-        else
+        else // All animations related unit being idle
         {
             animator.SetBool("running", false);
             if (target != null && tileData != null)
@@ -80,16 +82,17 @@ public class UnitData : MonoBehaviour
         }
     }
 
-    public void UpdateTargetInfo(GameObject tile)
+    public void UpdateTargetInfo(GameObject tile) // Method to set target location and info for the unit
     {
-        // Updated from PlayerControl
+        // Called from PlayerControl
         target = tile;
         tileData = tile.GetComponent<TileData>();
         UpdateTargetLocation(tile);
     }
 
-    public void UpdateTargetLocation(GameObject tile)
+    private void UpdateTargetLocation(GameObject tile) // Updates target location
     {
+        // Called from UpdateTargetInfo
         if (!busy)
         {
             busy = true;
@@ -98,14 +101,15 @@ public class UnitData : MonoBehaviour
         }
     }
 
-    public void RemoveTargetLocation()
+    public void RemoveTargetLocation() // Method to cancel units work
     {
+        // Called from PlayerControl
         busy = false;
         path.speed = 3f;
         path.destination = this.transform.position;
     }
 
-    private void WanderAround()
+    private void WanderAround() // Makes the unit to wander around when jobless
     {
         if (!busy)
         {
@@ -120,7 +124,7 @@ public class UnitData : MonoBehaviour
         }
     }
 
-    private Vector3 WanderAroundLocation()
+    private Vector3 WanderAroundLocation() // Gives wander location for the WanderAround function
     {
         Vector3 point = Random.insideUnitSphere * wanderRadius;
         point.y = 1f;
@@ -128,7 +132,7 @@ public class UnitData : MonoBehaviour
         return point;
     }
 
-    private bool CheckTile(string name)
+    private bool CheckTile(string name) // Checks if the tile is workable for the unit
     {
         for (int i = 0; i < workableTiles.Count; i++)
         {
@@ -140,7 +144,7 @@ public class UnitData : MonoBehaviour
         return false;
     }
 
-    private void WorkRoutine()
+    private void WorkRoutine() // [[WIP]]
     {
         if (!busy)
         {
