@@ -19,6 +19,28 @@ public class TileData : MonoBehaviour
 
     public Work[] works;
 
+    public GameObject unit = null;
+
+    public void AttachWork(GameObject _unit)
+    {
+        unit = _unit;
+    }
+
+    public void DetachWork()
+    {
+        unit = null;
+    }
+
+    public bool GetData()
+    {
+        return unit;
+    }
+
+    public GameObject GetObject()
+    {
+        return unit;
+    }
+
     // Card data
 
     // Pathfinding data

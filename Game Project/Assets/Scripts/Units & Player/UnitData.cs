@@ -23,7 +23,7 @@ public class UnitData : MonoBehaviour
     private AIDestinationSetter setter;
 
     // Work routine
-    private bool busy = false;
+    public bool busy = false;
 
     // Recieved from PlayerControl
     [HideInInspector] public GameObject target;
@@ -95,6 +95,12 @@ public class UnitData : MonoBehaviour
         }
     }
 
+    public void RemoveTargetLocation()
+    {
+        busy = false;
+        setter.target = null;
+    }
+
     private bool CheckTile(string name)
     {
         for (int i = 0; i < workableTiles.Count; i++)
@@ -117,7 +123,7 @@ public class UnitData : MonoBehaviour
         else
         {
             // If the unit is busy
-            if (path.reachedDestination)
+            if (path.reachedDestination || !setter.target)
             {
                 busy = false;
             }

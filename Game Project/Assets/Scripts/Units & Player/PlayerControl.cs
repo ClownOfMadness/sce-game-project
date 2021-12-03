@@ -6,17 +6,21 @@ using Pathfinding;
 public class PlayerControl : MonoBehaviour
 {
     // General
-    private GameObject camera;
+    private GameObject camera; // Camera gameobject
 
     // Unit Command
     [SerializeField] private LayerMask layerMask; // List of layers that the mouse can interact with
-    public GameObject selectedObject;
-    public AIDestinationSetter targetLocation;
-    public UnitData unitData;
-    public UnitList unitList;
+    public GameObject selectedObject; // An object that the player has clicked on
+    public UnitData unitData; // Data of the unit
+    public UnitList unitList; // List of units script
+    public int selectedJob = 0; // Current selected unit job to command
+    private int previousJob = -1;
+    private UnitData unitInGroupData;
+    public GameObject selectedUnit;
+    private TileData selectedTileData;
 
     // Screen Panning
-    public Vector3 pos;
+    public Vector3 pos; // Camera movement vector
     public float panSpeed = 40f; // Pan speed
     public float panBorderTHICCNess = 10f; // Pan offscreen border THICCness
     public Vector2 panLimit; // Screen panning limit [[Should be changed by map size]]
@@ -27,18 +31,19 @@ public class PlayerControl : MonoBehaviour
     private Vector3 originalCameraPos; // Stores camera original position
 
     // Card
-    public ZoneMap zoneMap;
+    public ZoneMap zoneMap; // Zonemap script for passing location
 
     private void Awake()
     {
         camera = Camera.main.gameObject; // Finds the main camera in game
-        originalCameraPos = camera.transform.position;
+        originalCameraPos = camera.transform.position; // Default camera position
     }
 
     private void Update()
     {
         CameraControl(); // Screen panning functions
         UnitCommand(); // Unit pathfinding control;
+        //SwitchJob();
     }
 
     private void UnitCommand()
@@ -48,27 +53,74 @@ public class PlayerControl : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
             // Functions for when the mouse hovers over an interactable layer
-            if (Input.GetMouseButton(0))
+            if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7) // if it is terrain or impassable
             {
-                // Functions for when the mouse clicks on interactable layer
-                if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7) // if it is clicked on terrain or impassable
+                if (Input.GetMouseButton(0)) // if it is clicked on terrain or impassable
                 {
-                    // [[Later make an option to switch betwenn units]]
-                    
-                    selectedObject = raycastHit.transform.gameObject;
-                    //zoneMap.selectedTile = selectedObject;
+                    // Functions for when the mouse clicks on interactable layer
 
-                    // For test purposes
-                    unitData.UpdateTargetInfo(selectedObject);
+                    selectedObject = raycastHit.transform.gameObject;
+                    selectedTileData = selectedObject.GetComponent<TileData>();
+                    if (!selectedTileData.GetData())
+                    {
+                        selectedUnit = UnitSelection(selectedJob);
+                        if (selectedUnit)
+                        {
+                            unitData = selectedUnit.GetComponent<UnitData>();
+                            if (unitData)
+                            {
+                                selectedTileData.AttachWork(selectedUnit);
+                                unitData.UpdateTargetInfo(selectedObject);
+                            }
+                        }
+                    }
+                }
+
+                if (Input.GetMouseButton(1))
+                {
+                    selectedObject = raycastHit.transform.gameObject;
+                    selectedTileData = selectedObject.GetComponent<TileData>();
+                    if (selectedTileData.GetData())
+                    {
+                        (selectedTileData.GetObject()).GetComponent<UnitData>().RemoveTargetLocation();
+                        selectedTileData.DetachWork();
+                    }
                 }
             }
-            zoneMap.selectedTile = raycastHit.transform.gameObject;
+            
+            if (raycastHit.transform.gameObject.layer == 6)
+            {
+                // Checks if the selected object is a terrain tile
+                zoneMap.selectedTile = raycastHit.transform.gameObject; // Pass the current selected tile to the zonemap script
+            }
         }
     }
 
-    private void UnitSelection()
+    private void SwitchJob()
     {
-        //
+        if (previousJob != selectedJob)
+        {
+            previousJob = selectedJob;
+        }
+    }
+
+    private GameObject UnitSelection(int _selectedJob)
+    {
+        switch (_selectedJob)
+        {
+            case 0: // Peasants
+                foreach (Transform unitInGroup in unitList.units[0].unitGroup.transform)
+                {
+                    GameObject unitInGroupObject = unitInGroup.gameObject;
+                    if (unitInGroupObject.GetComponent<UnitData>().busy == false)
+                    {
+                        return unitInGroupObject;
+                    }
+                }
+                return null;
+            default:
+                return null;
+        }
     }
 
     private void CameraControl()
@@ -77,19 +129,19 @@ public class PlayerControl : MonoBehaviour
         // and from there draw out the correct keys to be used in game]]
         
         pos = camera.transform.position; // Stores original camera position
-        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderTHICCNess) // Up
+        if (Input.GetKey("w")) // Up - old: Input.mousePosition.y >= Screen.height - panBorderTHICCNess
         {
             pos.z += panSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("s") || Input.mousePosition.y <= panBorderTHICCNess) // Down
+        if (Input.GetKey("s")) // Down - old: Input.mousePosition.y <= panBorderTHICCNess
         {
             pos.z -= panSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderTHICCNess) // Right
+        if (Input.GetKey("d")) // Right - old: Input.mousePosition.x >= Screen.width - panBorderTHICCNess
         {
             pos.x += panSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("a") || Input.mousePosition.x <= panBorderTHICCNess) // Left
+        if (Input.GetKey("a")) // Left - old: Input.mousePosition.x <= panBorderTHICCNess
         {
             pos.x -= panSpeed * Time.deltaTime;
         }
