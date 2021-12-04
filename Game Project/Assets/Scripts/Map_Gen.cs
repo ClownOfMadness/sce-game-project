@@ -121,21 +121,21 @@ public class Map_Gen : MonoBehaviour
         int x = PosiblePos[randNum].x;
         int y = PosiblePos[randNum].y;
 
-        while (regions[k].name != "P1") { k++; }
+        while (regions[k].tile.name != "Plains") { k++; }
         
         for (int i = y - 1; i <= y + 1; i++)
         {
             for (int j = x - 1; j <= x + 1; j++)
             {
-                TileArray[x, y] = GameObject.Find(string.Format("tile_x{0}_y{1}", j, i));
-                if (TileArray[x, y].name != "P1")
+                TileArray[j, i] = GameObject.Find(string.Format("tile_x{0}_y{1}", j, i));
+                if (TileArray[j, i].name != "Plains")
                 { 
                     Vector3 pos = TileArray[x, y].transform.position;
-                    GameObject.DestroyImmediate(TileArray[x, y]);
-                    TileArray[x, y] = Instantiate(regions[k].tile, new Vector3(j * 10, 1, i * 10), Quaternion.Euler(0, 180, 0));
-                    TileArray[x, y].transform.parent = this.transform;
-                    TileArray[x, y].name = string.Format("tile_x{0}_y{1}", j, i);
-                    GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 180, 0), TileArray[x, y].transform);
+                    GameObject.DestroyImmediate(TileArray[j, i]);
+                    TileArray[j, i] = Instantiate(regions[k].tile, new Vector3(j * 10, 1, i * 10), Quaternion.Euler(0, 180, 0));
+                    TileArray[j, i].transform.parent = this.transform;
+                    TileArray[j, i].name = string.Format("tile_x{0}_y{1}", j, i);
+                    GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 180, 0), TileArray[j, i].transform);
                     thisFog.transform.localPosition = new Vector3(0, 1, 0);
                 }
             }
