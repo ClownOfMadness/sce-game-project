@@ -16,6 +16,7 @@ public class Unit_List : MonoBehaviour
     // [Int - Unit]
     // 0 - Peasant
 
+    public GameObject townhall;
     private Quaternion rotation = Quaternion.Euler(Vector3.zero); // Default unit rotation
 
     public void AddUnit(Vector3 location, int unit) // Creates the unit in a given location

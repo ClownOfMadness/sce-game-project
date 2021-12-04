@@ -12,7 +12,7 @@ public class Player_Control : MonoBehaviour
     [SerializeField] private LayerMask layerMask; // List of layers that the mouse can interact with
     public GameObject selectedObject; // An object that the player has clicked on
     public Data_Unit Data_Unit; // Data of the unit
-    public Unit_List Unit_List; // List of units script
+    public Unit_List unitList; // List of units script
     public int selectedJob = 0; // Current selected unit job group to command
     public GameObject selectedUnit; // Current selected unit from the job
     private Data_Tile selectedData_Tile; // Current selected tile data
@@ -35,6 +35,16 @@ public class Player_Control : MonoBehaviour
     {
         camera = Camera.main.gameObject; // Finds the main camera in game
         originalCameraPos = camera.transform.position; // Default camera position
+
+        // Safe Check
+        if (!unitList)
+        {
+            Debug.LogError("Unit_List script object is missing in Player_Control");
+        }
+        if (!zoneMap)
+        {
+            Debug.LogError("Zone_Map script object is missing in Player_Control");
+        }
     }
 
     private void Update()
@@ -101,8 +111,9 @@ public class Player_Control : MonoBehaviour
         switch (_selectedJob)
         {
             case 0: // Peasants
-                foreach (Transform unitInGroup in Unit_List.units[0].unitGroup.transform)
+                foreach (Transform unitInGroup in unitList.units[0].unitGroup.transform)
                 {
+                    Debug.Log(unitInGroup.gameObject.name);
                     GameObject unitInGroupObject = unitInGroup.gameObject;
                     if (unitInGroupObject.GetComponent<Data_Unit>().busy == false)
                     {

@@ -25,7 +25,7 @@ public class Player_SpawnBuilding : MonoBehaviour
             GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition, Quaternion.Euler(0, 180, 0));
             NewBuilding.name = building.transform.name;
             NewBuilding.transform.parent = Tile.transform;
-
+            // Add fog check
             path.Scan();
             return true;
         }
