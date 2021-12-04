@@ -40,6 +40,7 @@ public class MapGen : MonoBehaviour
     GameObject[,] TileArray;
 
     public GameObject townHall;
+    public GameObject fog;
 
     void Awake()
     {
@@ -87,6 +88,12 @@ public class MapGen : MonoBehaviour
                             TileArray[x, y] = Instantiate(Ruins, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
                         else
                             TileArray[x, y] = Instantiate(regions[i].tile, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
+
+                        if (TileArray[x,y].transform.childCount == 0)
+                        {
+                            GameObject thisFog = Instantiate(fog, new Vector3(0,1,0), Quaternion.Euler(0, 180, 0), TileArray[x,y].transform);
+                            thisFog.transform.localPosition = new Vector3(0, 1, 0);
+                        }
 
                         TileArray[x, y].transform.parent = this.transform;
                         TileArray[x, y].name = string.Format("tile_x{0}_y{1}", x, y);
