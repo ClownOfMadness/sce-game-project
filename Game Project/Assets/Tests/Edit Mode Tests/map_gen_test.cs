@@ -41,23 +41,23 @@ public class map_gen_test: MonoBehaviour
         Assert.IsTrue(map.transform.childCount == 0);
     }
     
-    //Test if the returned starting point is in the valid range.
-    [Test]
-    public void is_starting_pos_legit()
-    {
-        MapGen map = FindObjectOfType<MapGen>();
-        map.generateMap();
-        int size = map.mapSize, count = 0;
+    ////Test if the returned starting point is in the valid range.
+    //[Test]
+    //public void is_starting_pos_legit()
+    //{
+    //    MapGen map = FindObjectOfType<MapGen>();
+    //    map.generateMap();
+    //    int size = map.mapSize, count = 0;
 
-        //Create a test dictionery.
-        Dictionary<int, Vector2Int> PosiblePos = new Dictionary<int, Vector2Int>();
-        for(int y = 0; y < size; y++)
-            for(int x = 0; x < size; x++)
-                PosiblePos.Add(count++, new Vector2Int(x, y));
+    //    //Create a test dictionery.
+    //    Dictionary<int, Vector2Int> PosiblePos = new Dictionary<int, Vector2Int>();
+    //    for(int y = 0; y < size; y++)
+    //        for(int x = 0; x < size; x++)
+    //            PosiblePos.Add(count++, new Vector2Int(x, y));
 
-        Vector3 pos = map.PlaceStartPos(PosiblePos);
+    //    Vector3 pos = map.PlaceStartPos(PosiblePos);
 
-        Assert.IsTrue(pos.x <= size * 10 && pos.z <= size * 10);
-        Assert.IsTrue(pos.x >= 0 && pos.z >= 0);
-    }
+    //    Assert.IsTrue(pos.x <= size * 10 && pos.z <= size * 10);
+    //    Assert.IsTrue(pos.x >= 0 && pos.z >= 0);
+    //}
 }

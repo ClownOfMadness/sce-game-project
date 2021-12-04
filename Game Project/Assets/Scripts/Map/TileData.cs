@@ -7,7 +7,7 @@ public class TileData : MonoBehaviour
 {
     // Tile Description
     public new string name;
-
+    public bool revealed = false;
     // Work data
     //public Dictionary<UnitData, ScriptableObject> work;
     [Serializable]
@@ -41,7 +41,7 @@ public class TileData : MonoBehaviour
     {
         return unit;
     }
-
+    
     // Card data
 
     // Pathfinding data

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGen : MonoBehaviour
+public class Map_Gen : MonoBehaviour
 {
     [System.Serializable]
     public struct TerrainType // Terrain struct
@@ -50,7 +50,7 @@ public class MapGen : MonoBehaviour
     }
 
     //Generating the map.
-    public Vector3 generateMap()
+    public GameObject generateMap()
     {
         int seed = Random.Range(int.MinValue, int.MaxValue);//Seed get a random value.
         int randP1, randP2;
@@ -91,12 +91,9 @@ public class MapGen : MonoBehaviour
                         else
                             TileArray[x, y] = Instantiate(regions[i].tile, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
 
-                        if (TileArray[x,y].transform.childCount == 0)
-                        {
-                            GameObject thisFog = Instantiate(fog, new Vector3(0,1,0), Quaternion.Euler(0, 180, 0), TileArray[x,y].transform);
-                            thisFog.transform.localPosition = new Vector3(0, 1, 0);
-                        }
-
+                        GameObject thisFog = Instantiate(fog, new Vector3(0,1,0), Quaternion.Euler(0, 180, 0), TileArray[x,y].transform);
+                        thisFog.transform.localPosition = new Vector3(0, 1, 0);
+                   
                         TileArray[x, y].transform.parent = this.transform;
                         TileArray[x, y].name = string.Format("tile_x{0}_y{1}", x, y);
                         break;
@@ -116,7 +113,7 @@ public class MapGen : MonoBehaviour
     }
 
     //Choosing randomly the player's starting point and adding the Town Hall to the map.
-    public Vector3 PlaceStartPos(Dictionary<int, Vector2Int> PosiblePos)
+    public GameObject PlaceStartPos(Dictionary<int, Vector2Int> PosiblePos)
     {
         int size = PosiblePos.Count, k = 0;
         int randNum = Random.Range(0, size - 1);
@@ -138,6 +135,8 @@ public class MapGen : MonoBehaviour
                     TileArray[x, y] = Instantiate(regions[k].tile, new Vector3(j * 10, 1, i * 10), Quaternion.Euler(0, 180, 0));
                     TileArray[x, y].transform.parent = this.transform;
                     TileArray[x, y].name = string.Format("tile_x{0}_y{1}", j, i);
+                    GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 180, 0), TileArray[x, y].transform);
+                    thisFog.transform.localPosition = new Vector3(0, 1, 0);
                 }
             }
         }
@@ -145,7 +144,7 @@ public class MapGen : MonoBehaviour
         //TownHall.Spawn(new Vector3(x * 10 ,2, y * 10), "BU0001", TileArray[x,y]);
         TownHall.Spawn(townHall, TileArray[x, y]);
 
-        return new Vector3(x * 10, 150, y * 10);
+        return TileArray[x, y];
     }
 
     //Delete all the tiles on the map.

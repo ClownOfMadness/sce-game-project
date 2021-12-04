@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class SpawnBuilding : MonoBehaviour
+public class Player_SpawnBuilding : MonoBehaviour
 {
     public AstarPath path;
     private Vector3 buildingPosition = new Vector3(0, 1, 0);
@@ -29,21 +29,23 @@ public class SpawnBuilding : MonoBehaviour
 
     public void Spawn(GameObject building, GameObject Tile)
     {
-        GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition ,Quaternion.Euler(0, 180, 0));
+        
+        GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition, Quaternion.Euler(0, 180, 0));
         NewBuilding.name = building.transform.name;
         NewBuilding.transform.parent = Tile.transform;
+        
         path.Scan();
         //Debug.Log("Building placed in " + Tile);
     }
 
     //Find the building in the buildings database.
-    public static Building FindBuilding(string ID, BuildingDataBase DB)
-    {
-        foreach (Building building in DB.BuildingList)
-        {
-            if (building.BuildingID == ID)
-                return building;
-        }
-        return null;
-    }
+    //public static Building FindBuilding(string ID, BuildingDataBase DB)
+    //{
+    //    foreach (Building building in DB.BuildingList)
+    //    {
+    //        if (building.BuildingID == ID)
+    //            return building;
+    //    }
+    //    return null;
+    //}
 }

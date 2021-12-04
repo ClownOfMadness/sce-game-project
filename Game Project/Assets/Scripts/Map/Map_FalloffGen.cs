@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class FalloffGen
+public static class Map_FalloffGen
 {
     //Create falloff map.
     public static float[,] generateFalloffMap(int size, int A, float B)
