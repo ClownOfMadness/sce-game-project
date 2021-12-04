@@ -15,6 +15,7 @@ public class TileData : MonoBehaviour
     {
         public UnitData job;
         public ScriptableObject card;
+        public float workTime;
     }
 
     public Work[] works;

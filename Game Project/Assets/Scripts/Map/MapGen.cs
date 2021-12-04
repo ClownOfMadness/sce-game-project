@@ -5,42 +5,44 @@ using UnityEngine;
 public class MapGen : MonoBehaviour
 {
     [System.Serializable]
-    public struct TerrainType
+    public struct TerrainType // Terrain struct
     {
         public string name;
         public float height;
         public GameObject tile;
     }
+
+    // Resource rarity - [[Later should be changed to a struct due to many resources]]
     public GameObject Abyss;
     public int abyss;
     public GameObject Ruins;
     public int ruins;
 
+    // Prefabs
+    public GameObject townHall;
+    public GameObject fog;
+
+    // Map settings
     public int mapSize;
     public float noiseScale;
-
     public int octaves;
     [Range(0,1)]
     public float persistance;
     public float lacunarity;
+    public Vector2 offset;
 
-    //Control the falloff map.
+    // Control the falloff map.
     public int falloffA;
     public float falloffB;
 
-    public Vector2 offset;
-
     public TerrainType[] regions;
 
+    // Extra settings
     public bool autoUpdate;
     public bool useFalloff;
 
-
     float[,] falloffMap;
     GameObject[,] TileArray;
-
-    public GameObject townHall;
-    public GameObject fog;
 
     void Awake()
     {

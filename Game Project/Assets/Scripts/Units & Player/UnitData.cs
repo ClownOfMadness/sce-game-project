@@ -26,6 +26,7 @@ public class UnitData : MonoBehaviour
 
     // Work routine
     public bool busy = false;
+    private GameObject townhall;
 
     // Recieved from PlayerControl
     [HideInInspector] public GameObject target;
@@ -38,6 +39,8 @@ public class UnitData : MonoBehaviour
 
         // Sets AIPath
         path = GetComponent<AIPath>();
+
+        // Gets town hall
     }
 
     private void Update()
@@ -82,21 +85,15 @@ public class UnitData : MonoBehaviour
         }
     }
 
-    public void UpdateTargetInfo(GameObject tile) // Method to set target location and info for the unit
+    public void UpdateTargetLocation(GameObject tile) // Method to set target location and info for the unit
     {
         // Called from PlayerControl
-        target = tile;
-        tileData = tile.GetComponent<TileData>();
-        UpdateTargetLocation(tile);
-    }
-
-    private void UpdateTargetLocation(GameObject tile) // Updates target location
-    {
-        // Called from UpdateTargetInfo
         if (!busy)
         {
             busy = true;
             path.speed = 7f;
+            target = tile;
+            tileData = tile.GetComponent<TileData>();
             path.destination = tile.transform.position;
         }
     }
@@ -146,18 +143,10 @@ public class UnitData : MonoBehaviour
 
     private void WorkRoutine() // [[WIP]]
     {
-        if (!busy)
+        if (busy)
         {
             // If the unit is free
 
-        }
-        else
-        {
-            // If the unit is busy
-            if (path.reachedDestination)
-            {
-                //busy = false;
-            }
         }
     }
 }

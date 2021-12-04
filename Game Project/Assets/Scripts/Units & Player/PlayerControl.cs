@@ -69,7 +69,7 @@ public class PlayerControl : MonoBehaviour
                             if (unitData)
                             {
                                 selectedTileData.AttachWork(selectedUnit);
-                                unitData.UpdateTargetInfo(selectedObject);
+                                unitData.UpdateTargetLocation(selectedObject);
                             }
                         }
                     }
