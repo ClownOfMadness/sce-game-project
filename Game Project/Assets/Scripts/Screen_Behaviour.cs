@@ -1,21 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameBehaviour : MonoBehaviour
+public class Screen_Behaviour : MonoBehaviour
 {
     public GameObject Login;
     public GameObject Cards;
     public GameObject loginButton;
     public GameObject cardsButton;
     [HideInInspector] public string[] Pcode = new string[] { "Premium", "premium", "Premium1", "premium1", "Premium2", "premium2" };
-    private LoginScreen LoginS;
-    private ScreenCards CardsS;
+    private Screen_Login LoginS;
+    private Screen_Cards CardsS;
     public Button submitButton; //
 
     void Start()    //initilizing screen
     {
-        LoginS = Login.transform.GetComponent<LoginScreen>();
-        CardsS = Cards.transform.GetComponent<ScreenCards>();
+        LoginS = Login.transform.GetComponent<Screen_Login>();
+        CardsS = Cards.transform.GetComponent<Screen_Cards>();
 
         Login.SetActive(false);
         Cards.SetActive(true);

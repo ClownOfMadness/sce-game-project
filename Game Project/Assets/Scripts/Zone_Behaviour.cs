@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 //responsible for creating a Zone to drop the cards to, Parent of other Zones that support dragging
-public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [HideInInspector] public int Size;  //used by other Zones
     public GameObject CardPrefab;       //type of prefab for Card (attached via Inspector)
     public GameObject MapBlank;
 
-    public virtual void EventDrop(CardDrag cardObject)
+    public virtual void EventDrop(Card_Drag cardObject)
     { Debug.Log("Error, wrong EvenDrop function called."); }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -17,7 +17,7 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             return;
         }
-        CardDrag d = eventData.pointerDrag.GetComponent<CardDrag>();
+        Card_Drag d = eventData.pointerDrag.GetComponent<Card_Drag>();
         if (d != null)
         {
             d.GetComponent<CanvasGroup>().alpha = 1f;        //reset effect for card (can be changed)
@@ -33,7 +33,7 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             return;
         }
-        CardDrag d = eventData.pointerDrag.GetComponent<CardDrag>();
+        Card_Drag d = eventData.pointerDrag.GetComponent<Card_Drag>();
         if ((d != null) && (d.placeholderParent == this.transform))
         {
             d.GetComponent<CanvasGroup>().alpha = .6f;      //effect for card when moved (can be changed)
@@ -45,7 +45,7 @@ public class ZoneBehaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     }
     public void OnDrop(PointerEventData eventData)
     {
-        CardDrag d = eventData.pointerDrag.GetComponent<CardDrag>();
+        Card_Drag d = eventData.pointerDrag.GetComponent<Card_Drag>();
         if (d != null)
         {
             if (this.transform.childCount < this.Size)  //switch parents only if there's extra space

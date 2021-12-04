@@ -1,7 +1,7 @@
 using UnityEngine;
 
 //responsible for creating Craft zone
-public class ZoneCraft : MonoBehaviour
+public class Zone_Craft : MonoBehaviour
 {
     public GameObject CardPrefab;           //type of prefab for Card (attached via Inspector)
     [HideInInspector] public int Size;      //Zone size
@@ -16,10 +16,10 @@ public class ZoneCraft : MonoBehaviour
     {
         if (this.transform.childCount == this.Size)     //failsafe - verifying that there's two objects in the Zone
         {
-            CardDrag[] cardObjects = this.gameObject.transform.GetComponentsInChildren<CardDrag>();
-            Card first = cardObjects[0].card;
-            Card second = cardObjects[1].card;
-            Card combination = CardPool.FindCombo(first, second);   //find fitting combination in deck pool
+            Card_Drag[] cardObjects = this.gameObject.transform.GetComponentsInChildren<Card_Drag>();
+            Data_Card first = cardObjects[0].card;
+            Data_Card second = cardObjects[1].card;
+            Data_Card combination = Card_Pool.FindCombo(first, second);   //find fitting combination in deck pool
             if (combination)
             {
                 success = true;

@@ -1,17 +1,17 @@
 using UnityEngine;
 
 //responsible for creating Map zone and changing building cards to buildings on contact, extension of ZoneBehaviour
-public class ZoneMap : ZoneBehaviour
+public class Zone_Map : Zone_Behaviour
 {
     [HideInInspector] public GameObject selectedTile;   //updated by PlayerControl
-    private SpawnBuilding Tiles;                
+    private Player_SpawnBuilding Tiles;                
 
     void Awake()
     {
         Size = 1;       //max Zone size 
-        Tiles = FindObjectOfType<SpawnBuilding>();      //connection to use SpawnBuilding functions
+        Tiles = FindObjectOfType<Player_SpawnBuilding>();      //connection to use SpawnBuilding functions
     }
-    public override void EventDrop(CardDrag cardObject)
+    public override void EventDrop(Card_Drag cardObject)
     {
         if (this.transform.childCount == this.Size)     //failsafe - verifying that there's an object in the Zone
         {

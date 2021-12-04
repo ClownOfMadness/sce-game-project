@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //responsible for creating and storing Book zone
-public class ZoneBook : MonoBehaviour
+public class Zone_Book : MonoBehaviour
 {
     public GameObject PagePrefab;   //type of prefab for Page (attached via Inspector)
     public GameObject CardPrefab;   //type of prefab for Card (attached via Inspector)
@@ -21,15 +21,15 @@ public class ZoneBook : MonoBehaviour
     {
         int cardIndex = 0;  //keep track of what card we're adding
         pagesInBook = 0;    //will store maximum pages in book
-        while (cardIndex < CardPool.count)
+        while (cardIndex < Card_Pool.count)
         {
             GameObject newPage = Instantiate(PagePrefab, this.transform);           //create and instantiate Page objects in scene
             newPage.name = string.Format("Page {0}", pagesInBook + 1);              //new Page name (for displaying in Scene)
-            for (int inPage = 0; inPage < Size && cardIndex < CardPool.count; inPage++, cardIndex++)
+            for (int inPage = 0; inPage < Size && cardIndex < Card_Pool.count; inPage++, cardIndex++)
             {
                 GameObject newCard = Instantiate(CardPrefab, newPage.transform);    //create and instantiate card objects in scene
-                newCard.GetComponent<CardDisplay>().AddCard(CardPool.cards[cardIndex]);
-                string newName = CardPool.cards[cardIndex].name;                        //save the new card name (for displaying in Scene)
+                newCard.GetComponent<Card_Display>().AddCard(Card_Pool.cards[cardIndex]);
+                string newName = Card_Pool.cards[cardIndex].name;                        //save the new card name (for displaying in Scene)
                 newCard.name = string.Format("{0} (Card)", newName);                //updates name in scene
                 newCard.transform.localScale -= new Vector3((CardPrefab.transform.localScale.x) / 3, (CardPrefab.transform.localScale.y) / 3, 0);
             }

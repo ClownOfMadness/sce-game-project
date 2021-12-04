@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //responsible for switching panels and button related functions of Cards
-public class ScreenCards : MonoBehaviour
+public class Screen_Cards : MonoBehaviour
 {
     public Text Message;
     public GameObject Hand;
@@ -14,18 +14,18 @@ public class ScreenCards : MonoBehaviour
     public GameObject destroyButton;
     [Header("Game State:")]
     public bool SkipLogin;
-    private ZoneHand zHand;
-    private ZoneCraft zCraft;
-    private ZoneStorage zStorage;
-    private ZoneBook zBook;
+    private Zone_Hand zHand;
+    private Zone_Craft zCraft;
+    private Zone_Storage zStorage;
+    private Zone_Book zBook;
     [HideInInspector] public bool Placeable;
 
     void Start()    //initilizing in case something was off
     {
-        zHand = Hand.transform.GetComponent<ZoneHand>();
-        zCraft = Craft.transform.GetComponent<ZoneCraft>();
-        zStorage = Storage.transform.GetComponent<ZoneStorage>();
-        zBook = Book.transform.GetComponent<ZoneBook>();
+        zHand = Hand.transform.GetComponent<Zone_Hand>();
+        zCraft = Craft.transform.GetComponent<Zone_Craft>();
+        zStorage = Storage.transform.GetComponent<Zone_Storage>();
+        zBook = Book.transform.GetComponent<Zone_Book>();
         Message.gameObject.SetActive(false);
 
         Hand.SetActive(true);
@@ -92,7 +92,7 @@ public class ScreenCards : MonoBehaviour
         Craft.SetActive(true);
         Storage.SetActive(false);
     }
-    public void MoveFromHand(CardDrag pickedCard)  //move card from Hand zone to Hand on click
+    public void MoveFromHand(Card_Drag pickedCard)  //move card from Hand zone to Hand on click
     {
         if (Craft.activeSelf)
         {
@@ -130,7 +130,7 @@ public class ScreenCards : MonoBehaviour
             }
         }
     }
-    public void CraftToHand(CardDrag card)  //move card from Craft zone to Hand on click
+    public void CraftToHand(Card_Drag card)  //move card from Craft zone to Hand on click
     {
         if (zCraft.success)
         {
@@ -147,12 +147,12 @@ public class ScreenCards : MonoBehaviour
         //Message.gameObject.SetActive(false); //happens after a timer
         card.gameObject.transform.SetParent(Hand.transform);
     }
-    public void ClickToHand(CardDisplay pickedCard)  //adds card to hand based on what was picked in Book/Storage
+    public void ClickToHand(Card_Display pickedCard)  //adds card to hand based on what was picked in Book/Storage
     {
         if (Hand.transform.childCount < zHand.Size)
         {
             GameObject newCard = Instantiate(zHand.CardPrefab, Hand.transform);     //create and instantiate object in scene
-            newCard.GetComponent<CardDrag>().AddCard(pickedCard.card);              //add cards to objects 
+            newCard.GetComponent<Card_Drag>().AddCard(pickedCard.card);              //add cards to objects 
             newCard.name = string.Format("{0}", pickedCard.name);                   //update new card name (for displaying in Scene)
             if (Storage.activeSelf)
                 zStorage.RemoveFromStorage(pickedCard);

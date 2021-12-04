@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 //responsible for the Card Drag commands, extension of CardDisplay
-public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [HideInInspector] public Transform parentReturnTo = null;         //helps snapping the card back to place
     [HideInInspector] public GameObject placeholder = null;           //saves the dragged card's spot (for changing card order)
@@ -14,9 +14,9 @@ public class CardDrag : CardDisplay, IBeginDragHandler, IDragHandler, IEndDragHa
     void Start()
     {
         canvas = this.transform.parent.parent.GetComponent<Canvas>();
-        screen = canvas.GetComponent<ScreenCards>();
-        hand = screen.Hand.GetComponentInChildren<ZoneHand>().transform;
-        map = screen.Map.GetComponentInChildren<ZoneMap>().transform;
+        screen = canvas.GetComponent<Screen_Cards>();
+        hand = screen.Hand.GetComponentInChildren<Zone_Hand>().transform;
+        map = screen.Map.GetComponentInChildren<Zone_Map>().transform;
     }
     public void ReturnToHand()          //return to hand after craft attempt
     {

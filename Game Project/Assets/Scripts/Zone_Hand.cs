@@ -1,16 +1,16 @@
 using UnityEngine;
 
 //responsible for creating and storing Hand zone, extension of ZoneBehaviour
-public class ZoneHand : ZoneBehaviour
+public class Zone_Hand : Zone_Behaviour
 {
     [Header("Fill Hand:")]
     public bool Fill = false;
-    private CardPool Pool;
+    private Card_Pool Pool;
 
     void Awake()
     {
         Size = 8;               //max Zone size
-        Pool = ScriptableObject.CreateInstance<CardPool>();        //open CardPool connection to use its functions
+        Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions
         InstantiateZone();      //create and instantiate objects in scene in runtime
 
     }
@@ -31,7 +31,7 @@ public class ZoneHand : ZoneBehaviour
             newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
         }
     }
-    public override void EventDrop(CardDrag cardObject)             //failsafe for when card gets dropped back in hand
+    public override void EventDrop(Card_Drag cardObject)             //failsafe for when card gets dropped back in hand
     {
     }
 }
