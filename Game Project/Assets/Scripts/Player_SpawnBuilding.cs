@@ -7,18 +7,7 @@ public class Player_SpawnBuilding : MonoBehaviour
 {
     public AstarPath path;
     private Vector3 buildingPosition = new Vector3(0, 1, 0);
-    //Create a building on the map.
-    //public void Spawn(Vector3 SpawnPoint, string ID, GameObject Tile)
-    //{
-    //    BuildingDataBase buildings = ScriptableObject.CreateInstance<BuildingDataBase>();   //open BuildingDataBase connection to use its functions
-    //    Building BuildingType = FindBuilding(ID, buildings);
-    //    GameObject NewBuilding = Instantiate(BuildingType.Prefab, SpawnPoint, Quaternion.Euler(0, 180, 0));
-    //    //FogOfWar Fog = FindObjectOfType<FogOfWar>();
-
-    //    NewBuilding.name = BuildingType.BuildingName;
-    //    NewBuilding.transform.parent = Tile.transform;
-    //}
-
+    
     private void Awake()
     {
         if (!(path = GameObject.Find("Pathfinder Grid").GetComponent<AstarPath>()))
@@ -27,6 +16,7 @@ public class Player_SpawnBuilding : MonoBehaviour
         }
     }
 
+    //Create a building on the map.
     public bool Spawn(GameObject building, GameObject Tile)
     {
         Data_Tile dataTile = Tile.GetComponent<Data_Tile>();
@@ -42,6 +32,17 @@ public class Player_SpawnBuilding : MonoBehaviour
         return false;
     }
 
+
+    //public void Spawn(Vector3 SpawnPoint, string ID, GameObject Tile)
+    //{
+    //    BuildingDataBase buildings = ScriptableObject.CreateInstance<BuildingDataBase>();   //open BuildingDataBase connection to use its functions
+    //    Building BuildingType = FindBuilding(ID, buildings);
+    //    GameObject NewBuilding = Instantiate(BuildingType.Prefab, SpawnPoint, Quaternion.Euler(0, 180, 0));
+    //    //FogOfWar Fog = FindObjectOfType<FogOfWar>();
+
+    //    NewBuilding.name = BuildingType.BuildingName;
+    //    NewBuilding.transform.parent = Tile.transform;
+    //}
     //Find the building in the buildings database.
     //public static Building FindBuilding(string ID, BuildingDataBase DB)
     //{

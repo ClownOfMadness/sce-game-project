@@ -40,6 +40,7 @@ public class Map_Gen : MonoBehaviour
     // Extra settings
     public bool autoUpdate;
     public bool useFalloff;
+    public bool FogMap;
 
     float[,] falloffMap;
     GameObject[,] TileArray;
@@ -91,8 +92,11 @@ public class Map_Gen : MonoBehaviour
                         else
                             TileArray[x, y] = Instantiate(regions[i].tile, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
 
-                        GameObject thisFog = Instantiate(fog, new Vector3(0,1,0), Quaternion.Euler(0, 180, 0), TileArray[x,y].transform);
-                        thisFog.transform.localPosition = new Vector3(0, 1, 0);
+                        if (FogMap)
+                        {
+                            GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 180, 0), TileArray[x, y].transform);
+                            thisFog.transform.localPosition = new Vector3(0, 1, 0);
+                        }
                    
                         TileArray[x, y].transform.parent = this.transform;
                         TileArray[x, y].name = string.Format("tile_x{0}_y{1}", x, y);
@@ -107,7 +111,7 @@ public class Map_Gen : MonoBehaviour
     //Check if from this region there is access to the over tiles.
     public bool CheckValidPos(TerrainType tile)
     {
-        if (tile.height > 0.35 && tile.height < 0.60)
+        if (tile.height > 0.60 && tile.height < 0.69)
             return true;
         return false;
     }
@@ -122,11 +126,15 @@ public class Map_Gen : MonoBehaviour
         int y = PosiblePos[randNum].y;
 
         while (regions[k].tile.name != "Plains") { k++; }
-        
+        List<Vector3> PeasentPos = new List<Vector3>();
         for (int i = y - 1; i <= y + 1; i++)
         {
             for (int j = x - 1; j <= x + 1; j++)
             {
+                //Creating an list of the tiles surrounding the town hall.
+                if (!(i == y && j == x))
+                    PeasentPos.Add(new Vector3(j * 10, 1, i * 10));
+
                 TileArray[j, i] = GameObject.Find(string.Format("tile_x{0}_y{1}", j, i));
                 if (TileArray[j, i].name != "Plains")
                 { 
@@ -135,15 +143,37 @@ public class Map_Gen : MonoBehaviour
                     TileArray[j, i] = Instantiate(regions[k].tile, new Vector3(j * 10, 1, i * 10), Quaternion.Euler(0, 180, 0));
                     TileArray[j, i].transform.parent = this.transform;
                     TileArray[j, i].name = string.Format("tile_x{0}_y{1}", j, i);
-                    GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 180, 0), TileArray[j, i].transform);
-                    thisFog.transform.localPosition = new Vector3(0, 1, 0);
+
+                    if (FogMap)//Create fog if it enabled.
+                    {
+                        GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 180, 0), TileArray[j, i].transform);
+                        thisFog.transform.localPosition = new Vector3(0, 1, 0);
+                    }
                 }
             }
         }
         Player_SpawnBuilding TownHall = FindObjectOfType<Player_SpawnBuilding>();
         TownHall.Spawn(townHall, TileArray[x, y]);
+        RandomPeasents(PeasentPos);
         return TileArray[x, y];
     }
+
+
+    //Create 3 random peasents at random places around the town hall.
+    private void RandomPeasents(List<Vector3> PeasentsPos) 
+    {
+       Unit_List unitList = FindObjectOfType<Unit_List>();
+
+        int size = 8;
+        for (int i = 0; i < 3; i++)
+        {
+            int rand = Random.Range(0, size);
+            unitList.AddUnit(PeasentsPos[rand], 0);
+            PeasentsPos.RemoveAt(rand);
+            size--;
+        }
+    }
+
 
     //Delete all the tiles on the map.
     public void deleteTileMap()

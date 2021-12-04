@@ -15,7 +15,7 @@ public class Map_Display : MonoBehaviour
         Map_Gen Map = FindObjectOfType<Map_Gen>();
         int size = Map.mapSize;
         TownHall = Map.generateMap();
-        MainCamera.transform.position = TownHall.transform.position + new Vector3(0,150,0);
+        MainCamera.transform.position = TownHall.transform.position + new Vector3(0, 150, 0);
         path.Scan();
     }
 
