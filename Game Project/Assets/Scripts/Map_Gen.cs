@@ -46,7 +46,7 @@ public class Map_Gen : MonoBehaviour
 
     void Awake()
     {
-        falloffMap = FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
+        falloffMap = Map_FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
     }
 
     //Generating the map.
@@ -57,7 +57,7 @@ public class Map_Gen : MonoBehaviour
         TileArray = new GameObject[mapSize, mapSize];
 
         //Create a noise map.
-        float[,] noiseMap = Noise.noiseMapGen(mapSize, mapSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
+        float[,] noiseMap = Map_Noise.noiseMapGen(mapSize, mapSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
         //Create a dictionary of possible possitions for the Town Hall.
         Dictionary<int, Vector2Int> PosiblePos = new Dictionary<int, Vector2Int>();
         int count = 0;
@@ -140,10 +140,8 @@ public class Map_Gen : MonoBehaviour
                 }
             }
         }
-        SpawnBuilding TownHall = FindObjectOfType<SpawnBuilding>();
-        //TownHall.Spawn(new Vector3(x * 10 ,2, y * 10), "BU0001", TileArray[x,y]);
+        Player_SpawnBuilding TownHall = FindObjectOfType<Player_SpawnBuilding>();
         TownHall.Spawn(townHall, TileArray[x, y]);
-
         return TileArray[x, y];
     }
 
@@ -177,6 +175,6 @@ public class Map_Gen : MonoBehaviour
         if (ruins < 1)
             ruins = 1;
 
-        falloffMap = FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
+        falloffMap = Map_FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
     }
 }

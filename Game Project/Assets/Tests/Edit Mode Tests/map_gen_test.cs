@@ -10,7 +10,7 @@ public class map_gen_test: MonoBehaviour
     [Test]
     public void tile_map_size()
     {
-        MapGen map = FindObjectOfType<MapGen>();
+        Map_Gen map = FindObjectOfType<Map_Gen>();
         int size = map.mapSize;
         map.generateMap();
         
@@ -21,8 +21,8 @@ public class map_gen_test: MonoBehaviour
     [Test]
     public void check_valid_position()
     {
-        MapGen map = FindObjectOfType<MapGen>();
-        MapGen.TerrainType tile = new MapGen.TerrainType();
+        Map_Gen map = FindObjectOfType<Map_Gen>();
+        Map_Gen.TerrainType tile = new Map_Gen.TerrainType();
 
         tile.height = 0.40f;// Valid height is between 0.35 and 0.6
         Assert.IsTrue(map.CheckValidPos(tile));
@@ -34,7 +34,7 @@ public class map_gen_test: MonoBehaviour
     [Test]
     public void destroy_tile_map()
     {
-        MapGen map = FindObjectOfType<MapGen>();
+        Map_Gen map = FindObjectOfType<Map_Gen>();
         map.generateMap();
         map.deleteTileMap();
 

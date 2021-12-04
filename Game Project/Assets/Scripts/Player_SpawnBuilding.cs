@@ -29,13 +29,15 @@ public class Player_SpawnBuilding : MonoBehaviour
 
     public void Spawn(GameObject building, GameObject Tile)
     {
-        
-        GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition, Quaternion.Euler(0, 180, 0));
-        NewBuilding.name = building.transform.name;
-        NewBuilding.transform.parent = Tile.transform;
-        
-        path.Scan();
-        //Debug.Log("Building placed in " + Tile);
+        Data_Tile dataTile = Tile.GetComponent<Data_Tile>();
+        if (dataTile.revealed == true || building.name == "TownHall")
+        {
+            GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition, Quaternion.Euler(0, 180, 0));
+            NewBuilding.name = building.transform.name;
+            NewBuilding.transform.parent = Tile.transform;
+
+            path.Scan();
+        }        
     }
 
     //Find the building in the buildings database.

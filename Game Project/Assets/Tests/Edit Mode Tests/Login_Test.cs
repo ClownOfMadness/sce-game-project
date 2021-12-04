@@ -11,28 +11,28 @@ public class Login_Test
     [Test]
     public void IsPremium() //checks if the code appears in the database
     {
-        GameBehaviour code = new GameBehaviour();
+        Screen_Behaviour code = new Screen_Behaviour();
         Assert.AreEqual(expected: "premium", actual: code.Pcode[1]);
     }
 
     [Test]
     public void IsPremiumVariant() //checks if the code variant appears in the database
     {
-        GameBehaviour code = new GameBehaviour();
+        Screen_Behaviour code = new Screen_Behaviour();
         Assert.AreEqual(expected: "premium2", actual: code.Pcode[5]);
     }
 
     [Test]
     public void IsCodeLength() //tests for the correct code database length
     {
-        GameBehaviour code = new GameBehaviour();
+        Screen_Behaviour code = new Screen_Behaviour();
         Assert.AreEqual(expected: 6, actual: code.Pcode.Length);
     }
     [Test]
     public void IsLoginButton() //tests the login button
     {
-        GameBehaviour code = new GameBehaviour();
-        LoginScreen loginField = new LoginScreen();
+        Screen_Behaviour code = new Screen_Behaviour();
+        Screen_Login loginField = new Screen_Login();
         code.loginButton.SetActive(true);
         loginField.GetComponentInChildren<InputField>().text = "Premium";
         code.TryLogin();
@@ -41,7 +41,7 @@ public class Login_Test
     [Test]
     public void IsSkipButton() //tests the skip button
     {
-        GameBehaviour code = new GameBehaviour();
+        Screen_Behaviour code = new Screen_Behaviour();
         code.Login.SetActive(true);
         code.CloseLoginOpenGame();
         Assert.IsFalse(code.Login.activeSelf);
@@ -49,7 +49,7 @@ public class Login_Test
     [Test]
     public void IsOpenLogin() //tests for if buttons can close the game and open login
     {
-        GameBehaviour code = new GameBehaviour();
+        Screen_Behaviour code = new Screen_Behaviour();
         code.Login.SetActive(false);
         code.CloseGameOpenLogin();
         Assert.IsTrue(code.Login.activeSelf);
@@ -57,9 +57,9 @@ public class Login_Test
     [Test]
     public void IsCreative() //tests if the access to the book is granted for the premium
     {
-        GameBehaviour code = new GameBehaviour();
-        LoginScreen loginField = new LoginScreen();
-        ScreenCards ZoneC = new ScreenCards();
+        Screen_Behaviour code = new Screen_Behaviour();
+        Screen_Login loginField = new Screen_Login();
+        Screen_Cards ZoneC = new Screen_Cards();
         code.loginButton.SetActive(true);
         loginField.GetComponentInChildren<InputField>().text = "Premium";
         code.TryLogin();

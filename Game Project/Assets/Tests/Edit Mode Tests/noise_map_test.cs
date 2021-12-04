@@ -11,7 +11,7 @@ public class noise_map_test
     public void noise_map_size()
     {
         int size = 20, count =  0;
-        float[,] noiseMap = Noise.noiseMapGen(size, size, 1, 1, 1, 3, 0.5f, new Vector2(0,0));
+        float[,] noiseMap = Map_Noise.noiseMapGen(size, size, 1, 1, 1, 3, 0.5f, new Vector2(0,0));
         for(int i = 0; i < size; i++)
             for(int j = 0; j < size; j++)
                 count++;
@@ -25,8 +25,8 @@ public class noise_map_test
     {
         int size = 20;
         float low = 0.2f, high = 1000f;
-        float[,] noiseMap = Noise.noiseMapGen(size, size, 1, 1, 1, 3, 0.5f, new Vector2(0, 0));
-        noiseMap = Noise.Normalize(low, high, size, size, noiseMap);
+        float[,] noiseMap = Map_Noise.noiseMapGen(size, size, 1, 1, 1, 3, 0.5f, new Vector2(0, 0));
+        noiseMap = Map_Noise.Normalize(low, high, size, size, noiseMap);
 
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
@@ -38,7 +38,7 @@ public class noise_map_test
     public void falloff_map_size()
     {
         int size = 20, count = 0;
-        float[,] noiseMap = FalloffGen.generateFalloffMap(size, 3, 0.2f);
+        float[,] noiseMap = Map_FalloffGen.generateFalloffMap(size, 3, 0.2f);
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
                 count++;
