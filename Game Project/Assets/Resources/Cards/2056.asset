@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
   m_Name: 2056
   m_EditorClassIdentifier: 
-  name: 
-  code: 0
+  name: Leather
+  code: 2056
   type: 0
-  source: 
+  source: 0f000000
   combinationOf: []
-  gatheredBy: []
-  complexity: 0
-  description: 
-  artwork: {fileID: 0}
+  gatheredBy:
+  - {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
+  complexity: 3
+  description: txt
+  artwork: {fileID: 21300000, guid: e655cb79435e42542be37a6436831ac4, type: 3}
   buildingPrefab: {fileID: 0}
