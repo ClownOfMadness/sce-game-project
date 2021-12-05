@@ -101,8 +101,7 @@ MonoBehaviour:
   works:
   - job: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
     card: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
-    workTime: 0
-  unit: {fileID: 0}
+    workTime: 15
 --- !u!65 &6674890483927572054
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -19,12 +19,25 @@ public class Player_SpawnBuilding : MonoBehaviour
     //Create a building on the map.
     public bool Spawn(GameObject building, GameObject Tile)
     {
+        Data_Building dataBuilding = building.GetComponent<Data_Building>();
         Data_Tile dataTile = Tile.GetComponent<Data_Tile>();
-        if ((dataTile.revealed == true && (dataTile.tileName == "Plains" || dataTile.tileName == "Marsh")) || building.GetComponent<Data_Building>().buildingName == "TownHall")
+        if (dataTile.hasBuilding || dataTile.hasTownHall)
+        {
+            return false;
+        }
+        if ((dataTile.revealed == true && (dataTile.tileName == "Plains" || dataTile.tileName == "Marsh")) || dataBuilding.buildingName == "TownHall")
         {
             GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition, Quaternion.Euler(0, 180, 0));
             NewBuilding.name = building.transform.name;
             NewBuilding.transform.parent = Tile.transform;
+            if (dataBuilding.buildingName == "TownHall")
+            {
+                dataTile.hasTownHall = true;
+            }
+            else
+            {
+                dataTile.hasBuilding = true;
+            }
             path.Scan();
             return true;
         }

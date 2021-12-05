@@ -21,10 +21,28 @@ public class Data_Tile : MonoBehaviour
     public Work[] works;
 
     private GameObject unit = null;
+    public bool hasTownHall = false;
+    public bool hasBuilding = false;
+
+    public int CanWork(Data_Unit _unit)
+    {
+        Debug.Log("Sent Unit: " + _unit.unitJob);
+        for (int i = 0; i < works.Length; i++)
+        {
+            if (works[i].job.unitJob == _unit.unitJob)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     public void AttachWork(GameObject _unit)
     {
-        unit = _unit;
+        if (!hasBuilding)
+        {
+            unit = _unit;
+        }
     }
 
     public void DetachWork()

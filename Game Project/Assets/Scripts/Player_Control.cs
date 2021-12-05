@@ -60,7 +60,7 @@ public class Player_Control : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
             // Functions for when the mouse hovers over an interactable layer
-            if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7) // if it is terrain or impassable
+            if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7) // if it is terrain or impassable or townhall
             {
                 if (Input.GetMouseButton(0)) // if it is clicked on terrain or impassable
                 {
@@ -71,7 +71,7 @@ public class Player_Control : MonoBehaviour
                     selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
                     if (!selectedData_Tile.GetData())
                     {
-                        selectedUnit = UnitSelection(selectedJob);
+                        selectedUnit = UnitSelection(selectedJob, selectedData_Tile.hasTownHall);
                         if (selectedUnit)
                         {
                             Data_Unit = selectedUnit.GetComponent<Data_Unit>();
@@ -105,23 +105,22 @@ public class Player_Control : MonoBehaviour
         }
     }
 
-    private GameObject UnitSelection(int _selectedJob) // Searches for a free unit in a job category
+    private GameObject UnitSelection(int _selectedJob, bool townhall) // Searches for a free unit in a job category
     {
-        switch (_selectedJob)
+        if (_selectedJob < 0 || _selectedJob >= unitList.units.Length)
+            return null;
+        else
         {
-            case 0: // Peasants
-                foreach (Transform unitInGroup in unitList.units[0].unitGroup.transform)
+            foreach (Transform unitInGroup in unitList.units[_selectedJob].unitGroup.transform)
+            {
+                GameObject unitInGroupObject = unitInGroup.gameObject;
+                Data_Unit tempData = unitInGroupObject.GetComponent<Data_Unit>();
+                if ((tempData.busy == false && tempData.holdingCard == false) || (townhall && tempData.holdingCard == true))
                 {
-                    Debug.Log(unitInGroup.gameObject.name);
-                    GameObject unitInGroupObject = unitInGroup.gameObject;
-                    if (unitInGroupObject.GetComponent<Data_Unit>().busy == false)
-                    {
-                        return unitInGroupObject;
-                    }
+                    return unitInGroupObject;
                 }
-                return null;
-            default:
-                return null;
+            }
+            return null;
         }
     }
 

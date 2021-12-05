@@ -17,14 +17,14 @@ public class Data_Fog : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 8 || other.gameObject.layer == 9)
+        if (other.gameObject.layer == 8 || other.gameObject.layer == 9 || other.gameObject.layer == 11)
         {
             sprite.sprite = halfFog;
         }
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == 8 || other.gameObject.layer == 9)
+        if (other.gameObject.layer == 8 || other.gameObject.layer == 9 || other.gameObject.layer == 11)
         {
             sprite.enabled = false;
             Data_Tile.revealed = true;
@@ -33,7 +33,7 @@ public class Data_Fog : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == 8 || other.gameObject.layer == 9)
+        if (other.gameObject.layer == 8 || other.gameObject.layer == 9 || other.gameObject.layer == 11)
         {
             sprite.enabled = true;
             Data_Tile.revealed = false;
