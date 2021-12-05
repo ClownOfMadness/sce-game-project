@@ -25,7 +25,7 @@ public class Data_Unit : MonoBehaviour
     private float nextWander = 0f;
 
     // Work routine
-    [HideInInspector] public Unit_List unitList;
+    public Unit_List unitList;
     [HideInInspector] public bool busy = false;
     private Transform townHall;
     private Transform workPlace;
@@ -36,10 +36,10 @@ public class Data_Unit : MonoBehaviour
 
     private void Awake()
     {
-        if (!unitList)
-        {
-            Debug.LogError("Unit_List is missing from the Data_Unit, Check in Unit_List if the Unit_List script is transferred correctly");
-        }
+        //if (!unitList)
+        //{
+        //    Debug.LogError("Unit_List is missing from the Data_Unit, Check in Unit_List if the Unit_List script is transferred correctly");
+        //}
         if (!sprite)
         {
             Debug.LogError("SpriteRenderer Component is missing in the Data_Unit");

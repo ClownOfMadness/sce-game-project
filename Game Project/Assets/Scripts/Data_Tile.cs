@@ -7,7 +7,7 @@ public class Data_Tile : MonoBehaviour
 {
     // Tile Description
     public string tileName;
-    public bool revealed = false;
+    [HideInInspector] public bool revealed = false;
     // Work data
     //public Dictionary<Data_Unit, ScriptableObject> work;
     [Serializable]
@@ -20,7 +20,7 @@ public class Data_Tile : MonoBehaviour
 
     public Work[] works;
 
-    public GameObject unit = null;
+    private GameObject unit = null;
 
     public void AttachWork(GameObject _unit)
     {

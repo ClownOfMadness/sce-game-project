@@ -96,9 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff57fb16e4b22c498caf4a769f07c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Plains
-  cost: 1
-  bestCost: 65535
+  tileName: Plains
+  revealed: 0
+  works: []
+  unit: {fileID: 0}
 --- !u!65 &3809613313669076355
 BoxCollider:
   m_ObjectHideFlags: 0

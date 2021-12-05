@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4469783071307966138}
   - component: {fileID: 9072890139396344483}
   - component: {fileID: 8375015018625959810}
-  - component: {fileID: -162001193561235280}
+  - component: {fileID: 5905521155373001877}
   - component: {fileID: -8654342010953843594}
   - component: {fileID: -1319961853074622128}
   - component: {fileID: 993967690060842183}
@@ -86,7 +86,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-162001193561235280
+--- !u!114 &5905521155373001877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,12 +95,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9034094746195452373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ff57fb16e4b22c498caf4a769f07c78, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f5d8145160530f4c8865ce19e39d921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: TownHall
-  works: []
-  unit: {fileID: 0}
+  buildingName: TownHall
 --- !u!65 &-8654342010953843594
 BoxCollider:
   m_ObjectHideFlags: 0

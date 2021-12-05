@@ -96,10 +96,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff57fb16e4b22c498caf4a769f07c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Forest
+  tileName: Forest
+  revealed: 0
   works:
   - job: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
     card: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
+    workTime: 0
+  unit: {fileID: 0}
 --- !u!65 &6674890483927572054
 BoxCollider:
   m_ObjectHideFlags: 0

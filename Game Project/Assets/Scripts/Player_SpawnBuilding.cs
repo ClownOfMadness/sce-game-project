@@ -20,7 +20,7 @@ public class Player_SpawnBuilding : MonoBehaviour
     public bool Spawn(GameObject building, GameObject Tile)
     {
         Data_Tile dataTile = Tile.GetComponent<Data_Tile>();
-        if ((dataTile.revealed == true && dataTile.tileName == "Plains") || building.GetComponent<Data_Tile>().name == "TownHall")
+        if ((dataTile.revealed == true && (dataTile.tileName == "Plains" || dataTile.tileName == "Marsh")) || building.GetComponent<Data_Building>().buildingName == "TownHall")
         {
             GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition, Quaternion.Euler(0, 180, 0));
             NewBuilding.name = building.transform.name;
