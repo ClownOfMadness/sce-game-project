@@ -51,7 +51,6 @@ public class Player_Control : MonoBehaviour
     {
         CameraControl(); // Screen panning functions
         UnitCommand(); // Unit pathfinding control;
-        //SwitchJob();
     }
 
     private void UnitCommand()

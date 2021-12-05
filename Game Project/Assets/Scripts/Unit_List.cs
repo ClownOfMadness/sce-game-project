@@ -16,18 +16,27 @@ public class Unit_List : MonoBehaviour
     // [Int - Unit]
     // 0 - Peasant
 
-    public GameObject townhall;
+    [HideInInspector] public GameObject townhall;
     private Quaternion rotation = Quaternion.Euler(Vector3.zero); // Default unit rotation
 
     public void AddUnit(Vector3 location, int unit) // Creates the unit in a given location
     {
         if (unit < 0 || unit > units.Length)
         {
-            Debug.LogError("You have given wrong int to the AddUnit function");
+            Debug.LogError("You have given wrong int to the AddUnit function that is in Unit_List");
         }
         else
         {
-            Instantiate(units[unit].unitPrefab, location, rotation, units[unit].unitGroup.transform);
+            Data_Unit unitData;
+            GameObject newUnit = Instantiate(units[unit].unitPrefab, location, rotation, units[unit].unitGroup.transform);
+            if (!(unitData = newUnit.GetComponent<Data_Unit>()))
+            {
+                Debug.LogError("Cannot find Data_Unit when creating new unit in Unit_List");
+            }
+            else
+            {
+                unitData.unitList = this;
+            }
         }
     }
 }

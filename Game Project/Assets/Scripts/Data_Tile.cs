@@ -6,7 +6,7 @@ using UnityEngine;
 public class Data_Tile : MonoBehaviour
 {
     // Tile Description
-    public new string name;
+    public string tileName;
     public bool revealed = false;
     // Work data
     //public Dictionary<Data_Unit, ScriptableObject> work;

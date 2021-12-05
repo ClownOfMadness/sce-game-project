@@ -25,8 +25,10 @@ public class Data_Unit : MonoBehaviour
     private float nextWander = 0f;
 
     // Work routine
-    public bool busy = false;
-    private GameObject townhall;
+    [HideInInspector] public Unit_List unitList;
+    [HideInInspector] public bool busy = false;
+    private Transform townHall;
+    private Transform workPlace;
 
     // Recieved from PlayerControl
     [HideInInspector] public GameObject target;
@@ -34,11 +36,27 @@ public class Data_Unit : MonoBehaviour
 
     private void Awake()
     {
+        if (!unitList)
+        {
+            Debug.LogError("Unit_List is missing from the Data_Unit, Check in Unit_List if the Unit_List script is transferred correctly");
+        }
+        if (!sprite)
+        {
+            Debug.LogError("SpriteRenderer Component is missing in the Data_Unit");
+        }
+        if (!animator)
+        {
+            Debug.LogError("Animator Component is missing in the Data_Unit");
+        }
+        
         // Sets random design
         animator.runtimeAnimatorController = design[Random.Range(0, (design.Count))];
 
         // Sets AIPath
-        path = GetComponent<AIPath>();
+        if (!(path = GetComponent<AIPath>()))
+        {
+            Debug.LogError("AIPath Component is missing in a Data_Unit");
+        }
 
         // Gets town hall
     }
@@ -70,18 +88,18 @@ public class Data_Unit : MonoBehaviour
         else // All animations related unit being idle
         {
             animator.SetBool("running", false);
-            if (target != null && Data_Tile != null)
-            {
-                if (path.reachedDestination && CheckTile(Data_Tile.name))
-                {
-                    animator.SetBool("working", true);
-                    animator.SetBool("hasCard", true);
-                }
-                else
-                {
-                    animator.SetBool("working", false);
-                }
-            }
+            //if (target != null && Data_Tile != null)
+            //{
+            //    if (path.reachedDestination && CheckTile(Data_Tile.name))
+            //    {
+            //        animator.SetBool("working", true);
+            //        animator.SetBool("hasCard", true);
+            //    }
+            //    else
+            //    {
+            //        animator.SetBool("working", false);
+            //    }
+            //}
         }
     }
 
