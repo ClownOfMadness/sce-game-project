@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8654342010953843594}
   - component: {fileID: -1319961853074622128}
   - component: {fileID: 993967690060842183}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: TownHall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
