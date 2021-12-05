@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
-  m_Name: 6005
+  m_Name: 2057
   m_EditorClassIdentifier: 
-  name: Flint Pickaxe
-  code: 6000
-  type: 5
+  name: Armor
+  code: 2057
+  type: 2
   source: 
   combinationOf:
-  - card1: {fileID: 11400000, guid: 3224aa7c34724cb44ae5a91ea7dc9ba0, type: 2}
-    card2: {fileID: 11400000, guid: c6ebb2dab03cfb347b08872e42059186, type: 2}
+  - card1: {fileID: 11400000, guid: bd7b3bf588b713441b1254dada7b0123, type: 2}
+    card2: {fileID: 11400000, guid: 9dc53f43321834244a0789f0648d0c45, type: 2}
   gatheredBy: []
-  complexity: 2
-  description: txt
-  artwork: {fileID: 21300000, guid: c7fb3e74f532bd04e98baf632d895ea6, type: 3}
+  complexity: 7
+  description: Also works as a faraday cage
+  artwork: {fileID: 21300000, guid: 570b78be112150546b7240e6b7007501, type: 3}
   buildingPrefab: {fileID: 0}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
   m_Name: 3008
   m_EditorClassIdentifier: 
-  name: Mixture of Clay and Daub
+  name: Mixture of Clay and Sticks
   code: 3008
   type: 3
   source: 
