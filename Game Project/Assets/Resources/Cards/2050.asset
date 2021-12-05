@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
   m_Name: 2050
   m_EditorClassIdentifier: 
-  name: 
-  code: 0
-  type: 0
+  name: Creation
+  code: 2050
+  type: 2
   source: 
   combinationOf: []
   gatheredBy: []
   complexity: 0
-  description: 
-  artwork: {fileID: 0}
+  description: The power of creation
+  artwork: {fileID: 21300000, guid: b807100e097744f40a26a70c2c66cd9f, type: 3}
   buildingPrefab: {fileID: 0}

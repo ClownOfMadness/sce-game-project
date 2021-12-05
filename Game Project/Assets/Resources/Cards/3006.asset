@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
   m_Name: 3006
   m_EditorClassIdentifier: 
-  name: 
-  code: 0
-  type: 0
+  name: Arrow
+  code: 3006
+  type: 3
   source: 
-  combinationOf: []
+  combinationOf:
+  - card1: {fileID: 11400000, guid: c6ebb2dab03cfb347b08872e42059186, type: 2}
+    card2: {fileID: 11400000, guid: 6252d19e9c5787547b9a02ad7a7bd4e5, type: 2}
   gatheredBy: []
-  complexity: 0
-  description: 
-  artwork: {fileID: 0}
+  complexity: 2
+  description: not as effective without a bow
+  artwork: {fileID: 21300000, guid: e2a9d59325045174582070d455f26b23, type: 3}
   buildingPrefab: {fileID: 0}

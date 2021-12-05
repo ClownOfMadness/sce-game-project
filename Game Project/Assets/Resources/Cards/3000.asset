@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
   m_Name: 3000
   m_EditorClassIdentifier: 
-  name: 
-  code: 0
-  type: 0
+  name: Mud
+  code: 3000
+  type: 3
   source: 
-  combinationOf: []
+  combinationOf:
+  - card1: {fileID: 11400000, guid: 4c6ed40fc58e10e48b1baa2491fbde18, type: 2}
+    card2: {fileID: 11400000, guid: aed14c0c460df934a967e2513141aa80, type: 2}
   gatheredBy: []
-  complexity: 0
-  description: 
-  artwork: {fileID: 0}
+  complexity: 1
+  description: even mud can be useful in the right hands
+  artwork: {fileID: 21300000, guid: 3f16859912cf66a44ac8c6b89baccbe5, type: 3}
   buildingPrefab: {fileID: 0}

@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
   m_Name: 3004
   m_EditorClassIdentifier: 
-  name: 
-  code: 0
-  type: 0
+  name: String
+  code: 3004
+  type: 3
   source: 
-  combinationOf: []
+  combinationOf:
+  - card1: {fileID: 11400000, guid: aa451c770152a2e4e92089bbb2afd921, type: 2}
+    card2: {fileID: 11400000, guid: aa451c770152a2e4e92089bbb2afd921, type: 2}
   gatheredBy: []
-  complexity: 0
-  description: 
-  artwork: {fileID: 0}
+  complexity: 1
+  description: txt
+  artwork: {fileID: 21300000, guid: 99a0ab25e6f5e804f925e8731ecb1969, type: 3}
   buildingPrefab: {fileID: 0}

@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
   m_Name: 3001
   m_EditorClassIdentifier: 
-  name: 
-  code: 0
-  type: 0
+  name: Plank
+  code: 3001
+  type: 3
   source: 
-  combinationOf: []
+  combinationOf:
+  - card1: {fileID: 11400000, guid: 6c59b2aaed79d23469b3b8469b6915b4, type: 2}
+    card2: {fileID: 11400000, guid: f60bb3d44e094b849aa70b92c35d7917, type: 2}
   gatheredBy: []
-  complexity: 0
-  description: 
-  artwork: {fileID: 0}
+  complexity: 6
+  description: txt
+  artwork: {fileID: 21300000, guid: 9b835849287c15f4eb4d344bda9220a4, type: 3}
   buildingPrefab: {fileID: 0}
