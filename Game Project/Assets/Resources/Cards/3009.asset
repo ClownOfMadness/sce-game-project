@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Wattle and Dab
   code: 3009
   type: 3
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 7e711241692d78741b2ac33933b026bc, type: 2}
     card2: {fileID: 11400000, guid: 7a6a1ba949c5bbd4bbf5d36d87de47df, type: 2}

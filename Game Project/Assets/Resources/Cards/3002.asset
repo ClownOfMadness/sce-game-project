@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Wooden Frame
   code: 3002
   type: 3
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 1cb43548fb3dafc4e9478b47fb92f6ab, type: 2}
     card2: {fileID: 11400000, guid: 1cb43548fb3dafc4e9478b47fb92f6ab, type: 2}

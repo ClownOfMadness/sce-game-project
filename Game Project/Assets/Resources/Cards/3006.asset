@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Arrow
   code: 3006
   type: 3
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: c6ebb2dab03cfb347b08872e42059186, type: 2}
     card2: {fileID: 11400000, guid: 6252d19e9c5787547b9a02ad7a7bd4e5, type: 2}

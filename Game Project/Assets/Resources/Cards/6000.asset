@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 6000
   m_EditorClassIdentifier: 
   name: Flint Axe
-  code: 0
+  code: 6000
   type: 5
   source: 01000000
   combinationOf:
@@ -23,3 +23,4 @@ MonoBehaviour:
   complexity: 2
   description: The first axe, in the right hands it can provide you new resources
   artwork: {fileID: 21300000, guid: ff0a9af511c1f71449387cdde96272eb, type: 3}
+  buildingPrefab: {fileID: 0}

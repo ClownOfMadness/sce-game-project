@@ -12,6 +12,27 @@ public class Card_Pool : ScriptableObject
     {
         cards = Resources.LoadAll<Data_Card>("Cards").ToList();  //fills list from Resources folder
         count = cards.Count;
+        CheckCards();
+    }
+    private void CheckCards()   //verifies card fields in case their fields are incorrect (can be removed at a later stage)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (cards[i].source.Count == 0)                //cards without a source are invalid
+                Debug.Log("Error! Card " + cards[i].code + " is invalid, please set at least one source.");
+            else if (IsCombination(cards[i]))
+                if (cards[i].combinationOf.Count == 0)  //combination cards without a combination listed are invalid
+                    Debug.Log("Error! Combination of card " + cards[i].code + " is invalid, please add at least one set of cards that craft it.");
+                else if (cards[i].combinationOf[0].card1 == null || cards[i].combinationOf[0].card2 == null)
+                    Debug.Log("Error! Combination of card " + cards[i].code + " is invalid, please add at least one set of cards that craft it.");
+        }
+    }
+    private static bool IsCombination(Data_Card card)       //find if card is listed as combination
+    {
+        for (int i = 0; i < card.source.Count; i++) 
+            if (card.source[i].ToString() == "Combination")
+                return true;
+        return false;
     }
     public string FillObject(GameObject cardObject)         //add card to object + return the new card name (for displaying in Scene)
     {
@@ -28,7 +49,7 @@ public class Card_Pool : ScriptableObject
             List<Data_Card.Combinations> Combos = CombineAttempt.combinationOf;
             if (Combos.Count > 0) //failsafe - will catch bugged out cards that don't have all their fields filled out
             {
-                if (CombineAttempt.source[0].ToString() == "Combination")    //if card can be created
+                if (IsCombination(CombineAttempt))          //if card can be created
                 {
                     for (int startCombo = 0; startCombo < Combos.Count; startCombo++)   //check all possible combinations of current CombineAttempt
                     {

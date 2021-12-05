@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Bow & Arrow
   code: 6001
   type: 5
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: aabc00b3d0c86974bbe3687609ef6cf2, type: 2}
     card2: {fileID: 11400000, guid: 953478b4c500b8844bfd7192cfaaff9f, type: 2}

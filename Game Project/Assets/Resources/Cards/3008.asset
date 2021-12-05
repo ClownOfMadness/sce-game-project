@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Mixture of Clay and Sticks
   code: 3008
   type: 3
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 7a6a1ba949c5bbd4bbf5d36d87de47df, type: 2}
     card2: {fileID: 11400000, guid: 99bb678949b28b7469aec607715c7aba, type: 2}

@@ -7,7 +7,7 @@ public class Zone_Storage : MonoBehaviour
 {
     public GameObject PagePrefab;       //type of prefab for Page (attached via Inspector)
     public GameObject CardPrefab;       //type of prefab for Card (attached via Inspector)
-    public GameObject exitButton;
+    //public GameObject exitButton;     //removed for now
     [HideInInspector] private GameObject Page;
     [HideInInspector] public int Size;  //Page size
     [HideInInspector] private List<Data_Card> slots;  //what is in the storage
@@ -32,7 +32,7 @@ public class Zone_Storage : MonoBehaviour
             newCard.transform.localScale -= new Vector3((CardPrefab.transform.localScale.x) / 3, (CardPrefab.transform.localScale.y) / 3, 0);
             newCard.GetComponent<CanvasGroup>().alpha = .6f;
         }
-        exitButton.transform.SetAsLastSibling();             //move button to the far right
+        //exitButton.transform.SetAsLastSibling();             //move button to the far right
     }
     private void RefreshZone()
     {

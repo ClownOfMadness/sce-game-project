@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Stone Frame
   code: 3003
   type: 3
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: ebd35e72654e8364a8a5cd5332043de9, type: 2}
     card2: {fileID: 11400000, guid: ebd35e72654e8364a8a5cd5332043de9, type: 2}

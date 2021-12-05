@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Stone Wall
   code: 5002
   type: 4
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 7f48c392d63e6a34e97c71ab15cc2c8b, type: 2}
     card2: {fileID: 11400000, guid: ebd35e72654e8364a8a5cd5332043de9, type: 2}

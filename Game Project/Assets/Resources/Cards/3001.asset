@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Plank
   code: 3001
   type: 3
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 6c59b2aaed79d23469b3b8469b6915b4, type: 2}
     card2: {fileID: 11400000, guid: f60bb3d44e094b849aa70b92c35d7917, type: 2}

@@ -22,6 +22,10 @@ public class Screen_Behaviour : MonoBehaviour
         loginButton.SetActive(true);
         cardsButton.SetActive(true);
     }
+    public void TopMessage(string text)
+    {
+        //move things about Message from Screen_Cards here
+    }
     public void CloseLoginOpenGame()
     {
         Login.SetActive(false);

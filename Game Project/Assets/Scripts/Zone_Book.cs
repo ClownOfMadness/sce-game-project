@@ -37,7 +37,9 @@ public class Zone_Book : MonoBehaviour
                 newPage.SetActive(false);
             pagesInBook++;
         }
-        backButton.CrossFadeAlpha(0.0f, 0.05f, false);
+        //backButton.CrossFadeAlpha(0.0f, 0.05f, false);
+        backButton.gameObject.SetActive(false);
+        nextButton.gameObject.SetActive(true);
         nextButton.gameObject.transform.SetAsLastSibling();             //move button to the far right
         pageIndex = 1;  //stores what Page we're on
     }
@@ -46,12 +48,12 @@ public class Zone_Book : MonoBehaviour
         if (pageIndex < pagesInBook)
         {
             if (pageIndex == 1)
-                backButton.CrossFadeAlpha(1.0f, 0.05f, false);
+                backButton.gameObject.SetActive(true);
             this.gameObject.transform.GetChild(pageIndex).gameObject.SetActive(false);  //hide last page
             pageIndex++;
             this.gameObject.transform.GetChild(pageIndex).gameObject.SetActive(true);   //show new page
             if (pageIndex == pagesInBook)
-                nextButton.CrossFadeAlpha(0.0f, 0.05f, false);
+                nextButton.gameObject.SetActive(false);
         }
     }
     public void BackPage()  //move a Page back on click
@@ -59,21 +61,21 @@ public class Zone_Book : MonoBehaviour
         if (pageIndex > 1)
         {
             if (pageIndex == pagesInBook)
-                nextButton.CrossFadeAlpha(1.0f, 0.05f, false);
+                nextButton.gameObject.SetActive(true);
             this.gameObject.transform.GetChild(pageIndex).gameObject.SetActive(false);  //hide last page
             pageIndex--;
             this.gameObject.transform.GetChild(pageIndex).gameObject.SetActive(true);   //show new page
             if (pageIndex == 1)
-                backButton.CrossFadeAlpha(0.0f, 0.05f, false);
+                backButton.gameObject.SetActive(false);
         }
     }
     public void FirstPage()     //switch back to first page (used when Book is closed)
     {
-        nextButton.CrossFadeAlpha(1.0f, 0.05f, false);
+        nextButton.gameObject.SetActive(true);
         this.gameObject.transform.GetChild(pageIndex).gameObject.SetActive(false);  //hide last page
         pageIndex = 1;
         this.gameObject.transform.GetChild(pageIndex).gameObject.SetActive(true);   //show new page
-        backButton.CrossFadeAlpha(0.0f, 0.05f, false);
+        backButton.gameObject.SetActive(false);
     }
 }
 

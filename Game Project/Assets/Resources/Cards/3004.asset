@@ -15,7 +15,7 @@ MonoBehaviour:
   name: String
   code: 3004
   type: 3
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: aa451c770152a2e4e92089bbb2afd921, type: 2}
     card2: {fileID: 11400000, guid: aa451c770152a2e4e92089bbb2afd921, type: 2}

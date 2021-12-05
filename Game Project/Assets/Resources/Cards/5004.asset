@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Hut
   code: 5004
   type: 3
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: b231d013aeb28e24eab9b498266f2438, type: 2}
     card2: {fileID: 11400000, guid: 6d0d526d3ccf25e4abf909e9f4ec94ee, type: 2}

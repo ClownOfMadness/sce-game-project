@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Farm
   code: 5006
   type: 4
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 4c6ed40fc58e10e48b1baa2491fbde18, type: 2}
     card2: {fileID: 11400000, guid: 4c6ed40fc58e10e48b1baa2491fbde18, type: 2}

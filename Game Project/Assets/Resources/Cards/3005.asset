@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Bow
   code: 3005
   type: 3
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
     card2: {fileID: 11400000, guid: abbbb57a9afb2904b8ca7dfcaeed5568, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Oven
   code: 6012
   type: 5
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 4782869aef04d7b488027ccf13b82a06, type: 2}
     card2: {fileID: 11400000, guid: 6d0d526d3ccf25e4abf909e9f4ec94ee, type: 2}

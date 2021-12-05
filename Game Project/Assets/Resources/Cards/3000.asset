@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Mud
   code: 3000
   type: 3
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 4c6ed40fc58e10e48b1baa2491fbde18, type: 2}
     card2: {fileID: 11400000, guid: aed14c0c460df934a967e2513141aa80, type: 2}
