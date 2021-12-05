@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
+  m_Name: 6001
+  m_EditorClassIdentifier: 
+  name: Bow & Arrow
+  code: 6001
+  type: 5
+  source: 01000000
+  combinationOf:
+  - card1: {fileID: 11400000, guid: aabc00b3d0c86974bbe3687609ef6cf2, type: 2}
+    card2: {fileID: 11400000, guid: 953478b4c500b8844bfd7192cfaaff9f, type: 2}
+  gatheredBy: []
+  complexity: 5
+  description: The perfect package for an archer cosplay
+  artwork: {fileID: 21300000, guid: 4ad9a73e285a5a047b87f4efe71de034, type: 3}
+  buildingPrefab: {fileID: 0}

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
+  m_Name: 6010
+  m_EditorClassIdentifier: 
+  name: Iron Spear
+  code: 6010
+  type: 5
+  source: 
+  combinationOf:
+  - card1: {fileID: 11400000, guid: 6690953aab85a944b8c6b2b1a7d36bf4, type: 2}
+    card2: {fileID: 11400000, guid: 23a5a397f7430c7438f3b684d34c880c, type: 2}
+  gatheredBy: []
+  complexity: 8
+  description: More effective at pointing that sharp end at the enemy
+  artwork: {fileID: 21300000, guid: 732b0e803fbec1b45a1c890dd0f4e21d, type: 3}
+  buildingPrefab: {fileID: 0}

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
+  m_Name: 2057
+  m_EditorClassIdentifier: 
+  name: Armor
+  code: 2057
+  type: 2
+  source: 
+  combinationOf:
+  - card1: {fileID: 11400000, guid: bd7b3bf588b713441b1254dada7b0123, type: 2}
+    card2: {fileID: 11400000, guid: 9dc53f43321834244a0789f0648d0c45, type: 2}
+  gatheredBy: []
+  complexity: 7
+  description: Also works as a faraday cage
+  artwork: {fileID: 21300000, guid: 570b78be112150546b7240e6b7007501, type: 3}
+  buildingPrefab: {fileID: 0}
