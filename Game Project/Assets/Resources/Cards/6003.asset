@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Iron Sword
   code: 6003
   type: 5
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 6690953aab85a944b8c6b2b1a7d36bf4, type: 2}
     card2: {fileID: 11400000, guid: d7a171c14aac58b43aadc541818a9769, type: 2}

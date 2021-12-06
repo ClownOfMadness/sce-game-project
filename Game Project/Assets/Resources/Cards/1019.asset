@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Baker
   code: 1019
   type: 0
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
     card2: {fileID: 11400000, guid: 361126a81a73da743b2825cbf6fe665a, type: 2}

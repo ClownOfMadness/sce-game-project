@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Bakery
   code: 5008
   type: 4
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 5152a10d6d8b31d4aa550f72b5755b2f, type: 2}
     card2: {fileID: 11400000, guid: 361126a81a73da743b2825cbf6fe665a, type: 2}

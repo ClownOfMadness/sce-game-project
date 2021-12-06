@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Armor
   code: 2057
   type: 2
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: bd7b3bf588b713441b1254dada7b0123, type: 2}
     card2: {fileID: 11400000, guid: 9dc53f43321834244a0789f0648d0c45, type: 2}

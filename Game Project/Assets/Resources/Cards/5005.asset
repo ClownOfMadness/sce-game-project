@@ -15,7 +15,7 @@ MonoBehaviour:
   name: House
   code: 5005
   type: 4
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 3ed9877e28d2a27448847f1f88d09a32, type: 2}
     card2: {fileID: 11400000, guid: 81389775193a71a4394ef336b30627d9, type: 2}

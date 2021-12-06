@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Town Hall
   code: 5000
   type: 4
-  source: 
+  source: 00000000
   combinationOf: []
   gatheredBy: []
   complexity: 0

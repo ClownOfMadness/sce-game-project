@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Flint Spear
   code: 6006
   type: 5
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: aed14c0c460df934a967e2513141aa80, type: 2}
     card2: {fileID: 11400000, guid: c6ebb2dab03cfb347b08872e42059186, type: 2}

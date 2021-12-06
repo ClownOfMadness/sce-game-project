@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Cob
   code: 3010
   type: 3
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 76b70438ace0ab04ca989481546987f8, type: 2}
     card2: {fileID: 11400000, guid: c82627fefb8c55149b5610e0445bd55d, type: 2}

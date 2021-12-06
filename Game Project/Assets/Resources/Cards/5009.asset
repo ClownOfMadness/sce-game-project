@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Food Storage
   code: 5009
   type: 4
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 5152a10d6d8b31d4aa550f72b5755b2f, type: 2}
     card2: {fileID: 11400000, guid: 6252d19e9c5787547b9a02ad7a7bd4e5, type: 2}

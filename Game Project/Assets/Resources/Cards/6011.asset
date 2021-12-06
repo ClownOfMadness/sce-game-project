@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Iron Plough
   code: 6011
   type: 5
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 6690953aab85a944b8c6b2b1a7d36bf4, type: 2}
     card2: {fileID: 11400000, guid: 4c6ed40fc58e10e48b1baa2491fbde18, type: 2}

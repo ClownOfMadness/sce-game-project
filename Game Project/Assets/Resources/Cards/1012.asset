@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Farmer
   code: 1012
   type: 0
-  source: 
+  source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
     card2: {fileID: 11400000, guid: 619e21a2020f51244b9049559cba003a, type: 2}
