@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.EventSystems;
 
 public class Player_Control : MonoBehaviour
 {
@@ -59,48 +60,51 @@ public class Player_Control : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
-            // Functions for when the mouse hovers over an interactable layer
-            if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7) // if it is terrain or impassable or townhall
+            if (EventSystem.current.currentSelectedGameObject == null)
             {
-                if (Input.GetMouseButton(0)) // if it is clicked on terrain or impassable
+                // Functions for when the mouse hovers over an interactable layer
+                if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7) // if it is terrain or impassable or townhall
                 {
-                    // Functions for when the mouse clicks on interactable layer
-
-                    // Gives order to the unit if they are available
-                    selectedObject = raycastHit.transform.gameObject;
-                    selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
-                    if (!selectedData_Tile.GetData())
+                    if (Input.GetMouseButton(0)) // if it is clicked on terrain or impassable
                     {
-                        selectedUnit = UnitSelection(selectedJob, selectedObject, selectedData_Tile.hasTownHall);
-                        if (selectedUnit)
+                        // Functions for when the mouse clicks on interactable layer
+
+                        // Gives order to the unit if they are available
+                        selectedObject = raycastHit.transform.gameObject;
+                        selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
+                        if (!selectedData_Tile.GetData())
                         {
-                            Data_Unit = selectedUnit.GetComponent<Data_Unit>();
-                            if (Data_Unit)
+                            selectedUnit = UnitSelection(selectedJob, selectedObject, selectedData_Tile.hasTownHall);
+                            if (selectedUnit)
                             {
-                                selectedData_Tile.AttachWork(selectedUnit);
-                                Data_Unit.UpdateTargetLocation(selectedObject);
+                                Data_Unit = selectedUnit.GetComponent<Data_Unit>();
+                                if (Data_Unit)
+                                {
+                                    selectedData_Tile.AttachWork(selectedUnit);
+                                    Data_Unit.UpdateTargetLocation(selectedObject);
+                                }
                             }
+                        }
+                    }
+
+                    if (Input.GetMouseButton(1))
+                    {
+                        // Cancels units current job
+                        selectedObject = raycastHit.transform.gameObject;
+                        selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
+                        if (selectedData_Tile.GetData())
+                        {
+                            (selectedData_Tile.GetObject()).GetComponent<Data_Unit>().RemoveTargetLocation();
+                            selectedData_Tile.DetachWork();
                         }
                     }
                 }
 
-                if (Input.GetMouseButton(1))
+                if (raycastHit.transform.gameObject.layer == 6)
                 {
-                    // Cancels units current job
-                    selectedObject = raycastHit.transform.gameObject;
-                    selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
-                    if (selectedData_Tile.GetData())
-                    {
-                        (selectedData_Tile.GetObject()).GetComponent<Data_Unit>().RemoveTargetLocation();
-                        selectedData_Tile.DetachWork();
-                    }
+                    // Checks if the selected object is a terrain tile
+                    zoneMap.selectedTile = raycastHit.transform.gameObject; // Pass the current selected tile to the zonemap script
                 }
-            }
-            
-            if (raycastHit.transform.gameObject.layer == 6)
-            {
-                // Checks if the selected object is a terrain tile
-                zoneMap.selectedTile = raycastHit.transform.gameObject; // Pass the current selected tile to the zonemap script
             }
         }
     }
