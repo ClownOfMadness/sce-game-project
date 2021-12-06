@@ -29,12 +29,21 @@ public class Data_Unit : MonoBehaviour
     [HideInInspector] public bool busy = false;
     private GameObject townHall;
     private GameObject workPlace;
+    private System_DayNight time;
     private bool working = false;
     private int workIndex = -1;
     private float workTime = 0f;
     private float workDone = 0f;
     private bool workBegun = false;
     private bool toTownHall = false;
+    private bool workInMemory = false;
+
+    // Work in memory
+    private Data_Tile rmbTileData;
+    private GameObject rmbWorkPlace;
+    private int rmbWorkIndex;
+    private float rmbWorkTime;
+    private GameObject rmbTarget;
 
     // Recieved from PlayerControl
     [HideInInspector] public GameObject target;
@@ -93,6 +102,14 @@ public class Data_Unit : MonoBehaviour
             if (unitList && !townHall)
             {
                 if (!(townHall = unitList.townhall))
+                {
+                    loadCount++;
+                }
+            }
+
+            if (!time)
+            {
+                if(!(time = GameObject.Find("Day/Night Cycle").GetComponent<System_DayNight>()))
                 {
                     loadCount++;
                 }
@@ -201,6 +218,7 @@ public class Data_Unit : MonoBehaviour
     {
         if (working)
         {
+            workInMemory = false;
             if (!workPlace || !townHall)
             {
                 Debug.LogError("Could not find work Tile or TownHall in Data_Unit");
@@ -221,7 +239,6 @@ public class Data_Unit : MonoBehaviour
                         }
                         if (Time.time > workDone)
                         {
-                            Debug.Log("Finished work");
                             animator.SetBool("working", false);
                             animator.SetBool("hasCard", true);
                             workBegun = false;
@@ -238,15 +255,26 @@ public class Data_Unit : MonoBehaviour
                         // [[Here add additional check if the hand is free or full and the unit will wait if needed]]
                         animator.SetBool("hasCard", false);
                         holdingCard = false;
-                        path.destination = workPlace.transform.position;
+                        if (!time.isDay)
+                        {
+                            // It is nightTime
+                            RememberWork();
+                        }
+                        else
+                        {
+                            // If it is daytime
+                            path.destination = workPlace.transform.position;
+                        }
                     }
                 }
             }
         }
         else if (toTownHall)
         {
+            // If the units target location is townhall
             if (path.reachedDestination)
             {
+                // If the unit has reached the townhall
                 if (holdingCard)
                 {
                     // [[Add here function that gets the card to hand]]
@@ -266,6 +294,72 @@ public class Data_Unit : MonoBehaviour
                     Destroy(this.gameObject);
                 }
             }
+        }
+        else if (time.isDay && workInMemory)
+        {
+            // If it is now daytime and unit remembers work
+            if (!busy)
+            {
+                BackToWork();
+            }
+        }
+    }
+
+    private void RememberWork()
+    {
+        workInMemory = true;
+
+        tileData.DetachWork();
+        busy = false;
+        working = false;
+        path.speed = 3f;
+        rmbTileData = tileData;
+        tileData = null;
+        rmbTarget = target;
+        target = null;
+        rmbWorkPlace = workPlace;
+        workPlace = null;
+        rmbWorkIndex = workIndex;
+        workIndex = -1;
+        rmbWorkTime = workTime;
+        workTime = 0f;
+        workDone = 0f;
+        workBegun = false;
+        path.destination = this.transform.position;
+    }
+
+    private void BackToWork()
+    {
+        workInMemory = false;
+
+        if (!rmbTileData.GetData())
+        {
+            rmbTileData.AttachWork(this.gameObject);
+            busy = true;
+            working = true;
+            path.speed = 7f;
+            target = rmbTarget;
+            tileData = rmbTileData;
+            workPlace = rmbWorkPlace;
+            workIndex = rmbWorkIndex;
+            workTime = rmbWorkTime;
+            workDone = 0f;
+            workBegun = false;
+            path.destination = workPlace.transform.position;
+        }
+        else
+        {
+            busy = false;
+            working = false;
+            path.speed = 3f;
+            tileData = null;
+            target = null;
+            workPlace = null;
+            workIndex = -1;
+            workTime = 0f;
+            workDone = 0f;
+            workBegun = false;
+            path.destination = this.transform.position;
         }
     }
 }

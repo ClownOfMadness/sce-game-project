@@ -26,7 +26,6 @@ public class Data_Tile : MonoBehaviour
 
     public int CanWork(Data_Unit _unit)
     {
-        Debug.Log("Sent Unit: " + _unit.unitJob);
         for (int i = 0; i < works.Length; i++)
         {
             if (works[i].job.unitJob == _unit.unitJob)
