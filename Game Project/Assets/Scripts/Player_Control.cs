@@ -71,7 +71,7 @@ public class Player_Control : MonoBehaviour
                     selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
                     if (!selectedData_Tile.GetData())
                     {
-                        selectedUnit = UnitSelection(selectedJob, selectedData_Tile.hasTownHall);
+                        selectedUnit = UnitSelection(selectedJob, selectedObject, selectedData_Tile.hasTownHall);
                         if (selectedUnit)
                         {
                             Data_Unit = selectedUnit.GetComponent<Data_Unit>();
@@ -105,8 +105,11 @@ public class Player_Control : MonoBehaviour
         }
     }
 
-    private GameObject UnitSelection(int _selectedJob, bool townhall) // Searches for a free unit in a job category
+    private GameObject UnitSelection(int _selectedJob, GameObject target, bool townhall) // Searches for a free unit in a job category
     {
+        float distance = 0f;
+        float lowestDistance = 99999f;
+        GameObject bestOption = null;
         if (_selectedJob < 0 || _selectedJob >= unitList.units.Length)
             return null;
         else
@@ -114,13 +117,18 @@ public class Player_Control : MonoBehaviour
             foreach (Transform unitInGroup in unitList.units[_selectedJob].unitGroup.transform)
             {
                 GameObject unitInGroupObject = unitInGroup.gameObject;
+                distance = Vector3.Distance(unitInGroup.position, target.transform.position);
                 Data_Unit tempData = unitInGroupObject.GetComponent<Data_Unit>();
                 if ((tempData.busy == false && tempData.holdingCard == false) || (townhall && tempData.holdingCard == true))
                 {
-                    return unitInGroupObject;
+                    if (lowestDistance > distance)
+                    {
+                        lowestDistance = distance;
+                        bestOption = unitInGroupObject;
+                    }
                 }
             }
-            return null;
+            return bestOption;
         }
     }
 
