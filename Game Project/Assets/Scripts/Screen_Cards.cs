@@ -7,11 +7,14 @@ public class Screen_Cards : MonoBehaviour
     public Text Message;
     public GameObject Hand;
     public GameObject Craft;
-    public GameObject Book;
     public GameObject Storage;
+    public GameObject Book;
     public GameObject Map;
-    public GameObject creativeButton;
     public GameObject destroyButton;
+    public GameObject creativeButton;
+    public GameObject storageButton;
+    public GameObject cardsButton;
+
     [Header("Game State:")]
     public bool SkipLogin;
     private Zone_Hand zHand;
@@ -45,7 +48,11 @@ public class Screen_Cards : MonoBehaviour
         }
 
     }
-    public void SwitchCreative()
+    public void SwitchCards()
+    {
+
+    }
+        public void SwitchCreative()
     {
         if (Storage.activeSelf == false)    //only try to open/close Book if Storage is closed
         {

@@ -3,29 +3,32 @@ using UnityEngine.UI;
 
 public class Screen_Behaviour : MonoBehaviour
 {
-    public GameObject Login;
+    //public GameObject Login;
     public GameObject Cards;
-    public GameObject loginButton;
+    //public GameObject loginButton;
     public GameObject cardsButton;
-    [HideInInspector] public string[] Pcode = new string[] { "Premium", "premium", "Premium1", "premium1", "Premium2", "premium2" };
+    //[HideInInspector] public string[] Pcode = new string[] { "Premium", "premium", "Premium1", "premium1", "Premium2", "premium2" };
     private Screen_Login LoginS;
     private Screen_Cards CardsS;
     public Button submitButton; //
 
     void Start()    //initilizing screen
     {
-        LoginS = Login.transform.GetComponent<Screen_Login>();
+        //LoginS = Login.transform.GetComponent<Screen_Login>();
         CardsS = Cards.transform.GetComponent<Screen_Cards>();
 
-        Login.SetActive(false);
-        Cards.SetActive(true);
-        loginButton.SetActive(true);
+        //Login.SetActive(false);
+        Cards.SetActive(false);
+        //loginButton.SetActive(true);
         cardsButton.SetActive(true);
     }
     public void TopMessage(string text)
     {
         //move things about Message from Screen_Cards here
     }
+
+    //All Login stuff moved to Menu scene and to Screen_Login Script
+    /*
     public void CloseLoginOpenGame()
     {
         Login.SetActive(false);
@@ -34,10 +37,11 @@ public class Screen_Behaviour : MonoBehaviour
     public void CloseGameOpenLogin()
     {
         Login.SetActive(true);
-        Cards.SetActive(false);
+        //Cards.SetActive(false);
     }
     public void LoginUI()    //open login UI on click
     {
+        
         
         if (Login.activeSelf)
         {
@@ -47,8 +51,9 @@ public class Screen_Behaviour : MonoBehaviour
         {
             CloseGameOpenLogin();
         }
+       
     }
-
+    
     public void Update() //
     {
         if (Login.activeSelf)   //only check if login screen is open (feel free to remove if I misunderstood)
@@ -81,6 +86,7 @@ public class Screen_Behaviour : MonoBehaviour
             Debug.Log("Incorrect Code");
         }
     }
+    */
     public void CardUI()    //open card UI on click
     {
         Debug.Log("Clicked "+Cards.activeSelf);
