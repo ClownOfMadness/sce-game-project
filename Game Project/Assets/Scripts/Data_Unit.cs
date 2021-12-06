@@ -184,7 +184,6 @@ public class Data_Unit : MonoBehaviour
         {
             if (path.reachedDestination && !working)
             {
-                Debug.Log("Not busy anymore and no work");
                 busy = false;
             }
         }
@@ -219,7 +218,6 @@ public class Data_Unit : MonoBehaviour
                         {
                             workBegun = true;
                             workDone = Time.time + workTime;
-                            Debug.Log("Started work, work time: " + workTime + ". current time: " + Time.time + ". Finish work time: " + workDone);
                         }
                         if (Time.time > workDone)
                         {
