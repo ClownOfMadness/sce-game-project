@@ -51,7 +51,7 @@ public class Screen_Cards : MonoBehaviour
         Message.gameObject.SetActive(true);
         Message.text = text;
     }
-    public void SwitchCards()
+    public void SwitchCards()   //close/open all card related stuff
     {
         if (UIDown)
         {
@@ -62,7 +62,7 @@ public class Screen_Cards : MonoBehaviour
             CloseUI();
         }
     }
-    private void OpenUI()
+    private void OpenUI()   
     {
         Placeable = true;
 

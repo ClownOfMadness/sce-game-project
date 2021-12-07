@@ -53,7 +53,7 @@ public class Zone_Storage : MonoBehaviour
     }
     public bool AddToStorage(Data_Card newCard, bool ignoreTime)
     {
-        if ((nightTime == false || ignoreTime) && count < Size) 
+        if ((nightTime || ignoreTime) && count < Size) 
         {
             slots.Add(newCard);
             slots.OrderBy(Card => Card.code);
@@ -65,7 +65,7 @@ public class Zone_Storage : MonoBehaviour
     }
     public void RemoveFromStorage(Card_Display pickedCard)
     {
-        if (nightTime == false)
+        if (nightTime) 
         {
             slots.Remove(pickedCard.card);
             count--;

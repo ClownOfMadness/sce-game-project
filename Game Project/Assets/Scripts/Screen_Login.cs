@@ -10,7 +10,8 @@ public class Screen_Login : MonoBehaviour
     [HideInInspector] public string [] Pcode = new string[] { "Premium", "premium", "Premium1", "premium1","Premium2","premium2" };
     public InputField code;
     public Button submitButton; //
-    public Menu_Main Menu;
+    public GameObject Menu;
+    public GameObject LoginPremium;
     public void Update() //
     {
         if (Input.GetKeyDown(KeyCode.Return))
@@ -30,7 +31,9 @@ public class Screen_Login : MonoBehaviour
             {
                 Debug.Log("Log in succefull");
                 IsLogin = true;
-                Menu.NewGame();
+                LoginPremium.SetActive(false);
+                Menu.SetActive(true);
+                //replace with premium windows in future
                 break;
             }
         }
