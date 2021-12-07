@@ -22,4 +22,4 @@ MonoBehaviour:
   description: Adds 6 space to the kingdom and creates one peasant a day as long
     as there is space
   artwork: {fileID: 21300000, guid: 56af3e652e0cda94597295b2b74cb464, type: 3}
-  buildingPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 9034094746195452373, guid: 67cb9a8e55611e648a782b97987f1138, type: 3}
