@@ -11,15 +11,16 @@ public class Zone_Storage : MonoBehaviour
     [HideInInspector] public int Size;  //Page size
     [HideInInspector] private List<Data_Card> slots;  //what is in the storage
     [HideInInspector] public int count;  //amount of full slots in the storage
-    [HideInInspector] public bool nightTime;
+    [HideInInspector] private System_DayNight night;
 
-    void Start()
+    void Awake()
     {
         Size = 8;           //max Zone size
         InstantiateZone();
         slots = new List<Data_Card>();
         count = 0;
-    }
+        night=FindObjectOfType<System_DayNight>();
+}
     private void InstantiateZone()
     {
         Page = Instantiate(PagePrefab, this.transform);             //create and instantiate Page objects in scene
@@ -40,11 +41,11 @@ public class Zone_Storage : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             cards[i].AddCard(slots[i]);
-            cards[i].gameObject.name = string.Format("{0} (Card)", slots[i].name);                    //updates name in scene
-            if(nightTime)
-                cards[i].gameObject.GetComponent<CanvasGroup>().alpha = .6f;
-            else
+            cards[i].gameObject.name = string.Format("{0} (Card)", slots[i].name);  //updates name in scene
+            if(night.isDay)
                 cards[i].gameObject.GetComponent<CanvasGroup>().alpha = 1f;
+            else
+                cards[i].gameObject.GetComponent<CanvasGroup>().alpha = .6f;
         }
         for (int i = count; i < this.Size; i++)
         {
@@ -53,7 +54,7 @@ public class Zone_Storage : MonoBehaviour
     }
     public bool AddToStorage(Data_Card newCard, bool ignoreTime)
     {
-        if ((nightTime || ignoreTime) && count < Size) 
+        if ((night.isDay==false || ignoreTime) && count < Size) 
         {
             slots.Add(newCard);
             slots.OrderBy(Card => Card.code);
@@ -65,7 +66,7 @@ public class Zone_Storage : MonoBehaviour
     }
     public void RemoveFromStorage(Card_Display pickedCard)
     {
-        if (nightTime) 
+        if (night.isDay==false) 
         {
             slots.Remove(pickedCard.card);
             count--;
