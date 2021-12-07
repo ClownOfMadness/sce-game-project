@@ -135,7 +135,6 @@ public class Map_Gen : MonoBehaviour
                 if (!(i == y && j == x))
                     PeasentPos.Add(new Vector3(j * 10, 1, i * 10));
 
-                TileArray[j, i] = GameObject.Find(string.Format("tile_x{0}_y{1}", j, i));
                 if (TileArray[j, i].name != "Plains")
                 { 
                     Vector3 pos = TileArray[x, y].transform.position;
