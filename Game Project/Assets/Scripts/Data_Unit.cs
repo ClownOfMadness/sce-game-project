@@ -9,7 +9,7 @@ public class Data_Unit : MonoBehaviour
     public string unitJob = "None";
 
     // Unit Data
-    [HideInInspector] public bool holdingCard = false;
+    //[HideInInspector] public bool holdingCard = false;
     
     // Input unit design
     public List<RuntimeAnimatorController> design;
@@ -37,6 +37,11 @@ public class Data_Unit : MonoBehaviour
     private bool workBegun = false;
     private bool toTownHall = false;
     private bool workInMemory = false;
+    private Data_Card workCard;
+    public Data_Card card;
+    private Screen_Cards screenCards;
+    public bool cardToDeliver = false;
+    public Data_Card unitCard;
 
     // Work in memory
     private Data_Tile rmbTileData;
@@ -44,9 +49,9 @@ public class Data_Unit : MonoBehaviour
     private int rmbWorkIndex;
     private float rmbWorkTime;
     private GameObject rmbTarget;
+    private Data_Card rmbWorkCard;
 
     // Recieved from PlayerControl
-    [HideInInspector] public GameObject target;
     private Data_Tile tileData;
 
     // Find Once function
@@ -61,6 +66,10 @@ public class Data_Unit : MonoBehaviour
         if (!animator)
         {
             Debug.LogError("Animator Component is missing in the Data_Unit");
+        }
+        if (!unitCard)
+        {
+            Debug.LogError("Unit's Data_Card is missing in the Data_Unit");
         }
         
         // Sets random design
@@ -114,6 +123,14 @@ public class Data_Unit : MonoBehaviour
                     loadCount++;
                 }
             }
+
+            if (!screenCards)
+            {
+                if(!(screenCards = GameObject.Find("CardsScreen").GetComponent<Screen_Cards>()))
+                {
+                    loadCount++;
+                }
+            }
         }
     }
 
@@ -143,11 +160,10 @@ public class Data_Unit : MonoBehaviour
     public void UpdateTargetLocation(GameObject tile) // Method to set target location and info for the unit
     {
         // Called from PlayerControl
-        if (!busy)
+        if (!busy && !card)
         {
             busy = true;
             path.speed = 7f;
-            target = tile;
             tileData = tile.GetComponent<Data_Tile>();
             path.destination = tile.transform.position;
             if (tileData.hasTownHall) // If townhall
@@ -161,6 +177,7 @@ public class Data_Unit : MonoBehaviour
                     working = true;
                     workPlace = tile;
                     workTime = tileData.works[workIndex].workTime;
+                    workCard = tileData.works[workIndex].card;
                 }
             }
         }
@@ -177,8 +194,8 @@ public class Data_Unit : MonoBehaviour
         workTime = 0f;
         workDone = 0f;
         workBegun = false;
+        workCard = null;
         path.speed = 3f;
-        target = null;
         tileData = null;
         path.destination = this.transform.position;
     }
@@ -241,8 +258,8 @@ public class Data_Unit : MonoBehaviour
                         {
                             animator.SetBool("working", false);
                             animator.SetBool("hasCard", true);
+                            card = workCard;
                             workBegun = false;
-                            holdingCard = true;
                             path.destination = townHall.transform.position;
                         }
                     }
@@ -253,21 +270,61 @@ public class Data_Unit : MonoBehaviour
                     if (path.reachedDestination)
                     {
                         // [[Here add additional check if the hand is free or full and the unit will wait if needed]]
-                        animator.SetBool("hasCard", false);
-                        holdingCard = false;
-                        if (!time.isDay)
+                        if (screenCards.AddGathered(card))
                         {
-                            // It is nightTime
-                            RememberWork();
+                            animator.SetBool("hasCard", false);
+                            card = null;
+                            cardToDeliver = false;
+                            if (!time.isDay)
+                            {
+                                // It is nightTime
+                                RememberWork();
+                            }
+                            else
+                            {
+                                // If it is daytime
+                                path.destination = workPlace.transform.position;
+                            }
                         }
                         else
                         {
-                            // If it is daytime
-                            path.destination = workPlace.transform.position;
+                            WaitingWithCard();
                         }
                     }
                 }
             }
+        }
+        else if (card && !cardToDeliver)
+        {
+            busy = true;
+            path.speed = 7f;
+            if (path.destination != townHall.transform.position)
+                path.destination = townHall.transform.position;
+            else
+            {
+                if (path.reachedDestination)
+                {
+                    if (screenCards.AddGathered(card))
+                    {
+                        animator.SetBool("hasCard", false);
+                        card = null;
+                        busy = false;
+                        cardToDeliver = false;
+                        path.speed = 3f;
+                        tileData = null;
+                        path.destination = this.transform.position;
+                    }
+                    else
+                    {
+                        WaitingWithCard();
+                    }
+                }
+            }
+        }
+        else if (cardToDeliver && !card)
+        {
+            animator.SetBool("hasCard", false);
+            cardToDeliver = false;
         }
         else if (toTownHall)
         {
@@ -275,30 +332,26 @@ public class Data_Unit : MonoBehaviour
             if (path.reachedDestination)
             {
                 // If the unit has reached the townhall
-                if (holdingCard)
+                if (screenCards.AddGathered(unitCard))
                 {
-                    // [[Add here function that gets the card to hand]]
-                    animator.SetBool("hasCard", false);
-                    holdingCard = false;
-                    busy = false;
-                    path.speed = 3f;
                     tileData.DetachWork();
-                    target = null;
-                    tileData = null;
-                    path.destination = this.transform.position;
+                    Destroy(this.gameObject);
                 }
                 else
                 {
-                    // [[Add function that turns the peasant into a card]]
+                    toTownHall = false;
+                    busy = false;
+                    path.speed = 3f;
                     tileData.DetachWork();
-                    Destroy(this.gameObject);
+                    tileData = null;
+                    path.destination = this.transform.position;
                 }
             }
         }
         else if (time.isDay && workInMemory)
         {
             // If it is now daytime and unit remembers work
-            if (!busy)
+            if (!busy && !card)
             {
                 BackToWork();
             }
@@ -315,8 +368,6 @@ public class Data_Unit : MonoBehaviour
         path.speed = 3f;
         rmbTileData = tileData;
         tileData = null;
-        rmbTarget = target;
-        target = null;
         rmbWorkPlace = workPlace;
         workPlace = null;
         rmbWorkIndex = workIndex;
@@ -324,6 +375,8 @@ public class Data_Unit : MonoBehaviour
         rmbWorkTime = workTime;
         workTime = 0f;
         workDone = 0f;
+        rmbWorkCard = workCard;
+        workCard = null;
         workBegun = false;
         path.destination = this.transform.position;
     }
@@ -338,11 +391,11 @@ public class Data_Unit : MonoBehaviour
             busy = true;
             working = true;
             path.speed = 7f;
-            target = rmbTarget;
             tileData = rmbTileData;
             workPlace = rmbWorkPlace;
             workIndex = rmbWorkIndex;
             workTime = rmbWorkTime;
+            workCard = rmbWorkCard;
             workDone = 0f;
             workBegun = false;
             path.destination = workPlace.transform.position;
@@ -353,12 +406,47 @@ public class Data_Unit : MonoBehaviour
             working = false;
             path.speed = 3f;
             tileData = null;
-            target = null;
             workPlace = null;
             workIndex = -1;
             workTime = 0f;
             workDone = 0f;
+            workCard = null;
             workBegun = false;
+            path.destination = this.transform.position;
+        }
+    }
+
+    private void WaitingWithCard()
+    {
+        cardToDeliver = true;
+        if (working)
+        {
+            workInMemory = true;
+
+            tileData.DetachWork();
+            busy = false;
+            working = false;
+            path.speed = 3f;
+            rmbTileData = tileData;
+            tileData = null;
+            rmbWorkPlace = workPlace;
+            workPlace = null;
+            rmbWorkIndex = workIndex;
+            workIndex = -1;
+            rmbWorkTime = workTime;
+            workTime = 0f;
+            workDone = 0f;
+            rmbWorkCard = workCard;
+            workCard = null;
+            workBegun = false;
+            path.destination = this.transform.position;
+        }
+        else
+        {
+            busy = false;
+            path.speed = 3f;
+            tileData.DetachWork();
+            tileData = null;
             path.destination = this.transform.position;
         }
     }

@@ -31,6 +31,7 @@ public class Player_Control : MonoBehaviour
 
     // Card
     public Zone_Map zoneMap; // Zonemap script for passing location
+    public Screen_Cards screenCards;
 
     private void Awake()
     {
@@ -45,6 +46,10 @@ public class Player_Control : MonoBehaviour
         if (!zoneMap)
         {
             Debug.LogError("Zone_Map script object is missing in Player_Control");
+        }
+        if (!screenCards)
+        {
+            Debug.LogError("Screen_Cards script object is missing in Player_Control");
         }
     }
 
@@ -104,6 +109,7 @@ public class Player_Control : MonoBehaviour
                 {
                     // Checks if the selected object is a terrain tile
                     zoneMap.selectedTile = raycastHit.transform.gameObject; // Pass the current selected tile to the zonemap script
+                    //screenCards.zMap.selectedTile = raycastHit.transform.gameObject;
                 }
             }
         }
@@ -123,7 +129,7 @@ public class Player_Control : MonoBehaviour
                 GameObject unitInGroupObject = unitInGroup.gameObject;
                 distance = Vector3.Distance(unitInGroup.position, target.transform.position);
                 Data_Unit tempData = unitInGroupObject.GetComponent<Data_Unit>();
-                if ((tempData.busy == false && tempData.holdingCard == false) || (townhall && tempData.holdingCard == true))
+                if (tempData.busy == false && tempData.card == null)
                 {
                     if (lowestDistance > distance)
                     {

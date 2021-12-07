@@ -14,7 +14,7 @@ public class Data_Tile : MonoBehaviour
     public struct Work
     {
         public Data_Unit job;
-        public ScriptableObject card;
+        public Data_Card card;
         public float workTime;
     }
 
