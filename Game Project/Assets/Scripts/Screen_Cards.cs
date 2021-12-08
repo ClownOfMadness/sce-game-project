@@ -9,7 +9,6 @@ public class Screen_Cards : MonoBehaviour
     public GameObject Craft;
     public GameObject Storage;
     public GameObject Book;
-    public GameObject Map;
     public GameObject destroyButton;
     public GameObject creativeButton;
     public GameObject storageButton;
@@ -21,9 +20,9 @@ public class Screen_Cards : MonoBehaviour
     private Zone_Craft zCraft;
     private Zone_Storage zStorage;
     private Zone_Book zBook;
-    private Zone_Map zMap;
-    [HideInInspector] public bool Placeable;
     [HideInInspector] public bool UIDown;
+    [HideInInspector] public GameObject selectedTile;   //updated by PlayerControl
+    
 
     void Start()    //initilizing in case something was off
     {
@@ -31,7 +30,6 @@ public class Screen_Cards : MonoBehaviour
         zCraft = Craft.transform.GetComponent<Zone_Craft>();
         zStorage = Storage.transform.GetComponent<Zone_Storage>();
         zBook = Book.transform.GetComponent<Zone_Book>();
-        zMap = Map.transform.GetComponent<Zone_Map>();
 
         CloseUI();
        
@@ -64,11 +62,9 @@ public class Screen_Cards : MonoBehaviour
     }
     private void OpenUI()   
     {
-        Placeable = true;
 
         Hand.SetActive(true);
         Craft.SetActive(true);
-        Map.SetActive(false);
         destroyButton.SetActive(true);
        
         UIDown = false;
@@ -76,13 +72,11 @@ public class Screen_Cards : MonoBehaviour
     private void CloseUI()
     {
         Message.gameObject.SetActive(false);
-        Placeable = false;
 
         Hand.SetActive(false);
         Craft.SetActive(false);
         Storage.SetActive(false);
         Book.SetActive(false);
-        Map.SetActive(false);
         destroyButton.SetActive(false);
 
         UIDown = true;
@@ -102,7 +96,6 @@ public class Screen_Cards : MonoBehaviour
     private void OpenBook()
     {
         TopMessage("Creative game mode, click cards to add to your deck");
-        Placeable = false;
 
         Craft.SetActive(false);
         Storage.SetActive(false);
@@ -115,7 +108,6 @@ public class Screen_Cards : MonoBehaviour
     private void CloseBook()
     {
         Message.gameObject.SetActive(false);
-        Placeable = true;
 
         zBook.FirstPage();
         Book.SetActive(false); 
@@ -135,7 +127,6 @@ public class Screen_Cards : MonoBehaviour
     public void OpenStorage()      
     {
         TopMessage("Town Storage");
-        Placeable = false;
 
         Book.SetActive(false);
         Craft.SetActive(false);
@@ -148,7 +139,6 @@ public class Screen_Cards : MonoBehaviour
     public void CloseStorage()
     {
         Message.gameObject.SetActive(false);
-        Placeable = true;
 
         Storage.SetActive(false);
         Craft.SetActive(true);
@@ -162,7 +152,6 @@ public class Screen_Cards : MonoBehaviour
                 if (Craft.transform.childCount < zCraft.Size)
                 {
                     TopMessage("Attempting to craft! Pick another card to combine");
-                    Placeable = false;
                     pickedCard.transform.SetParent(Craft.transform);
                     if (Craft.transform.childCount == zCraft.Size)
                     {
@@ -203,7 +192,6 @@ public class Screen_Cards : MonoBehaviour
         //card.gameObject.transform.SetParent(Craft.transform);
         //[insert timer]
         card.gameObject.transform.SetParent(Hand.transform);
-        Placeable = true;
     }
     public void ClickToHand(Card_Display pickedCard)//adds card to hand based on what was picked in Book/Storage
     {

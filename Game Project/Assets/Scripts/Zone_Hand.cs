@@ -27,12 +27,18 @@ public class Zone_Hand : Zone_Behaviour
         for (int i = this.transform.childCount; i < this.Size; i++)
         {
             GameObject newCard = Instantiate(CardPrefab, this.transform);   //create and instantiate objects in scene
-            string newName = Pool.FillObject(newCard);                      //add cards to objects + save the new card name (for displaying in Scene)
+            string newName = Pool.FillObject(newCard,5000);                 //add cards to objects + save the new card name (for displaying in Scene)
             newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
         }
     }
-    public override void EventDrop(Card_Drag cardObject)             //failsafe for when card gets dropped back in hand
+    public void EmptyHand()     //add Creation to hand (not used yet)
     {
+        if (this.transform.childCount == 0)
+        {
+            GameObject newCard = Instantiate(CardPrefab, this.transform);   //create and instantiate objects in scene
+            string newName = Pool.FillObject(newCard, "Creation");          //add cards to objects + save the new card name (for displaying in Scene)
+            newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
+        }
     }
 }
 

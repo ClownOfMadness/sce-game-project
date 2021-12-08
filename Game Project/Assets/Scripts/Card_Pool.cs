@@ -19,12 +19,12 @@ public class Card_Pool : ScriptableObject
         for (int i = 0; i < count; i++)
         {
             if (cards[i].source.Count == 0)                //cards without a source are invalid
-                Debug.Log("Error! Card " + cards[i].code + " is invalid, please set at least one source.");
+                Debug.LogError("Error! Card " + cards[i].code + " is invalid, please set at least one source.");
             else if (IsCombination(cards[i]))
                 if (cards[i].combinationOf.Count == 0)  //combination cards without a combination listed are invalid
-                    Debug.Log("Error! Combination of card " + cards[i].code + " is invalid, please add at least one set of cards that craft it.");
+                    Debug.LogError("Error! Combination of card " + cards[i].code + " is invalid, please add at least one set of cards that craft it.");
                 else if (cards[i].combinationOf[0].card1 == null || cards[i].combinationOf[0].card2 == null)
-                    Debug.Log("Error! Combination of card " + cards[i].code + " is invalid, please add at least one set of cards that craft it.");
+                    Debug.LogError("Error! Combination of card " + cards[i].code + " is invalid, please add at least one set of cards that craft it.");
         }
     }
     private static bool IsCombination(Data_Card card)       //find if card is listed as combination
@@ -34,9 +34,33 @@ public class Card_Pool : ScriptableObject
                 return true;
         return false;
     }
-    public string FillObject(GameObject cardObject)         //add card to object + return the new card name (for displaying in Scene)
+    public int FindCard(string cardName)    //gets card index from name
+    {
+        int i;
+        for (i = 0; i < count && cards[i].name != cardName; i++) ;
+        return i;
+    }
+    public int FindCard(int cardCode)       //gets card index from code
+    {
+        int i;
+        for (i = 0; i < count && cards[i].code != cardCode; i++) ;
+        return i;
+    }
+    public string FillObject(GameObject cardObject)             //add random card to object + return the new card name (for displaying in Scene)
     {
         Data_Card newCard = cards[Random.Range(0, count)];
+        cardObject.GetComponent<Card_Display>().AddCard(newCard);
+        return newCard.name;
+    }
+    public string FillObject(GameObject cardObject, int cardCode)  //add card of given code to object + return the new card name (for displaying in Scene)
+    {
+        Data_Card newCard = cards[FindCard(cardCode)];
+        cardObject.GetComponent<Card_Display>().AddCard(newCard);
+        return newCard.name;
+    }
+    public string FillObject(GameObject cardObject, string cardName)  //add card of given name to object + return the new card name (for displaying in Scene)
+    {
+        Data_Card newCard = cards[FindCard(cardName)];
         cardObject.GetComponent<Card_Display>().AddCard(newCard);
         return newCard.name;
     }

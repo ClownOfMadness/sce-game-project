@@ -8,15 +8,15 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     [HideInInspector] public Transform parentReturnTo = null;         //helps snapping the card back to place
     [HideInInspector] public GameObject placeholder = null;           //saves the dragged card's spot (for changing card order)
     [HideInInspector] public Transform placeholderParent = null;      //saves the dragged card's parent
-    [HideInInspector] public Transform hand;
-    [HideInInspector] public Transform map;
+    //[HideInInspector] public Transform hand;
+    private Player_SpawnBuilding Tiles;
 
     void Start()
     {
         canvas = this.transform.parent.parent.GetComponent<Canvas>();
         screen = canvas.GetComponent<Screen_Cards>();
-        hand = screen.Hand.GetComponentInChildren<Zone_Hand>().transform;
-        map = screen.Map.GetComponentInChildren<Zone_Map>().transform;
+        Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
+        //hand = screen.Hand.GetComponentInChildren<Zone_Hand>().transform;
     }
     public void ReturnToHand()          //return to hand after craft attempt
     {
@@ -41,44 +41,57 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (screen.Placeable)
-            map.gameObject.SetActive(true); //only enable map if we dont have a UI window open
         parentReturnTo = this.transform.parent;
-        if(parentReturnTo==hand)    //only update placefolder if we're in the Hand
-            SavePlaceholder();
+        SavePlaceholder();
         this.transform.SetParent(this.transform.parent.parent);         //changes parent once the card is picked
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
     public void OnDrag(PointerEventData eventData)
     {
         GetComponent<RectTransform>().anchoredPosition += eventData.delta / canvas.scaleFactor; //moves by wherever we picked the card instead of by the middle
-        if (parentReturnTo == hand) //only update placefolder if we're in the Hand
+        if (placeholder.transform.parent != placeholderParent)
         {
-            if (placeholder.transform.parent != placeholderParent)
-            {
-                placeholder.transform.SetParent(placeholderParent);
-            }
-            int newSiblingIndex = placeholderParent.childCount;         //a workaround to make it also work from right to left
-            for (int i = 0; i < placeholderParent.childCount; i++)      //loops to move the placeholder to the left
-            {
-                if (this.transform.position.x < placeholderParent.GetChild(i).position.x)
-                {
-                    newSiblingIndex = i;
-                    if (placeholder.transform.GetSiblingIndex() < newSiblingIndex)
-                        newSiblingIndex--;
-                    break;
-                }
-            }
-            placeholder.transform.SetSiblingIndex(newSiblingIndex);     //the abillity to swap places with cards in hand
+            placeholder.transform.SetParent(placeholderParent);
         }
+        int newSiblingIndex = placeholderParent.childCount;         //a workaround to make it also work from right to left
+        for (int i = 0; i < placeholderParent.childCount; i++)      //loops to move the placeholder to the left
+        {
+            if (this.transform.position.x < placeholderParent.GetChild(i).position.x)
+            {
+                newSiblingIndex = i;
+                if (placeholder.transform.GetSiblingIndex() < newSiblingIndex)
+                    newSiblingIndex--;
+                break;
+            }
+        }
+        placeholder.transform.SetSiblingIndex(newSiblingIndex);     //the abillity to swap places with cards in hand
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (screen.Placeable)
-            map.gameObject.SetActive(false); //only disable map if we dont have a UI window open
+            if (card.buildingPrefab)    //if building, try to place
+            {
+                Debug.Log(card.buildingPrefab);
+                Debug.Log(screen.selectedTile);
+                if (Tiles.Spawn(card.buildingPrefab, screen.selectedTile))     //spawn the card's building on the tile that's under the pointer
+                {
+                    Destroy(placeholder);
+                    GetComponent<CanvasGroup>().alpha = 0f;                    //hide for now
+                }
+                else        //if placement failed, snap back to Hand
+                {
+                    SnapToHand();
+                }
+            }
+            else   //if not a building, snap back to Hand
+            {
+                SnapToHand();
+            }
+    }
+    private void SnapToHand()
+    {
         this.transform.SetParent(parentReturnTo);
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
-        GetComponent<CanvasGroup>().alpha = 1f;                         //reset effect for card (can be changed)
+        GetComponent<CanvasGroup>().alpha = 1f;                     //reset effect for card (can be changed)
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeholder);
     }
