@@ -86,15 +86,15 @@ public class Map_Gen : MonoBehaviour
                         randP2 = Random.Range(1, ruins);
 
                         if (regions[i].name == "P1" && randP1 == 1)
-                            TileArray[x, y] = Instantiate(Abyss, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
+                            TileArray[x, y] = Instantiate(Abyss, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 0, 0));
                         else if (regions[i].name == "P2" && randP2 == 1)
-                            TileArray[x, y] = Instantiate(Ruins, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
+                            TileArray[x, y] = Instantiate(Ruins, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 0, 0));
                         else
-                            TileArray[x, y] = Instantiate(regions[i].tile, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 180, 0));
+                            TileArray[x, y] = Instantiate(regions[i].tile, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 0, 0));
 
                         if (FogMap)
                         {
-                            GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 180, 0), TileArray[x, y].transform);
+                            GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 0, 0), TileArray[x, y].transform);
                             thisFog.transform.localPosition = new Vector3(0, 1, 0);
                         }
                    
@@ -139,13 +139,13 @@ public class Map_Gen : MonoBehaviour
                 { 
                     Vector3 pos = TileArray[x, y].transform.position;
                     GameObject.DestroyImmediate(TileArray[j, i]);
-                    TileArray[j, i] = Instantiate(regions[k].tile, new Vector3(j * 10, 1, i * 10), Quaternion.Euler(0, 180, 0));
+                    TileArray[j, i] = Instantiate(regions[k].tile, new Vector3(j * 10, 1, i * 10), Quaternion.Euler(0, 0, 0));
                     TileArray[j, i].transform.parent = this.transform;
                     TileArray[j, i].name = string.Format("tile_x{0}_y{1}", j, i);
 
                     if (FogMap)//Create fog if it enabled.
                     {
-                        GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 180, 0), TileArray[j, i].transform);
+                        GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 0, 0), TileArray[j, i].transform);
                         thisFog.transform.localPosition = new Vector3(0, 1, 0);
                     }
                 }

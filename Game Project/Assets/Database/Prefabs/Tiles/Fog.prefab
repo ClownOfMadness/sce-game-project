@@ -70,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -475640103
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 95c22c0a62b9eb04f884eef17afcdfb1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -92,7 +92,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6067169464022514713}
-  - component: {fileID: 4465393226172062549}
   - component: {fileID: 3018925803416976917}
   - component: {fileID: 998333137036339592}
   m_Layer: 10
@@ -117,14 +116,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4465393226172062549
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5062480754815206708}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!65 &3018925803416976917
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -153,3 +144,4 @@ MonoBehaviour:
   fullFog: {fileID: 21300000, guid: 95c22c0a62b9eb04f884eef17afcdfb1, type: 3}
   halfFog: {fileID: 21300000, guid: 394f371232d1ae34e8a4fab88a1ca32c, type: 3}
   sprite: {fileID: 6004003470057923133}
+  Data_Tile: {fileID: 0}

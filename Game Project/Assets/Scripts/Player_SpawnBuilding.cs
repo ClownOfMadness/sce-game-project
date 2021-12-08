@@ -25,19 +25,29 @@ public class Player_SpawnBuilding : MonoBehaviour
         {
             return false;
         }
-        if ((dataTile.revealed == true && (dataTile.tileName == "Plains" || dataTile.tileName == "Marsh")) || dataBuilding.buildingName == "TownHall")
+        if ((dataTile.revealed && dataTile.canBuild) || dataBuilding.buildingName == "TownHall")
         {
-            GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition, Quaternion.Euler(0, 180, 0));
+            if (dataTile.hasBuilding)
+            {
+                Destroy(dataTile.building);
+            }
+            GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition, Quaternion.Euler(0, 0, 0));
             NewBuilding.name = building.transform.name;
             NewBuilding.transform.parent = Tile.transform;
             if (dataBuilding.buildingName == "TownHall")
             {
                 dataTile.hasTownHall = true;
+                dataTile.hasBuilding = false;
+                dataTile.canBuild = false;
             }
             else
             {
                 dataTile.hasBuilding = true;
+                dataTile.hasTownHall = false;
+                dataTile.canBuild = true;
             }
+            dataTile.building = NewBuilding;
+            dataTile.ReturnToDefault();
             path.Scan();
             return true;
         }

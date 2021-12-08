@@ -65,12 +65,14 @@ public class Player_Control : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
+            // Functions for when the mouse hovers over an interactable layer
             if (EventSystem.current.currentSelectedGameObject == null) 
             {
-                // Functions for when the mouse hovers over an interactable layer
-                if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7) // if it is terrain or impassable or townhall
+                // Checks if raycast doesnt hit ui
+                if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7)
                 {
-                    if (Input.GetMouseButton(0)) // if it is clicked on terrain or impassable
+                    // if it is terrain or impassable or townhall
+                    if (Input.GetMouseButtonDown(0))
                     {
                         // Functions for when the mouse clicks on interactable layer
 
@@ -92,7 +94,7 @@ public class Player_Control : MonoBehaviour
                         }
                     }
 
-                    if (Input.GetMouseButton(1))
+                    if (Input.GetMouseButtonDown(1))
                     {
                         // Cancels units current job
                         selectedObject = raycastHit.transform.gameObject;

@@ -48,7 +48,6 @@ public class Data_Unit : MonoBehaviour
     private GameObject rmbWorkPlace;
     private int rmbWorkIndex;
     private float rmbWorkTime;
-    private GameObject rmbTarget;
     private Data_Card rmbWorkCard;
 
     // Recieved from PlayerControl
@@ -248,19 +247,38 @@ public class Data_Unit : MonoBehaviour
                     // if target is workplace
                     if (path.reachedDestination)
                     {
-                        animator.SetBool("working", true);
-                        if (!workBegun)
+                        if (tileData.hasResources)
                         {
-                            workBegun = true;
-                            workDone = Time.time + workTime;
+                            animator.SetBool("working", true);
+                            if (!workBegun)
+                            {
+                                workBegun = true;
+                                workDone = Time.time + workTime;
+                            }
+                            if (Time.time > workDone)
+                            {
+                                animator.SetBool("working", false);
+                                animator.SetBool("hasCard", true);
+                                card = workCard;
+                                workBegun = false;
+                                tileData.durability--;
+                                path.destination = townHall.transform.position;
+                            }
                         }
-                        if (Time.time > workDone)
+                        else
                         {
-                            animator.SetBool("working", false);
-                            animator.SetBool("hasCard", true);
-                            card = workCard;
+                            busy = false;
+                            working = false;
+                            workPlace = null;
+                            workIndex = -1;
+                            workTime = 0f;
+                            workDone = 0f;
                             workBegun = false;
-                            path.destination = townHall.transform.position;
+                            workCard = null;
+                            path.speed = 3f;
+                            tileData.DetachWork();
+                            tileData = null;
+                            path.destination = this.transform.position;
                         }
                     }
                 }
