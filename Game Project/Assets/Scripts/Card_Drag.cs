@@ -102,7 +102,6 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     private void SnapToParent()
     {
-        Debug.Log("snapping");
         this.transform.SetParent(parentReturnTo);
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().alpha = 1f;                     //reset effect for card (can be changed)

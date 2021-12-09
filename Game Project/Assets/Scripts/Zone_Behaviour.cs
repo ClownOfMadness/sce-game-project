@@ -46,7 +46,6 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
                 ZoneUnit.GetComponent<Zone_Unit>().FreeUnit();
             }
             d.parentReturnTo = this.transform;
-            d.gameObject.transform.SetParent(this.transform);
             this.EventDrop(d);  //run response function to dropping a card (of the fitting Zone)
             
         }
