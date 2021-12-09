@@ -30,7 +30,7 @@ public class Player_Control : MonoBehaviour
     private Vector3 originalCameraPos; // Stores camera original position
 
     // Card
-    public Zone_Map zoneMap; // Zonemap script for passing location
+    //public Zone_Map zoneMap; // Zonemap script for passing location
     public Screen_Cards screenCards;
 
     private void Awake()
@@ -43,10 +43,10 @@ public class Player_Control : MonoBehaviour
         {
             Debug.LogError("Unit_List script object is missing in Player_Control");
         }
-        if (!zoneMap)
-        {
-            Debug.LogError("Zone_Map script object is missing in Player_Control");
-        }
+        //if (!zoneMap)
+        //{
+            //Debug.LogError("Zone_Map script object is missing in Player_Control");
+        //}
         if (!screenCards)
         {
             Debug.LogError("Screen_Cards script object is missing in Player_Control");
@@ -110,8 +110,8 @@ public class Player_Control : MonoBehaviour
                 if (raycastHit.transform.gameObject.layer == 6)
                 {
                     // Checks if the selected object is a terrain tile
-                    zoneMap.selectedTile = raycastHit.transform.gameObject; // Pass the current selected tile to the zonemap script
-                    //screenCards.zMap.selectedTile = raycastHit.transform.gameObject;
+                    //zoneMap.selectedTile = raycastHit.transform.gameObject; // Pass the current selected tile to the zonemap script
+                    screenCards.selectedTile = raycastHit.transform.gameObject;
                 }
             }
         }

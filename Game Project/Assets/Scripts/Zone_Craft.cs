@@ -16,7 +16,6 @@ public class Zone_Craft : MonoBehaviour
     {
         if (this.transform.childCount == this.Size)     //failsafe - verifying that there's two objects in the Zone
         {
-            Debug.Log("Crafting");
             Card_Drag[] cardObjects = this.gameObject.transform.GetComponentsInChildren<Card_Drag>();
             Data_Card first = cardObjects[0].card;
             Data_Card second = cardObjects[1].card;
@@ -32,7 +31,6 @@ public class Zone_Craft : MonoBehaviour
             }
             else
             {
-                Debug.Log("Card not found");
                 success = false;
                 cardObjects[1].ReturnToHand();
             }

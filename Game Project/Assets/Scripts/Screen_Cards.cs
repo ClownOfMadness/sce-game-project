@@ -20,6 +20,7 @@ public class Screen_Cards : MonoBehaviour
     private Zone_Craft zCraft;
     private Zone_Storage zStorage;
     private Zone_Book zBook;
+    [HideInInspector] public bool canCraft;
     [HideInInspector] public bool UIDown;
     [HideInInspector] public GameObject selectedTile;   //updated by PlayerControl
     
@@ -64,9 +65,8 @@ public class Screen_Cards : MonoBehaviour
     {
 
         Hand.SetActive(true);
-        Craft.SetActive(true);
         destroyButton.SetActive(true);
-       
+        canCraft = true;
         UIDown = false;
     }
     private void CloseUI()
@@ -78,7 +78,7 @@ public class Screen_Cards : MonoBehaviour
         Storage.SetActive(false);
         Book.SetActive(false);
         destroyButton.SetActive(false);
-
+        canCraft = false;
         UIDown = true;
     }
     public void SwitchCreative()
@@ -96,8 +96,7 @@ public class Screen_Cards : MonoBehaviour
     private void OpenBook()
     {
         TopMessage("Creative game mode, click cards to add to your deck");
-
-        Craft.SetActive(false);
+        canCraft = false;
         Storage.SetActive(false);
         Book.SetActive(true);
         Hand.SetActive(true);
@@ -110,8 +109,8 @@ public class Screen_Cards : MonoBehaviour
         Message.gameObject.SetActive(false);
 
         zBook.FirstPage();
-        Book.SetActive(false); 
-        Craft.SetActive(true);
+        Book.SetActive(false);
+        canCraft = true;
     }
     public void SwitchStorage()       //used when clicked on TownHall
     {
@@ -126,11 +125,14 @@ public class Screen_Cards : MonoBehaviour
     }
     public void OpenStorage()      
     {
-        TopMessage("Town Storage");
-
-        Book.SetActive(false);
-        Craft.SetActive(false);
         Storage.SetActive(true);
+        zStorage.RefreshZone();
+        if(zStorage.night.isDay)
+            TopMessage("Town Storage currently closed! Come back at night");
+        else
+            TopMessage("Town Storage, choose your deck for the next day");
+        canCraft = false;
+        Book.SetActive(false);
         Hand.SetActive(true);
         destroyButton.SetActive(true);
 
@@ -141,14 +143,15 @@ public class Screen_Cards : MonoBehaviour
         Message.gameObject.SetActive(false);
 
         Storage.SetActive(false);
-        Craft.SetActive(true);
+        canCraft = true;
     }
     public void MoveFromHand(Card_Drag pickedCard)  //move card between Hand zone and Craft on click
     {
-        if (Craft.activeSelf)
+        if (canCraft)
         {
             if (pickedCard.transform.parent == Hand.transform)  //if card is in hand - move to craft
             {
+                Craft.SetActive(true);
                 if (Craft.transform.childCount < zCraft.Size)
                 {
                     TopMessage("Attempting to craft! Pick another card to combine");
@@ -192,6 +195,7 @@ public class Screen_Cards : MonoBehaviour
         //card.gameObject.transform.SetParent(Craft.transform);
         //[insert timer]
         card.gameObject.transform.SetParent(Hand.transform);
+        Craft.SetActive(false);
     }
     public void ClickToHand(Card_Display pickedCard)//adds card to hand based on what was picked in Book/Storage
     {

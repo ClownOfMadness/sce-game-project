@@ -11,7 +11,7 @@ public class Zone_Storage : MonoBehaviour
     [HideInInspector] public int Size;  //Page size
     [HideInInspector] private List<Data_Card> slots;  //what is in the storage
     [HideInInspector] public int count;  //amount of full slots in the storage
-    [HideInInspector] private System_DayNight night;
+    [HideInInspector] public System_DayNight night;
 
     void Awake()
     {
@@ -34,7 +34,7 @@ public class Zone_Storage : MonoBehaviour
             newCard.GetComponent<CanvasGroup>().alpha = .6f;
         }
     }
-    private void RefreshZone()
+    public void RefreshZone()
     {
         slots = slots.OrderBy(Card => Card.code).ToList();
         Card_Display[] cards = Page.gameObject.transform.GetComponentsInChildren<Card_Display>();
@@ -42,7 +42,7 @@ public class Zone_Storage : MonoBehaviour
         {
             cards[i].AddCard(slots[i]);
             cards[i].gameObject.name = string.Format("{0} (Card)", slots[i].name);  //updates name in scene
-            if(night.isDay)
+            if(night.isDay==false)
                 cards[i].gameObject.GetComponent<CanvasGroup>().alpha = 1f;
             else
                 cards[i].gameObject.GetComponent<CanvasGroup>().alpha = .6f;

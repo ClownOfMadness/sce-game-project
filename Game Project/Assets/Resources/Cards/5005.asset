@@ -23,4 +23,4 @@ MonoBehaviour:
   complexity: 23
   description: Adds 5 space to the kingdom
   artwork: {fileID: 21300000, guid: bbea48dca48294e4b98ce3b304073d94, type: 3}
-  buildingPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 47623423905756705, guid: 518ca7df09a9bdc46ae3e0b30a3c8816, type: 3}

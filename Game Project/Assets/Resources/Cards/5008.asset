@@ -23,4 +23,4 @@ MonoBehaviour:
   complexity: 35
   description: Also adds a pleasant smell around your kingdom
   artwork: {fileID: 21300000, guid: 2e892b2223bfb7746b2a1a923ae7ae60, type: 3}
-  buildingPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 9096224186310366768, guid: 5d57887078902aa4f831ba29d6cb658e, type: 3}

@@ -8,15 +8,16 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     [HideInInspector] public Transform parentReturnTo = null;         //helps snapping the card back to place
     [HideInInspector] public GameObject placeholder = null;           //saves the dragged card's spot (for changing card order)
     [HideInInspector] public Transform placeholderParent = null;      //saves the dragged card's parent
-    //[HideInInspector] public Transform hand;
+    [HideInInspector] public Transform hand;
     private Player_SpawnBuilding Tiles;
 
     void Start()
     {
         canvas = this.transform.parent.parent.GetComponent<Canvas>();
         screen = canvas.GetComponent<Screen_Cards>();
+        hand = screen.Hand.GetComponentInChildren<Zone_Hand>().transform;
         Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
-        //hand = screen.Hand.GetComponentInChildren<Zone_Hand>().transform;
+       
     }
     public void ReturnToHand()          //return to hand after craft attempt
     {
@@ -42,7 +43,8 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnBeginDrag(PointerEventData eventData)
     {
         parentReturnTo = this.transform.parent;
-        SavePlaceholder();
+        if (parentReturnTo == hand)    //only update placefolder if we're in the Hand
+            SavePlaceholder();
         this.transform.SetParent(this.transform.parent.parent);         //changes parent once the card is picked
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
@@ -70,8 +72,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     {
             if (card.buildingPrefab)    //if building, try to place
             {
-                Debug.Log(card.buildingPrefab);
-                Debug.Log(screen.selectedTile);
+            Debug.Log("Card_Drag: trying to place " + card.buildingPrefab.name + " at " + screen.selectedTile.name);
                 if (Tiles.Spawn(card.buildingPrefab, screen.selectedTile))     //spawn the card's building on the tile that's under the pointer
                 {
                     Destroy(placeholder);
