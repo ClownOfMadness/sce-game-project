@@ -21,18 +21,20 @@ public class Player_Control : MonoBehaviour
     private Data_Tile selectedData_Tile; // Current selected tile data
 
     // Screen Panning
+    public Vector3 startPosition;
     public Vector3 pos; // Camera movement vector
     public float panSpeed = 40f; // Pan speed
     public float panBorderTHICCNess = 10f; // Pan offscreen border THICCness
     public Vector2 panLimit; // Screen panning limit [[Should be changed by map size]]
+    public float border;
     public float scrollSpeed = 10f; // Scroll speed
     public float minScroll = 30f; // Min zoom
     public float maxScroll = 50f; // Max zoom
     public float scroll = 40f; // Original zoom
     private Vector3 originalCameraPos; // Stores camera original position
+    public Map_Gen mapGen;
 
     // Card
-    //public Zone_Map zoneMap; // Zonemap script for passing location
     public Screen_Cards screenCards;
 
     private void Awake()
@@ -45,20 +47,27 @@ public class Player_Control : MonoBehaviour
         {
             Debug.LogError("Unit_List script object is missing in Player_Control");
         }
-        //if (!zoneMap)
-        //{
-            //Debug.LogError("Zone_Map script object is missing in Player_Control");
-        //}
         if (!screenCards)
         {
             Debug.LogError("Screen_Cards script object is missing in Player_Control");
         }
+        if (!mapGen)
+        {
+            Debug.LogError("Map_Gen script is missing in Player_Control");
+        }
+
+        // Screen Pan
+        border = (mapGen.mapSize - 1f) * 10f;
     }
 
     private void Update()
     {
-        CameraControl(); // Screen panning functions
         UnitCommand(); // Unit pathfinding control;
+    }
+
+    private void LateUpdate()
+    {
+        CameraControl(); // Screen panning functions
     }
 
     private void UnitCommand()
@@ -74,7 +83,7 @@ public class Player_Control : MonoBehaviour
                 if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7)
                 {
                     // if it is terrain or impassable or townhall
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0) && !Input.GetKey("space"))
                     {
                         // Functions for when the mouse clicks on interactable layer
 
@@ -115,7 +124,6 @@ public class Player_Control : MonoBehaviour
                 if (raycastHit.transform.gameObject.layer == 6)
                 {
                     // Checks if the selected object is a terrain tile
-                    //zoneMap.selectedTile = raycastHit.transform.gameObject; // Pass the current selected tile to the zonemap script
                     if (screenCards.selectedTile != raycastHit.transform.gameObject)
                     {
                         screenCards.selectedTile = raycastHit.transform.gameObject;
@@ -152,7 +160,7 @@ public class Player_Control : MonoBehaviour
         }
     }
 
-    private void CameraControl()
+    private void OldCameraControl() // [[Can be removed]]
     {
         // [[In future, create a script or scriptable object that will contain key settings
         // and from there draw out the correct keys to be used in game]]
@@ -175,6 +183,16 @@ public class Player_Control : MonoBehaviour
             pos.x -= panSpeed * Time.deltaTime;
         }
 
+        if (Input.GetMouseButtonDown(2))
+        {
+            startPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
+        if (Input.GetMouseButton(2))
+        {
+            Vector3 newPos = startPosition - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            camera.transform.position += newPos;
+        }
+
         // Controls the zoom in and zoom out and limits it
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
         scroll -= scrollInput * scrollSpeed * 100f * Time.deltaTime;
@@ -185,6 +203,41 @@ public class Player_Control : MonoBehaviour
         pos.x = Mathf.Clamp(pos.x, originalCameraPos.x - panLimit.x, originalCameraPos.x + panLimit.x);
         pos.z = Mathf.Clamp(pos.z, originalCameraPos.z - panLimit.y, originalCameraPos.z + panLimit.y);
 
-        camera.transform.position = pos; // Updates camera position;
+        //camera.transform.position = pos; // Updates camera position;
+    }
+
+    private void CameraControl()
+    {
+        if (Input.GetMouseButtonDown(2) || (Input.GetKey("space") && Input.GetMouseButtonDown(0)))
+        {
+            startPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
+        if (Input.GetMouseButton(2) || (Input.GetKey("space") && Input.GetMouseButton(0)))
+        {
+            Vector3 newPos = startPosition - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            camera.transform.position = ClampCamera(camera.transform.position + newPos);
+        }
+
+        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+        scroll -= scrollInput * scrollSpeed * 100f * Time.deltaTime;
+        scroll = Mathf.Clamp(scroll, minScroll, maxScroll);
+        Camera.main.orthographicSize = scroll;
+        camera.transform.position = ClampCamera(camera.transform.position);
+    }
+
+    private Vector3 ClampCamera(Vector3 targetPosition)
+    {
+        float camHeight = Camera.main.orthographicSize;
+        float camWidth = Camera.main.orthographicSize * Camera.main.aspect;
+
+        float minX = 5f + camWidth;
+        float maxX = border - 5f - camWidth;
+        float minY = 5f + camHeight;
+        float maxY = border - 5f - camHeight;
+
+        float newX = Mathf.Clamp(targetPosition.x, minX, maxX);
+        float newZ = Mathf.Clamp(targetPosition.z, minY, maxY);
+
+        return new Vector3(newX, 150f, newZ);
     }
 }
