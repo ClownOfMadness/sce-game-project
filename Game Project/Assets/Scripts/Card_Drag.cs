@@ -42,6 +42,8 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (card.buildingPrefab)       //if building, start recieving selectedTile updates
+            screen.draggedCard=true;
         parentReturnTo = this.transform.parent;
         if (parentReturnTo == hand)    //only update placefolder if we're in the Hand
             SavePlaceholder();
@@ -82,8 +84,9 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                 {
                     SnapToHand();
                 }
-            }
-            else   //if not a building, snap back to Hand
+            screen.draggedCard = false; //close selectedTile updates
+        }
+            else            //if not a building, snap back to Hand
             {
                 SnapToHand();
             }

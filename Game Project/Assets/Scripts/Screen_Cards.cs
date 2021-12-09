@@ -22,8 +22,9 @@ public class Screen_Cards : MonoBehaviour
     private Zone_Book zBook;
     [HideInInspector] public bool canCraft;
     [HideInInspector] public bool UIDown;
-    [HideInInspector] public GameObject selectedTile;   //updated by PlayerControl
-    
+    [HideInInspector] public GameObject selectedTile;   //updated by Player_Control
+    [HideInInspector] public bool draggedCard;          //updated by Card_Drag
+
 
     void Start()    //initilizing in case something was off
     {

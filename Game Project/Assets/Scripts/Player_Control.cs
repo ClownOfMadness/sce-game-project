@@ -110,14 +110,16 @@ public class Player_Control : MonoBehaviour
                 }
             }
 
-            if (Input.GetMouseButton(0))
+            if (screenCards.draggedCard)
             {
                 if (raycastHit.transform.gameObject.layer == 6)
                 {
                     // Checks if the selected object is a terrain tile
                     //zoneMap.selectedTile = raycastHit.transform.gameObject; // Pass the current selected tile to the zonemap script
-                    screenCards.selectedTile = raycastHit.transform.gameObject;
-                    Debug.Log("From Player Controller: " + raycastHit.transform.gameObject);
+                    if (screenCards.selectedTile != raycastHit.transform.gameObject)
+                    {
+                        screenCards.selectedTile = raycastHit.transform.gameObject;
+                    }
                 }
             }
         }
