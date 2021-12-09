@@ -65,8 +65,8 @@ MonoBehaviour:
   regularSprite: {fileID: 21300000, guid: 2af6cd72e4caa8548a63f14e45727065, type: 3}
   defaultSprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
   works: []
-  maxDurability: 0
-  durability: 0
+  maxDurability: 1
+  durability: 1
   recharge: 0
   revealed: 0
   building: {fileID: 0}

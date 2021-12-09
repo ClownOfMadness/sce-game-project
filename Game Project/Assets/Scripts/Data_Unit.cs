@@ -5,59 +5,57 @@ using Pathfinding;
 
 public class Data_Unit : MonoBehaviour
 {
-    // Input unit name
-    public string unitJob = "None";
-
-    // Unit Data
-    //[HideInInspector] public bool holdingCard = false;
+    // to add: durabilty to jobs, hurt system, build buildings,
     
-    // Input unit design
-    public List<RuntimeAnimatorController> design;
+    // [Input Data - To configure]
+    public string unitJob = "None"; // Units job name
+    public List<RuntimeAnimatorController> design; // Units sprite controller
+    public SpriteRenderer sprite; // Units sprite renderer
+    public Animator animator; // Units animator
+    public Data_Card unitCard; // Its own card
 
-    // Input unit sprite
-    public SpriteRenderer sprite;
-    public Animator animator;
+    // [Navigator settings - Automatic]
+    private AIPath path; // Pathfinding component
+    private float wanderRadius = 10f; // Radius the unit will wander
+    private float waitToWander = 10f; // Delay between each wander
+    private float nextWander = 0f; // Trigger for next wander
 
-    // Navigator settings
-    private AIPath path;
-    private float wanderRadius = 10f;
-    private float waitToWander = 10f;
-    private float nextWander = 0f;
+    // [Unit Control - Automatic]
+    private GameObject townHall; // TownHall object
+    public Data_Card card; // Shows the card that the unit carries
+    [HideInInspector] public bool busy = false; // Toggles on if the unit is doing something
+    private bool toTownHall = false; // Determines if the unit was send to townhall
+    [HideInInspector] public bool cardToDeliver = false; // Toggles on when the unit is in waiting mode
+    
+    // [Work routine - Automatic]
+    private Data_Card workCard; // Work card that the unit will recieve after finishin job
+    private GameObject workPlace; // WorkPlace object
+    private bool working = false; // Shows if the unit is currently working
+    private bool workBegun = false; // Shows if the work has begun
+    private int workIndex = -1; // Work index to determine which work it does from the tile
+    private float workTime = 0f; // Work time needed to get the card
+    private float workDone = 0f; // Time until work is done
+    
+    // [Work in memory - Automatic]
+    private bool workInMemory = false; // Shows if the unit got a work remembered
+    private Data_Tile rmbTileData; // Remembered TileData
+    private Data_Card rmbWorkCard; // Remembered WorkCard
+    private GameObject rmbWorkPlace; // Remembered WorkPlace
+    private int rmbWorkIndex; // Remembered WorkIndex
+    private float rmbWorkTime; // Remembered WorkTime
+    
+    // [Recieved from PlayerControl - Automatic]
+    private Data_Tile tileData; // Tile Data that is recieved from the player
 
-    // Work routine
-    public Unit_List unitList;
-    [HideInInspector] public bool busy = false;
-    private GameObject townHall;
-    private GameObject workPlace;
-    private System_DayNight time;
-    private bool working = false;
-    private int workIndex = -1;
-    private float workTime = 0f;
-    private float workDone = 0f;
-    private bool workBegun = false;
-    private bool toTownHall = false;
-    private bool workInMemory = false;
-    private Data_Card workCard;
-    public Data_Card card;
-    private Screen_Cards screenCards;
-    public bool cardToDeliver = false;
-    public Data_Card unitCard;
-
-    // Work in memory
-    private Data_Tile rmbTileData;
-    private GameObject rmbWorkPlace;
-    private int rmbWorkIndex;
-    private float rmbWorkTime;
-    private Data_Card rmbWorkCard;
-
-    // Recieved from PlayerControl
-    private Data_Tile tileData;
-
-    // Find Once function
-    private int loadCount = 0;
+    // [Find Once function - Automatic]
+    [HideInInspector] public Unit_List unitList; // Unit list script
+    private System_DayNight time; // DayNight script
+    private Screen_Cards screenCards; // ScreenCards script
+    private int loadCount = 0; // Amount of time to try to find components until claiming a fail
 
     private void Awake()
     {
+        // Checks if everything is in place
         if (!sprite)
         {
             Debug.LogError("SpriteRenderer Component is missing in the Data_Unit");
@@ -79,19 +77,17 @@ public class Data_Unit : MonoBehaviour
         {
             Debug.LogError("AIPath Component is missing in a Data_Unit");
         }
-
-        // Gets town hall
     }
 
     private void Update()
     {
-        FindOnce();
-        Animator();
-        WorkRoutine();
-        WanderAround();
+        FindOnce(); // Seeks needed scripts once
+        Animator(); // Controls the animation
+        WorkRoutine(); // Units work routine
+        WanderAround(); // Wander around if not busy
     }
 
-    private void FindOnce()
+    private void FindOnce() // Seeks needed scripts once
     {
         if (loadCount > 60)
         {
@@ -146,6 +142,20 @@ public class Data_Unit : MonoBehaviour
             sprite.flipX = false;
         }
 
+        if (card) // Check if the card has card and shows it
+        {
+            animator.SetBool("hasCard", true);
+        }
+        else
+        {
+            animator.SetBool("hasCard", false);
+        }
+
+        if (!workBegun)
+        {
+            animator.SetBool("working", false);
+        }
+
         if (path.velocity.magnitude > 0) // Checks if the unit is moving and if so play running animation
         {
             animator.SetBool("running", true);
@@ -153,6 +163,10 @@ public class Data_Unit : MonoBehaviour
         else // All animations related unit being idle
         {
             animator.SetBool("running", false);
+            if (workBegun)
+            {
+                animator.SetBool("working", true);
+            }
         }
     }
 
@@ -164,6 +178,7 @@ public class Data_Unit : MonoBehaviour
             busy = true;
             path.speed = 7f;
             tileData = tile.GetComponent<Data_Tile>();
+            tileData.AttachWork(this.gameObject);
             path.destination = tile.transform.position;
             if (tileData.hasTownHall) // If townhall
             {
@@ -185,7 +200,6 @@ public class Data_Unit : MonoBehaviour
     public void RemoveTargetLocation() // Method to cancel units work
     {
         // Called from PlayerControl
-        animator.SetBool("working", false);
         busy = false;
         working = false;
         workPlace = null;
@@ -249,7 +263,6 @@ public class Data_Unit : MonoBehaviour
                     {
                         if (tileData.hasResources)
                         {
-                            animator.SetBool("working", true);
                             if (!workBegun)
                             {
                                 workBegun = true;
@@ -257,8 +270,6 @@ public class Data_Unit : MonoBehaviour
                             }
                             if (Time.time > workDone)
                             {
-                                animator.SetBool("working", false);
-                                animator.SetBool("hasCard", true);
                                 card = workCard;
                                 workBegun = false;
                                 tileData.durability--;
@@ -290,7 +301,6 @@ public class Data_Unit : MonoBehaviour
                         // [[Here add additional check if the hand is free or full and the unit will wait if needed]]
                         if (screenCards.AddGathered(card))
                         {
-                            animator.SetBool("hasCard", false);
                             card = null;
                             cardToDeliver = false;
                             if (!time.isDay)
@@ -324,7 +334,6 @@ public class Data_Unit : MonoBehaviour
                 {
                     if (screenCards.AddGathered(card))
                     {
-                        animator.SetBool("hasCard", false);
                         card = null;
                         busy = false;
                         cardToDeliver = false;
@@ -341,7 +350,6 @@ public class Data_Unit : MonoBehaviour
         }
         else if (cardToDeliver && !card)
         {
-            animator.SetBool("hasCard", false);
             cardToDeliver = false;
         }
         else if (toTownHall)
@@ -373,6 +381,10 @@ public class Data_Unit : MonoBehaviour
             {
                 BackToWork();
             }
+        }
+        else if (!time.isDay)
+        {
+            // Send unit back to townhall
         }
     }
 

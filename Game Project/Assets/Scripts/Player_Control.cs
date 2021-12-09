@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class Player_Control : MonoBehaviour
 {
+    // To add: Hand pan screen like in drawing softwares
+    
     // General
     private GameObject camera; // Camera gameobject
 
@@ -87,7 +89,7 @@ public class Player_Control : MonoBehaviour
                                 Data_Unit = selectedUnit.GetComponent<Data_Unit>();
                                 if (Data_Unit)
                                 {
-                                    selectedData_Tile.AttachWork(selectedUnit);
+                                    //selectedData_Tile.AttachWork(selectedUnit);
                                     Data_Unit.UpdateTargetLocation(selectedObject);
                                 }
                             }
@@ -106,12 +108,16 @@ public class Player_Control : MonoBehaviour
                         }
                     }
                 }
+            }
 
+            if (Input.GetMouseButton(0))
+            {
                 if (raycastHit.transform.gameObject.layer == 6)
                 {
                     // Checks if the selected object is a terrain tile
                     //zoneMap.selectedTile = raycastHit.transform.gameObject; // Pass the current selected tile to the zonemap script
                     screenCards.selectedTile = raycastHit.transform.gameObject;
+                    Debug.Log("From Player Controller: " + raycastHit.transform.gameObject);
                 }
             }
         }

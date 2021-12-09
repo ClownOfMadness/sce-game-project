@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Data_Tile : MonoBehaviour
 {
+    // To add: display work tile, display selected tile
+    
     // [Tile Description - To configure]
     public string tileName; // Tile name
     public bool canBuild = false; // Determines if in this tile buildings can be build or rebuild
