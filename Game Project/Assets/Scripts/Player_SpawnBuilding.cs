@@ -21,7 +21,7 @@ public class Player_SpawnBuilding : MonoBehaviour
     {
         Data_Building dataBuilding = building.GetComponent<Data_Building>();
         Data_Tile dataTile = Tile.GetComponent<Data_Tile>();
-        if (dataTile.hasBuilding || dataTile.hasTownHall)
+        if (dataTile.hasTownHall)
         {
             return false;
         }
