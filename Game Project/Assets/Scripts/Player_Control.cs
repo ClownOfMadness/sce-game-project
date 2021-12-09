@@ -33,6 +33,7 @@ public class Player_Control : MonoBehaviour
     public float scroll = 40f; // Original zoom
     private Vector3 originalCameraPos; // Stores camera original position
     public Map_Gen mapGen;
+    private int loadCount = 0;
 
     // Card
     public Screen_Cards screenCards;
@@ -55,21 +56,39 @@ public class Player_Control : MonoBehaviour
         {
             Debug.LogError("Map_Gen script is missing in Player_Control");
         }
-
-        // Screen Pan
-        border = (mapGen.mapSize - 1f) * 10f;
     }
-
+    private void Start()
+    {
+        // Screen Pan
+        //border = (mapGen.mapSize - 1f) * 10f;
+    }
     private void Update()
     {
         UnitCommand(); // Unit pathfinding control;
+        FindOnce();
     }
 
     private void LateUpdate()
     {
         CameraControl(); // Screen panning functions
     }
-
+    private void FindOnce()
+    {
+        if (loadCount > 60)
+        {
+            Debug.LogError("Failed to find needed parameters in FindOnce() in the Data_Unit script");
+        }
+        else
+        {
+            if (border==0)
+            {
+                if ((border = (mapGen.mapSize - 1f) * 10f) ==0)
+                {
+                    loadCount++;
+                }
+            }
+        }
+    }
     private void UnitCommand()
     {
         // Raycast from camera to the mouse position on the game field

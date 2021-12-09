@@ -6,9 +6,9 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
 {
     [HideInInspector] public int Size;  //used by other Zones
     public GameObject CardPrefab;       //type of prefab for Card (attached via Inspector)
+    public GameObject ZoneUnit;         //Zone Unit (attached via Inspector)
 
-    public virtual void EventDrop(Card_Drag cardObject)
-    { Debug.LogError("Wrong EventDrop function called."); }
+    public virtual void EventDrop(Card_Drag cardObject){ Debug.Log("Behaviour EventDrop"); }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -41,8 +41,14 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
         Card_Drag d = eventData.pointerDrag.GetComponent<Card_Drag>();
         if (d != null)
         {
-                d.parentReturnTo = this.transform;
-                this.EventDrop(d);  //run response function to dropping a card (of the fitting Zone)
+            if (d.parentReturnTo == ZoneUnit.transform)
+            {
+                ZoneUnit.GetComponent<Zone_Unit>().FreeUnit();
+            }
+            d.parentReturnTo = this.transform;
+            d.gameObject.transform.SetParent(this.transform);
+            this.EventDrop(d);  //run response function to dropping a card (of the fitting Zone)
+            
         }
     }
 }

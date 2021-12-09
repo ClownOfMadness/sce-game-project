@@ -9,13 +9,17 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     [HideInInspector] public GameObject placeholder = null;           //saves the dragged card's spot (for changing card order)
     [HideInInspector] public Transform placeholderParent = null;      //saves the dragged card's parent
     [HideInInspector] public Transform hand;
+    [HideInInspector] public Transform unit;
+    [HideInInspector] public Transform destroy;
     private Player_SpawnBuilding Tiles;
 
     void Start()
     {
         canvas = this.transform.parent.parent.GetComponent<Canvas>();
         screen = canvas.GetComponent<Screen_Cards>();
-        hand = screen.Hand.GetComponentInChildren<Zone_Hand>().transform;
+        hand = screen.Hand.transform;
+        unit = screen.Unit.transform;
+        destroy = screen.destroyButton.transform;
         Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
        
     }
@@ -45,7 +49,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         if (card.buildingPrefab)       //if building, start recieving selectedTile updates
             screen.draggedCard=true;
         parentReturnTo = this.transform.parent;
-        if (parentReturnTo == hand)    //only update placefolder if we're in the Hand
+        if (parentReturnTo != destroy)    //only update placefolder if we're not in Destroy
             SavePlaceholder();
         this.transform.SetParent(this.transform.parent.parent);         //changes parent once the card is picked
         GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -72,9 +76,11 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (this.transform.parent != hand && this.transform.parent != destroy && this.transform.parent != unit)
+        {
             if (card.buildingPrefab)    //if building, try to place
             {
-            Debug.Log("Card_Drag: trying to place " + card.buildingPrefab.name + " at " + screen.selectedTile.name);
+                Debug.Log("Card_Drag: trying to place " + card.buildingPrefab.name + " at " + screen.selectedTile.name);
                 if (Tiles.Spawn(card.buildingPrefab, screen.selectedTile))     //spawn the card's building on the tile that's under the pointer
                 {
                     Destroy(placeholder);
@@ -82,17 +88,21 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                 }
                 else        //if placement failed, snap back to Hand
                 {
-                    SnapToHand();
+                    SnapToParent();
                 }
-            screen.draggedCard = false; //close selectedTile updates
-        }
+                screen.draggedCard = false; //close selectedTile updates
+            }
             else            //if not a building, snap back to Hand
             {
-                SnapToHand();
+                SnapToParent();
             }
+        }
+        else
+            SnapToParent();
     }
-    private void SnapToHand()
+    private void SnapToParent()
     {
+        Debug.Log("snapping");
         this.transform.SetParent(parentReturnTo);
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().alpha = 1f;                     //reset effect for card (can be changed)

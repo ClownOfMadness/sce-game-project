@@ -299,7 +299,7 @@ public class Data_Unit : MonoBehaviour
                     if (path.reachedDestination)
                     {
                         // [[Here add additional check if the hand is free or full and the unit will wait if needed]]
-                        if (screenCards.AddGathered(card))
+                        if (screenCards.AddGathered(this, true))
                         {
                             card = null;
                             cardToDeliver = false;
@@ -332,7 +332,7 @@ public class Data_Unit : MonoBehaviour
             {
                 if (path.reachedDestination)
                 {
-                    if (screenCards.AddGathered(card))
+                    if (screenCards.AddGathered(this, true))
                     {
                         card = null;
                         busy = false;
@@ -358,20 +358,20 @@ public class Data_Unit : MonoBehaviour
             if (path.reachedDestination)
             {
                 // If the unit has reached the townhall
-                if (screenCards.AddGathered(unitCard))
-                {
-                    tileData.DetachWork();
-                    Destroy(this.gameObject);
-                }
-                else
-                {
-                    toTownHall = false;
-                    busy = false;
-                    path.speed = 3f;
-                    tileData.DetachWork();
-                    tileData = null;
-                    path.destination = this.transform.position;
-                }
+                screenCards.AddGathered(this, false);
+
+                tileData.DetachWork();
+                Destroy(this.gameObject);
+
+                //else
+                //{
+                //    toTownHall = false;
+                //    busy = false;
+                //    path.speed = 3f;
+                //    tileData.DetachWork();
+                //    tileData = null;
+                //    path.destination = this.transform.position;
+                //}
             }
         }
         else if (time.isDay && workInMemory)

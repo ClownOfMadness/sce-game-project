@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 //responsible for switching panels and button related functions of Cards
 public class Screen_Cards : MonoBehaviour
@@ -9,6 +10,7 @@ public class Screen_Cards : MonoBehaviour
     public GameObject Craft;
     public GameObject Storage;
     public GameObject Book;
+    public GameObject Unit;
     public GameObject destroyButton;
     public GameObject creativeButton;
     public GameObject storageButton;
@@ -16,10 +18,13 @@ public class Screen_Cards : MonoBehaviour
 
     [Header("Game State:")]
     public bool SkipLogin;  //for development testing
+
     private Zone_Hand zHand;
     private Zone_Craft zCraft;
     private Zone_Storage zStorage;
     private Zone_Book zBook;
+    private Zone_Unit zUnit;
+
     [HideInInspector] public bool canCraft;
     [HideInInspector] public bool UIDown;
     [HideInInspector] public GameObject selectedTile;   //updated by Player_Control
@@ -32,10 +37,13 @@ public class Screen_Cards : MonoBehaviour
         zCraft = Craft.transform.GetComponent<Zone_Craft>();
         zStorage = Storage.transform.GetComponent<Zone_Storage>();
         zBook = Book.transform.GetComponent<Zone_Book>();
+        zUnit = Unit.transform.GetComponent<Zone_Unit>();
+
+        Unit.SetActive(false);
 
         CloseUI();
-       
-        if (SkipLogin || Screen_Login.IsLogin)  
+
+        if (SkipLogin || Screen_Login.IsLogin)
         {
             creativeButton.SetActive(true);
         }
@@ -45,7 +53,7 @@ public class Screen_Cards : MonoBehaviour
         }
         storageButton.SetActive(true);
         cardsButton.SetActive(true);
-}
+    }
     public void TopMessage(string text)
     {
         Message.gameObject.SetActive(true);
@@ -62,7 +70,7 @@ public class Screen_Cards : MonoBehaviour
             CloseUI();
         }
     }
-    private void OpenUI()   
+    private void OpenUI()
     {
 
         Hand.SetActive(true);
@@ -84,12 +92,12 @@ public class Screen_Cards : MonoBehaviour
     }
     public void SwitchCreative()
     {
-        
-        if (Book.activeSelf)            
+
+        if (Book.activeSelf)
         {
             CloseBook();
         }
-        else                             
+        else
         {
             OpenBook();
         }
@@ -124,11 +132,11 @@ public class Screen_Cards : MonoBehaviour
             OpenStorage();
         }
     }
-    public void OpenStorage()      
+    public void OpenStorage()
     {
         Storage.SetActive(true);
         zStorage.RefreshZone();
-        if(zStorage.night.isDay)
+        if (zStorage.night.isDay)
             TopMessage("Town Storage currently closed! Come back at night");
         else
             TopMessage("Town Storage, choose your deck for the next day");
@@ -223,16 +231,33 @@ public class Screen_Cards : MonoBehaviour
         }
         return false;
     }
-    public bool AddGathered(Data_Card pickedCard)   //Add card from Unit to Hand/Storage
+    public bool AddGathered(Data_Unit unit, bool gathered)   //add card from Unit to Hand (if there's space)
     {
-        if (CreateInHand(pickedCard))   
+        Debug.Log(unit.unitCard.name);
+        Data_Card pickedCard;
+        if (gathered)
         {
-            return true;
+            pickedCard = unit.card;
         }
-        else if (zStorage.AddToStorage(pickedCard, true))
+        else
         {
-            return true;
+            pickedCard = unit.unitCard;
         }
-        return false;
+
+        if (CreateInHand(pickedCard))
+        {
+            return true; //unit doesn't need to wait
+        }
+        else    //no space in Hand
+        {
+            GameObject newCard = Instantiate(zHand.CardPrefab, Unit.transform);     //create and instantiate object in scene
+            newCard.GetComponent<Card_Drag>().AddCard(pickedCard);                   //add cards to objects 
+            newCard.name = string.Format("{0}", pickedCard.name);                    //update new card name (for displaying in Scene)
+            newCard.gameObject.transform.SetParent(Unit.transform);
+            newCard.SetActive(false);
+            zUnit.CardAdded(unit);
+            return false; //unit needs to wait
+        }
     }
+
 }
