@@ -200,10 +200,16 @@ public class Screen_Cards : MonoBehaviour
     }
     public void ClickToHand(Card_Display pickedCard)//adds card to hand based on what was picked in Book/Storage
     {
-        if (CreateInHand(pickedCard.card))
+        if (Book.activeSelf)    //only run if book is open
         {
-            if (Storage.activeSelf)
+            CreateInHand(pickedCard.card);
+        }
+        else if (Storage.activeSelf && zStorage.night.isDay == false) //only run if storage is open at night
+        {
+            if (CreateInHand(pickedCard.card))
+            {
                 zStorage.RemoveFromStorage(pickedCard);
+            }
         }
     }
     private bool CreateInHand(Data_Card pickedCard)
@@ -223,9 +229,8 @@ public class Screen_Cards : MonoBehaviour
         {
             return true;
         }
-        else if (zStorage.count < zStorage.Size)
+        else if (zStorage.AddToStorage(pickedCard, true))
         {
-            zStorage.AddToStorage(pickedCard, true);
             return true;
         }
         return false;

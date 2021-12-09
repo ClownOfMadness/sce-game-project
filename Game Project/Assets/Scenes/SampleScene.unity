@@ -8227,6 +8227,7 @@ MonoBehaviour:
   canCraft: 0
   UIDown: 0
   selectedTile: {fileID: 0}
+  draggedCard: 0
 --- !u!114 &2133596451
 MonoBehaviour:
   m_ObjectHideFlags: 0
