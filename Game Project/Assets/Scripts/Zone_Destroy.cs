@@ -9,7 +9,7 @@ public class Zone_Destroy : Zone_Behaviour
     }
     public override void EventDrop(Card_Drag cardObject)
     {
-        if (this.transform.childCount == this.Size)     //failsafe - verifying that there's an object in the Zone
+        if (this.transform.childCount >= this.Size)     //failsafe - verifying that there's an object in the Zone
         {
             GameObject placeholder = cardObject.placeholder;      //get the card's placeholder in the Hand to delete it
             Destroy(placeholder);
