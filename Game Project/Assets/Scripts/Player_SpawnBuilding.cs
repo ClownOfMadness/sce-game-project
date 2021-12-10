@@ -7,6 +7,7 @@ public class Player_SpawnBuilding : MonoBehaviour
 {
     public AstarPath path;
     private Vector3 buildingPosition = new Vector3(0, 1, 0);
+    [HideInInspector] public int sumBuildings = 0;
     
     private void Awake()
     {

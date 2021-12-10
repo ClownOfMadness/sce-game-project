@@ -5,9 +5,10 @@ using Pathfinding;
 
 public class Map_Display : MonoBehaviour
 {
+    public GameObject GameMap;
     public Camera MainCamera;
     public AstarPath path;
-    public GameObject TownHall;
+    [HideInInspector] public GameObject TownHall;
     public Unit_List unitlist;
 
     private void Awake()

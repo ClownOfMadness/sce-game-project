@@ -152,25 +152,30 @@ public class Map_Gen : MonoBehaviour
             }
         }
         Player_SpawnBuilding TownHall = FindObjectOfType<Player_SpawnBuilding>();
-        TownHall.Spawn(townHall, TileArray[x, y]);
-        RandomPeasents(PeasentPos);
-        return TileArray[x, y];
+        TownHall.Spawn(townHall, TileArray[x, y]);//spawn the town hall
+        RandomPeasents(PeasentPos, 3);//spawn 3 random peasents around the town hall
+        return TileArray[x, y];//return the position of the town hall
     }
 
 
-    //Create 3 random peasents at random places around the town hall.
-    private void RandomPeasents(List<Vector3> PeasentsPos) 
+    //Create random peasents at n random places of the chose positions.
+    public void RandomPeasents(List<Vector3> PeasentsPos, int n) 
     {
-       Unit_List unitList = FindObjectOfType<Unit_List>();
+        Unit_List unitList = FindObjectOfType<Unit_List>();
+        int size = PeasentsPos.Count;
 
-        int size = 8;
-        for (int i = 0; i < 3; i++)
+        if (n <= size)
         {
-            int rand = Random.Range(0, size);
-            unitList.AddUnit(PeasentsPos[rand], 0);
-            PeasentsPos.RemoveAt(rand);
-            size--;
+            for (int i = 0; i < n; i++)
+            {
+                int rand = Random.Range(0, size);
+                unitList.AddUnit(PeasentsPos[rand], 0);
+                PeasentsPos.RemoveAt(rand);
+                size--;
+            }
         }
+        else
+            Debug.LogError("Insufficient amount of positions");
     }
 
 

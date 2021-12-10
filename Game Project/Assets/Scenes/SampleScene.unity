@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5564,6 +5564,7 @@ GameObject:
   - component: {fileID: 1505982683}
   - component: {fileID: 1505982682}
   - component: {fileID: 1505982685}
+  - component: {fileID: 1505982686}
   m_Layer: 0
   m_Name: Map Generator
   m_TagString: Untagged
@@ -5583,6 +5584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b5b913b82584041883d756a3f72dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameMap: {fileID: 1505982681}
   MainCamera: {fileID: 963194227}
   path: {fileID: 549329537}
   TownHall: {fileID: 0}
@@ -5671,6 +5673,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: {fileID: 0}
+  sumBuildings: 0
+--- !u!114 &1505982686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505982681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76386c4b700692c409f99bb4616f9591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DayCount: 0
+  UnitTotal: 3
 --- !u!1 &1513308076
 GameObject:
   m_ObjectHideFlags: 0
