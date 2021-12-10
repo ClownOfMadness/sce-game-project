@@ -29,7 +29,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void SwitchCardPlace()       //move card between hand-craft on click
     {
-        screen.MoveFromHand(this);       //needs to happen here to get the "this" of the object
+        screen.CardClick(this);       //needs to happen here to get the "this" of the object
     }
     private void SavePlaceholder()      //enables card order
     {
@@ -49,8 +49,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         if (card.buildingPrefab)       //if building, start recieving selectedTile updates
             screen.draggedCard=true;
         parentReturnTo = this.transform.parent;
-        if (parentReturnTo != destroy)    //only update placefolder if we're not in Destroy
-            SavePlaceholder();
+        SavePlaceholder();
         this.transform.SetParent(this.transform.parent.parent);         //changes parent once the card is picked
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
@@ -76,7 +75,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (this.transform.parent != hand && this.transform.parent != destroy && this.transform.parent != unit)
+        if (this.transform.parent == canvas)
         {
             if (card.buildingPrefab)    //if building, try to place
             {

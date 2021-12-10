@@ -7,7 +7,7 @@ public class Zone_Hand : Zone_Behaviour
     [Header("Fill Hand:")]
     public bool Fill = false;
     private Card_Pool Pool;
-    private List<string> deck = new List<string>
+    private List<string> deck = new List<string>    //the starting cards that appear in Hand
     { "Town Hall","Town Hall","House","Hut","Cabin","Bakery","Wooden Wall","Wooden Wall" };
 
     void Awake()
@@ -30,7 +30,7 @@ public class Zone_Hand : Zone_Behaviour
         for (int i = this.transform.childCount; i < this.Size; i++)
         {
             GameObject newCard = Instantiate(CardPrefab, this.transform);   //create and instantiate objects in scene
-            string newName = Pool.FillObject(newCard,deck[i]);                 //add cards to objects + save the new card name (for displaying in Scene)
+            string newName = Pool.FillObject(newCard, deck[i]);             //add cards to objects + save the new card name (for displaying in Scene)
             newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
         }
     }

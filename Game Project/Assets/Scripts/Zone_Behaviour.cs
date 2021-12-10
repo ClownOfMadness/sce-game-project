@@ -17,7 +17,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
             return;
         }
         Card_Drag d = eventData.pointerDrag.GetComponent<Card_Drag>();
-        if (d != null)
+        if (d != null && this.transform.childCount < this.Size && this.transform != d.destroy) 
         {
             d.GetComponent<CanvasGroup>().alpha = 1f;        //reset effect for card (can be changed)
             d.placeholderParent = this.transform;
@@ -41,14 +41,16 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
         Card_Drag d = eventData.pointerDrag.GetComponent<Card_Drag>();
         if (d != null)
         {
-            if (d.parentReturnTo == ZoneUnit.transform)
+            if (this.transform.childCount < this.Size)
             {
-                ZoneUnit.GetComponent<Zone_Unit>().FreeUnit();
+                if (d.parentReturnTo == d.unit.transform && this.transform != d.unit.transform) 
+                {
+                    d.unit.GetComponent<Zone_Unit>().FreeUnit();
+                }
+                d.parentReturnTo = this.transform;
+                d.gameObject.transform.SetParent(this.transform);
+                this.EventDrop(d);  //run response function to dropping a card (of the fitting Zone)
             }
-            d.parentReturnTo = this.transform;
-            d.gameObject.transform.SetParent(this.transform);
-            this.EventDrop(d);  //run response function to dropping a card (of the fitting Zone)
-            
         }
     }
 }

@@ -112,6 +112,7 @@ public class Screen_Cards : MonoBehaviour
         destroyButton.SetActive(true);
 
         UIDown = false;
+        Time.timeScale = 0f;    //pause game
     }
     private void CloseBook()
     {
@@ -120,6 +121,7 @@ public class Screen_Cards : MonoBehaviour
         zBook.FirstPage();
         Book.SetActive(false);
         canCraft = true;
+        Time.timeScale = 1f;    //unpause game
     }
     public void SwitchStorage()       //used when clicked on TownHall
     {
@@ -146,6 +148,7 @@ public class Screen_Cards : MonoBehaviour
         destroyButton.SetActive(true);
 
         UIDown = false;
+        Time.timeScale = 0f;    //pause game
     }
     public void CloseStorage()
     {
@@ -153,8 +156,9 @@ public class Screen_Cards : MonoBehaviour
 
         Storage.SetActive(false);
         canCraft = true;
+        Time.timeScale = 1f;    //unpause game
     }
-    public void MoveFromHand(Card_Drag pickedCard)  //move card between Hand zone and Craft on click
+    public void CardClick(Card_Drag pickedCard)  //move card between Hand zone and Craft on click
     {
         if (canCraft)
         {
@@ -171,9 +175,16 @@ public class Screen_Cards : MonoBehaviour
                     }
                 }
             }
-            else     //if card is in craft - move to hand
+            else if (Hand.transform.childCount < zHand.Size)    //make sure there's space in Hand
             {
-                CraftToHand(pickedCard);
+                if (pickedCard.transform.parent == Craft.transform)    //if card is in craft - move to hand
+                {
+                    CraftToHand(pickedCard);
+                }
+                else if (pickedCard.transform.parent == Unit.transform)    //if card is in Unit - move to hand
+                {
+                    UnitToHand(pickedCard);
+                }
             }
         }
         else if (Storage.activeSelf)
@@ -206,6 +217,12 @@ public class Screen_Cards : MonoBehaviour
         card.gameObject.transform.SetParent(Hand.transform);
         Craft.SetActive(false);
     }
+    public void UnitToHand(Card_Drag card)         //move card from Craft zone to Hand on click
+    {
+        zUnit.FreeUnit();
+        card.gameObject.transform.SetParent(Hand.transform);
+        Message.gameObject.SetActive(false);
+    }
     public void ClickToHand(Card_Display pickedCard)//adds card to hand based on what was picked in Book/Storage
     {
         if (Book.activeSelf)    //only run if book is open
@@ -233,29 +250,28 @@ public class Screen_Cards : MonoBehaviour
     }
     public bool AddGathered(Data_Unit unit, bool gathered)   //add card from Unit to Hand (if there's space)
     {
-        Debug.Log(unit.unitCard.name);
         Data_Card pickedCard;
+        Data_Unit waitingUnit;
         if (gathered)
         {
             pickedCard = unit.card;
+            waitingUnit = unit;
         }
         else
         {
             pickedCard = unit.unitCard;
+            waitingUnit = null;
         }
-
         if (CreateInHand(pickedCard))
         {
             return true; //unit doesn't need to wait
         }
         else    //no space in Hand
         {
-            GameObject newCard = Instantiate(zHand.CardPrefab, Unit.transform);     //create and instantiate object in scene
-            newCard.GetComponent<Card_Drag>().AddCard(pickedCard);                   //add cards to objects 
-            newCard.name = string.Format("{0}", pickedCard.name);                    //update new card name (for displaying in Scene)
-            newCard.gameObject.transform.SetParent(Unit.transform);
-            newCard.SetActive(false);
-            zUnit.CardAdded(unit);
+            OpenUI();
+            TopMessage("New card arrived arrived at the Town Hall! Choose what to do with it next");
+            Unit.SetActive(true);
+            zUnit.CardAdded(pickedCard, waitingUnit);
             return false; //unit needs to wait
         }
     }
