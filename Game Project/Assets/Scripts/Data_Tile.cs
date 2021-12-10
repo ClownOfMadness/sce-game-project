@@ -9,6 +9,7 @@ public class Data_Tile : MonoBehaviour
     
     // [Tile Description - To configure]
     public string tileName; // Tile name
+    [HideInInspector] public float height; // Tile height
     public bool canBuild = false; // Determines if in this tile buildings can be build or rebuild
     public bool canBuildAtDefault = false; // Determines if in its default tile buildings can be build or rebuild
     public SpriteRenderer spriteRenderer; // Displays the sprite

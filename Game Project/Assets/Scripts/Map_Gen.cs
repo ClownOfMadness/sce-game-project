@@ -13,8 +13,6 @@ public class Map_Gen : MonoBehaviour
     }
 
     // Resource rarity - [[Later should be changed to a struct due to many resources]]
-    public GameObject Abyss;
-    public int abyss;
     public GameObject Ruins;
     public int ruins;
 
@@ -43,7 +41,7 @@ public class Map_Gen : MonoBehaviour
     public bool FogMap;
 
     float[,] falloffMap;
-    GameObject[,] TileArray;
+    public GameObject[,] TileArray;
 
     void Awake()
     {
@@ -54,7 +52,7 @@ public class Map_Gen : MonoBehaviour
     public GameObject generateMap()
     {
         int seed = Random.Range(int.MinValue, int.MaxValue);//Seed get a random value.
-        int randP1, randP2;
+        int randP2;
         TileArray = new GameObject[mapSize, mapSize];
 
         //Create a noise map.
@@ -82,12 +80,9 @@ public class Map_Gen : MonoBehaviour
                         if (CheckValidPos(regions[i]))
                             PosiblePos.Add(count++, new Vector2Int(x, y));
 
-                        randP1 = Random.Range(1, abyss);
                         randP2 = Random.Range(1, ruins);
 
-                        if (regions[i].name == "P1" && randP1 == 1)
-                            TileArray[x, y] = Instantiate(Abyss, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 0, 0));
-                        else if (regions[i].name == "P2" && randP2 == 1)
+                        if (regions[i].name == "P2" && randP2 == 1)
                             TileArray[x, y] = Instantiate(Ruins, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 0, 0));
                         else
                             TileArray[x, y] = Instantiate(regions[i].tile, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 0, 0));
@@ -100,6 +95,7 @@ public class Map_Gen : MonoBehaviour
                    
                         TileArray[x, y].transform.parent = this.transform;
                         TileArray[x, y].name = string.Format("tile_x{0}_y{1}", x, y);
+                        TileArray[x, y].GetComponent<Data_Tile>().height = currentHeight;
                         break;
                     }
                 }
@@ -107,6 +103,23 @@ public class Map_Gen : MonoBehaviour
         }
         return PlaceStartPos(PosiblePos);
     }
+
+    public Dictionary<int, Vector2Int> FindPosByRange(float minHeight, float maxHeight)
+    {
+        Dictionary<int, Vector2Int> PosDic = new Dictionary<int, Vector2Int>();
+        int count = 0;
+        for (int y = 0; y < mapSize; y++)
+        {
+            for (int x = 0; x < mapSize; x++)
+            {
+                float curHeight = TileArray[x, y].GetComponent<Data_Tile>().height;
+                if ((curHeight >= minHeight && curHeight <= maxHeight) && (TileArray[x, y].GetComponent<Data_Tile>().tileName == "Plains"))
+                    PosDic.Add(count++, new Vector2Int(x, y));
+            }
+        }
+        return PosDic;
+    }
+
 
     //Check if from this region there is access to the over tiles.
     public bool CheckValidPos(TerrainType tile)
@@ -135,7 +148,7 @@ public class Map_Gen : MonoBehaviour
                 if (!(i == y && j == x))
                     PeasentPos.Add(new Vector3(j * 10, 1, i * 10));
 
-                if (TileArray[j, i].name != "Plains")
+                if (TileArray[j, i].GetComponent<Data_Tile>().tileName != "Plains")
                 { 
                     Vector3 pos = TileArray[x, y].transform.position;
                     GameObject.DestroyImmediate(TileArray[j, i]);
@@ -204,8 +217,6 @@ public class Map_Gen : MonoBehaviour
             falloffA = 1;
         if (falloffB < 0.1f)
             falloffB = 0.1f;
-        if (abyss < 1)
-            abyss = 1;
         if (ruins < 1)
             ruins = 1;
 

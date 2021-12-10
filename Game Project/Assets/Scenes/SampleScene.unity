@@ -1937,6 +1937,7 @@ MonoBehaviour:
   CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
   Size: 0
   success: 0
+  CombosTotal: 0
 --- !u!114 &542042819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5601,8 +5602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6bc7f2ce5ce574ab98a5506aa5eaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Abyss: {fileID: 8880338952174156630, guid: 5cedcd31bc389ff4baf5c20fc9a8d789, type: 3}
-  abyss: 70
   Ruins: {fileID: 5063894248013108221, guid: 6140dc54305d6584c98f3f765c05a2ff, type: 3}
   ruins: 100
   townHall: {fileID: 9034094746195452373, guid: 67cb9a8e55611e648a782b97987f1138, type: 3}
@@ -5690,6 +5689,12 @@ MonoBehaviour:
   UnitTotal: 3
   BuildingCapacity: 0
   MaxPeasentSpawn: 2
+  resources:
+  - ID: 0
+    name: Abyss
+    prefab: {fileID: 8880338952174156630, guid: 5cedcd31bc389ff4baf5c20fc9a8d789, type: 3}
+    maxHeight: 0.7
+    minHeight: 0.52
 --- !u!1 &1513308076
 GameObject:
   m_ObjectHideFlags: 0
@@ -7297,7 +7302,6 @@ MonoBehaviour:
   Size: 0
   CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
   ZoneUnit: {fileID: 1936515017}
-  queue: []
 --- !u!1 &1983492775
 GameObject:
   m_ObjectHideFlags: 0

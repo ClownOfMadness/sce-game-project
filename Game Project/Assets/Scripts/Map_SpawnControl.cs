@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Map_SpawnControl : MonoBehaviour
 {
@@ -18,6 +19,18 @@ public class Map_SpawnControl : MonoBehaviour
     [HideInInspector] public int BuildingCapacity;//the capacity of all the buildings on the map
     public int MaxPeasentSpawn;//the maximum spawning of peasents in one day
 
+    [System.Serializable]
+    public struct ResourceType
+    {
+        public int ID;
+        public string name;
+        public GameObject prefab;
+        public float maxHeight;
+        public float minHeight;
+    }
+    //Abyss ID:0
+    public ResourceType[] resources;
+
     private void Awake()
     {
         DayCicle = FindObjectOfType<System_DayNight>();
@@ -34,27 +47,50 @@ public class Map_SpawnControl : MonoBehaviour
         {
             curState = DayCicle.isDay;
             prevState = curState;
-            //Day time
-            if (curState == true)
+            
+            if (curState == true)//Day time
             {
-                //Map.RandomPeasents();
                 Debug.Log(string.Format("Day {0}", DayCount));
-                Debug.Log("UnitTotal: " + UnitTotal);
-                Debug.Log("BuildingCapacity: " + BuildingCapacity);
-                Debug.Log("MaxPeasentSpawn: " + MaxPeasentSpawn);
-                if(DayCount != 0)
-                    SpawnNewPeasents();
+                if (DayCount != 0) SpawnNewPeasents();
+                //Debug.Log("UnitTotal: " + UnitTotal);
+                //Debug.Log("BuildingCapacity: " + BuildingCapacity);
+                //Debug.Log("MaxPeasentSpawn: " + MaxPeasentSpawn);
             }
-            //Night time
-            else
+            else//Night time
             {
                 Debug.Log(string.Format("Night {0}", DayCount));
                 Debug.Log("Spawning new terrors");
+                if (DayCount != 0) SpawnResources(0);
                 DayCount++;
             }
         }
     }
 
+    //[Temporary?] create 1 of the chosen resource
+    private void SpawnResources(int n)
+    {
+        Dictionary<int, Vector2Int> PosDic;
+        float min = resources[n].minHeight, max = resources[n].maxHeight;
+        PosDic = Map.FindPosByRange(min, max);
+        if (PosDic.Count != 0) 
+        {
+            int randPos = Random.Range(0, PosDic.Count);
+            int x = PosDic[randPos].x;
+            int y = PosDic[randPos].y;
+
+            float currentHeight = Map.TileArray[x, y].GetComponent<Data_Tile>().height;
+            GameObject.Destroy(Map.TileArray[x, y]);
+            Map.TileArray[x, y] = Instantiate(resources[n].prefab, new Vector3(x * 10, 1, y * 10), Quaternion.Euler(0, 0, 0));
+            Map.TileArray[x, y].transform.parent = Map.transform;
+            Map.TileArray[x, y].name = string.Format("tile_x{0}_y{1}", x, y);
+            Map.TileArray[x, y].GetComponent<Data_Tile>().height = currentHeight;
+            Debug.Log("Spawned Abyss at: " + Map.TileArray[x, y]);
+        }
+        else Debug.LogError("List is empty");
+    }
+
+
+    //Spawn new peasents around the town hall.
     private void SpawnNewPeasents()
     {
         List<Vector3> PosList;
@@ -74,6 +110,7 @@ public class Map_SpawnControl : MonoBehaviour
             Debug.Log("The kingdom is full");
     }
 
+    //Calculate the number of new peasents that will be spawned.
     private int CaluculateNewPeasents()
     {
         int emptyPlaces = BuildingCapacity - UnitTotal;
@@ -83,6 +120,7 @@ public class Map_SpawnControl : MonoBehaviour
         return MaxPeasentSpawn;
     }
 
+    //Create list of all the positions surrounding the town hall.
     private List<Vector3> PeasentPosList()
     {
         List<Vector3> PosList = new List<Vector3>();
@@ -94,7 +132,6 @@ public class Map_SpawnControl : MonoBehaviour
         {
             for (int j = x - 1; j <= x + 1; j++)
             {
-                //Creating an list of the tiles surrounding the town hall.
                 if (!(i == y && j == x))
                     PosList.Add(new Vector3(j * 10, 1, i * 10));
             }
