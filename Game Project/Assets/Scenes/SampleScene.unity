@@ -5672,8 +5672,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7fbd9780167d9748bc4055d2fbcc8e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DB: {fileID: 11400000, guid: f7fb6ffb702612a4da49ac12cfacde17, type: 2}
   path: {fileID: 0}
-  sumBuildings: 0
 --- !u!114 &1505982686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5688,6 +5688,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DayCount: 0
   UnitTotal: 3
+  BuildingCapacity: 0
+  MaxPeasentSpawn: 2
 --- !u!1 &1513308076
 GameObject:
   m_ObjectHideFlags: 0

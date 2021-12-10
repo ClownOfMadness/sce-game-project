@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e02a80eb4d92f964c95d018bba429c38, type: 3}
   m_Name: Cabin
   m_EditorClassIdentifier: 
-  BuildingID: BU0002
+  BuildingID: BU01
   BuildingName: Cabin
   Description: 
-  Prefab: {fileID: 0}
-  ViewRadius: 3
+  isLively: 1
+  capacity: 3

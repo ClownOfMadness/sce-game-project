@@ -5,12 +5,15 @@ using Pathfinding;
 
 public class Player_SpawnBuilding : MonoBehaviour
 {
+    public BuildingDataBase DB;
     public AstarPath path;
     private Vector3 buildingPosition = new Vector3(0, 1, 0);
-    [HideInInspector] public int sumBuildings = 0;
-    
+    Map_SpawnControl spawnControl;
+
     private void Awake()
     {
+        spawnControl = FindObjectOfType<Map_SpawnControl>();
+
         if (!(path = GameObject.Find("Pathfinder Grid").GetComponent<AstarPath>()))
         {
             Debug.LogError("Pathfinder Grid gameobject is not found for the SpawnBuilding script");
@@ -20,6 +23,7 @@ public class Player_SpawnBuilding : MonoBehaviour
     //Create a building on the map.
     public bool Spawn(GameObject building, GameObject Tile)
     {
+         
         Data_Building dataBuilding = building.GetComponent<Data_Building>();
         Data_Tile dataTile = Tile.GetComponent<Data_Tile>();
         if (dataTile.hasTownHall)
@@ -35,6 +39,8 @@ public class Player_SpawnBuilding : MonoBehaviour
             GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition, Quaternion.Euler(0, 0, 0));
             NewBuilding.name = building.transform.name;
             NewBuilding.transform.parent = Tile.transform;
+            spawnControl.BuildingCapacity += FindBuildingCapacity(NewBuilding.name, DB);//add to the buildings total capacity
+
             if (dataBuilding.buildingName == "TownHall")
             {
                 dataTile.hasTownHall = true;
@@ -55,25 +61,16 @@ public class Player_SpawnBuilding : MonoBehaviour
         return false;
     }
 
+    //Find the building capacity in the buildings database.
+    private int FindBuildingCapacity(string name, BuildingDataBase DB)
+    {
 
-    //public void Spawn(Vector3 SpawnPoint, string ID, GameObject Tile)
-    //{
-    //    BuildingDataBase buildings = ScriptableObject.CreateInstance<BuildingDataBase>();   //open BuildingDataBase connection to use its functions
-    //    Building BuildingType = FindBuilding(ID, buildings);
-    //    GameObject NewBuilding = Instantiate(BuildingType.Prefab, SpawnPoint, Quaternion.Euler(0, 180, 0));
-    //    //FogOfWar Fog = FindObjectOfType<FogOfWar>();
-
-    //    NewBuilding.name = BuildingType.BuildingName;
-    //    NewBuilding.transform.parent = Tile.transform;
-    //}
-    //Find the building in the buildings database.
-    //public static Building FindBuilding(string ID, BuildingDataBase DB)
-    //{
-    //    foreach (Building building in DB.BuildingList)
-    //    {
-    //        if (building.BuildingID == ID)
-    //            return building;
-    //    }
-    //    return null;
-    //}
+        foreach (Building building in DB.BuildingList)
+        {
+            if (building.BuildingName == name)
+                if (building.isLively)
+                    return building.capacity;
+        }
+        return 0;
+    }
 }
