@@ -57,6 +57,8 @@ public class Data_Card : ScriptableObject
 
     //public ScriptableObject Building;
     public GameObject buildingPrefab;   //can interact with the map
+
+    [HideInInspector] public bool neverDiscovered; //for statistics
 }
 
     

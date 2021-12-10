@@ -43,9 +43,9 @@ public class Zone_Unit : Zone_Behaviour
 
                 GameObject newCard = Instantiate(this.CardPrefab, this.transform);     //create and instantiate object in scene
                 newCard.GetComponent<Card_Drag>().AddCard(current.card);               //add cards to objects 
-                newCard.name = string.Format("{0}", current.card.name);                //update new card name (for displaying in Scene)
-                newCard.gameObject.transform.SetParent(this.transform);
+                newCard.name = string.Format("{0} (Card)", current.card.name);         //update new card name (for displaying in Scene)
                 newCard.SetActive(true);
+
             }
         }
         else

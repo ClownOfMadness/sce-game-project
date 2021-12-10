@@ -29,6 +29,12 @@ public class Zone_Hand : Zone_Behaviour
     {
         for (int i = this.transform.childCount; i < this.Size; i++)
         {
+            if (Card_Pool.cards[Pool.FindCard(deck[i])].neverDiscovered)
+            {
+                Card_Pool.cards[Pool.FindCard(deck[i])].neverDiscovered = false;
+                //Debug.Log("New card found: " + deck[i]);
+                Pool.discoveredTotal++;
+            }
             GameObject newCard = Instantiate(CardPrefab, this.transform);   //create and instantiate objects in scene
             string newName = Pool.FillObject(newCard, deck[i]);             //add cards to objects + save the new card name (for displaying in Scene)
             newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene

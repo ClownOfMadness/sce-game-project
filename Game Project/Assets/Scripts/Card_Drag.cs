@@ -75,11 +75,12 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (this.transform.parent == canvas)
+
+        if (this.transform.parent != hand && this.transform.parent != destroy && this.transform.parent != unit) //needed to allow building placement only outside of UI, don't change
         {
             if (card.buildingPrefab)    //if building, try to place
             {
-                Debug.Log("Card_Drag: trying to place " + card.buildingPrefab.name + " at " + screen.selectedTile.name);
+                //Debug.Log("Card_Drag: trying to place " + card.buildingPrefab.name + " at " + screen.selectedTile.name);
                 if (Tiles.Spawn(card.buildingPrefab, screen.selectedTile))     //spawn the card's building on the tile that's under the pointer
                 {
                     Destroy(placeholder);

@@ -25,6 +25,8 @@ public class Screen_Cards : MonoBehaviour
     private Zone_Book zBook;
     private Zone_Unit zUnit;
 
+    private Card_Pool Pool;
+
     [HideInInspector] public bool canCraft;
     [HideInInspector] public bool UIDown;
     [HideInInspector] public GameObject selectedTile;   //updated by Player_Control
@@ -38,6 +40,11 @@ public class Screen_Cards : MonoBehaviour
         zStorage = Storage.transform.GetComponent<Zone_Storage>();
         zBook = Book.transform.GetComponent<Zone_Book>();
         zUnit = Unit.transform.GetComponent<Zone_Unit>();
+
+        Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions
+
+        for (int i = 0; i < Card_Pool.count; i++)                   //returning all fields in cards back to default 
+            Card_Pool.cards[i].neverDiscovered = true;              //done here instead of Card_Pool to ensure that it only happens once
 
         Unit.SetActive(false);
 
@@ -177,6 +184,7 @@ public class Screen_Cards : MonoBehaviour
             }
             else if (Hand.transform.childCount < zHand.Size)    //make sure there's space in Hand
             {
+               
                 if (pickedCard.transform.parent == Craft.transform)    //if card is in craft - move to hand
                 {
                     CraftToHand(pickedCard);
@@ -241,9 +249,15 @@ public class Screen_Cards : MonoBehaviour
     {
         if (Hand.transform.childCount < zHand.Size)
         {
+            if (pickedCard.neverDiscovered)
+            {
+                pickedCard.neverDiscovered = false;
+                //Debug.Log("New card found: " + pickedCard.name);
+                Pool.discoveredTotal++;
+            }
             GameObject newCard = Instantiate(zHand.CardPrefab, Hand.transform);     //create and instantiate object in scene
             newCard.GetComponent<Card_Drag>().AddCard(pickedCard);                  //add cards to objects 
-            newCard.name = string.Format("{0}", pickedCard.name);                   //update new card name (for displaying in Scene)
+            newCard.name = string.Format("{0} (Card)", pickedCard.name);                   //update new card name (for displaying in Scene)
             return true;
         }
         return false;
@@ -264,7 +278,7 @@ public class Screen_Cards : MonoBehaviour
         }
         if (CreateInHand(pickedCard))
         {
-            return true; //unit doesn't need to wait
+            return true;    //unit doesn't need to wait
         }
         else    //no space in Hand
         {
@@ -275,5 +289,4 @@ public class Screen_Cards : MonoBehaviour
             return false; //unit needs to wait
         }
     }
-
 }
