@@ -14,11 +14,15 @@ public class Map_SpawnControl : MonoBehaviour
     Vector3 TownPos; //The position of the town hall
     bool prevState = false; //previous day state
     bool curState = false; //current day state
-    [HideInInspector] public int DayCount = 1; //still counting the days
+    [HideInInspector] public int DayCount; //still counting the days
     [HideInInspector] public int UnitTotal = 3; //the current amount of units
     [HideInInspector] public int BuildingCapacity; //the capacity of all the buildings on the map
     public int MaxPeasentSpawn; //the maximum spawning of peasents in one day
-    public bool EnemySpawn;
+
+    //Enemy spawn constants
+    public bool EnemySpawn; //spawning activation
+    int reAbyss = 7; //the power of repetition, determining the recurrence of the spawn
+    int numAbyss = 1; //abyss's per spawn 
 
     [System.Serializable]
     public struct ResourceType //Resource struct
@@ -34,6 +38,8 @@ public class Map_SpawnControl : MonoBehaviour
 
     private void Awake()
     {
+        DayCount = 1;
+
         DayCicle = FindObjectOfType<System_DayNight>();
         Map = FindObjectOfType<Map_Gen>();
         display = FindObjectOfType<Map_Display>();
@@ -52,14 +58,13 @@ public class Map_SpawnControl : MonoBehaviour
             if (curState == true)//Day time
             {
                 Debug.Log(string.Format("Day {0}", DayCount));
-                if (DayCount != 0) SpawnNewPeasents(); //spawn new villagers
+                if (DayCount != 1) SpawnNewPeasents(); //spawn new villagers
             }
             else//Night time
             {
                 Debug.Log(string.Format("Night {0}", DayCount));
-                Debug.Log("Spawning new terrors");
-                if (DayCount != 0 && EnemySpawn) 
-                    SpawnResources(0, 1); //spawn 1 Abyss at random place on the map
+                if ((DayCount == 2 || (DayCount > 2 && (DayCount + reAbyss - 2) % reAbyss == 0)) && EnemySpawn) 
+                    SpawnResources(0, numAbyss); //spawn Abyss's at random place on the map
                 DayCount++;
             }
         }
@@ -93,7 +98,7 @@ public class Map_SpawnControl : MonoBehaviour
 
                 GameObject.Destroy(Map.TileArray[x, y]); //destroy the old tile
                 Map.TileArray[x, y] = Map.InstantiateTile(resources[index].prefab, new Vector3(x * 10, 1, y * 10), Map, currentHeight);
-                Debug.Log("Spawned" + resources[index].name + "at: " + Map.TileArray[x, y]);
+                Debug.Log("Spawned " + resources[index].name + " at: " + Map.TileArray[x, y]);
             }
             else
             {

@@ -117,11 +117,13 @@ public class Map_Gen : MonoBehaviour
             for (int x = 0; x < mapSize; x++)
             {
                 if (isDistance) //if true eliminate from the list all the tiles in the radius of the town hall.
-                    if ((x >= hallCo.x - safeDistance && x <= hallCo.x + safeDistance) && (y >= hallCo.y - safeDistance && y <= hallCo.y + safeDistance))
-                        continue;
+                    if (Mathf.Sqrt(Mathf.Abs(((x - hallCo.x) * (x - hallCo.x)) + ((y - hallCo.y) * (y - hallCo.y)))) <= safeDistance)
+                        continue; //continue to the next position if the tile in the radius
 
-                float curHeight = TileArray[x, y].GetComponent<Data_Tile>().height;
-                if ((curHeight >= minHeight && curHeight <= maxHeight) && (TileArray[x, y].GetComponent<Data_Tile>().tileName == "Plains"))
+                Data_Tile data = TileArray[x, y].GetComponent<Data_Tile>();
+                float curHeight = data.height;
+                if ((curHeight >= minHeight && curHeight <= maxHeight) && !(data.hasTownHall || data.hasBuilding) &&
+                    (data.canBuildAtDefault || data.tileName != "Ruins"))  //might be changed in the future
                     PosDic.Add(count++, new Vector2Int(x, y));
             }
         }
