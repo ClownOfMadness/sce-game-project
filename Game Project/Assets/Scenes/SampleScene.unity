@@ -5602,6 +5602,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6bc7f2ce5ce574ab98a5506aa5eaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Ruins: {fileID: 5063894248013108221, guid: 6140dc54305d6584c98f3f765c05a2ff, type: 3}
+  ruins: 100
+  townHall: {fileID: 9034094746195452373, guid: 67cb9a8e55611e648a782b97987f1138, type: 3}
+  fog: {fileID: 5062480754815206708, guid: fae7873e9aec0f145bbed66ac6486951, type: 3}
+  mapSize: 100
+  noiseScale: 6
+  octaves: 3
+  persistance: 0.3
+  lacunarity: 10
+  offset: {x: 0, y: 0}
+  safeDistance: 10
+  falloffA: 3
+  falloffB: 2.2
   regions:
   - name: Sea
     height: 0.25
@@ -5630,19 +5643,6 @@ MonoBehaviour:
   - name: Mountain
     height: 1
     tile: {fileID: 6375032021364104203, guid: e644fb9b68c00fd40ae6a2dc3f2d6b65, type: 3}
-  Ruins: {fileID: 5063894248013108221, guid: 6140dc54305d6584c98f3f765c05a2ff, type: 3}
-  ruins: 100
-  townHall: {fileID: 9034094746195452373, guid: 67cb9a8e55611e648a782b97987f1138, type: 3}
-  fog: {fileID: 5062480754815206708, guid: fae7873e9aec0f145bbed66ac6486951, type: 3}
-  mapSize: 100
-  noiseScale: 6
-  octaves: 3
-  persistance: 0.3
-  lacunarity: 10
-  offset: {x: 0, y: 0}
-  safeDistance: 10
-  falloffA: 3
-  falloffB: 2.2
   autoUpdate: 0
   useFalloff: 1
   FogMap: 1

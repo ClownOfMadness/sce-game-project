@@ -11,7 +11,6 @@ public class Map_Gen : MonoBehaviour
         public float height;
         public GameObject tile;
     }
-    public TerrainType[] regions;
 
     // Resource rarity - [[Later should be changed to a struct due to many resources]]
     public GameObject Ruins;
@@ -36,6 +35,8 @@ public class Map_Gen : MonoBehaviour
     // Control the falloff map.
     public int falloffA;
     public float falloffB;
+
+    public TerrainType[] regions;
 
     // Extra settings
     public bool autoUpdate;
@@ -90,13 +91,13 @@ public class Map_Gen : MonoBehaviour
                         else
                             tileType = regions[i].tile;
 
+                        TileArray[x, y] = InstantiateTile(tileType, new Vector3(10 * x, 1, 10 * y), this, currentHeight);
+
                         if (FogMap)
                         {
                             GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 0, 0), TileArray[x, y].transform);
                             thisFog.transform.localPosition = new Vector3(0, 1, 0);
                         }
-
-                        TileArray[x, y] = InstantiateTile(tileType, new Vector3(10 * x, 1, 10 * y), this, currentHeight);
                         break;
                     }
                 }
