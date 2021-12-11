@@ -120,7 +120,7 @@ public class Map_Gen : MonoBehaviour
                     if ((x >= hallCo.x - safeDistance && x <= hallCo.x + safeDistance) && (y >= hallCo.y - safeDistance && y <= hallCo.y + safeDistance))
                         continue;
 
-                    float curHeight = TileArray[x, y].GetComponent<Data_Tile>().height;
+                float curHeight = TileArray[x, y].GetComponent<Data_Tile>().height;
                 if ((curHeight >= minHeight && curHeight <= maxHeight) && (TileArray[x, y].GetComponent<Data_Tile>().tileName == "Plains"))
                     PosDic.Add(count++, new Vector2Int(x, y));
             }
