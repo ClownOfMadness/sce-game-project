@@ -10,26 +10,27 @@ public class Map_SpawnControl : MonoBehaviour
     Map_Gen Map;
     Map_Display display;
 
-    GameObject GameMap;//The map of the game
-    Vector3 TownPos;//The position of the town hall
-    bool prevState = false;//previous day state
-    bool curState = false;//current day state
-    [HideInInspector] public int DayCount = 1;//still counting the days
-    [HideInInspector] public int UnitTotal = 3;//the current amount of units
-    [HideInInspector] public int BuildingCapacity;//the capacity of all the buildings on the map
-    public int MaxPeasentSpawn;//the maximum spawning of peasents in one day
+    GameObject GameMap; //The map of the game
+    Vector3 TownPos; //The position of the town hall
+    bool prevState = false; //previous day state
+    bool curState = false; //current day state
+    [HideInInspector] public int DayCount = 1; //still counting the days
+    [HideInInspector] public int UnitTotal = 3; //the current amount of units
+    [HideInInspector] public int BuildingCapacity; //the capacity of all the buildings on the map
+    public int MaxPeasentSpawn; //the maximum spawning of peasents in one day
+    public bool EnemySpawn;
 
     [System.Serializable]
-    public struct ResourceType
+    public struct ResourceType //Resource struct
     {
-        public int ID;
-        public string name;
-        public GameObject prefab;
-        public float maxHeight;
-        public float minHeight;
+        public int ID; //Abyss ID: 0
+        public string name; //resource name
+        public GameObject prefab; //resource prefab
+        public float maxHeight; //the maximum height of the tile
+        public float minHeight; //the minimum height of the tile
+        public bool isDistance; //is the location need to have distance from the town hall
     }
-    //Abyss ID:0
-    public ResourceType[] resources;
+    public ResourceType[] resources; //An array of the possible resources
 
     private void Awake()
     {
@@ -51,42 +52,55 @@ public class Map_SpawnControl : MonoBehaviour
             if (curState == true)//Day time
             {
                 Debug.Log(string.Format("Day {0}", DayCount));
-                if (DayCount != 0) SpawnNewPeasents();
-                //Debug.Log("UnitTotal: " + UnitTotal);
-                //Debug.Log("BuildingCapacity: " + BuildingCapacity);
-                //Debug.Log("MaxPeasentSpawn: " + MaxPeasentSpawn);
+                if (DayCount != 0) SpawnNewPeasents(); //spawn new villagers
             }
             else//Night time
             {
                 Debug.Log(string.Format("Night {0}", DayCount));
                 Debug.Log("Spawning new terrors");
-                if (DayCount != 0) SpawnResources(0);
+                if (DayCount != 0 && EnemySpawn) 
+                    SpawnResources(0, 1); //spawn 1 Abyss at random place on the map
                 DayCount++;
             }
         }
     }
 
-    //[Temporary?] create 1 of the chosen resource
-    private void SpawnResources(int n)
+    //Create n random tiles of the chosen resource
+    private void SpawnResources(int index, int n)
     {
         Dictionary<int, Vector2Int> PosDic;
-        float min = resources[n].minHeight, max = resources[n].maxHeight;
-        PosDic = Map.FindPosByRange(min, max);
-        if (PosDic.Count != 0) 
-        {
-            int randPos = Random.Range(0, PosDic.Count);
-            int x = PosDic[randPos].x;
-            int y = PosDic[randPos].y;
+        float min = resources[index].minHeight, max = resources[index].maxHeight;
+        PosDic = Map.FindPosByRange(min, max, resources[index].isDistance);
 
-            float currentHeight = Map.TileArray[x, y].GetComponent<Data_Tile>().height;
-            GameObject.Destroy(Map.TileArray[x, y]);
-            Map.TileArray[x, y] = Instantiate(resources[n].prefab, new Vector3(x * 10, 1, y * 10), Quaternion.Euler(0, 0, 0));
-            Map.TileArray[x, y].transform.parent = Map.transform;
-            Map.TileArray[x, y].name = string.Format("tile_x{0}_y{1}", x, y);
-            Map.TileArray[x, y].GetComponent<Data_Tile>().height = currentHeight;
-            Debug.Log("Spawned Abyss at: " + Map.TileArray[x, y]);
+        for (int i = 0; i < n; i++)
+        {
+            if (PosDic.Count != 0)
+            {
+                int randPos = Random.Range(0, PosDic.Count); //get a random index of the dictionary
+                int x = PosDic[randPos].x; //get the x value in the index
+                int y = PosDic[randPos].y; //get the y value in the index
+
+                //Update the dictionary
+                if (randPos != PosDic.Count - 1)
+                {
+                    PosDic[randPos] = PosDic[PosDic.Count - 1];
+                    PosDic.Remove(PosDic.Count - 1);
+                }
+                else
+                    PosDic.Remove(randPos);
+
+                float currentHeight = Map.TileArray[x, y].GetComponent<Data_Tile>().height; //get the height from the old tile
+
+                GameObject.Destroy(Map.TileArray[x, y]); //destroy the old tile
+                Map.InstantiateTile(resources[index].prefab, new Vector3(x * 10, 1, y * 10), Map, currentHeight);
+                Debug.Log("Spawned" + resources[index].name + "at: " + Map.TileArray[x, y]);
+            }
+            else
+            {
+                Debug.LogError("No empty positions available");
+                break;
+            }
         }
-        else Debug.LogError("List is empty");
     }
 
 
@@ -146,5 +160,20 @@ public class Map_SpawnControl : MonoBehaviour
             MaxPeasentSpawn = 0;
         else if (MaxPeasentSpawn > 8)
             MaxPeasentSpawn = 8;
+        for(int i = 0; i < resources.Length; i++)
+        {
+            if (resources[i].maxHeight < 0)
+                resources[i].maxHeight = 0;
+            else if (resources[i].maxHeight > 1)
+                resources[i].maxHeight = 1;
+
+            if (resources[i].minHeight < 0)
+                resources[i].minHeight = 0;
+            else if (resources[i].minHeight > 1)
+                resources[i].minHeight = 1;
+
+            if (resources[i].maxHeight < resources[i].minHeight)
+                resources[i].minHeight = resources[i].maxHeight - 0.1f;
+        }
     } 
 }

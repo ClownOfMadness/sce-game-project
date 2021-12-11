@@ -39,7 +39,7 @@ public class Player_SpawnBuilding : MonoBehaviour
             GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition, Quaternion.Euler(0, 0, 0));
             NewBuilding.name = building.transform.name;
             NewBuilding.transform.parent = Tile.transform;
-            spawnControl.BuildingCapacity += FindBuildingCapacity(NewBuilding.name, DB);//add to the buildings total capacity
+            UpdateCapacity(NewBuilding.name);//add to the buildings total capacity
 
             if (dataBuilding.buildingName == "TownHall")
             {
@@ -62,15 +62,17 @@ public class Player_SpawnBuilding : MonoBehaviour
     }
 
     //Find the building capacity in the buildings database.
-    private int FindBuildingCapacity(string name, BuildingDataBase DB)
+    private void UpdateCapacity(string name)
     {
 
         foreach (Building building in DB.BuildingList)
         {
             if (building.BuildingName == name)
+            { 
                 if (building.isLively)
-                    return building.capacity;
+                    spawnControl.BuildingCapacity += building.capacity;
+                break;
+            }     
         }
-        return 0;
     }
 }

@@ -11,6 +11,7 @@ public class Map_Gen : MonoBehaviour
         public float height;
         public GameObject tile;
     }
+    public TerrainType[] regions;
 
     // Resource rarity - [[Later should be changed to a struct due to many resources]]
     public GameObject Ruins;
@@ -29,11 +30,12 @@ public class Map_Gen : MonoBehaviour
     public float lacunarity;
     public Vector2 offset;
 
+    public int safeDistance; //distance from the town hall
+    Vector2 hallCo; //town hall coortinates
+
     // Control the falloff map.
     public int falloffA;
     public float falloffB;
-
-    public TerrainType[] regions;
 
     // Extra settings
     public bool autoUpdate;
@@ -59,6 +61,7 @@ public class Map_Gen : MonoBehaviour
         float[,] noiseMap = Map_Noise.noiseMapGen(mapSize, mapSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
         //Create a dictionary of possible possitions for the Town Hall.
         Dictionary<int, Vector2Int> PosiblePos = new Dictionary<int, Vector2Int>();
+        GameObject tileType;
         int count = 0;
 
         //Delete the map if such exist.
@@ -83,19 +86,17 @@ public class Map_Gen : MonoBehaviour
                         randP2 = Random.Range(1, ruins);
 
                         if (regions[i].name == "P2" && randP2 == 1)
-                            TileArray[x, y] = Instantiate(Ruins, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 0, 0));
+                            tileType = Ruins;
                         else
-                            TileArray[x, y] = Instantiate(regions[i].tile, new Vector3(10 * x, 1, 10 * y), Quaternion.Euler(0, 0, 0));
+                            tileType = regions[i].tile;
 
                         if (FogMap)
                         {
                             GameObject thisFog = Instantiate(fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 0, 0), TileArray[x, y].transform);
                             thisFog.transform.localPosition = new Vector3(0, 1, 0);
                         }
-                   
-                        TileArray[x, y].transform.parent = this.transform;
-                        TileArray[x, y].name = string.Format("tile_x{0}_y{1}", x, y);
-                        TileArray[x, y].GetComponent<Data_Tile>().height = currentHeight;
+
+                        TileArray[x, y] = InstantiateTile(tileType, new Vector3(10 * x, 1, 10 * y), this, currentHeight);
                         break;
                     }
                 }
@@ -104,15 +105,21 @@ public class Map_Gen : MonoBehaviour
         return PlaceStartPos(PosiblePos);
     }
 
-    public Dictionary<int, Vector2Int> FindPosByRange(float minHeight, float maxHeight)
+    //Create a dictionary of the possiple spawn tiles in the height range.
+    public Dictionary<int, Vector2Int> FindPosByRange(float minHeight, float maxHeight, bool isDistance)
     {
         Dictionary<int, Vector2Int> PosDic = new Dictionary<int, Vector2Int>();
         int count = 0;
+
         for (int y = 0; y < mapSize; y++)
         {
             for (int x = 0; x < mapSize; x++)
             {
-                float curHeight = TileArray[x, y].GetComponent<Data_Tile>().height;
+                if (isDistance) //if true eliminate from the list all the tiles in the radius of the town hall.
+                    if ((x >= hallCo.x - safeDistance && x <= hallCo.x + safeDistance) && (y >= hallCo.y - safeDistance && y <= hallCo.y + safeDistance))
+                        continue;
+
+                    float curHeight = TileArray[x, y].GetComponent<Data_Tile>().height;
                 if ((curHeight >= minHeight && curHeight <= maxHeight) && (TileArray[x, y].GetComponent<Data_Tile>().tileName == "Plains"))
                     PosDic.Add(count++, new Vector2Int(x, y));
             }
@@ -121,7 +128,7 @@ public class Map_Gen : MonoBehaviour
     }
 
 
-    //Check if from this region there is access to the over tiles.
+    //Check if from this region there is access to the other tiles.
     public bool CheckValidPos(TerrainType tile)
     {
         if (tile.height > 0.60 && tile.height < 0.69)
@@ -149,12 +156,10 @@ public class Map_Gen : MonoBehaviour
                     PeasentPos.Add(new Vector3(j * 10, 1, i * 10));
 
                 if (TileArray[j, i].GetComponent<Data_Tile>().tileName != "Plains")
-                { 
-                    Vector3 pos = TileArray[x, y].transform.position;
+                {
+                    float currentHeight = TileArray[j, i].GetComponent<Data_Tile>().height;
                     GameObject.DestroyImmediate(TileArray[j, i]);
-                    TileArray[j, i] = Instantiate(regions[k].tile, new Vector3(j * 10, 1, i * 10), Quaternion.Euler(0, 0, 0));
-                    TileArray[j, i].transform.parent = this.transform;
-                    TileArray[j, i].name = string.Format("tile_x{0}_y{1}", j, i);
+                    TileArray[j, i] = InstantiateTile(regions[k].tile, new Vector3(j * 10, 1, i * 10), this, currentHeight);
 
                     if (FogMap)//Create fog if it enabled.
                     {
@@ -165,11 +170,22 @@ public class Map_Gen : MonoBehaviour
             }
         }
         Player_SpawnBuilding TownHall = FindObjectOfType<Player_SpawnBuilding>();
-        TownHall.Spawn(townHall, TileArray[x, y]);//spawn the town hall
-        RandomPeasents(PeasentPos, 3);//spawn 3 random peasents around the town hall
-        return TileArray[x, y];//return the position of the town hall
+        TownHall.Spawn(townHall, TileArray[x, y]); //spawn the town hall
+        RandomPeasents(PeasentPos, 3); //spawn 3 random peasents around the town hall
+        hallCo = new Vector2(x, y); //save the coordenates of the town hall 
+
+        return TileArray[x, y]; //return the position of the town hall
     }
 
+    //Istantiate single tile by given parameters.
+    public GameObject InstantiateTile(GameObject tileType, Vector3 pos, Map_Gen parent, float currentHeight)
+    {
+        GameObject tile = Instantiate(tileType, pos, Quaternion.Euler(0, 0, 0));
+        tile.transform.parent = parent.transform;
+        tile.name = string.Format("tile_x{0}_y{1}", pos.x / 10, pos.z / 10);
+        tile.GetComponent<Data_Tile>().height = currentHeight;
+        return tile;
+    }
 
     //Create random peasents at n random places of the chose positions.
     public void RandomPeasents(List<Vector3> PeasentsPos, int n) 
@@ -219,7 +235,9 @@ public class Map_Gen : MonoBehaviour
             falloffB = 0.1f;
         if (ruins < 1)
             ruins = 1;
+        if (safeDistance < 1)
+            safeDistance = 1;
 
-        falloffMap = Map_FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
+            falloffMap = Map_FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
     }
 }
