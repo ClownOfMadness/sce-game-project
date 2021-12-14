@@ -89,7 +89,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                 if (Tiles.Spawn(card.buildingPrefab, screen.selectedTile))     //spawn the card's building on the tile that's under the pointer
                 {
                     Destroy(placeholder);
-                    GetComponent<CanvasGroup>().alpha = 0f;                    //hide for now
+                    Destroy(this.gameObject);          //destroy card that was placed successfully
                 }
                 else        //if placement failed, snap back to Hand
                 {
