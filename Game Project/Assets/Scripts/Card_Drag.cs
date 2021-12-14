@@ -11,6 +11,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     [HideInInspector] public Transform hand;
     [HideInInspector] public Transform unit;
     [HideInInspector] public Transform destroy;
+    private Zone_Hand zHand;
     private Player_SpawnBuilding Tiles;
 
     void Start()
@@ -20,6 +21,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         hand = screen.Hand.transform;
         unit = screen.Unit.transform;
         destroy = screen.destroyButton.transform;
+        zHand = hand.GetComponent<Zone_Hand>();
         Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
        
     }
@@ -55,7 +57,10 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnDrag(PointerEventData eventData)
     {
-        GetComponent<RectTransform>().anchoredPosition += eventData.delta / canvas.scaleFactor; //moves by wherever we picked the card instead of by the middle
+        //GetComponent<RectTransform>().anchoredPosition += eventData.delta / canvas.scaleFactor; //moves by wherever we picked the card instead of by the middle
+        this.transform.position = eventData.position; //moves by the middle of the card
+            if (this.transform.localScale.x > (zHand.CardPrefab.transform.localScale.x) / 2) 
+                this.transform.localScale -= new Vector3((zHand.CardPrefab.transform.localScale.x) / 20, (zHand.CardPrefab.transform.localScale.y) / 20, 0);
         if (placeholder.transform.parent != placeholderParent)
         {
             placeholder.transform.SetParent(placeholderParent);
@@ -105,6 +110,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         this.transform.SetParent(parentReturnTo);
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().alpha = 1f;                     //reset effect for card (can be changed)
+        this.transform.localScale = new Vector3(zHand.CardPrefab.transform.localScale.x, zHand.CardPrefab.transform.localScale.y, 0);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeholder);
     }
