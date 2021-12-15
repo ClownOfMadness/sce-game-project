@@ -16,6 +16,7 @@ public class Card_Display : MonoBehaviour
         canvas = this.transform.parent.parent.parent.GetComponent<Canvas>();
         screen = canvas.GetComponent<Screen_Cards>();
     }
+
     public void AddCard(Data_Card _card) //fill fields in card on screen according to card data
     {
         card = _card;

@@ -289,4 +289,12 @@ public class Screen_Cards : MonoBehaviour
             return false; //unit needs to wait
         }
     }
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H)) //can close and open ui with keyboard as well
+        {
+            SwitchCards();
+        }
+
+    }
 }
