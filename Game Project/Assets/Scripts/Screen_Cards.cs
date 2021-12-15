@@ -291,9 +291,17 @@ public class Screen_Cards : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H)) //can close and open ui with keyboard as well
+        if (Input.GetKeyDown(KeyCode.H)) //can close and open "hand" with keyboard as well
         {
             SwitchCards();
+        }
+        if (Input.GetKeyDown(KeyCode.C)) //can close and open "Creative" with keyboard as well
+        {
+            SwitchCreative();
+        }
+        if (Input.GetKeyDown(KeyCode.S)) //can close and open "Storage" with keyboard as well
+        {
+            SwitchStorage();
         }
 
     }
