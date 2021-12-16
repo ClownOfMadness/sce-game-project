@@ -5,18 +5,26 @@ using UnityEngine;
 
 public class Data_Tile : MonoBehaviour
 {
-    // To add: display work tile, display selected tile
-    
-    // [Tile Description - To configure]
-    public string tileName; // Tile name
-    [HideInInspector] public float height; // Tile height
+    //--------------------------------------[To-Do List]-----------------------------------------------
+
+    // To add:
+    // - display work tile
+    // - display selected tile
+    // - building the building procedure
+    // - display additional sprite if resources are about to end
+
+    //-------------------------------------[Configuration]---------------------------------------------
+
+    // [Tile Description]
+    public string tileName = "None"; // Tile name
     public bool canBuild = false; // Determines if in this tile buildings can be build or rebuild
     public bool canBuildAtDefault = false; // Determines if in its default tile buildings can be build or rebuild
     public SpriteRenderer spriteRenderer; // Displays the sprite
-    public Sprite regularSprite; // Sprite that the tile starts with
-    public Sprite defaultSprite; // Sprite to change to once there are no more resources
+    public Sprite fullSprite; // Sprite that the tile starts with
+    public Sprite halfSprite; // Sprite to change to once the resources are about to end
+    public Sprite emptySprite; // Sprite to change to once there are no more resources
 
-    // [Tile Resources - To configure]
+    // [Tile Resources]
     [Serializable]
     public struct Work // Resource work struct
     {
@@ -25,21 +33,30 @@ public class Data_Tile : MonoBehaviour
         public float workTime; // Time needed to recieve the card
     }
     public Work[] works; // The works
-    public int maxDurability; // Maximum allowed durabilty
-    public int durability; // Current durability
-    public int recharge; // Amount to recharge
+    [Range(0.0f, 50.0f)]
+    public int maxDurability = 0; // Maximum allowed durabilty
+    [Range(0.0f, 50.0f)]
+    public int durability = 0; // Current durability
+    [Range(0.0f, 50.0f)]
+    public int recharge = 0; // Amount to recharge
 
-    // [Tile Resources - Automated]
+    //---------------------------------------[Automatic]-----------------------------------------------
+
+    // [Tile Information]
+    [HideInInspector] public float height; // Tile height
+
+    // [Tile Resources]
     private bool canRecharge = false; // Checks if its daytime and can recharge
 
-    // [Tile Fog - Automated]
+    // [Tile Fog]
     [HideInInspector] public bool revealed = false; // Checks it the tile has been discovered
     
-    // [Tile Work - Automated]
+    // [Tile Work]
     private GameObject unit = null; // holds the unit that works here
     [HideInInspector] public GameObject building = null; // holds the building that is on it
     [HideInInspector] public bool hasTownHall = false; // True if it has townhall
     [HideInInspector] public bool hasBuilding = false; // True if it has building
+    [HideInInspector] public bool buildingComplete = false; // True if the building is complete
     [HideInInspector] public bool hasResources = false; // True if it has resources
 
     // [Find Once Function]
@@ -59,17 +76,6 @@ public class Data_Tile : MonoBehaviour
 
     private void Setup() // Setups the tile
     {
-        if (!spriteRenderer)
-        {
-            Debug.LogError("Sprite Renderer component is missing from the Data_Tile");
-        }
-        if (!defaultSprite)
-        {
-            Debug.LogError("Default sprite is missing from the Data_Tile");
-        }
-
-        //spriteRenderer.sprite = regularSprite;
-
         if (works.Length > 0) // If the tile has no resources to gather
         {
             hasResources = true;
@@ -77,6 +83,26 @@ public class Data_Tile : MonoBehaviour
         else // If the tile has resources to gather
         {
             hasResources = false;
+            maxDurability = 0;
+            durability = 0;
+            recharge = 0;
+        }
+
+        if (!spriteRenderer)
+        {
+            Debug.LogError("Sprite Renderer component is missing from the " + tileName + " Data_Tile");
+        }
+        if (!emptySprite && hasResources)
+        {
+            Debug.LogError("Empty sprite is missing from the " + tileName + " Data_Tile");
+        }
+        if (!halfSprite && hasResources)
+        {
+            Debug.LogError("Half sprite is missing from the " + tileName + " Data_Tile");
+        }
+        if (!fullSprite)
+        {
+            Debug.LogError("Full sprite is missing from the " + tileName + " Data_Tile");
         }
     }
 
@@ -152,7 +178,7 @@ public class Data_Tile : MonoBehaviour
         recharge = 0;
         hasResources = false;
         canBuild = canBuildAtDefault;
-        spriteRenderer.sprite = defaultSprite;
+        spriteRenderer.sprite = emptySprite;
     }
 
     public int CanWork(Data_Unit _unit) // Sends what work can unit work in, otherwise sends that it cannot
@@ -176,6 +202,10 @@ public class Data_Tile : MonoBehaviour
         {
             unit = _unit;
         }
+        else if (hasBuilding && !buildingComplete)
+        {
+
+        }
     }
 
     public void DetachWork() // Removes unit from the work place
@@ -192,8 +222,4 @@ public class Data_Tile : MonoBehaviour
     {
         return unit;
     }
-    
-    // Card data
-
-    // Pathfinding data
 }

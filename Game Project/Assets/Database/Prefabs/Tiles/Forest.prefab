@@ -145,8 +145,9 @@ MonoBehaviour:
   canBuild: 0
   canBuildAtDefault: 1
   spriteRenderer: {fileID: 3524023000276873429}
-  regularSprite: {fileID: 21300000, guid: 27acfa92d05c73c4ea1c5461ad7e224f, type: 3}
-  defaultSprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
+  fullSprite: {fileID: 21300000, guid: 27acfa92d05c73c4ea1c5461ad7e224f, type: 3}
+  halfSprite: {fileID: 21300000, guid: 27acfa92d05c73c4ea1c5461ad7e224f, type: 3}
+  emptySprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
   works:
   - job: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
     card: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
@@ -154,6 +155,7 @@ MonoBehaviour:
   maxDurability: 10
   durability: 5
   recharge: 2
+  height: 0
   revealed: 0
   building: {fileID: 0}
   hasTownHall: 0

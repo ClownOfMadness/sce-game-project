@@ -254,10 +254,12 @@ MonoBehaviour:
   design:
   - {fileID: 9100000, guid: f09c87d319baefc4abacfaf570de6e30, type: 2}
   - {fileID: 9100000, guid: 4a98721d3364b334baf3f7c2a48f9e08, type: 2}
+  - {fileID: 9100000, guid: 0578672bdff9cf94bb2ac37c387a2595, type: 2}
   sprite: {fileID: 4523351716890472440}
   animator: {fileID: 3180598046372167092}
-  unitList: {fileID: 0}
-  busy: 0
-  card: {fileID: 0}
-  cardToDeliver: 0
   unitCard: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
+  canBuild: 1
+  card: {fileID: 0}
+  busy: 0
+  cardToDeliver: 0
+  unitList: {fileID: 0}

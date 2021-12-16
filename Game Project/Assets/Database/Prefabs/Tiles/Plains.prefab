@@ -145,12 +145,14 @@ MonoBehaviour:
   canBuild: 1
   canBuildAtDefault: 1
   spriteRenderer: {fileID: 8375140818541808227}
-  regularSprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
-  defaultSprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
+  fullSprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
+  halfSprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
+  emptySprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
   works: []
   maxDurability: 0
   durability: 0
   recharge: 0
+  height: 0
   revealed: 0
   building: {fileID: 0}
   hasTownHall: 0

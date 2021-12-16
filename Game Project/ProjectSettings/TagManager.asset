@@ -18,8 +18,8 @@ TagManager:
   - Fog
   - TownHall
   - PostProcessing
-  - 
-  - 
+  - BloomOnly
+  - ToTownHall
   - 
   - 
   - 

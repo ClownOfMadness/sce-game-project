@@ -5,29 +5,50 @@ using Pathfinding;
 
 public class Data_Unit : MonoBehaviour
 {
-    // to add: durabilty to jobs, hurt system, build buildings,
-    
-    // [Input Data - To configure]
+    //--------------------------------------[To-Do List]-----------------------------------------------
+
+    // to add:
+    // - durabilty to jobs
+    // - hurt system
+    // - build buildings
+
+    //-------------------------------------[Configuration]---------------------------------------------
+
+    // Test
+    public float distance = 0f;
+
+    // [Input Data]
     public string unitJob = "None"; // Units job name
     public List<RuntimeAnimatorController> design; // Units sprite controller
     public SpriteRenderer sprite; // Units sprite renderer
     public Animator animator; // Units animator
     public Data_Card unitCard; // Its own card
 
-    // [Navigator settings - Automatic]
+    // [Build routine]
+    public bool canBuild = false; // Can the unit build?
+
+    //---------------------------------------[Automatic]-----------------------------------------------
+
+    // [Navigator settings]
     private AIPath path; // Pathfinding component
-    private float wanderRadius = 10f; // Radius the unit will wander
-    private float waitToWander = 10f; // Delay between each wander
+    private float wanderMaxRadius = 10f; // Max radius the unit will wander
+    private float wanderMinRadius = 2f; // Min radius the unit will wander
+    private float maxWaitToWander = 15f; // Max delay between each wander
+    private float minWaitToWander = 5f; // Min delay between each wander
     private float nextWander = 0f; // Trigger for next wander
 
-    // [Unit Control - Automatic]
+    // [Unit Control]
     private GameObject townHall; // TownHall object
-    public Data_Card card; // Shows the card that the unit carries
+    [HideInInspector] public Data_Card card; // Shows the card that the unit carries
     [HideInInspector] public bool busy = false; // Toggles on if the unit is doing something
     private bool toTownHall = false; // Determines if the unit was send to townhall
     [HideInInspector] public bool cardToDeliver = false; // Toggles on when the unit is in waiting mode
+    private bool nearTownHall = false;
+
+    // [Unit Health]
+    private bool hurt = false; // Becomes true if an enemy attacked the unit
     
-    // [Work routine - Automatic]
+    // [Work routine]
     private Data_Card workCard; // Work card that the unit will recieve after finishin job
     private GameObject workPlace; // WorkPlace object
     private bool working = false; // Shows if the unit is currently working
@@ -35,8 +56,13 @@ public class Data_Unit : MonoBehaviour
     private int workIndex = -1; // Work index to determine which work it does from the tile
     private float workTime = 0f; // Work time needed to get the card
     private float workDone = 0f; // Time until work is done
+
+    // [Build routine]
+    private GameObject buildPlace; // BuildPlace object
+    private bool building = false; // Shows if the unit is currently building
+    private bool buildBegun = false; // Shows if the build has begun
     
-    // [Work in memory - Automatic]
+    // [Work in memory]
     private bool workInMemory = false; // Shows if the unit got a work remembered
     private Data_Tile rmbTileData; // Remembered TileData
     private Data_Card rmbWorkCard; // Remembered WorkCard
@@ -44,10 +70,10 @@ public class Data_Unit : MonoBehaviour
     private int rmbWorkIndex; // Remembered WorkIndex
     private float rmbWorkTime; // Remembered WorkTime
     
-    // [Recieved from PlayerControl - Automatic]
+    // [Recieved from PlayerControl]
     private Data_Tile tileData; // Tile Data that is recieved from the player
 
-    // [Find Once function - Automatic]
+    // [Find Once function]
     [HideInInspector] public Unit_List unitList; // Unit list script
     private System_DayNight time; // DayNight script
     private Screen_Cards screenCards; // ScreenCards script
@@ -85,6 +111,10 @@ public class Data_Unit : MonoBehaviour
         Animator(); // Controls the animation
         WorkRoutine(); // Units work routine
         WanderAround(); // Wander around if not busy
+        if (path.hasPath)
+        {
+            distance = path.remainingDistance;
+        }
     }
 
     private void FindOnce() // Seeks needed scripts once
@@ -142,7 +172,16 @@ public class Data_Unit : MonoBehaviour
             sprite.flipX = false;
         }
 
-        if (card) // Check if the card has card and shows it
+        if (hurt) // Checks if the unit is hurt
+        {
+            animator.SetBool("hurt", true);
+        }
+        else
+        {
+            animator.SetBool("hurt", false);
+        }
+
+        if (card) // Checks if the card has card and shows it
         {
             animator.SetBool("hasCard", true);
         }
@@ -151,9 +190,14 @@ public class Data_Unit : MonoBehaviour
             animator.SetBool("hasCard", false);
         }
 
-        if (!workBegun)
+        if (!workBegun) // Checks if the unit is not working
         {
             animator.SetBool("working", false);
+        }
+
+        if (canBuild && !buildBegun) // Checks if the unit is not building
+        {
+            animator.SetBool("building", false);
         }
 
         if (path.velocity.magnitude > 0) // Checks if the unit is moving and if so play running animation
@@ -163,15 +207,22 @@ public class Data_Unit : MonoBehaviour
         else // All animations related unit being idle
         {
             animator.SetBool("running", false);
-            if (workBegun)
+            if (workBegun) // Checks if the unit has started work
             {
                 animator.SetBool("working", true);
+            }
+
+            if (canBuild && buildBegun) // Checks if the unit has started building
+            {
+                animator.SetBool("building", true);
             }
         }
     }
 
     public void UpdateTargetLocation(GameObject tile) // Method to set target location and info for the unit
     {
+        // Unit Rule: the unit will never listen to player if it is busy or has a card (unless player order to move to the townhall)
+        
         // Called from PlayerControl
         if (!busy && !card)
         {
@@ -215,6 +266,8 @@ public class Data_Unit : MonoBehaviour
 
     private void WanderAround() // Makes the unit to wander around when jobless
     {
+        // Unit Rule: the unit will always wonder if it is not busy
+        
         if (!busy)
         {
             path.speed = 3f;
@@ -223,13 +276,13 @@ public class Data_Unit : MonoBehaviour
                 if (Time.time > nextWander)
                 {
                     path.destination = WanderAroundLocation();
-                    nextWander = Time.time + waitToWander;
+                    nextWander = Time.time + Random.Range(minWaitToWander, maxWaitToWander);
                 }
             }
         }
         else // if busy
         {
-            if (path.reachedDestination && !working)
+            if (path.reachedDestination && !working && !building)
             {
                 busy = false;
             }
@@ -238,7 +291,7 @@ public class Data_Unit : MonoBehaviour
 
     private Vector3 WanderAroundLocation() // Gives wander location for the WanderAround function
     {
-        Vector3 point = Random.insideUnitSphere * wanderRadius;
+        Vector3 point = Random.insideUnitSphere * Random.Range(wanderMinRadius, wanderMaxRadius);
         point.y = 1f;
         point += this.transform.position;
         return point;
@@ -296,7 +349,7 @@ public class Data_Unit : MonoBehaviour
                 else if (path.destination == townHall.transform.position)
                 {
                     // if target is townhall
-                    if (path.reachedDestination)
+                    if (nearTownHall)
                     {
                         // [[Here add additional check if the hand is free or full and the unit will wait if needed]]
                         if (screenCards.AddGathered(this, true))
@@ -330,7 +383,7 @@ public class Data_Unit : MonoBehaviour
                 path.destination = townHall.transform.position;
             else
             {
-                if (path.reachedDestination)
+                if (nearTownHall)
                 {
                     if (screenCards.AddGathered(this, true))
                     {
@@ -355,7 +408,7 @@ public class Data_Unit : MonoBehaviour
         else if (toTownHall)
         {
             // If the units target location is townhall
-            if (path.reachedDestination)
+            if (nearTownHall && path.destination == townHall.transform.position)
             {
                 // If the unit has reached the townhall
                 screenCards.AddGathered(this, false);
@@ -478,6 +531,21 @@ public class Data_Unit : MonoBehaviour
             tileData.DetachWork();
             tileData = null;
             path.destination = this.transform.position;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == 14)
+        {
+            nearTownHall = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 14)
+        {
+            nearTownHall = false;
         }
     }
 }

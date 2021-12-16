@@ -6,8 +6,10 @@ using UnityEngine.EventSystems;
 
 public class Player_Control : MonoBehaviour
 {
-    // To add: Hand pan screen like in drawing softwares
-    
+    //--------------------------------------[To-Do List]-----------------------------------------------
+
+    // To add: (optional) add option to also move with keyboard
+
     // General
     private GameObject camera; // Camera gameobject
 
@@ -76,7 +78,7 @@ public class Player_Control : MonoBehaviour
     {
         if (loadCount > 60)
         {
-            Debug.LogError("Failed to find needed parameters in FindOnce() in the Data_Unit script");
+            Debug.LogError("Failed to find needed parameters in FindOnce() in the Player_Control script");
         }
         else
         {
