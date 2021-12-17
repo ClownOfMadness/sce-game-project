@@ -43,18 +43,12 @@ public class Player_SpawnBuilding : MonoBehaviour
 
             if (dataBuilding.buildingName == "TownHall")
             {
-                dataTile.hasTownHall = true;
-                dataTile.hasBuilding = false;
-                dataTile.canBuild = false;
+                dataTile.PlaceTownHall(NewBuilding);
             }
             else
             {
-                dataTile.hasBuilding = true;
-                dataTile.hasTownHall = false;
-                dataTile.canBuild = true;
+                dataTile.PlaceBuilding(NewBuilding);
             }
-            dataTile.building = NewBuilding;
-            dataTile.ReturnToDefault();
             path.Scan();
             return true;
         }

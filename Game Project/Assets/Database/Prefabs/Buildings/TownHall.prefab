@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5926152477165726287}
   - component: {fileID: 6409119300122607298}
   m_Layer: 14
-  m_Name: Entrance
+  m_Name: TownHall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +113,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 946178325
+  m_SortingLayerID: -165970917
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 20db585077ce3ce47a8b5712f386aa8f, type: 3}
@@ -196,7 +196,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 946178325
+  m_SortingLayerID: -165970917
   m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 46d87fb2fc527dc479c9e07ff4f9ad7a, type: 3}
@@ -304,8 +304,9 @@ MonoBehaviour:
   buildingName: TownHall
   isTownHall: 1
   hasLight: 1
+  canBuild: {fileID: 0}
   spriteRenderer: {fileID: 506153970870493651}
   secondaryRenderer: {fileID: 2568496364296377819}
-  buildingBlueprint: {fileID: 21300000, guid: b2c10addcf334694b87bda5d9b6d2792, type: 3}
   buildingComplete: {fileID: 21300000, guid: 20db585077ce3ce47a8b5712f386aa8f, type: 3}
   buildingLight: {fileID: 21300000, guid: 46d87fb2fc527dc479c9e07ff4f9ad7a, type: 3}
+  townHallGround: {fileID: 21300000, guid: 394b4a164372e984bbfb852becb73d01, type: 3}

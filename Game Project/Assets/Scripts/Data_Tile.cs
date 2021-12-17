@@ -20,9 +20,12 @@ public class Data_Tile : MonoBehaviour
     public bool canBuild = false; // Determines if in this tile buildings can be build or rebuild
     public bool canBuildAtDefault = false; // Determines if in its default tile buildings can be build or rebuild
     public SpriteRenderer spriteRenderer; // Displays the sprite
+    public SpriteRenderer workplaceRenderer;
+    public SpriteRenderer gizmoRenderer;
     public Sprite fullSprite; // Sprite that the tile starts with
     public Sprite halfSprite; // Sprite to change to once the resources are about to end
     public Sprite emptySprite; // Sprite to change to once there are no more resources
+    public Sprite buildSprite; // Sprite to be shown under the building
 
     // [Tile Resources]
     [Serializable]
@@ -54,13 +57,18 @@ public class Data_Tile : MonoBehaviour
     // [Tile Work]
     private GameObject unit = null; // holds the unit that works here
     [HideInInspector] public GameObject building = null; // holds the building that is on it
+    private Data_Building dataBuilding = null;
     [HideInInspector] public bool hasTownHall = false; // True if it has townhall
     [HideInInspector] public bool hasBuilding = false; // True if it has building
     [HideInInspector] public bool buildingComplete = false; // True if the building is complete
     [HideInInspector] public bool hasResources = false; // True if it has resources
 
+    // [Tile Build]
+    public List<GameObject> builders = null;
+
     // [Find Once Function]
     private System_DayNight systemDayNight; // Script for day night cycle
+    private Data_CommonDataHolder commonData;
     private int loadCount = 0; // Amount of times to search before declaring a fail
 
     private void Awake()
@@ -104,6 +112,10 @@ public class Data_Tile : MonoBehaviour
         {
             Debug.LogError("Full sprite is missing from the " + tileName + " Data_Tile");
         }
+        if (!buildSprite && (canBuild || canBuildAtDefault))
+        {
+            Debug.LogError("Build sprite is missing from the " + tileName + " Data_Tile");
+        }
     }
 
     private void FindOnce() // Searches for the needed components
@@ -117,6 +129,14 @@ public class Data_Tile : MonoBehaviour
             if (!systemDayNight)
             {
                 if (!(systemDayNight = GameObject.Find("Day/Night Cycle").GetComponent<System_DayNight>()))
+                {
+                    loadCount++;
+                }
+            }
+
+            if (!commonData)
+            {
+                if (!(commonData = GameObject.Find("Map Generator").GetComponent<Data_CommonDataHolder>()))
                 {
                     loadCount++;
                 }
@@ -181,6 +201,41 @@ public class Data_Tile : MonoBehaviour
         spriteRenderer.sprite = emptySprite;
     }
 
+    public void PlaceTownHall(GameObject _building)
+    {
+        hasTownHall = true;
+        hasBuilding = false;
+        canBuild = false;
+        building = _building;
+        dataBuilding = _building.GetComponent<Data_Building>();
+        buildingComplete = true;
+        works = null;
+        maxDurability = 0;
+        durability = 0;
+        recharge = 0;
+        hasResources = false;
+        if (buildSprite)
+            spriteRenderer.sprite = buildSprite;
+        else
+            spriteRenderer.sprite = _building.GetComponent<Data_Building>().townHallGround;
+    }
+
+    public void PlaceBuilding(GameObject _building)
+    {
+        hasTownHall = false;
+        hasBuilding = true;
+        canBuild = true;
+        building = _building;
+        dataBuilding = _building.GetComponent<Data_Building>();
+        buildingComplete = false;
+        works = null;
+        maxDurability = 0;
+        durability = 0;
+        recharge = 0;
+        hasResources = false;
+        spriteRenderer.sprite = commonData.workSiteSprite;
+    }
+
     public int CanWork(Data_Unit _unit) // Sends what work can unit work in, otherwise sends that it cannot
     {
         if (hasResources)
@@ -196,15 +251,32 @@ public class Data_Tile : MonoBehaviour
         return -1;
     }
 
+    public bool CanBuild(Data_Unit _unit)
+    {
+        if (hasBuilding && !buildingComplete && dataBuilding)
+        {
+            
+            if (_unit.unitJob == dataBuilding.canBuild.unitJob)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void AttachWork(GameObject _unit) // Adds unit to the work place
     {
-        if (hasResources)
+        if (hasResources && !hasBuilding)
         {
             unit = _unit;
         }
-        else if (hasBuilding && !buildingComplete)
-        {
+    }
 
+    public void AttachBuild(GameObject _unit)
+    {
+        if (hasBuilding && !buildingComplete)
+        {
+            builders.Add(_unit);
         }
     }
 
@@ -213,13 +285,46 @@ public class Data_Tile : MonoBehaviour
         unit = null;
     }
 
+    public void DetachBuild(GameObject _unit)
+    {
+        if (hasBuilding && !buildingComplete && builders.Count > 0)
+        {
+            for (int i = 0; i < builders.Count; i++)
+            {
+                if (builders[i] == _unit)
+                {
+                    builders.RemoveAt(i);
+                }
+            }
+        }
+    }    
+
     public bool GetData() // Returns the unit that works here
     {
         return unit;
     }
 
+    public bool GetBuildData()
+    {
+        if (builders.Count > 0)
+            return true;
+        return false;
+    }
+
     public GameObject GetObject() // Returns the object of the unit that works here
     {
-        return unit;
+        if (hasBuilding && !buildingComplete)
+        {
+            if (builders.Count > 0)
+            {
+                return builders[UnityEngine.Random.Range(0, (builders.Count - 1))];
+            }
+        }
+            return unit;
+    }
+
+    public void ShowGizmo()
+    {
+        
     }
 }

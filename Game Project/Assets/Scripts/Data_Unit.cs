@@ -11,6 +11,8 @@ public class Data_Unit : MonoBehaviour
     // - durabilty to jobs
     // - hurt system
     // - build buildings
+    // - let units recognize the tiles they are walking on
+    // - Add tile walking priority
 
     //-------------------------------------[Configuration]---------------------------------------------
 
@@ -43,7 +45,7 @@ public class Data_Unit : MonoBehaviour
     [HideInInspector] public bool busy = false; // Toggles on if the unit is doing something
     private bool toTownHall = false; // Determines if the unit was send to townhall
     [HideInInspector] public bool cardToDeliver = false; // Toggles on when the unit is in waiting mode
-    private bool nearTownHall = false;
+    private string buildingInteraction = null;
 
     // [Unit Health]
     private bool hurt = false; // Becomes true if an enemy attacked the unit
@@ -244,6 +246,11 @@ public class Data_Unit : MonoBehaviour
                     workTime = tileData.works[workIndex].workTime;
                     workCard = tileData.works[workIndex].card;
                 }
+                else if (tileData.CanBuild(this))
+                {
+                    building = true;
+                    buildPlace = tile;
+                }
             }
         }
     }
@@ -253,6 +260,9 @@ public class Data_Unit : MonoBehaviour
         // Called from PlayerControl
         busy = false;
         working = false;
+        building = false;
+        buildBegun = false;
+        buildPlace = null;
         workPlace = null;
         workIndex = -1;
         workTime = 0f;
@@ -349,7 +359,7 @@ public class Data_Unit : MonoBehaviour
                 else if (path.destination == townHall.transform.position)
                 {
                     // if target is townhall
-                    if (nearTownHall)
+                    if (buildingInteraction == "TownHall")
                     {
                         // [[Here add additional check if the hand is free or full and the unit will wait if needed]]
                         if (screenCards.AddGathered(this, true))
@@ -375,6 +385,33 @@ public class Data_Unit : MonoBehaviour
                 }
             }
         }
+        else if (building)
+        {
+            if (!buildPlace || !tileData)
+            {
+                building = false;
+            }
+            else if (buildingInteraction == tileData.building.name && !tileData.buildingComplete)
+            {
+                if (!buildBegun)
+                {
+                    buildBegun = true;
+                    tileData.AttachBuild(this.gameObject);
+                    //path.destination = this.transform.position;
+                }
+            }
+            else if (tileData.buildingComplete)
+            {
+                building = false;
+                buildBegun = false;
+                buildPlace = null;
+                busy = false;
+                path.speed = 3f;
+                tileData.DetachBuild(this.gameObject);
+                tileData = null;
+                path.destination = this.transform.position;
+            }
+        }
         else if (card && !cardToDeliver)
         {
             busy = true;
@@ -383,7 +420,7 @@ public class Data_Unit : MonoBehaviour
                 path.destination = townHall.transform.position;
             else
             {
-                if (nearTownHall)
+                if (buildingInteraction == "TownHall")
                 {
                     if (screenCards.AddGathered(this, true))
                     {
@@ -408,7 +445,7 @@ public class Data_Unit : MonoBehaviour
         else if (toTownHall)
         {
             // If the units target location is townhall
-            if (nearTownHall && path.destination == townHall.transform.position)
+            if (buildingInteraction == "TownHall")
             {
                 // If the unit has reached the townhall
                 screenCards.AddGathered(this, false);
@@ -538,14 +575,14 @@ public class Data_Unit : MonoBehaviour
     {
         if (other.gameObject.layer == 14)
         {
-            nearTownHall = true;
+            buildingInteraction = other.gameObject.name;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == 14)
         {
-            nearTownHall = false;
+            buildingInteraction = null;
         }
     }
 }

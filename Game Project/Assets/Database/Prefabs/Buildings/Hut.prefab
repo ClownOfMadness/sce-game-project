@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 946178325
+  m_SortingLayerID: -165970917
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 905bf9959c7520b4ab19336aa8a0391a, type: 3}
@@ -152,7 +152,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 946178325
+  m_SortingLayerID: -165970917
   m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -199,6 +199,7 @@ Transform:
   m_Children:
   - {fileID: 4465850847090193529}
   - {fileID: 1261601151786768216}
+  - {fileID: 735564861418984899}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -257,9 +258,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: Hut
-  hasLight: 0
+  isTownHall: 0
+  hasLight: 1
+  canBuild: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
   spriteRenderer: {fileID: 5101474537721919232}
   secondaryRenderer: {fileID: 4147465745566552385}
-  buildingBlueprint: {fileID: 21300000, guid: b2c10addcf334694b87bda5d9b6d2792, type: 3}
   buildingComplete: {fileID: 21300000, guid: 905bf9959c7520b4ab19336aa8a0391a, type: 3}
-  buildingLight: {fileID: 0}
+  buildingLight: {fileID: 21300000, guid: 1afbc17348a4b9049ae7c5883e99d827, type: 3}
+  townHallGround: {fileID: 0}
+--- !u!1 &6864236931996568508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 735564861418984899}
+  - component: {fileID: 7562415463055275586}
+  m_Layer: 14
+  m_Name: Hut
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &735564861418984899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6864236931996568508}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9209281037763571817}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7562415463055275586
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6864236931996568508}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}

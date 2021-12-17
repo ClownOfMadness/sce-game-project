@@ -119,7 +119,6 @@ public class Player_Control : MonoBehaviour
                                 Data_Unit = selectedUnit.GetComponent<Data_Unit>();
                                 if (Data_Unit)
                                 {
-                                    //selectedData_Tile.AttachWork(selectedUnit);
                                     Data_Unit.UpdateTargetLocation(selectedObject);
                                 }
                             }
@@ -131,10 +130,12 @@ public class Player_Control : MonoBehaviour
                         // Cancels units current job
                         selectedObject = raycastHit.transform.gameObject;
                         selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
-                        if (selectedData_Tile.GetData())
+                        if (selectedData_Tile.GetData() || selectedData_Tile.GetBuildData())
                         {
-                            (selectedData_Tile.GetObject()).GetComponent<Data_Unit>().RemoveTargetLocation();
+                            GameObject theUnit = selectedData_Tile.GetObject();
+                            theUnit.GetComponent<Data_Unit>().RemoveTargetLocation();
                             selectedData_Tile.DetachWork();
+                            selectedData_Tile.DetachBuild(theUnit);
                         }
                     }
                 }

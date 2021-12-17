@@ -19,7 +19,7 @@ TagManager:
   - TownHall
   - PostProcessing
   - BloomOnly
-  - ToTownHall
+  - BuildingInteraction
   - 
   - 
   - 
@@ -44,12 +44,12 @@ TagManager:
   - name: Tiles
     uniqueID: 305008931
     locked: 0
-  - name: Buildings
-    uniqueID: 946178325
-    locked: 0
-  - name: Units
+  - name: Units & Buildings
     uniqueID: 4128996379
     locked: 0
   - name: Fog
     uniqueID: 3819327193
+    locked: 0
+  - name: Gizmo
+    uniqueID: 1939207283
     locked: 0

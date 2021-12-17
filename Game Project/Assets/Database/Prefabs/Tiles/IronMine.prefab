@@ -143,11 +143,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileName: IronMine
   canBuild: 0
-  canBuildAtDefault: 0
+  canBuildAtDefault: 1
   spriteRenderer: {fileID: 5568073259864775010}
   fullSprite: {fileID: 21300000, guid: dc1aec2804d92034690fb4da53b1b27d, type: 3}
   halfSprite: {fileID: 21300000, guid: dc1aec2804d92034690fb4da53b1b27d, type: 3}
   emptySprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
+  buildSprite: {fileID: 21300000, guid: 394b4a164372e984bbfb852becb73d01, type: 3}
   works: []
   maxDurability: 0
   durability: 0
@@ -157,4 +158,5 @@ MonoBehaviour:
   building: {fileID: 0}
   hasTownHall: 0
   hasBuilding: 0
+  buildingComplete: 0
   hasResources: 0

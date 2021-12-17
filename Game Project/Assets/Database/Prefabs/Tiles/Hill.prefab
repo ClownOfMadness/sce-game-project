@@ -148,6 +148,7 @@ MonoBehaviour:
   fullSprite: {fileID: 21300000, guid: 5665d61c83626b14183f60100a43a237, type: 3}
   halfSprite: {fileID: 21300000, guid: 5665d61c83626b14183f60100a43a237, type: 3}
   emptySprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
+  buildSprite: {fileID: 21300000, guid: 394b4a164372e984bbfb852becb73d01, type: 3}
   works: []
   maxDurability: 0
   durability: 0
@@ -157,4 +158,5 @@ MonoBehaviour:
   building: {fileID: 0}
   hasTownHall: 0
   hasBuilding: 0
+  buildingComplete: 0
   hasResources: 0

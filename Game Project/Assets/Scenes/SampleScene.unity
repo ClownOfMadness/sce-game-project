@@ -2200,14 +2200,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAQIeyxfQUtWwIAABwFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE2P2jAQ/SvI526VUIigtxZYtgcWtLTaSy5DMiEWjh3ZDl8r/nvHTkJSVj3FefPm+c1H8sG4NCUmVuml5ulKpci+D5g7sy+DLviCZ9grueVXbDnvPLW5I4HnvIHlivDQpRlVoNU8+SH3wpEDAivJM6WLRbrHmTLWEJyBMEghrazLlgR9DNi5Sbg0z6t7Dm50SlBa1B1rNB0/8AjxzEomAooSU+e4SwiDoFV2R0+VVE/DCl0wUUJw07hh9lL6ardljhpduSkHKs7bCL5OCciR73NLr8N+9jrLDNrGmobLnGvqUi3Lfqq6dQWYQ+3uCKJyFw2jycTbqlVXnwhPoQ9nWhUv7cWhr8rmPDm8wSUBY3vN7cPzznvou3QCcYCdwPcc5ataalXJlIJWVy61Mjic96Tuxc1yTA4dr/bagi27Kj/PM+zmefP1n2eCFzvfy1ENbIXyLZ+6HNQ0nV/k2O+HaZQIdS7+GPwN+/4iNYFnro2lUHOhdPZ2qtKOyha+aa6ays6Ulqj7CiVKEPayIR37OMWH2P+znsF9M83tTaz9FB5SPNzxg+AhtFGn+7hMrk4rNPm6soLLvpiLvFKnZkrKesvMQ9TlbSudQdLP21c8/Xe92BjHo1EC02k0gWicRU+TbyHsdmE0jKa7IIKQ+f3jkioFsamtNg2iwcluKyTtWvszGSw1lH7lUw2nJb8WynRMLjO1TTSiXNcKd+eo6RL6ONNFyqlFW7SWSz9y9hEzoZIDpvFdKPalLs5WQ9ypxKzkR2UdErOZ/4XEzMH3dd5oPHI8uctbsRu7/QVQSwMEFAAACAgAABAh7JAGDcBtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJJpqqmJSXKipaWZRaKZaZqZroWxYWJSkqGZkZllkoFZoqFSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAABAh7LF9BS1bAgAAHAUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAABAh7JAGDcBtAAAAeAAAAAkAJAAAAAAAAAAAAAAAqAIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABgAwAAAAA=
+    dataString: UEsDBBQAAAgIAAAQIez9O+8hXQIAABsFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMzk3HpuBCby0Q0gMJE9rJxZfFXmMNsuSRZD6S4b93JdvYdU6Y997uvv2wPxiXpsTEKr3WPN2oFNmPEXPP7MuoI5/wAgcld/wdW80bT23uROA1r2C5Ijx0YUYVaDVPfsqDcOKAwEryTOlilR5woYw1BGcgDBKllXXRkqCPEbs0Adfm9939jm70lKC0qDvVZD4d6AjxykomAooSU+e4CwiDoM3sHr1UUj+NKnRkooTgpnHD7LX03e7KHDW6dlMO1Jy3EXz9TkCO/JBb+jvuR79kmUHbWNNwXXJNU6rTsl+qHl0B5li7O4GoXKFxNJt5W3XWzSfBQ+jpTKviqS0c+q5szpPjK1wTMLY33D687LyHfkpnEEfYC3zLUT6rtVaVTIm0unKhlcHxspfq3twix+TY6WqvLdiqq/LzPsNunzff/2UheLH3s5zUwE4oP/K5i0FN2/lNjv19mCYToc7FX4N/4NA/pIZ45NpYopqC0tnbq0o7KVv5obluKrtQWqKHm05KlCDsdUtp7HCJA65XdsA8gntlmuIN174JgxAPd/ogGFBbdb5vy+TqvEGTv1RWcNlP5phnGtRCSVkfmRmwLm5X6QySftyh4un/18WmOJ1MEpjPoxlE0yx6mH0LYb8Po3E03wcRhMyfH5fUKYhtbbUZEO1NdqOUdGrtt2S01lD6i081nNf8vVC9oXOZqV2iEeVLneHuHDUVoXczXaWcRrRDa7n0G2cfMRMqOWIa3xPFvtXVxWqIuywxK/lJWYfEbOG/IDFz8P2atxpPHM+ueJvsxm7/AFBLAwQUAAAICAAAECHskAYNwG0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0kmmqqYlJcqKlpZlFoplpmpmuhbFhYlKSoZmRmWWSgVmioVIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAECHs/TvvIV0CAAAbBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAECHskAYNwG0AAAB4AAAACQAkAAAAAAAAAAAAAACqAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAGIDAAAAAA==
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
     cacheStartup: 0
   showNavGraphs: 1
   showUnwalkableNodes: 1
-  debugMode: 0
+  debugMode: 4
   debugFloor: 0
   debugRoof: 1
   manualDebugFloorRoof: 0
@@ -2228,10 +2228,42 @@ MonoBehaviour:
     _MeshEdgeColor: {r: 0, g: 0, b: 0, a: 0.5}
     _AreaColors:
     - {r: 0, g: 0, b: 0, a: 0}
-  tagNames: []
+  tagNames:
+  - Basic Ground
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
+  - 20
+  - 21
+  - 22
+  - 23
+  - 24
+  - 25
+  - 26
+  - 27
+  - 28
+  - 29
+  - 30
+  - 31
   heuristic: 2
   heuristicScale: 1
-  threadCount: 1
+  threadCount: -1
   maxFrameTime: 10
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
@@ -5716,6 +5748,7 @@ GameObject:
   - component: {fileID: 1505982682}
   - component: {fileID: 1505982685}
   - component: {fileID: 1505982686}
+  - component: {fileID: 1505982687}
   m_Layer: 0
   m_Name: Map Generator
   m_TagString: Untagged
@@ -5767,8 +5800,14 @@ MonoBehaviour:
   falloffB: 2.2
   regions:
   - name: Sea
-    height: 0.25
+    height: 0.2
     tile: {fileID: 301549750496689606, guid: 60d3415c3d9bd164a9c75b88b8e34f60, type: 3}
+  - name: Shallow Sea
+    height: 0.25
+    tile: {fileID: 6210516484360979231, guid: d06535383cbe9e5478aa13b4f06244c0, type: 3}
+  - name: Sand
+    height: 0.3
+    tile: {fileID: 3546633623141441270, guid: c68c3253e0e2e42408b53ea690f2b105, type: 3}
   - name: P1
     height: 0.35
     tile: {fileID: 2687492343798803848, guid: bd3072b6a28c34345a08cc0512df3344, type: 3}
@@ -5848,6 +5887,22 @@ MonoBehaviour:
     maxHeight: 0.72
     minHeight: 0.5
     isDistance: 1
+--- !u!114 &1505982687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505982681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac62899a865472b42a9551c08d302779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  workSiteSprite: {fileID: 21300000, guid: b2c10addcf334694b87bda5d9b6d2792, type: 3}
+  buildLocationTrue: {fileID: 21300000, guid: edc46f98a1fa9e4498a7641a68dda79d, type: 3}
+  buildLocationFalse: {fileID: 21300000, guid: 21c50b4bbf2ac1347bab3684f347cee8, type: 3}
+  workPlace: {fileID: 21300000, guid: 46143e9116c160a43ba7b548db73cf9b, type: 3}
 --- !u!1 &1513308076
 GameObject:
   m_ObjectHideFlags: 0
