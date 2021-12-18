@@ -399,7 +399,6 @@ public class Data_Unit : MonoBehaviour
                 {
                     buildBegun = true;
                     tileData.AttachBuild(this.gameObject);
-                    //path.destination = this.transform.position;
                 }
             }
             else if (tileData.buildingComplete)
@@ -454,16 +453,6 @@ public class Data_Unit : MonoBehaviour
 
                 tileData.DetachWork();
                 Destroy(this.gameObject);
-
-                //else
-                //{
-                //    toTownHall = false;
-                //    busy = false;
-                //    path.speed = 3f;
-                //    tileData.DetachWork();
-                //    tileData = null;
-                //    path.destination = this.transform.position;
-                //}
             }
         }
         else if (time.isDay && workInMemory)

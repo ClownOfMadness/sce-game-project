@@ -121,6 +121,7 @@ public class Player_Control : MonoBehaviour
                                 if (Data_Unit)
                                 {
                                     Data_Unit.UpdateTargetLocation(selectedObject);
+                                    selectedData_Tile.DrawPointer();
                                 }
                             }
                         }

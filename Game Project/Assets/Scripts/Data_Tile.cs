@@ -8,8 +8,6 @@ public class Data_Tile : MonoBehaviour
     //--------------------------------------[To-Do List]-----------------------------------------------
 
     // To add:
-    // - display work tile
-    // - display selected tile
     // - building the building procedure
     // - display additional sprite if resources are about to end
 
@@ -22,6 +20,7 @@ public class Data_Tile : MonoBehaviour
     public SpriteRenderer spriteRenderer; // Displays the sprite
     public SpriteRenderer workplaceRenderer;
     public SpriteRenderer gizmoRenderer;
+    public SpriteRenderer pointerRenderer;
     public Sprite fullSprite; // Sprite that the tile starts with
     public Sprite halfSprite; // Sprite to change to once the resources are about to end
     public Sprite emptySprite; // Sprite to change to once there are no more resources
@@ -47,6 +46,7 @@ public class Data_Tile : MonoBehaviour
 
     // [Tile Information]
     [HideInInspector] public float height; // Tile height
+    private bool gizmoUse = false;
 
     // [Tile Resources]
     private bool canRecharge = false; // Checks if its daytime and can recharge
@@ -81,6 +81,7 @@ public class Data_Tile : MonoBehaviour
     {
         FindOnce(); // Searches for the needed components
         OnUpdate(); // Functions that work on update
+        BuildProcess();
     }
 
     private void Setup() // Setups the tile
@@ -108,6 +109,10 @@ public class Data_Tile : MonoBehaviour
         if (!gizmoRenderer)
         {
             Debug.LogError("Gizmo Renderer component is missing from the " + tileName + " Data_Tile");
+        }
+        if (!pointerRenderer)
+        {
+            Debug.LogError("Pointer Renderer component is missing from the " + tileName + " Data_Tile");
         }
         if (!emptySprite && hasResources)
         {
@@ -187,6 +192,16 @@ public class Data_Tile : MonoBehaviour
         {
             HideGizmo();
         }
+
+        if (unit)
+        {
+            workplaceRenderer.enabled = true;
+            workplaceRenderer.sprite = commonData.workPlace;
+        }
+        else
+        {
+            workplaceRenderer.enabled = false;
+        }
     }
 
     private void Recharge() // Recharge the tile's resources
@@ -214,6 +229,11 @@ public class Data_Tile : MonoBehaviour
                 canRecharge = true;
             }
         }
+    }
+
+    private void BuildProcess()
+    {
+        //if 
     }
 
     public void ReturnToDefault() // Returns the tile to dafault state, removing its resources
@@ -281,7 +301,6 @@ public class Data_Tile : MonoBehaviour
     {
         if (hasBuilding && !buildingComplete && dataBuilding)
         {
-            
             if (_unit.unitJob == dataBuilding.canBuild.unitJob)
             {
                 return true;
@@ -351,6 +370,7 @@ public class Data_Tile : MonoBehaviour
 
     private void ShowGizmo()
     {
+        gizmoUse = true;
         gizmoRenderer.enabled = true;
         if (revealed && canBuild)
         {
@@ -364,6 +384,24 @@ public class Data_Tile : MonoBehaviour
 
     private void HideGizmo()
     {
+        gizmoUse = false;
         gizmoRenderer.enabled = false;
+    }
+
+    public void DrawPointer()
+    {
+        if (!gizmoUse)
+        {
+            StartCoroutine(Pointer());
+        }
+    }
+
+    public IEnumerator Pointer()
+    {
+        pointerRenderer.enabled = true;
+        pointerRenderer.sprite = commonData.pointer;
+        yield return new WaitForSeconds(1);
+        pointerRenderer.enabled = false;
+        yield return null;
     }
 }
