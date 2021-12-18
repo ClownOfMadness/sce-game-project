@@ -8,7 +8,6 @@ public class Data_Tile : MonoBehaviour
     //--------------------------------------[To-Do List]-----------------------------------------------
 
     // To add:
-    // - building the building procedure
     // - display additional sprite if resources are about to end
 
     //-------------------------------------[Configuration]---------------------------------------------
@@ -260,6 +259,13 @@ public class Data_Tile : MonoBehaviour
                 }
                 spriteRenderer.sprite = buildSprite;
                 dataBuilding.Complete();
+            }
+        }
+        if (hasBuilding && buildingComplete && builders.Count > 0)
+        {
+            foreach (GameObject _unit in builders)
+            {
+                DetachBuild(_unit);
             }
         }
     }

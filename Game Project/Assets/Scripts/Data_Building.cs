@@ -8,7 +8,6 @@ public class Data_Building : MonoBehaviour
 
     // To add:
     // - building effects
-    // - process of building the building
 
     //-------------------------------------[Configuration]---------------------------------------------
 
@@ -121,19 +120,20 @@ public class Data_Building : MonoBehaviour
         transparency = originalColor;
         transparency.a = 0f;
         secondaryRenderer.color = transparency;
+        night = false;
     }
 
     private void NightMode()
     {
         if (hasLight)
         {
-            if (!dayNight.isDay && !night)
+            if (!dayNight.isDay && !night && spriteRenderer.sprite == buildingComplete)
             {
                 night = true;
                 transparency.a = 1f;
                 secondaryRenderer.color = transparency;
             }
-            else if (dayNight.isDay && night)
+            else if (dayNight.isDay && night && spriteRenderer.sprite == buildingComplete)
             {
                 night = false;
                 transparency.a = 0f;

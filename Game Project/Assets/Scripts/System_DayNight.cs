@@ -17,6 +17,8 @@ public class System_DayNight : MonoBehaviour
     private PostProcessVolume volume;
     private ColorGrading timeColor;
     private bool allGood = false;
+    public PostProcessVolume bloom;
+    private Bloom timeBloom;
     
     public float tempOffset = 20f;
     public float tempContrast = 90f;
@@ -32,23 +34,44 @@ public class System_DayNight : MonoBehaviour
         if(!(volume = GetComponent<PostProcessVolume>()))
         {
             Debug.LogError("PostProcessVolume component is not found in System_DayNight");
+            allGood = false;
         }
         else
         {
             if(!volume.profile.TryGetSettings<ColorGrading>(out timeColor))
             {
                 Debug.LogError("Cannot find ColorGrading setting from PostProcessingVolume in System_DayNight");
+                allGood = false;
             }
             else
             {
                 if (dayLength <= 0 || dayStart >= nightStart || nightStart >= dayLength || cycleSpeed <= 0)
                 {
                     Debug.LogError("The values that are given to the System_DayNight are incorrect");
+                    allGood = false;
                 }
                 else
                 {
                     allGood = true;
                 }
+            }
+        }
+
+        if (!bloom)
+        {
+            Debug.LogError("Bloom component is not found in System_DayNight");
+            allGood = false;
+        }
+        else
+        {
+            if (!bloom.profile.TryGetSettings<Bloom>(out timeBloom))
+            {
+                Debug.LogError("Cannot find Bloom setting from PostProcessingVolume in System_DayNight");
+                allGood = false;
+            }
+            else
+            {
+                allGood = true;
             }
         }
     }
@@ -98,11 +121,13 @@ public class System_DayNight : MonoBehaviour
             {
                 timeColor.temperature.value = (float)((nightStartJump * (tempContrast / (timeJump - nightStartJump))) - (tempOffset + nightTempOffset));
                 timeColor.brightness.value = (float)((nightStartJump * (brightnessContrast / (timeJump - nightStartJump))) - (brightnessOffset + nightBrightnessOffset));
+                timeBloom.intensity.value = 20f;
             }
             else
             {
                 timeColor.temperature.value = (float)(((currentJump - nightStartJump) * (tempContrast / (timeJump - nightStartJump))) - tempOffset);
                 timeColor.brightness.value = (float)(((currentJump - nightStartJump) * (brightnessContrast / (timeJump - nightStartJump))) - brightnessOffset);
+                timeBloom.intensity.value = 5f;
             }
         }
     }

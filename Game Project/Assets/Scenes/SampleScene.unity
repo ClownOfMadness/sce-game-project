@@ -3367,12 +3367,13 @@ MonoBehaviour:
   nightStart: 8
   cycleSpeed: 1
   isDay: 0
-  tempOffset: 30
-  tempContrast: 70
-  nightTempOffset: 10
-  brightnessOffset: 20
-  brightnessContrast: 30
-  nightBrightnessOffset: 10
+  bloom: {fileID: 1962350187}
+  tempOffset: 40
+  tempContrast: 80
+  nightTempOffset: 15
+  brightnessOffset: 30
+  brightnessContrast: 40
+  nightBrightnessOffset: 15
 --- !u!1 &828033760
 GameObject:
   m_ObjectHideFlags: 0

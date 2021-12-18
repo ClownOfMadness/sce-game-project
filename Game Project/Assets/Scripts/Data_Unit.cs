@@ -10,7 +10,6 @@ public class Data_Unit : MonoBehaviour
     // to add:
     // - durabilty to jobs
     // - hurt system
-    // - build buildings
     // - let units recognize the tiles they are walking on
     // - Add tile walking priority
 
