@@ -19,7 +19,7 @@ public class Unit_List : MonoBehaviour
     [HideInInspector] public GameObject townhall;
     private Quaternion rotation = Quaternion.Euler(Vector3.zero); // Default unit rotation
 
-    public void AddUnit(Vector3 location, int unit) // Creates the unit in a given location
+    public void OldAddUnit(Vector3 location, int unit) // [Depricated]
     {
         if (unit < 0 || unit > units.Length)
         {
@@ -37,6 +37,35 @@ public class Unit_List : MonoBehaviour
             {
                 unitData.unitList = this;
             }
+        }
+    }
+
+    public bool AddUnit(int unit, GameObject tile)
+    {
+        if (unit < 0 || unit > units.Length)
+        {
+            Debug.LogError("You have given wrong int to the AddUnit function that is in Unit_List");
+            return false;
+        }
+        else
+        {
+            Data_Unit unitData;
+            Data_Tile dataTile = tile.GetComponent<Data_Tile>();
+            if (dataTile.revealed && !dataTile.hasBuilding && dataTile.gameObject.layer != 7)
+            {
+                GameObject newUnit = Instantiate(units[unit].unitPrefab, tile.transform.position + new Vector3(0, 1, 0), rotation, units[unit].unitGroup.transform);
+                if (!(unitData = newUnit.GetComponent<Data_Unit>()))
+                {
+                    Debug.LogError("Cannot find Data_Unit when creating new unit in Unit_List");
+                    return false;
+                }
+                else
+                {
+                    unitData.unitList = this;
+                }
+                return true;
+            }
+            return true;
         }
     }
 }

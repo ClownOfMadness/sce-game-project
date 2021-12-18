@@ -201,7 +201,7 @@ public class Map_Gen : MonoBehaviour
             for (int i = 0; i < n; i++)
             {
                 int rand = Random.Range(0, size);
-                unitList.AddUnit(PeasentsPos[rand], 0);
+                unitList.OldAddUnit(PeasentsPos[rand], 0);
                 PeasentsPos.RemoveAt(rand);
                 size--;
             }
