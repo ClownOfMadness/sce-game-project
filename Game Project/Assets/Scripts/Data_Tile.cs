@@ -67,6 +67,7 @@ public class Data_Tile : MonoBehaviour
     public List<GameObject> builders = null;
 
     // [Find Once Function]
+    private Player_Control playerControl;
     private System_DayNight systemDayNight; // Script for day night cycle
     private Data_CommonDataHolder commonData;
     private int loadCount = 0; // Amount of times to search before declaring a fail
@@ -99,6 +100,14 @@ public class Data_Tile : MonoBehaviour
         if (!spriteRenderer)
         {
             Debug.LogError("Sprite Renderer component is missing from the " + tileName + " Data_Tile");
+        }
+        if (!workplaceRenderer && hasResources)
+        {
+            Debug.LogError("Workplace Renderer component is missing from the " + tileName + " Data_Tile");
+        }
+        if (!gizmoRenderer)
+        {
+            Debug.LogError("Gizmo Renderer component is missing from the " + tileName + " Data_Tile");
         }
         if (!emptySprite && hasResources)
         {
@@ -141,6 +150,14 @@ public class Data_Tile : MonoBehaviour
                     loadCount++;
                 }
             }
+
+            if (!playerControl)
+            {
+                if (!(playerControl = GameObject.Find("PlayerControl").GetComponent<Player_Control>()))
+                {
+                    loadCount++;
+                }
+            }
         }
     }
 
@@ -160,6 +177,15 @@ public class Data_Tile : MonoBehaviour
                 // If the tile still has resources
                 Recharge();
             }
+        }
+
+        if (playerControl.gizmoObject == this.gameObject)
+        {
+            ShowGizmo();
+        }
+        else
+        {
+            HideGizmo();
         }
     }
 
@@ -323,8 +349,21 @@ public class Data_Tile : MonoBehaviour
             return unit;
     }
 
-    public void ShowGizmo()
+    private void ShowGizmo()
     {
-        
+        gizmoRenderer.enabled = true;
+        if (revealed && canBuild)
+        {
+            gizmoRenderer.sprite = commonData.buildLocationTrue;
+        }
+        else
+        {
+            gizmoRenderer.sprite = commonData.buildLocationFalse;
+        }
+    }
+
+    private void HideGizmo()
+    {
+        gizmoRenderer.enabled = false;
     }
 }

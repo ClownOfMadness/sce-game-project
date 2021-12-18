@@ -38,6 +38,7 @@ public class Data_Unit : MonoBehaviour
     private float maxWaitToWander = 15f; // Max delay between each wander
     private float minWaitToWander = 5f; // Min delay between each wander
     private float nextWander = 0f; // Trigger for next wander
+    private bool impassable = false;
 
     // [Unit Control]
     private GameObject townHall; // TownHall object
@@ -229,6 +230,7 @@ public class Data_Unit : MonoBehaviour
         if (!busy && !card)
         {
             busy = true;
+            impassable = false;
             path.speed = 7f;
             tileData = tile.GetComponent<Data_Tile>();
             tileData.AttachWork(this.gameObject);
@@ -292,7 +294,7 @@ public class Data_Unit : MonoBehaviour
         }
         else // if busy
         {
-            if (path.reachedDestination && !working && !building)
+            if ((path.reachedDestination || (impassable)) && !working && !building)
             {
                 busy = false;
             }
@@ -577,12 +579,23 @@ public class Data_Unit : MonoBehaviour
         {
             buildingInteraction = other.gameObject.name;
         }
+        else if (other.gameObject.layer == 7 && tileData)
+        {
+            if (other.gameObject == tileData.gameObject)
+            {
+                impassable = true;
+            }
+        }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer == 14)
         {
             buildingInteraction = null;
+        }
+        else if (other.gameObject.layer == 7)
+        {
+            impassable = false;
         }
     }
 }

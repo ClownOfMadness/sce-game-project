@@ -95,7 +95,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                 {
                     SnapToParent();
                 }
-                screen.draggedCard = false; //close selectedTile updates
+                //screen.draggedCard = false; //close selectedTile updates
             }
             else            //if not a building, snap back to Hand
             {
@@ -104,6 +104,8 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         }
         else
             SnapToParent();
+
+        screen.draggedCard = false; // [[[Moved the draggedCard cancel to here]]]
     }
     private void SnapToParent()
     {

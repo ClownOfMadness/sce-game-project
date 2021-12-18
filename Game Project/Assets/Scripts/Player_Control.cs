@@ -16,6 +16,7 @@ public class Player_Control : MonoBehaviour
     // Unit Command
     [SerializeField] private LayerMask layerMask; // List of layers that the mouse can interact with
     public GameObject selectedObject; // An object that the player has clicked on
+    public GameObject gizmoObject;
     public Data_Unit Data_Unit; // Data of the unit
     public Unit_List unitList; // List of units script
     public int selectedJob = 0; // Current selected unit job group to command
@@ -141,15 +142,20 @@ public class Player_Control : MonoBehaviour
                 }
             }
 
-            if (screenCards.draggedCard)
+            if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7)
             {
-                if (raycastHit.transform.gameObject.layer == 6)
+                if (screenCards.draggedCard)
                 {
+                    gizmoObject = raycastHit.transform.gameObject;
                     // Checks if the selected object is a terrain tile
                     if (screenCards.selectedTile != raycastHit.transform.gameObject)
                     {
                         screenCards.selectedTile = raycastHit.transform.gameObject;
                     }
+                }
+                else
+                {
+                    gizmoObject = null;
                 }
             }
         }
