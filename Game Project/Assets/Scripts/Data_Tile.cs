@@ -65,6 +65,10 @@ public class Data_Tile : MonoBehaviour
 
     // [Tile Build]
     public List<GameObject> builders = null;
+    private int progress = 0;
+    private bool buildDone = false;
+    private bool canProgress = true;
+    private float nextProgress = 0f;
 
     // [Find Once Function]
     private Player_Control playerControl;
@@ -233,7 +237,31 @@ public class Data_Tile : MonoBehaviour
 
     private void BuildProcess()
     {
-        //if 
+        if (hasBuilding && !buildingComplete)
+        {
+            if (builders.Count > 0 && !buildDone)
+            {
+                if (Time.time > nextProgress)
+                {
+                    progress++;
+                    nextProgress = Time.time + (1f / builders.Count);
+                }
+                if (progress >= dataBuilding.buildTime)
+                {
+                    buildDone = true;
+                }
+            }
+            else if (buildDone)
+            {
+                buildingComplete = true;
+                foreach (GameObject _unit in builders)
+                {
+                    DetachBuild(_unit);
+                }
+                spriteRenderer.sprite = buildSprite;
+                dataBuilding.Complete();
+            }
+        }
     }
 
     public void ReturnToDefault() // Returns the tile to dafault state, removing its resources

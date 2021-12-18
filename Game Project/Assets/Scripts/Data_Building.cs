@@ -14,6 +14,7 @@ public class Data_Building : MonoBehaviour
 
     // [Building Description]
     public string buildingName = "None"; // Name of the building
+    public int buildTime = 0;
     public bool isTownHall = false; // Is this a townhall?
     public bool hasLight = false; // Does the building have light
     public Data_Unit canBuild; // Who can build this?
@@ -113,6 +114,7 @@ public class Data_Building : MonoBehaviour
 
     public void Complete()
     {
+        spriteRenderer.enabled = true;
         spriteRenderer.sprite = buildingComplete;
         if (hasLight)
             secondaryRenderer.sprite = buildingLight;

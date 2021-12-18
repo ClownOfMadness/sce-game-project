@@ -115,7 +115,7 @@ public class Player_Control : MonoBehaviour
                         if (!selectedData_Tile.GetData())
                         {
                             selectedUnit = UnitSelection(selectedJob, selectedObject, selectedData_Tile.hasTownHall);
-                            if (selectedUnit)
+                            if ((selectedUnit && selectedData_Tile.hasBuilding && !selectedData_Tile.buildingComplete) || (selectedUnit && !selectedData_Tile.hasBuilding))
                             {
                                 Data_Unit = selectedUnit.GetComponent<Data_Unit>();
                                 if (Data_Unit)
@@ -135,7 +135,8 @@ public class Player_Control : MonoBehaviour
                         if (selectedData_Tile.GetData() || selectedData_Tile.GetBuildData())
                         {
                             GameObject theUnit = selectedData_Tile.GetObject();
-                            theUnit.GetComponent<Data_Unit>().RemoveTargetLocation();
+                            if (theUnit)
+                                theUnit.GetComponent<Data_Unit>().RemoveTargetLocation();
                             selectedData_Tile.DetachWork();
                             selectedData_Tile.DetachBuild(theUnit);
                         }
