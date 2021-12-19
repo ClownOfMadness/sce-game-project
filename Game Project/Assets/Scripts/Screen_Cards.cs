@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 //responsible for switching panels and button related functions of Cards
 public class Screen_Cards : MonoBehaviour
@@ -32,7 +31,6 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public GameObject selectedTile;   //updated by Player_Control
     [HideInInspector] public bool draggedCard;          //updated by Card_Drag
 
-
     void Start()    //initilizing in case something was off
     {
         zHand = Hand.transform.GetComponent<Zone_Hand>();
@@ -41,7 +39,7 @@ public class Screen_Cards : MonoBehaviour
         zBook = Book.transform.GetComponent<Zone_Book>();
         zUnit = Unit.transform.GetComponent<Zone_Unit>();
 
-        Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions
+        Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions;
 
         for (int i = 0; i < Card_Pool.count; i++)                   //returning all fields in cards back to default 
             Card_Pool.cards[i].neverDiscovered = true;              //done here instead of Card_Pool to ensure that it only happens once
@@ -60,6 +58,21 @@ public class Screen_Cards : MonoBehaviour
         }
         storageButton.SetActive(true);
         cardsButton.SetActive(true);
+    }
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H)) //can close and open "Hand" with keyboard as well
+        {
+            SwitchCards();
+        }
+        if (Input.GetKeyDown(KeyCode.C)) //can close and open "Creative" with keyboard as well
+        {
+            SwitchCreative();
+        }
+        if (Input.GetKeyDown(KeyCode.S)) //can close and open "Storage" with keyboard as well
+        {
+            SwitchStorage();
+        }
     }
     public void TopMessage(string text)
     {
@@ -97,7 +110,7 @@ public class Screen_Cards : MonoBehaviour
         canCraft = false;
         UIDown = true;
     }
-    public void SwitchCreative()
+    public void SwitchCreative()//close/open Book
     {
 
         if (Book.activeSelf)
@@ -130,7 +143,7 @@ public class Screen_Cards : MonoBehaviour
         canCraft = true;
         Time.timeScale = 1f;    //unpause game
     }
-    public void SwitchStorage()       //used when clicked on TownHall
+    public void SwitchStorage() //close/open Storage
     {
         if (Storage.activeSelf)
         {
@@ -165,7 +178,7 @@ public class Screen_Cards : MonoBehaviour
         canCraft = true;
         Time.timeScale = 1f;    //unpause game
     }
-    public void CardClick(Card_Drag pickedCard)  //move card between Hand zone and Craft on click
+    public void CardClick(Card_Drag pickedCard)     //move card between Hand zone and Craft on click
     {
         if (canCraft)
         {
@@ -225,7 +238,7 @@ public class Screen_Cards : MonoBehaviour
         card.gameObject.transform.SetParent(Hand.transform);
         Craft.SetActive(false);
     }
-    public void UnitToHand(Card_Drag card)         //move card from Craft zone to Hand on click
+    public void UnitToHand(Card_Drag card)          //move card from Craft zone to Hand on click
     {
         zUnit.FreeUnit();
         card.gameObject.transform.SetParent(Hand.transform);
@@ -288,21 +301,5 @@ public class Screen_Cards : MonoBehaviour
             zUnit.CardAdded(pickedCard, waitingUnit);
             return false; //unit needs to wait
         }
-    }
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.H)) //can close and open "hand" with keyboard as well
-        {
-            SwitchCards();
-        }
-        if (Input.GetKeyDown(KeyCode.C)) //can close and open "Creative" with keyboard as well
-        {
-            SwitchCreative();
-        }
-        if (Input.GetKeyDown(KeyCode.S)) //can close and open "Storage" with keyboard as well
-        {
-            SwitchStorage();
-        }
-
     }
 }

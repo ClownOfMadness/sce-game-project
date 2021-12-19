@@ -19,9 +19,11 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
         Card_Drag d = eventData.pointerDrag.GetComponent<Card_Drag>();
         if (d != null && this.transform.childCount < this.Size)
         {
-            d.GetComponent<CanvasGroup>().alpha = 1f;        //reset effect for card (can be changed)
-            if(this.transform == d.hand)
+            //d.GetComponent<CanvasGroup>().alpha = 1f;     //reenables itself in a loop for no reason
+            if (this.transform == d.hand)
+            {
                 d.placeholderParent = this.transform;       //only make a placeholder in Hand
+            }
         }
     }
     public void OnPointerExit(PointerEventData eventData)
@@ -33,7 +35,6 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
         Card_Drag d = eventData.pointerDrag.GetComponent<Card_Drag>();
         if ((d != null) && (d.placeholderParent == this.transform))
         {
-            d.GetComponent<CanvasGroup>().alpha = .6f;      //effect for card when moved (can be changed)
             d.placeholderParent = d.parentReturnTo;
         }
     }

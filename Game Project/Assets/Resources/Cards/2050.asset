@@ -15,10 +15,13 @@ MonoBehaviour:
   name: Creation
   code: 2050
   type: 2
-  source: 00000000
+  source: 10000000
   combinationOf: []
   gatheredBy: []
+  tier: 
   complexity: 0
   description: The power of creation
   artwork: {fileID: 21300000, guid: b807100e097744f40a26a70c2c66cd9f, type: 3}
   buildingPrefab: {fileID: 0}
+  unitIndex: 
+  neverDiscovered: 1

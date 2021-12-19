@@ -12,6 +12,7 @@ public class Zone_Storage : MonoBehaviour
     [HideInInspector] private List<Data_Card> slots;  //what is in the storage
     [HideInInspector] public int count;  //amount of full slots in the storage
     [HideInInspector] public System_DayNight night;
+    private Card_Pool Pool;
 
     void Awake()
     {
@@ -20,6 +21,7 @@ public class Zone_Storage : MonoBehaviour
         slots = new List<Data_Card>();
         count = 0;
         night=FindObjectOfType<System_DayNight>();
+        Pool = ScriptableObject.CreateInstance<Card_Pool>();
 }
     private void InstantiateZone()
     {
@@ -56,11 +58,14 @@ public class Zone_Storage : MonoBehaviour
     {
         if ((night.isDay==false || ignoreTime) && count < Size) 
         {
-            slots.Add(newCard);
-            slots.OrderBy(Card => Card.code);
-            count++;
-            RefreshZone();
-            return true;
+            if (newCard != Pool.GetCard("Creation"))
+            {
+                slots.Add(newCard);
+                slots.OrderBy(Card => Card.code);
+                count++;
+                RefreshZone();
+                return true;
+            }
         }
         return false;
     }

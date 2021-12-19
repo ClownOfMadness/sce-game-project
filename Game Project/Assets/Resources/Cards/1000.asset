@@ -15,10 +15,13 @@ MonoBehaviour:
   name: Cardmaster
   code: 1000
   type: 0
-  source: 00000000
+  source: 10000000
   combinationOf: []
   gatheredBy: []
+  tier: 
   complexity: 0
   description: The all-powerful cardmaster
   artwork: {fileID: 21300000, guid: 6de6eb73758157d4da9482e028375f0d, type: 3}
   buildingPrefab: {fileID: 0}
+  unitIndex: 
+  neverDiscovered: 1

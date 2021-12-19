@@ -16,7 +16,7 @@ public class Data_Card : ScriptableObject
     }
     public enum sourcesList     //enum for source menu, replace with tile/buildings objects list when one is made
     {                           //notice! changing order changes the selection in the exisiting Data_Cards
-        None,
+        Menu,
         Combination,
         River,
         Plains,
@@ -32,6 +32,7 @@ public class Data_Card : ScriptableObject
         TownHall,
         House,
         Farm,
+        None,
     }
     [System.Serializable]   //needed for combinations to appear in inspector
     public struct Combinations  //struct for combinations (stores 2 at a time)
@@ -51,12 +52,15 @@ public class Data_Card : ScriptableObject
     //for Data_Cards you can gather (type=Basic,Complex,Special)
     public List<Data_Card> gatheredBy;
 
+    //for Data_Cards that have tool durability (type=Job)
+    public string tier;
+
     public int complexity;
     public string description;
     public Sprite artwork;
 
-    //public ScriptableObject Building;
     public GameObject buildingPrefab;   //can interact with the map
+    public string unitIndex;            //can interact with the map
 
     [HideInInspector] public bool neverDiscovered; //for statistics
 }

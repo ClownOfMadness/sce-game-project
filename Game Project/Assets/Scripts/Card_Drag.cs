@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 //responsible for the Card Drag commands, extension of CardDisplay
 public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -13,6 +14,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     [HideInInspector] public Transform destroy;
     private Zone_Hand zHand;
     private Player_SpawnBuilding Tiles;
+    private Unit_List Units;
 
     void Start()
     {
@@ -23,7 +25,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         destroy = screen.destroyButton.transform;
         zHand = hand.GetComponent<Zone_Hand>();
         Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
-       
+        Units = FindObjectOfType<Unit_List>();              //connection to use UnitList functions
     }
     public void ReturnToHand()          //return to hand after craft attempt
     {
@@ -31,7 +33,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void SwitchCardPlace()       //move card between hand-craft on click
     {
-        screen.CardClick(this);       //needs to happen here to get the "this" of the object
+        screen.CardClick(this);         //needs to happen here to get the "this" of the object
     }
     private void SavePlaceholder()      //enables card order
     {
@@ -48,19 +50,19 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (card.buildingPrefab)       //if building, start recieving selectedTile updates
-            screen.draggedCard=true;
+        if (card.buildingPrefab || int.TryParse(card.unitIndex, out int index))      //if building/unit, start recieving selectedTile updates and hide card
+        {       
+            screen.draggedCard = true;
+            GetComponent<CanvasGroup>().alpha = 0f; //hide building until placed/returned to hand
+        }
         parentReturnTo = this.transform.parent;
         SavePlaceholder();
-        this.transform.SetParent(this.transform.parent.parent);         //changes parent once the card is picked
+        this.transform.SetParent(this.transform.parent.parent); //changes parent once the card is picked
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
     public void OnDrag(PointerEventData eventData)
     {
-        //GetComponent<RectTransform>().anchoredPosition += eventData.delta / canvas.scaleFactor; //moves by wherever we picked the card instead of by the middle
-        this.transform.position = eventData.position; //moves by the middle of the card
-            if (this.transform.localScale.x > (zHand.CardPrefab.transform.localScale.x) / 2) 
-                this.transform.localScale -= new Vector3((zHand.CardPrefab.transform.localScale.x) / 20, (zHand.CardPrefab.transform.localScale.y) / 20, 0);
+        GetComponent<RectTransform>().anchoredPosition += eventData.delta / canvas.scaleFactor; //moves by wherever we picked the card instead of by the middle
         if (placeholder.transform.parent != placeholderParent)
         {
             placeholder.transform.SetParent(placeholderParent);
@@ -80,38 +82,37 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-
         if (this.transform.parent != hand && this.transform.parent != destroy && this.transform.parent != unit) //needed to allow building placement only outside of UI, don't change
         {
-            if (card.buildingPrefab)    //if building, try to place
-            {
-                //Debug.Log("Card_Drag: trying to place " + card.buildingPrefab.name + " at " + screen.selectedTile.name);
-                if (Tiles.Spawn(card.buildingPrefab, screen.selectedTile))     //spawn the card's building on the tile that's under the pointer
+            if (placeholderParent == hand)
+                if (card.buildingPrefab)                    //if building, try to place
                 {
-                    Destroy(placeholder);
-                    Destroy(this.gameObject);          //destroy card that was placed successfully
+                    if (Tiles.Spawn(card.buildingPrefab, screen.selectedTile))     //spawn the card's building on the tile that's under the pointer
+                    {
+                        //Debug.Log("Card_Drag: placing " + card.buildingPrefab.name + " at " + screen.selectedTile.name);
+                        Destroy(placeholder);
+                        Destroy(this.gameObject);           //destroy card that was placed successfully
+                    }
                 }
-                else        //if placement failed, snap back to Hand
+                else if (int.TryParse(card.unitIndex, out int index))             //if unit, try to place
                 {
-                    SnapToParent();
+                    if (Units.AddUnit(index, screen.selectedTile))     //spawn the card's unit on the tile that's under the pointer
+                    {
+                        Debug.Log("Card_Drag: placing unit #" + card.unitIndex + " at " + screen.selectedTile.name);
+                        Destroy(placeholder);
+                        Destroy(this.gameObject);           //destroy card that was placed successfully
+                    }
                 }
-                //screen.draggedCard = false; //close selectedTile updates
-            }
-            else            //if not a building, snap back to Hand
-            {
-                SnapToParent();
-            }
         }
-        else
+        screen.draggedCard = false; //close selectedTile updates
+        if (this.gameObject)     //if object still exists, snap back to Hand
             SnapToParent();
-
-        screen.draggedCard = false; // [[[Moved the draggedCard cancel to here]]]
     }
     private void SnapToParent()
     {
         this.transform.SetParent(parentReturnTo);
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
-        GetComponent<CanvasGroup>().alpha = 1f;                     //reset effect for card (can be changed)
+        GetComponent<CanvasGroup>().alpha = 1f; //reset effect for card (can be changed)
         this.transform.localScale = new Vector3(zHand.CardPrefab.transform.localScale.x, zHand.CardPrefab.transform.localScale.y, 0);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeholder);
