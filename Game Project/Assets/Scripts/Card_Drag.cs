@@ -50,22 +50,22 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (card.buildingPrefab)                            //if building, start recieving selectedTile updates and hide card
-        {       
+        parentReturnTo = this.transform.parent;
+        SavePlaceholder();
+        this.transform.SetParent(this.transform.parent.parent); //changes parent once the card is picked
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
+        if (card.buildingPrefab && placeholderParent == hand)                           //if building, start recieving selectedTile updates and hide card
+        {
             screen.draggedBuilding = true;
             screen.draggedSprite = card.artwork;
             GetComponent<CanvasGroup>().alpha = 0f; //hide building until placed/returned to hand
         }
-        if (int.TryParse(card.unitIndex, out int index))     //if unit, start recieving selectedTile updates and hide card
+        if (int.TryParse(card.unitIndex, out int index) && placeholderParent == hand)   //if unit, start recieving selectedTile updates and hide card
         {
             screen.draggedUnit = true;
             screen.draggedSprite = card.artwork;
             GetComponent<CanvasGroup>().alpha = 0f; //hide unit until placed/returned to hand
         }
-        parentReturnTo = this.transform.parent;
-        SavePlaceholder();
-        this.transform.SetParent(this.transform.parent.parent); //changes parent once the card is picked
-        GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
     public void OnDrag(PointerEventData eventData)
     {

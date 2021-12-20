@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
+  m_Name: 2004_Gravel
+  m_EditorClassIdentifier: 
+  name: Gravel
+  code: 2004
+  type: 1
+  source: 03000000
+  combinationOf: []
+  gatheredBy:
+  - {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
+  tier: 
+  complexity: 0
+  description: Rocks shattered into small pieces
+  artwork: {fileID: 21300000, guid: f435d7e91b2e00c45be8b9b6d3c308f7, type: 3}
+  buildingPrefab: {fileID: 0}
+  unitIndex: 
+  neverDiscovered: 0

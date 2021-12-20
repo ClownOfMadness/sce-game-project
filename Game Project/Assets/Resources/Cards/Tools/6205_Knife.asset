@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
+  m_Name: 6205_Knife
+  m_EditorClassIdentifier: 
+  name: Iron Knife
+  code: 6205
+  type: 5
+  source: 00000000
+  combinationOf:
+  - card1: {fileID: 11400000, guid: 6690953aab85a944b8c6b2b1a7d36bf4, type: 2}
+    card2: {fileID: 11400000, guid: 6c59b2aaed79d23469b3b8469b6915b4, type: 2}
+  gatheredBy: []
+  tier: 
+  complexity: 8
+  description: txt
+  artwork: {fileID: 21300000, guid: c7796e2402cfab247a0908153ebd857c, type: 3}
+  buildingPrefab: {fileID: 0}
+  unitIndex: 
+  neverDiscovered: 1

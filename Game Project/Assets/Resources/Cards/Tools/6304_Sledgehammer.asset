@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
+  m_Name: 6304_Sledgehammer
+  m_EditorClassIdentifier: 
+  name: Sledgehammer
+  code: 6304
+  type: 5
+  source: 00000000
+  combinationOf:
+  - card1: {fileID: 11400000, guid: 1cb43548fb3dafc4e9478b47fb92f6ab, type: 2}
+    card2: {fileID: 11400000, guid: 5e05022619d46a24081410bb3b1f2a3b, type: 2}
+  gatheredBy: []
+  tier: 
+  complexity: 15
+  description: 
+  artwork: {fileID: 21300000, guid: 143ab4a7e9d637247aba35344f9a1e90, type: 3}
+  buildingPrefab: {fileID: 0}
+  unitIndex: 
+  neverDiscovered: 0

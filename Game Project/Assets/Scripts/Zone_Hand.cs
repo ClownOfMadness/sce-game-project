@@ -10,7 +10,7 @@ public class Zone_Hand : Zone_Behaviour
     public bool Damage = false;
     private Card_Pool Pool;
     private List<string> deck = new List<string>    //the starting cards that appear in Hand
-    { "Town Hall","Town Hall","House","Hut","Cabin","Bakery","Wooden Wall","Wooden Wall" };
+    { "Town Hall","Town Hall","House","Hut","Cabin","Bakery","Wood","Stick" };
 
     void Awake()
     {

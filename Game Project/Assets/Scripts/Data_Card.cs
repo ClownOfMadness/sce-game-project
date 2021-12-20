@@ -18,20 +18,8 @@ public class Data_Card : ScriptableObject
     {                           //notice! changing order changes the selection in the exisiting Data_Cards
         Menu,
         Combination,
-        River,
-        Plains,
-        Hills,
-        Animals,
-        Forest,
-        Mountain,
-        Marsh,
-        CoalMine,
-        IronMine,
-        GoldMine,
-        Beach,
-        TownHall,
-        House,
-        Farm,
+        Spawns,
+        Gathering,
         None,
     }
     [System.Serializable]   //needed for combinations to appear in inspector
@@ -51,9 +39,6 @@ public class Data_Card : ScriptableObject
 
     //for Data_Cards you can gather (type=Basic,Complex,Special)
     public List<Data_Card> gatheredBy;
-
-    //for Data_Cards that have tool durability (type=Job)
-    public string tier;
 
     public int complexity;
     public string description;
