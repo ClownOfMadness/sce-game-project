@@ -50,10 +50,15 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (card.buildingPrefab || int.TryParse(card.unitIndex, out int index))      //if building/unit, start recieving selectedTile updates and hide card
+        if (card.buildingPrefab)                            //if building, start recieving selectedTile updates and hide card
         {       
-            screen.draggedCard = true;
+            screen.draggedBuilding = true;
             GetComponent<CanvasGroup>().alpha = 0f; //hide building until placed/returned to hand
+        }
+        if (int.TryParse(card.unitIndex, out int index))     //if unit, start recieving selectedTile updates and hide card
+        {
+            screen.draggedUnit = true;
+            GetComponent<CanvasGroup>().alpha = 0f; //hide unit until placed/returned to hand
         }
         parentReturnTo = this.transform.parent;
         SavePlaceholder();
@@ -104,7 +109,8 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                     }
                 }
         }
-        screen.draggedCard = false; //close selectedTile updates
+        screen.draggedBuilding = false; //close selectedTile updates
+        screen.draggedUnit = false;     //close selectedTile updates
         if (this.gameObject)     //if object still exists, snap back to Hand
             SnapToParent();
     }
