@@ -313,19 +313,31 @@ MonoBehaviour:
   tileName: Plains
   canBuild: 1
   canBuildAtDefault: 1
+  hasExtra: 1
+  extraChance: 5
+  extraGameobject: {fileID: 2707168647742401132, guid: ceac33484e65c584cb994f95a279f17d, type: 3}
   spriteRenderer: {fileID: 8375140818541808227}
   workplaceRenderer: {fileID: 2529471452308515144}
   gizmoRenderer: {fileID: 8453849517021000775}
   pointerRenderer: {fileID: 1872319848139529268}
   fullSprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
   halfSprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
-  emptySprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
+  emptySprite: {fileID: 21300000, guid: 394b4a164372e984bbfb852becb73d01, type: 3}
   buildSprite: {fileID: 21300000, guid: 394b4a164372e984bbfb852becb73d01, type: 3}
-  works: []
-  maxDurability: 0
-  durability: 0
-  recharge: 0
+  works:
+  - job: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
+    card: {fileID: 11400000, guid: 4c6ed40fc58e10e48b1baa2491fbde18, type: 2}
+    workTime: 10
+    extra: 0
+  - job: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
+    card: {fileID: 11400000, guid: 6252d19e9c5787547b9a02ad7a7bd4e5, type: 2}
+    workTime: 20
+    extra: 1
+  maxDurability: 3
+  durability: 3
+  recharge: 1
   height: 0
+  parentExtra: {fileID: 0}
   revealed: 0
   building: {fileID: 0}
   hasTownHall: 0

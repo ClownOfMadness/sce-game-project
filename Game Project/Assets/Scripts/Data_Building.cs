@@ -127,13 +127,13 @@ public class Data_Building : MonoBehaviour
     {
         if (hasLight)
         {
-            if (!dayNight.isDay && !night && spriteRenderer.sprite == buildingComplete)
+            if (!dayNight.isDay && !night && secondaryRenderer.sprite != buildingComplete)
             {
                 night = true;
                 transparency.a = 1f;
                 secondaryRenderer.color = transparency;
             }
-            else if (dayNight.isDay && night && spriteRenderer.sprite == buildingComplete)
+            else if (dayNight.isDay && night && secondaryRenderer.sprite != buildingComplete)
             {
                 night = false;
                 transparency.a = 0f;

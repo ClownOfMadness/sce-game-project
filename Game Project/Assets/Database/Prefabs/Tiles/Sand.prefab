@@ -147,6 +147,8 @@ MonoBehaviour:
   tileName: Sand
   canBuild: 1
   canBuildAtDefault: 1
+  hasExtra: 0
+  extraGameobject: {fileID: 0}
   spriteRenderer: {fileID: 8917261356517440448}
   workplaceRenderer: {fileID: 8932905232375740419}
   gizmoRenderer: {fileID: 5867883233389757498}

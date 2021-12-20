@@ -16,14 +16,18 @@ public class Data_Tile : MonoBehaviour
     public string tileName = "None"; // Tile name
     public bool canBuild = false; // Determines if in this tile buildings can be build or rebuild
     public bool canBuildAtDefault = false; // Determines if in its default tile buildings can be build or rebuild
-    public SpriteRenderer spriteRenderer; // Displays the sprite
-    public SpriteRenderer workplaceRenderer;
-    public SpriteRenderer gizmoRenderer;
-    public SpriteRenderer pointerRenderer;
-    public Sprite fullSprite; // Sprite that the tile starts with
-    public Sprite halfSprite; // Sprite to change to once the resources are about to end
-    public Sprite emptySprite; // Sprite to change to once there are no more resources
-    public Sprite buildSprite; // Sprite to be shown under the building
+    public bool hasExtra = false;
+    [Range(0.0f, 100.0f)]
+    public float extraChance = 0f;
+    public GameObject extraGameobject = null;
+    public SpriteRenderer spriteRenderer = null; // Displays the sprite
+    public SpriteRenderer workplaceRenderer = null;
+    public SpriteRenderer gizmoRenderer = null;
+    public SpriteRenderer pointerRenderer = null;
+    public Sprite fullSprite = null; // Sprite that the tile starts with
+    public Sprite halfSprite = null; // Sprite to change to once the resources are about to end
+    public Sprite emptySprite = null; // Sprite to change to once there are no more resources
+    public Sprite buildSprite = null; // Sprite to be shown under the building
 
     // [Tile Resources]
     [Serializable]
@@ -32,13 +36,15 @@ public class Data_Tile : MonoBehaviour
         public Data_Unit job; // Units that can work for the resource
         public Data_Card card; // Resource the unit will recieve
         public float workTime; // Time needed to recieve the card
+        public bool extra;
     }
     public Work[] works; // The works
-    [Range(0.0f, 50.0f)]
+
+    [Range(0, 50)]
     public int maxDurability = 0; // Maximum allowed durabilty
-    [Range(0.0f, 50.0f)]
+    [Range(0, 50)]
     public int durability = 0; // Current durability
-    [Range(0.0f, 50.0f)]
+    [Range(0, 50)]
     public int recharge = 0; // Amount to recharge
 
     //---------------------------------------[Automatic]-----------------------------------------------
@@ -49,6 +55,10 @@ public class Data_Tile : MonoBehaviour
 
     // [Tile Resources]
     private bool canRecharge = false; // Checks if its daytime and can recharge
+    private bool canRandom = true;
+    private GameObject theExtra = null;
+    [HideInInspector] public GameObject parentExtra = null;
+    private bool extra = false;
 
     // [Tile Fog]
     [HideInInspector] public bool revealed = false; // Checks it the tile has been discovered
@@ -104,6 +114,10 @@ public class Data_Tile : MonoBehaviour
         if (!spriteRenderer)
         {
             Debug.LogError("Sprite Renderer component is missing from the " + tileName + " Data_Tile");
+        }
+        if (!extraGameobject && hasExtra)
+        {
+            Debug.LogError("Extra GameObject component is missing from the " + tileName + " Data_Tile");
         }
         if (!workplaceRenderer && hasResources)
         {
@@ -171,13 +185,16 @@ public class Data_Tile : MonoBehaviour
 
     private void OnUpdate() // Functions that work on update
     {
-        if (!hasBuilding)
+        if (!hasBuilding && !hasTownHall)
         {
             // If the tile has no building
             if (durability <= 0 && hasResources)
             {
                 // If the tile had resources and now they're gone
-                ReturnToDefault();
+                if (!extra)
+                    ReturnToDefault();
+                else
+                    NoExtra();
             }
 
             if (hasResources)
@@ -185,6 +202,9 @@ public class Data_Tile : MonoBehaviour
                 // If the tile still has resources
                 Recharge();
             }
+
+            if (hasExtra)
+                ExtraChance();
         }
 
         if (playerControl.gizmoObject == this.gameObject && (playerControl.draggedType == "unit" || playerControl.draggedType == "building"))
@@ -232,6 +252,48 @@ public class Data_Tile : MonoBehaviour
                 canRecharge = true;
             }
         }
+    }
+
+    private void ExtraChance()
+    {
+        if (systemDayNight.isDay)
+        {
+            if (canRandom)
+            {
+                canRandom = false;
+                float result = UnityEngine.Random.Range(0f, 100f);
+                if (result <= extraChance)
+                {
+                    HasExtra();
+                }
+                else
+                {
+                    extra = false;
+                }
+            }
+        }
+        else
+        {
+            if (!canRandom)
+            {
+                canRandom = true;
+                NoExtra();
+            }
+        }
+    }
+
+    public void HasExtra()
+    {
+        extra = true;
+        theExtra = Instantiate(extraGameobject, this.transform.position, Quaternion.Euler(90, 0, 0), this.gameObject.transform);
+    }
+
+    public void NoExtra()
+    {
+        extra = false;
+        Destroy(theExtra);
+        theExtra = null;
+        durability += recharge;
     }
 
     private void BuildProcess()
@@ -322,7 +384,7 @@ public class Data_Tile : MonoBehaviour
         {
             for (int i = 0; i < works.Length; i++)
             {
-                if (works[i].job.unitJob == _unit.unitJob)
+                if (works[i].job.unitJob == _unit.unitJob && works[i].extra == extra)
                 {
                     return i;
                 }
@@ -381,6 +443,11 @@ public class Data_Tile : MonoBehaviour
     public bool GetData() // Returns the unit that works here
     {
         return unit;
+    }
+
+    public bool GetExtra()
+    {
+        return extra;
     }
 
     public bool GetBuildData()
@@ -446,16 +513,16 @@ public class Data_Tile : MonoBehaviour
     {
         if (!gizmoUse)
         {
+            pointerRenderer.enabled = true;
+            Color fade = pointerRenderer.color;
+            fade.a = 1f;
+            pointerRenderer.color = fade;
             StartCoroutine(Pointer());
         }
     }
 
     public IEnumerator Pointer()
     {
-        pointerRenderer.enabled = true;
-        Color fade = pointerRenderer.color;
-        fade.a = 1f;
-        pointerRenderer.color = fade;
         pointerRenderer.sprite = commonData.pointer;
         yield return new WaitForSeconds(1);
         pointerRenderer.enabled = false;

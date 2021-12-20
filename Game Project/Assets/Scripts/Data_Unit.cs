@@ -12,6 +12,7 @@ public class Data_Unit : MonoBehaviour
     // - hurt system
     // - let units recognize the tiles they are walking on
     // - Add tile walking priority
+    // - Disable work on unrevealed tiles
 
     //-------------------------------------[Configuration]---------------------------------------------
 
@@ -58,6 +59,7 @@ public class Data_Unit : MonoBehaviour
     private int workIndex = -1; // Work index to determine which work it does from the tile
     private float workTime = 0f; // Work time needed to get the card
     private float workDone = 0f; // Time until work is done
+    private bool workExtra = false;
 
     // [Build routine]
     private GameObject buildPlace; // BuildPlace object
@@ -71,6 +73,7 @@ public class Data_Unit : MonoBehaviour
     private GameObject rmbWorkPlace; // Remembered WorkPlace
     private int rmbWorkIndex; // Remembered WorkIndex
     private float rmbWorkTime; // Remembered WorkTime
+    private bool rmbWorkExtra = false;
     
     // [Recieved from PlayerControl]
     private Data_Tile tileData; // Tile Data that is recieved from the player
@@ -246,6 +249,7 @@ public class Data_Unit : MonoBehaviour
                     workPlace = tile;
                     workTime = tileData.works[workIndex].workTime;
                     workCard = tileData.works[workIndex].card;
+                    workExtra = tileData.works[workIndex].extra;
                 }
                 else if (tileData.CanBuild(this))
                 {
@@ -270,6 +274,7 @@ public class Data_Unit : MonoBehaviour
         workDone = 0f;
         workBegun = false;
         workCard = null;
+        workExtra = false;
         path.speed = 3f;
         tileData = null;
         path.destination = this.transform.position;
@@ -325,7 +330,7 @@ public class Data_Unit : MonoBehaviour
                     // if target is workplace
                     if (path.reachedDestination)
                     {
-                        if (tileData.hasResources)
+                        if (tileData.hasResources && workExtra == tileData.GetExtra())
                         {
                             if (!workBegun)
                             {
@@ -487,6 +492,8 @@ public class Data_Unit : MonoBehaviour
         workDone = 0f;
         rmbWorkCard = workCard;
         workCard = null;
+        rmbWorkExtra = workExtra;
+        workExtra = false;
         workBegun = false;
         path.destination = this.transform.position;
     }
@@ -495,20 +502,39 @@ public class Data_Unit : MonoBehaviour
     {
         workInMemory = false;
 
-        if (!rmbTileData.GetData())
+        if (rmbTileData)
         {
-            rmbTileData.AttachWork(this.gameObject);
-            busy = true;
-            working = true;
-            path.speed = 7f;
-            tileData = rmbTileData;
-            workPlace = rmbWorkPlace;
-            workIndex = rmbWorkIndex;
-            workTime = rmbWorkTime;
-            workCard = rmbWorkCard;
-            workDone = 0f;
-            workBegun = false;
-            path.destination = workPlace.transform.position;
+            if (!rmbTileData.GetData() && rmbTileData.gameObject.activeSelf == true && rmbWorkExtra == rmbTileData.GetExtra())
+            {
+                rmbTileData.AttachWork(this.gameObject);
+                busy = true;
+                working = true;
+                path.speed = 7f;
+                tileData = rmbTileData;
+                workPlace = rmbWorkPlace;
+                workIndex = rmbWorkIndex;
+                workTime = rmbWorkTime;
+                workCard = rmbWorkCard;
+                workExtra = rmbWorkExtra;
+                workDone = 0f;
+                workBegun = false;
+                path.destination = workPlace.transform.position;
+            }
+            else
+            {
+                busy = false;
+                working = false;
+                path.speed = 3f;
+                tileData = null;
+                workPlace = null;
+                workIndex = -1;
+                workTime = 0f;
+                workDone = 0f;
+                workCard = null;
+                workExtra = false;
+                workBegun = false;
+                path.destination = this.transform.position;
+            }
         }
         else
         {
@@ -521,6 +547,7 @@ public class Data_Unit : MonoBehaviour
             workTime = 0f;
             workDone = 0f;
             workCard = null;
+            workExtra = false;
             workBegun = false;
             path.destination = this.transform.position;
         }
@@ -548,6 +575,8 @@ public class Data_Unit : MonoBehaviour
             workDone = 0f;
             rmbWorkCard = workCard;
             workCard = null;
+            rmbWorkExtra = workExtra;
+            workExtra = false;
             workBegun = false;
             path.destination = this.transform.position;
         }

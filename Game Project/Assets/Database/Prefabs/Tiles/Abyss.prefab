@@ -396,6 +396,8 @@ MonoBehaviour:
   tileName: Abyss
   canBuild: 0
   canBuildAtDefault: 0
+  hasExtra: 0
+  extraGameobject: {fileID: 0}
   spriteRenderer: {fileID: 3776088101216642229}
   workplaceRenderer: {fileID: 3042096548071704330}
   gizmoRenderer: {fileID: 3702477356985533458}

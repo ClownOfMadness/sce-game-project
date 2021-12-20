@@ -6470,6 +6470,7 @@ MonoBehaviour:
   CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
   ZoneUnit: {fileID: 1936515017}
   Fill: 0
+  Damage: 0
 --- !u!114 &1697456046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8032,6 +8033,8 @@ MonoBehaviour:
     m_Bits: 192
   selectedObject: {fileID: 0}
   gizmoObject: {fileID: 0}
+  draggedType: none
+  draggedSprite: {fileID: 0}
   Data_Unit: {fileID: 0}
   unitList: {fileID: 11710810}
   selectedJob: 0
@@ -8634,7 +8637,9 @@ MonoBehaviour:
   canCraft: 0
   UIDown: 0
   selectedTile: {fileID: 0}
-  draggedCard: 0
+  draggedBuilding: 0
+  draggedUnit: 0
+  draggedSprite: {fileID: 0}
 --- !u!114 &2133596451
 MonoBehaviour:
   m_ObjectHideFlags: 0
