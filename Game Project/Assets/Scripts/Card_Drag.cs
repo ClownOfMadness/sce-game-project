@@ -53,11 +53,13 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         if (card.buildingPrefab)                            //if building, start recieving selectedTile updates and hide card
         {       
             screen.draggedBuilding = true;
+            screen.draggedSprite = card.artwork;
             GetComponent<CanvasGroup>().alpha = 0f; //hide building until placed/returned to hand
         }
         if (int.TryParse(card.unitIndex, out int index))     //if unit, start recieving selectedTile updates and hide card
         {
             screen.draggedUnit = true;
+            screen.draggedSprite = card.artwork;
             GetComponent<CanvasGroup>().alpha = 0f; //hide unit until placed/returned to hand
         }
         parentReturnTo = this.transform.parent;

@@ -32,6 +32,7 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public GameObject selectedTile;   //updated by Player_Control
     [HideInInspector] public bool draggedBuilding;      //updated by Card_Drag
     [HideInInspector] public bool draggedUnit;          //updated by Card_Drag
+    [HideInInspector] public Sprite draggedSprite;      //updated by Card_Drag
 
     void Start()    //initilizing in case something was off
     {
