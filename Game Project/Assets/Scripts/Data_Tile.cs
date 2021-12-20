@@ -187,7 +187,7 @@ public class Data_Tile : MonoBehaviour
             }
         }
 
-        if (playerControl.gizmoObject == this.gameObject)
+        if (playerControl.gizmoObject == this.gameObject && (playerControl.draggedType == "unit" || playerControl.draggedType == "building"))
         {
             ShowGizmo();
         }
@@ -406,13 +406,32 @@ public class Data_Tile : MonoBehaviour
     {
         gizmoUse = true;
         gizmoRenderer.enabled = true;
-        if (revealed && canBuild)
+        pointerRenderer.enabled = true;
+        Color fade = pointerRenderer.color;
+        fade.a = 0.5f;
+        pointerRenderer.color = fade;
+        pointerRenderer.sprite = playerControl.draggedSprite;
+        if (playerControl.draggedType == "building")
         {
-            gizmoRenderer.sprite = commonData.buildLocationTrue;
+            if (revealed && canBuild)
+            {
+                gizmoRenderer.sprite = commonData.buildLocationTrue;
+            }
+            else
+            {
+                gizmoRenderer.sprite = commonData.buildLocationFalse;
+            }
         }
-        else
+        else if (playerControl.draggedType == "unit")
         {
-            gizmoRenderer.sprite = commonData.buildLocationFalse;
+            if (revealed && this.gameObject.layer == 6)
+            {
+                gizmoRenderer.sprite = commonData.buildLocationTrue;
+            }
+            else
+            {
+                gizmoRenderer.sprite = commonData.buildLocationFalse;
+            }
         }
     }
 
@@ -420,6 +439,7 @@ public class Data_Tile : MonoBehaviour
     {
         gizmoUse = false;
         gizmoRenderer.enabled = false;
+        pointerRenderer.enabled = false;
     }
 
     public void DrawPointer()
@@ -433,6 +453,9 @@ public class Data_Tile : MonoBehaviour
     public IEnumerator Pointer()
     {
         pointerRenderer.enabled = true;
+        Color fade = pointerRenderer.color;
+        fade.a = 1f;
+        pointerRenderer.color = fade;
         pointerRenderer.sprite = commonData.pointer;
         yield return new WaitForSeconds(1);
         pointerRenderer.enabled = false;
