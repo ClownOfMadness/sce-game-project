@@ -20,10 +20,9 @@ MonoBehaviour:
   - card1: {fileID: 11400000, guid: 5152a10d6d8b31d4aa550f72b5755b2f, type: 2}
     card2: {fileID: 11400000, guid: 361126a81a73da743b2825cbf6fe665a, type: 2}
   gatheredBy: []
-  tier: 
   complexity: 35
   description: Also adds a pleasant smell around your kingdom
-  artwork: {fileID: 21300000, guid: 2e892b2223bfb7746b2a1a923ae7ae60, type: 3}
+  artwork: {fileID: 21300000, guid: 8eb46a5aa3dd8de42ba01573b616bea2, type: 3}
   buildingPrefab: {fileID: 9096224186310366768, guid: 5d57887078902aa4f831ba29d6cb658e, type: 3}
   unitIndex: 
   neverDiscovered: 1

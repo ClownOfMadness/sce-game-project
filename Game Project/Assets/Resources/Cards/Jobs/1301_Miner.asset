@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914496e05a361184983b22d52f21bcd5, type: 3}
   m_Name: 1301_Miner
   m_EditorClassIdentifier: 
-  name: 
-  code: 0
+  name: Miner (Steel)
+  code: 1301
   type: 0
-  source: 
-  combinationOf: []
+  source: 01000000
+  combinationOf:
+  - card1: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
+    card2: {fileID: 11400000, guid: 134d2fa6785566446a0145deab871ca0, type: 2}
   gatheredBy: []
-  complexity: 0
+  complexity: 16
   description: 
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 64b325d68ca2a8c49bb5657f458c1ca7, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
-  neverDiscovered: 0
+  neverDiscovered: 1

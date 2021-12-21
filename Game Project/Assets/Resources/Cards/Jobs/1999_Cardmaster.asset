@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: 1999_Cardmaster
   m_EditorClassIdentifier: 
   name: Cardmaster
-  code: 1000
+  code: 1999
   type: 0
   source: 04000000
   combinationOf: []
   gatheredBy: []
-  tier: 
   complexity: 0
   description: The all-powerful cardmaster
   artwork: {fileID: 21300000, guid: 6de6eb73758157d4da9482e028375f0d, type: 3}

@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: 1002_Hunter
   m_EditorClassIdentifier: 
   name: Hunter
-  code: 1003
+  code: 1002
   type: 0
   source: 01000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
     card2: {fileID: 11400000, guid: 875d1027fcb1bea42bd8f91b65dc8122, type: 2}
   gatheredBy: []
-  tier: 
   complexity: 6
   description: txt
   artwork: {fileID: 21300000, guid: ea6e6b02bb6c25347a96ad68184440a5, type: 3}
