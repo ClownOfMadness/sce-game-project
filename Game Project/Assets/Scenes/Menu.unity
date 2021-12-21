@@ -3561,7 +3561,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoadScreen: {fileID: 1371378425}
   SaveSlots: {fileID: 1717050718}
-  LoadingText: {fileID: 1665515888}
   loadText: {fileID: 1665515889}
   count: 0
 --- !u!224 &361339072
@@ -11070,10 +11069,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0ad295fdf07144d8a896455b1a71bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadScreen: {fileID: 0}
-  SaveSlots: {fileID: 0}
-  LoadingText: {fileID: 0}
-  loadText: {fileID: 0}
+  LoadScreen: {fileID: 1371378425}
+  SaveSlots: {fileID: 1717050718}
+  loadText: {fileID: 1665515889}
   count: 0
 --- !u!1 &1163085523
 GameObject:
@@ -21245,7 +21243,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoadScreen: {fileID: 1371378425}
   SaveSlots: {fileID: 1717050718}
-  LoadingText: {fileID: 1665515888}
   loadText: {fileID: 1665515889}
   count: 0
 --- !u!114 &2100703381
