@@ -213,7 +213,8 @@ public class Data_Tile : MonoBehaviour
         }
         else
         {
-            HideGizmo();
+            if (pointerRenderer.sprite != commonData.pointer)
+                HideGizmo();
         }
 
         if (unit)
@@ -525,6 +526,7 @@ public class Data_Tile : MonoBehaviour
     {
         pointerRenderer.sprite = commonData.pointer;
         yield return new WaitForSeconds(1);
+        pointerRenderer.sprite = null;
         pointerRenderer.enabled = false;
         yield return null;
     }
