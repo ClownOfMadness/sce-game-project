@@ -200,7 +200,7 @@ public class Screen_Cards : MonoBehaviour
             }
             else if (Hand.transform.childCount < zHand.Size)    //make sure there's space in Hand
             {
-               
+
                 if (pickedCard.transform.parent == Craft.transform)    //if card is in craft - move to hand
                 {
                     CraftToHand(pickedCard);
@@ -274,6 +274,7 @@ public class Screen_Cards : MonoBehaviour
             GameObject newCard = Instantiate(zHand.CardPrefab, Hand.transform);     //create and instantiate object in scene
             newCard.GetComponent<Card_Drag>().AddCard(pickedCard);                  //add cards to objects 
             newCard.name = string.Format("{0} (Card)", pickedCard.name);                   //update new card name (for displaying in Scene)
+            zHand.NotEmpty();   //if Creation was in hand, remove it
             return true;
         }
         return false;
@@ -303,6 +304,13 @@ public class Screen_Cards : MonoBehaviour
             Unit.SetActive(true);
             zUnit.CardAdded(pickedCard, waitingUnit);
             return false; //unit needs to wait
+        }
+    }
+    public void CheckEmpty()     //add Creation to hand if empty
+    {
+        if (Hand.transform.childCount <= 1)
+        {
+            zHand.EmptyHand();
         }
     }
 }

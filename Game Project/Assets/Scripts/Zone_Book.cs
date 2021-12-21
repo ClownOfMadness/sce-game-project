@@ -35,7 +35,7 @@ public class Zone_Book : MonoBehaviour
                     newCard.GetComponent<Card_Display>().AddCard(Card_Pool.cards[cardIndex]);
                     string newName = Card_Pool.cards[cardIndex].name;                           //save the new card name (for displaying in Scene)
                     newCard.name = string.Format("{0} (Card)", newName);                        //updates name in scene
-                    newCard.transform.localScale -= new Vector3((CardPrefab.transform.localScale.x) / 3, (CardPrefab.transform.localScale.y) / 3, 0);
+                    newCard.transform.localScale -= new Vector3((CardPrefab.transform.localScale.x) / 10, (CardPrefab.transform.localScale.y) / 10, 0);
                     inPage++;
                 }
             }

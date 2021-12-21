@@ -9,6 +9,9 @@ public class Zone_Hand : Zone_Behaviour
     [Header("Attack Cardmaster:")]
     public bool Damage = false;
     private Card_Pool Pool;
+
+    //private List<string> deck = new List<string>();    //empty Hand
+
     private List<string> deck = new List<string>    //the starting cards that appear in Hand
     { "Town Hall","Town Hall","House","Hut","Cabin","Bakery","Wood","Stick" };
 
@@ -33,7 +36,7 @@ public class Zone_Hand : Zone_Behaviour
     }
     public void InstantiateZone()
     {
-        for (int i = this.transform.childCount; i < this.Size; i++)
+        for (int i = this.transform.childCount; i < this.Size && i < deck.Count; i++) 
         {
             if (Card_Pool.cards[Pool.FindCard(deck[i])].neverDiscovered)
             {
@@ -45,7 +48,10 @@ public class Zone_Hand : Zone_Behaviour
             string newName = Pool.FillObject(newCard, deck[i]);             //add cards to objects + save the new card name (for displaying in Scene)
             newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
         }
+        if (this.transform.childCount == 0) //creates Creation if deck was empty
+            EmptyHand();
     }
+
     public void DamageDeck()    //lose a random card from hand, if Creation is lost
     {
         int count = this.transform.childCount;
@@ -71,6 +77,19 @@ public class Zone_Hand : Zone_Behaviour
         GameObject newCard = Instantiate(CardPrefab, this.transform);   //create and instantiate objects in scene
         string newName = Pool.FillObject(newCard, "Creation");          //add cards to objects + save the new card name (for displaying in Scene)
         newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
+    }
+    public void NotEmpty()
+    {
+        if (this.transform.childCount <= 2)     //failsafe - verifying that there's enough objects in the Zone
+        {
+            Debug.Log("Creation wasd hidden, you're safe for now.");
+            Card_Drag[] cards = this.GetComponentsInChildren<Card_Drag>();
+            foreach (Card_Drag card in cards)
+                if (card.card == Pool.GetCard("Creation"))
+                {
+                    Destroy(card.gameObject);   //if Creation used to be in hand and card was added, remove Creation
+                }
+        }
     }
 }
 

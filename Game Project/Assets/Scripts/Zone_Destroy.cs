@@ -7,7 +7,7 @@ public class Zone_Destroy : Zone_Behaviour
     void Awake()
     {
         Size = 1;       //max Zone size
-        Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions;
+        Pool = ScriptableObject.CreateInstance<Card_Pool>();    //open Card_Pool connection to use its functions;
     }
     public override void EventDrop(Card_Drag cardObject)
     {
@@ -17,8 +17,11 @@ public class Zone_Destroy : Zone_Behaviour
             {
                 Debug.Log("Game lost.");
             }
-            GameObject placeholder = cardObject.placeholder;      //get the card's placeholder in the Hand to delete it
+            cardObject.screen.draggedBuilding = false;  //close selectedTile updates
+            cardObject.screen.draggedUnit = false;      //close selectedTile updates
+            GameObject placeholder = cardObject.placeholder;    //get the card's placeholder in the Hand to delete it
             Destroy(placeholder);
+            cardObject.screen.CheckEmpty();             //create Creation if last card was destroyed
             Destroy(cardObject.gameObject);     
         }
     }

@@ -91,12 +91,12 @@ MonoBehaviour:
   m_Padding:
     m_Left: 80
     m_Right: 0
-    m_Top: -20
+    m_Top: -12
     m_Bottom: 0
   m_ChildAlignment: 3
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 125, y: 200}
-  m_Spacing: {x: 30, y: -60}
+  m_CellSize: {x: 100, y: 150}
+  m_Spacing: {x: 62, y: -8}
   m_Constraint: 2
   m_ConstraintCount: 2

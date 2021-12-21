@@ -32,7 +32,7 @@ public class Zone_Storage : MonoBehaviour
             GameObject newCard = Instantiate(CardPrefab, Page.transform);   //create and instantiate objects in scene
             newCard.GetComponent<Card_Display>().ClearCard();
             newCard.name = string.Format("Slot {0}", i);                    //updates name in scene
-            newCard.transform.localScale -= new Vector3((CardPrefab.transform.localScale.x) / 3, (CardPrefab.transform.localScale.y) / 3, 0);
+            newCard.transform.localScale -= new Vector3((CardPrefab.transform.localScale.x) / 10, (CardPrefab.transform.localScale.y) / 10, 0);
             newCard.GetComponent<CanvasGroup>().alpha = .6f;
         }
     }
