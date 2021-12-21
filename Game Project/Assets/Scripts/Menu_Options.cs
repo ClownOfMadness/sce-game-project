@@ -6,8 +6,14 @@ using TMPro;
 
 public class Menu_Options : MonoBehaviour
 {
-    public TextMeshProUGUI Logo;
-    float cntdnw = 5.0f;
+    public TextMeshProUGUI Logo;//main
+    float cntdnw = 5.0f;//main
+    public void SetVolume(float volume)
+    {
+
+    }
+
+
 
     // Start is called before the first frame update
     private void Awake()
@@ -16,7 +22,7 @@ public class Menu_Options : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Update()//will move to the main(probably)
     {
         if (cntdnw > 0 || Logo.alpha == 1)
         {
