@@ -49,6 +49,7 @@ public class Map_Gen : MonoBehaviour
     void Awake()
     {
         falloffMap = Map_FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
+
     }
 
     //Generating the map.
@@ -202,6 +203,9 @@ public class Map_Gen : MonoBehaviour
             {
                 int rand = Random.Range(0, size);
                 unitList.OldAddUnit(PeasentsPos[rand], 0);
+                //int x = (int)PeasentsPos[rand].x / 10;
+                //int y = (int)PeasentsPos[rand].z / 10;
+                //unitList.AddUnit(0, TileArray[x, y]);
                 PeasentsPos.RemoveAt(rand);
                 size--;
             }

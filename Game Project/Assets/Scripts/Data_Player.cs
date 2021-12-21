@@ -6,6 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class Data_Player
 {
+    Map_Gen Map;
+    //--------------------------------[Player config]------------------------------------
     public float TotalGameTime;    //in minutes, will be converted to hours for display??
     public float PlayTimeLimit;    //in minutes, will be converted to hours for display??
     public float Bedtime;
@@ -19,11 +21,34 @@ public class Data_Player
     public int CardsCombined;
     public bool AllowedHints;
     public bool IsPremium;
+    //-----------------------------------------------------------------------------------
 
-    //map
+    //-----------------------------------[Map data]--------------------------------------
+    public static int MapSize;
+    public int[,] MapArray = new int[MapSize, MapSize];
+
+    //Tile Data
+    public enum TileType
+    {
+        Sea,
+        ShallowSea,
+        Sand,
+        Plains,
+        Marsh,
+        Forest,
+        IronMine,
+        Hill,
+        Mountain,
+        Ruins,
+        Abyss,
+    }
+
+
+    //-----------------------------------------------------------------------------------
+
 
     //cards
-    
+
 
     //units
 
