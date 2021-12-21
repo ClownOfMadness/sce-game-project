@@ -68,4 +68,34 @@ public class Unit_List : MonoBehaviour
             return false;
         }
     }
+
+    public bool CreateUnit(int unit, GameObject tile, Data_Card card)
+    {
+        if (unit < 0 || unit > units.Length)
+        {
+            Debug.LogError("You have given wrong int to the AddUnit function that is in Unit_List");
+            return false;
+        }
+        else
+        {
+            Data_Unit unitData;
+            Data_Tile dataTile = tile.GetComponent<Data_Tile>();
+            if (dataTile.revealed && !dataTile.hasBuilding && dataTile.gameObject.layer != 7)
+            {
+                GameObject newUnit = Instantiate(units[unit].unitPrefab, tile.transform.position + new Vector3(0, 0, 0), rotation, units[unit].unitGroup.transform);
+                if (!(unitData = newUnit.GetComponent<Data_Unit>()))
+                {
+                    Debug.LogError("Cannot find Data_Unit when creating new unit in Unit_List");
+                    return false;
+                }
+                else
+                {
+                    unitData.unitList = this;
+                    unitData.card = card;
+                }
+                return true;
+            }
+            return false;
+        }
+    }
 }

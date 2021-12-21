@@ -8,9 +8,7 @@ public class Data_Unit : MonoBehaviour
     //--------------------------------------[To-Do List]-----------------------------------------------
 
     // to add:
-    // - durabilty to jobs
     // - hurt system
-    // - let units recognize the tiles they are walking on
     // - Add tile walking priority
     // - (AP) Disable work on unrevealed tiles
 
@@ -38,6 +36,7 @@ public class Data_Unit : MonoBehaviour
     private float minWaitToWander = 5f; // Min delay between each wander
     private float nextWander = 0f; // Trigger for next wander
     private bool impassable = false;
+    public GameObject currentTileOn = null;
 
     // [Unit Control]
     private GameObject townHall; // TownHall object
@@ -239,7 +238,7 @@ public class Data_Unit : MonoBehaviour
             impassable = false;
             path.speed = 7f;
             tileData = tile.GetComponent<Data_Tile>();
-            tileData.AttachWork(this.gameObject);
+            //tileData.AttachWork(this.gameObject);
             path.destination = tile.transform.position;
             if (tileData.hasTownHall) // If townhall
             {
@@ -249,6 +248,7 @@ public class Data_Unit : MonoBehaviour
             {
                 if ((workIndex = tileData.CanWork(this)) != -1)
                 {
+                    tileData.AttachWork(this.gameObject);
                     working = true;
                     workPlace = tile;
                     workTime = tileData.works[workIndex].workTime;
@@ -319,7 +319,17 @@ public class Data_Unit : MonoBehaviour
 
     private void GroundCheck()
     {
-        //Physics.Raycast(detector.transform.position, Vector3.down, 0.1f);
+        RaycastHit hit;
+        Debug.DrawRay(detector.transform.position, Vector3.down, Color.yellow);
+        if (Physics.Raycast(detector.transform.position, Vector3.down, out hit, 0.1f))
+        {
+            currentTileOn = hit.transform.gameObject;
+        }
+
+        if (currentTileOn)
+        {
+            //
+        }
     }
 
     private void JobCheck()
@@ -328,7 +338,8 @@ public class Data_Unit : MonoBehaviour
         {
             if (durability <= 0)
             {
-                //unitList.AddUnit(0, )
+                unitList.CreateUnit(0, currentTileOn, card);
+                Destroy(this.gameObject);
             }
         }
     }

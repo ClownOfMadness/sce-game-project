@@ -71,12 +71,14 @@ public class Player_Control : MonoBehaviour
     {
         UnitCommand(); // Unit pathfinding control;
         FindOnce();
+        PlayerInput();
     }
 
     private void LateUpdate()
     {
         CameraControl(); // Screen panning functions
     }
+
     private void FindOnce()
     {
         if (loadCount > 60)
@@ -171,7 +173,17 @@ public class Player_Control : MonoBehaviour
             }
         }
     }
-
+    private void PlayerInput()
+    {
+        if (Input.GetKey("1"))
+        {
+            selectedJob = 0;
+        }
+        if (Input.GetKey("2"))
+        {
+            selectedJob = 1;
+        }
+    }
     private GameObject UnitSelection(int _selectedJob, GameObject target, bool townhall) // Searches for a free unit in a job category
     {
         float distance = 0f;

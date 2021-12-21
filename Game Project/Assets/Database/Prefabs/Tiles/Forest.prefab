@@ -396,6 +396,10 @@ MonoBehaviour:
   tileName: Forest
   canBuild: 0
   canBuildAtDefault: 1
+  hasExtra: 0
+  thereIsRandom: 0
+  extraChance: 0
+  extraGameobject: {fileID: 0}
   spriteRenderer: {fileID: 3524023000276873429}
   workplaceRenderer: {fileID: 7802246891902628418}
   gizmoRenderer: {fileID: 1799191781478734828}
@@ -407,11 +411,19 @@ MonoBehaviour:
   works:
   - job: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
     card: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
-    workTime: 15
+    workTime: 10
+    extra: 0
+    random: 0
+  - job: {fileID: 5659102659634341861, guid: 3df830c09a11a9a4e9d36515a963aa0d, type: 3}
+    card: {fileID: 11400000, guid: 6c59b2aaed79d23469b3b8469b6915b4, type: 2}
+    workTime: 20
+    extra: 0
+    random: 0
   maxDurability: 10
   durability: 5
   recharge: 2
   height: 0
+  parentExtra: {fileID: 0}
   revealed: 0
   building: {fileID: 0}
   hasTownHall: 0

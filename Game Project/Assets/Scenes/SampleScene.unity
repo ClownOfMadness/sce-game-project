@@ -306,6 +306,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 109604075}
+  - {fileID: 1466614226}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -324,6 +325,8 @@ MonoBehaviour:
   units:
   - unitPrefab: {fileID: 6511593569209969031, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
     unitGroup: {fileID: 109604074}
+  - unitPrefab: {fileID: 8390930572215930690, guid: 3df830c09a11a9a4e9d36515a963aa0d, type: 3}
+    unitGroup: {fileID: 1466614225}
   townhall: {fileID: 0}
 --- !u!1 &47301224
 GameObject:
@@ -7504,6 +7507,36 @@ RectTransform:
   m_AnchoredPosition: {x: -25, y: -0.000015258789}
   m_SizeDelta: {x: 50, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1466614225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1466614226}
+  m_Layer: 0
+  m_Name: WoodCutter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1466614226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466614225}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 11710809}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1467506728
 GameObject:
   m_ObjectHideFlags: 0
@@ -12315,6 +12348,7 @@ MonoBehaviour:
   storageButton: {fileID: 710504986}
   cardsButton: {fileID: 1714407379}
   SkipLogin: 1
+  Pool: {fileID: 0}
   canCraft: 0
   UIDown: 0
   selectedTile: {fileID: 0}
