@@ -9,6 +9,7 @@ public class Data_Tile : MonoBehaviour
 
     // To add:
     // - display additional sprite if resources are about to end
+    // - Add random loot to ruins
 
     //-------------------------------------[Configuration]---------------------------------------------
 
@@ -17,6 +18,7 @@ public class Data_Tile : MonoBehaviour
     public bool canBuild = false; // Determines if in this tile buildings can be build or rebuild
     public bool canBuildAtDefault = false; // Determines if in its default tile buildings can be build or rebuild
     public bool hasExtra = false;
+    public bool thereIsRandom = false;
     [Range(0.0f, 100.0f)]
     public float extraChance = 0f;
     public GameObject extraGameobject = null;
@@ -31,12 +33,13 @@ public class Data_Tile : MonoBehaviour
 
     // [Tile Resources]
     [Serializable]
-    public struct Work // Resource work struct
+    public class Work // Resource work struct
     {
         public Data_Unit job; // Units that can work for the resource
         public Data_Card card; // Resource the unit will recieve
         public float workTime; // Time needed to recieve the card
         public bool extra;
+        public bool random;
     }
     public Work[] works; // The works
 
@@ -59,6 +62,7 @@ public class Data_Tile : MonoBehaviour
     private GameObject theExtra = null;
     [HideInInspector] public GameObject parentExtra = null;
     private bool extra = false;
+    private bool check = false;
 
     // [Tile Fog]
     [HideInInspector] public bool revealed = false; // Checks it the tile has been discovered
@@ -83,6 +87,7 @@ public class Data_Tile : MonoBehaviour
     private Player_Control playerControl;
     private System_DayNight systemDayNight; // Script for day night cycle
     private Data_CommonDataHolder commonData;
+    private Screen_Cards screenCards;
     private int loadCount = 0; // Amount of times to search before declaring a fail
 
     private void Awake()
@@ -95,6 +100,7 @@ public class Data_Tile : MonoBehaviour
         FindOnce(); // Searches for the needed components
         OnUpdate(); // Functions that work on update
         BuildProcess();
+        Random();
     }
 
     private void Setup() // Setups the tile
@@ -149,6 +155,21 @@ public class Data_Tile : MonoBehaviour
         }
     }
 
+    private void Random()
+    {
+        if (!check && thereIsRandom)
+        {
+            foreach (Work workRandom in works)
+            {
+                if (workRandom.random == true)
+                {
+                    workRandom.card = screenCards.Pool.GetLoot(3);
+                }
+            }
+            check = true;
+        }
+    }
+
     private void FindOnce() // Searches for the needed components
     {
         if (loadCount > 60)
@@ -176,6 +197,14 @@ public class Data_Tile : MonoBehaviour
             if (!playerControl)
             {
                 if (!(playerControl = GameObject.Find("PlayerControl").GetComponent<Player_Control>()))
+                {
+                    loadCount++;
+                }
+            }
+
+            if (!screenCards)
+            {
+                if (!(screenCards = GameObject.Find("CardsScreen").GetComponent<Screen_Cards>()))
                 {
                     loadCount++;
                 }

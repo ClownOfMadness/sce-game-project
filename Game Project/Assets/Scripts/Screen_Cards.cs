@@ -24,7 +24,7 @@ public class Screen_Cards : MonoBehaviour
     private Zone_Book zBook;
     private Zone_Unit zUnit;
 
-    private Card_Pool Pool;
+    public Card_Pool Pool;
 
     [HideInInspector] public bool canCraft;
     [HideInInspector] public bool UIDown;

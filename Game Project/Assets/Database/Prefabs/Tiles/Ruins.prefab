@@ -230,6 +230,10 @@ MonoBehaviour:
   tileName: Ruins
   canBuild: 0
   canBuildAtDefault: 1
+  hasExtra: 0
+  thereIsRandom: 1
+  extraChance: 0
+  extraGameobject: {fileID: 0}
   spriteRenderer: {fileID: 6455461199660745758}
   workplaceRenderer: {fileID: 5685204176832694033}
   gizmoRenderer: {fileID: 7662784745476424329}
@@ -238,11 +242,17 @@ MonoBehaviour:
   halfSprite: {fileID: 21300000, guid: 2af6cd72e4caa8548a63f14e45727065, type: 3}
   emptySprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
   buildSprite: {fileID: 21300000, guid: 394b4a164372e984bbfb852becb73d01, type: 3}
-  works: []
+  works:
+  - job: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
+    card: {fileID: 0}
+    workTime: 10
+    extra: 0
+    random: 1
   maxDurability: 1
   durability: 1
   recharge: 0
   height: 0
+  parentExtra: {fileID: 0}
   revealed: 0
   building: {fileID: 0}
   hasTownHall: 0

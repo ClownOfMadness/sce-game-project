@@ -5,6 +5,11 @@ using Pathfinding;
 
 public class Player_SpawnBuilding : MonoBehaviour
 {
+    //--------------------------------------[To-Do List]-----------------------------------------------
+
+    // to add:
+    // - option to remove buildings (with getting building card back)
+
     public BuildingDataBase DB;
     public AstarPath path;
     private Vector3 buildingPosition = new Vector3(0, 1, 0);

@@ -12,19 +12,18 @@ public class Data_Unit : MonoBehaviour
     // - hurt system
     // - let units recognize the tiles they are walking on
     // - Add tile walking priority
-    // - Disable work on unrevealed tiles
+    // - (AP) Disable work on unrevealed tiles
 
     //-------------------------------------[Configuration]---------------------------------------------
 
-    // Test
-    public float distance = 0f;
-
     // [Input Data]
     public string unitJob = "None"; // Units job name
+    public int jobDurability = 0; // Units job durability
     public List<RuntimeAnimatorController> design; // Units sprite controller
     public SpriteRenderer sprite; // Units sprite renderer
     public Animator animator; // Units animator
     public Data_Card unitCard; // Its own card
+    public GameObject detector;
 
     // [Build routine]
     public bool canBuild = false; // Can the unit build?
@@ -50,6 +49,7 @@ public class Data_Unit : MonoBehaviour
 
     // [Unit Health]
     private bool hurt = false; // Becomes true if an enemy attacked the unit
+    private int durability = 0;
     
     // [Work routine]
     private Data_Card workCard; // Work card that the unit will recieve after finishin job
@@ -89,15 +89,19 @@ public class Data_Unit : MonoBehaviour
         // Checks if everything is in place
         if (!sprite)
         {
-            Debug.LogError("SpriteRenderer Component is missing in the Data_Unit");
+            Debug.LogError("SpriteRenderer Component is missing in the " + unitJob + " Data_Unit");
         }
         if (!animator)
         {
-            Debug.LogError("Animator Component is missing in the Data_Unit");
+            Debug.LogError("Animator Component is missing in the " + unitJob + " Data_Unit");
         }
         if (!unitCard)
         {
-            Debug.LogError("Unit's Data_Card is missing in the Data_Unit");
+            Debug.LogError("Unit's Data_Card is missing in the " + unitJob + " Data_Unit");
+        }
+        if (!detector)
+        {
+            Debug.LogError("Detector gameobject is missing in the " + unitJob + " Data_Unit");
         }
         
         // Sets random design
@@ -106,8 +110,10 @@ public class Data_Unit : MonoBehaviour
         // Sets AIPath
         if (!(path = GetComponent<AIPath>()))
         {
-            Debug.LogError("AIPath Component is missing in a Data_Unit");
+            Debug.LogError("AIPath Component is missing in the " + unitJob + " Data_Unit");
         }
+
+        durability = jobDurability;
     }
 
     private void Update()
@@ -116,10 +122,8 @@ public class Data_Unit : MonoBehaviour
         Animator(); // Controls the animation
         WorkRoutine(); // Units work routine
         WanderAround(); // Wander around if not busy
-        if (path.hasPath)
-        {
-            distance = path.remainingDistance;
-        }
+        JobCheck();
+        GroundCheck();
     }
 
     private void FindOnce() // Seeks needed scripts once
@@ -313,6 +317,22 @@ public class Data_Unit : MonoBehaviour
         return point;
     }
 
+    private void GroundCheck()
+    {
+        //Physics.Raycast(detector.transform.position, Vector3.down, 0.1f);
+    }
+
+    private void JobCheck()
+    {
+        if (jobDurability > 0)
+        {
+            if (durability <= 0)
+            {
+                //unitList.AddUnit(0, )
+            }
+        }
+    }
+
     private void WorkRoutine()
     {
         if (working)
@@ -339,6 +359,8 @@ public class Data_Unit : MonoBehaviour
                             }
                             if (Time.time > workDone)
                             {
+                                if (jobDurability > 0 && durability > 0)
+                                    durability--;
                                 card = workCard;
                                 workBegun = false;
                                 tileData.durability--;
@@ -584,8 +606,11 @@ public class Data_Unit : MonoBehaviour
         {
             busy = false;
             path.speed = 3f;
-            tileData.DetachWork();
-            tileData = null;
+            if (tileData)
+            {
+                tileData.DetachWork();
+                tileData = null;
+            }
             path.destination = this.transform.position;
         }
     }

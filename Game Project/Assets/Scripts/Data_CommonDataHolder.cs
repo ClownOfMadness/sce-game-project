@@ -9,7 +9,6 @@ public class Data_CommonDataHolder : MonoBehaviour
     public Sprite buildLocationFalse;
     public Sprite workPlace;
     public Sprite pointer;
-
     private void Awake()
     {
         if (!workSiteSprite)
