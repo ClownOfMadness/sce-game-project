@@ -28,14 +28,14 @@ public class Card_Pool : ScriptableObject
                     Debug.LogError("Error! Combination of card " + cards[i].code + " is invalid, please add at least one set of cards that craft it.");
         }
     }
-    public bool IsCombination(Data_Card card)     //find if card is listed as combination
+    public bool IsCombination(Data_Card card)       //find if card is listed as combination
     {
         for (int i = 0; i < card.source.Count; i++) 
             if (card.source[i].ToString() == "Combination")
                 return true;
         return false;
     }
-    public bool IsMenuCombination(Data_Card card)  //find if card is listed as menu combination
+    public bool IsMenuCombination(Data_Card card)   //find if card is listed as menu combination
     {
         for (int i = 0; i < card.source.Count; i++)
             if (card.source[i].ToString() == "Menu")
@@ -65,6 +65,12 @@ public class Card_Pool : ScriptableObject
         int i=0;
         for (; i < count && cards[i].code != cardCode; i++) ;
         return cards[i];
+    }
+    public string CodeToName(int cardCode)     //gets card name from code
+    {
+        int i = 0;
+        for (; i < count && cards[i].code != cardCode; i++) ;
+        return cards[i].name;
     }
     private List<int> TotalComplexities(int threshold)      //returns list of all complexities above threshold
     {
@@ -161,6 +167,27 @@ public class Card_Pool : ScriptableObject
                             cardList.Add(CombineAttempt);
                         else if (Combos[startCombo].card2 == first && Combos[startCombo].card1 == second)
                             cardList.Add(CombineAttempt);
+                    }
+                }
+            }
+        }
+        return cardList;
+    }
+    public List<string> GetAllCombos()               //returns list of all combinations in the format Card1 + Card2 = Card3
+    {
+        List<string> cardList = new List<string>();
+        Data_Card card;
+        for (int i = 0; i < count; i++) 
+        {
+            card = cards[i];
+            List<Data_Card.Combinations> Combos = card.combinationOf;
+            if (Combos.Count > 0) //failsafe - will catch bugged out cards that don't have all their fields filled out
+            {
+                if (IsCombination(card) || IsMenuCombination(card))  //if card can be created
+                {
+                    for (int startCombo = 0; startCombo < Combos.Count; startCombo++)    //check all possible combinations of current CombineAttempt
+                    {
+                        cardList.Add(card.name + " = " + Combos[startCombo].card1.name + " + " + Combos[startCombo].card2.name + "\n");
                     }
                 }
             }

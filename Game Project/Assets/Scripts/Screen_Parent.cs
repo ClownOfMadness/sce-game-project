@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
@@ -119,5 +120,13 @@ public class Screen_Parent : MonoBehaviour
         ParentOptions.transform.parent.gameObject.SetActive(false); //turn Parent off
         OptionsMenu.SetActive(true);
         firstLogin = true;
+    }
+    public void CombosScreen()
+    {
+        Card_Pool Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions
+        List<string> cards = Pool.GetAllCombos();
+        for (int i = 0; i < cards.Count; i++)
+            Debug.Log(cards[i]);
+        Debug.Log("Printed by Screen_Parent.CombosScreen, display on combos panel once one is made");
     }
 }

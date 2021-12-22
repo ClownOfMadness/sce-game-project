@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -169,6 +170,7 @@ public class Screen_Cards : MonoBehaviour
         Book.SetActive(false);
         visibleMap = true;
         Time.timeScale = 1f;    //unpause game
+        CheckUnit();
     }
     public void SwitchStorage() //close/open Storage
     {
@@ -204,6 +206,7 @@ public class Screen_Cards : MonoBehaviour
         Storage.SetActive(false);
         visibleMap = true;
         Time.timeScale = 1f;    //unpause game
+        CheckUnit();
     }
     public void CardClick(Card_Drag pickedCard)             //move Card_Drag between zones on click
     {
@@ -212,8 +215,9 @@ public class Screen_Cards : MonoBehaviour
         {
             if (pickedCard.card != Pool.GetCard("Creation"))
             {
-                if (visibleMap)                   //move to Craft
+                if (visibleMap || Craft.activeSelf) //move to Craft
                 {
+                    visibleMap = false;
                     Craft.SetActive(true);
                     if (Craft.transform.childCount < zCraft.Size)
                     {
@@ -226,7 +230,7 @@ public class Screen_Cards : MonoBehaviour
                         CheckEmpty();
                     }
                 }
-                else if (Storage.activeSelf)    //move to Storage
+                else if (Storage.activeSelf)        //move to Storage
                 {
                     if (zStorage.AddToStorage(pickedCard.card))
                     {
@@ -256,6 +260,7 @@ public class Screen_Cards : MonoBehaviour
             {
                 Craft.SetActive(false);
                 pickedCard.gameObject.transform.SetParent(Hand.transform);
+                visibleMap = true;
                 CheckUnit();
             }
             else if (pickedCard.transform.parent == Unit.transform)     //if card is in Unit prompt - move to hand
@@ -290,21 +295,26 @@ public class Screen_Cards : MonoBehaviour
             pickedCard = unit.unitCard;
             waitingUnit = null;
         }
-        if (CreateInHand(pickedCard))
+        if (visibleMap) //nothing is open
         {
-            return true;    //unit doesn't need to wait
-        }
-        else    //no space in Hand
-        {
-            OpenUI();
-            zUnit.CardAdded(pickedCard, waitingUnit);
-            if (Craft.activeSelf == false) 
+            if (CreateInHand(pickedCard))
             {
-                TopMessage(UnitMsg);
-                zUnit.RefreshZone();
+                return true;    //unit doesn't need to wait
             }
-            return false; //unit needs to wait
+            else    //no space in Hand
+            {
+                zUnit.CardAdded(pickedCard, waitingUnit);
+                if (visibleMap)
+                {
+                    OpenUI();
+                    CheckUnit();
+                }
+                return false; //unit needs to wait
+            }
         }
+        else //something is open on screen
+            zUnit.CardAdded(pickedCard, waitingUnit);
+        return false;
     }
     private bool CreateInHand(Data_Card pickedCard)
     {
@@ -345,5 +355,36 @@ public class Screen_Cards : MonoBehaviour
         }
         else
             Message.gameObject.SetActive(false);
+    }
+    public Cards_Info ExportCards()         //will be used to save the game
+    {
+        Cards_Info export = new Cards_Info();
+        export.Hand = zHand.ExportDeck();
+        export.Storage = zStorage.ExportDeck();
+        export.Discovered = Pool.discoveredTotal;
+        export.Combos = zCraft.CombosTotal;
+        List<bool> status = new List<bool>(0);
+        for (int i = 0; i < Card_Pool.count; i++)                   //returning all fields in cards back to default 
+            status.Add(Card_Pool.cards[i].neverDiscovered);         //done here instead of Card_Pool to ensure that it only happens once
+        export.DisStatus = status;
+        return export;
+    }
+    public void ImportCards(Cards_Info import)//will be used to load the game
+    {
+        zHand.ImportDeck(import.Hand);
+        zStorage.ImportDeck(import.Storage);
+        Pool.discoveredTotal = import.Discovered;
+        zCraft.CombosTotal = import.Combos;
+        List<bool> status = new List<bool>(0);
+        for (int i = 0; i < Card_Pool.count; i++)
+            Card_Pool.cards[i].neverDiscovered = import.DisStatus[i];
+    }
+    public class Cards_Info   //used for saves
+    {
+        public List<int> Hand;
+        public List<int> Storage;
+        public int Discovered;
+        public int Combos;
+        public List<bool> DisStatus;
     }
 }

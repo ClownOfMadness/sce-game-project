@@ -37,14 +37,15 @@ public class Zone_Hand : Zone_Behaviour
     {
         Size = 8;               //max Zone size
         Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions;
-        switch (Preset)
-        {
-            case decksList.EmptyHand: deck = emptyHand; break;
-            case decksList.CraftMenuPrompt: deck = craftMenuPrompt; break;
-            case decksList.Units: deck = units; break;
-            case decksList.Buildings: deck = buildings; break;
-            default: deck = emptyHand; break;
-        }
+        if (deck.Count == 0)
+            switch (Preset)
+            {
+                case decksList.EmptyHand: deck = emptyHand; break;
+                case decksList.CraftMenuPrompt: deck = craftMenuPrompt; break;
+                case decksList.Units: deck = units; break;
+                case decksList.Buildings: deck = buildings; break;
+                default: deck = emptyHand; break;
+            }
         InstantiateZone();      //create and instantiate objects in scene in runtime
     }
     void Update()
@@ -141,6 +142,17 @@ public class Zone_Hand : Zone_Behaviour
                 Debug.Log("Creation was hidden, you're safe for now.");
         }
     }
+    public List<int> ExportDeck()           //will be used to save the game
+    {
+        List<int> export = new List<int>();
+        Card_Drag[] cardObjects = this.GetComponentsInChildren<Card_Drag>();
+        for (int i = 0; i < cardObjects.Length; i++)
+            export.Add(cardObjects[i].card.code);
+        return export;
+    }
+    public void ImportDeck(List<int> import)//will be used to load the game
+    {
+        for (int i = 0; i < this.Size; i++)
+            deck.Add(Pool.CodeToName(import[i]));
+    }
 }
-
-

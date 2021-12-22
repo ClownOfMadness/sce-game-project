@@ -64,7 +64,6 @@ public class Zone_Storage : Zone_Behaviour
             cards[i].gameObject.GetComponent<CanvasGroup>().alpha = .6f;
         }
     }
-
     public bool AddToStorage(Data_Card newCard)//adds card to zone at night or if given by Unit
     {
         if ((count < Size))
@@ -85,6 +84,18 @@ public class Zone_Storage : Zone_Behaviour
             count--;
             RefreshZone();
         }
+    }
+    public List<int> ExportDeck()           //will be used to save the game
+    {
+        List<int> export = new List<int>();
+        for (int i = 0; i < count; i++)
+            export.Add(slots[i].code);
+        return export;
+    }
+    public void ImportDeck(List<int> import)//will be used to load the game
+    {
+        for (int i = 0; i < this.Size; i++)
+            AddToStorage(Pool.GetCard(import[i]));
     }
 }
 

@@ -44,13 +44,11 @@ public class Zone_Craft : MonoBehaviour
                         newCard.GetComponent<Card_Drag>().AddCard(combinations[i]);            //add cards to objects 
                         newCard.name = string.Format("{0} (Card)", combinations[i].name);      //update new card name (for displaying in Scene)
                     }
-                    //zMenu.Size = combinations.Count;   //add them to menu
 
                     CombosTotal++;
                     cardObjects[0].screen.TopMessage(string.Format("Craft succeseful! Pick one card to add to your deck"));
 
                     this.gameObject.SetActive(false);
-                    cardObjects[0].screen.visibleMap = false;
                     craftMenu.SetActive(true);
 
                     Destroy(cardObjects[0].gameObject);
