@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //responsible for creating and storing Hand zone, extension of ZoneBehaviour
 public class Zone_Hand : Zone_Behaviour
@@ -10,7 +11,7 @@ public class Zone_Hand : Zone_Behaviour
     public bool Damage = false;
     private Card_Pool Pool;
     public enum decksList       //enum for preset menu
-    {         
+    {
         CraftMenuPrompt,
         Units,
         Buildings,
@@ -24,7 +25,7 @@ public class Zone_Hand : Zone_Behaviour
     private List<string> emptyHand = new List<string>();    //empty Hand
 
     private List<string> craftMenuPrompt = new List<string> //craft menu preset
-    { "Flint","Stick","Flint Tool","Iron Tool","Wood","Stick","Steel Tool","Plank" };
+    { "Flint","Stick","Flint","Stick","Iron","Stick","Steel","Stick" };
 
     private List<string> units = new List<string> //craft menu preset
     { "Peasant","Peasant","Woodcutter (Flint)","Woodcutter (Flint)" };
@@ -70,7 +71,7 @@ public class Zone_Hand : Zone_Behaviour
     }
     public void InstantiateZone()
     {
-        for (int i = this.transform.childCount; i < this.Size && i < deck.Count; i++) 
+        for (int i = this.transform.childCount; i < this.Size && i < deck.Count; i++)
         {
             if (Card_Pool.cards[Pool.FindCard(deck[i])].neverDiscovered)
             {
@@ -93,8 +94,6 @@ public class Zone_Hand : Zone_Behaviour
             //Debug.Log("New card found: " + combination.name);
             Pool.discoveredTotal++;
         }
-        if(cardObject.card != Pool.GetCard("Creation"))
-            NotEmpty();
     }
     public void DamageDeck()    //lose a random card from hand, if Creation is lost game is lost
     {
@@ -121,19 +120,26 @@ public class Zone_Hand : Zone_Behaviour
         GameObject newCard = Instantiate(CardPrefab, this.transform);   //create and instantiate objects in scene
         string newName = Pool.FillObject(newCard, "Creation");          //add cards to objects + save the new card name (for displaying in Scene)
         newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
+        newCard.GetComponent<LayoutElement>().ignoreLayout = true;
+        Debug.Log("Creation was revealed.");
     }
     public void NotEmpty()      //remove Creation
     {
         bool hidden = false;
         Card_Drag[] cardObjects = this.GetComponentsInChildren<Card_Drag>();
-        foreach (Card_Drag card in cardObjects)
-            if (card.card == Pool.GetCard("Creation"))
-            {
-                hidden = true;
-                Destroy(card.gameObject);   //if Creation used to be in hand and card was added, remove Creation
-            }
-        if (hidden) //if Creation was found and removed
-            Debug.Log("Creation wasd hidden, you're safe for now.");
+        if (cardObjects.Length > 1)
+        {
+            foreach (Card_Drag card in cardObjects)
+                if (card.card == Pool.GetCard("Creation"))
+                {
+                    hidden = true;
+                    GameObject placeholder = card.placeholder;    //get the card's placeholder in the Hand to delete it
+                    Destroy(placeholder);
+                    Destroy(card.gameObject);   //if Creation used to be in hand and card was added, remove Creation
+                }
+            if (hidden) //if Creation was found and removed
+                Debug.Log("Creation was hidden, you're safe for now.");
+        }
     }
 }
 

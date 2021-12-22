@@ -4,6 +4,7 @@ using UnityEngine.UI;
 //responsible for switching panels and button related functions of Cards
 public class Screen_Cards : MonoBehaviour
 {
+    //connected via Inspector
     public Text Message;
     public GameObject Hand;
     public GameObject Craft;
@@ -16,27 +17,39 @@ public class Screen_Cards : MonoBehaviour
     public GameObject storageButton;
     public GameObject cardsButton;
 
+    //for development testing
     [Header("Game State:")]
-    public bool SkipLogin;      //for development testing
+    public bool SkipLogin; 
     [Header("Simulate night:")]
-    public bool skipDay;        //for development testing
+    public bool skipDay;    
 
+    //private Zones
     private Zone_Hand zHand;
     private Zone_Craft zCraft;
     private Zone_Unit zUnit;
     private Zone_Storage zStorage;
     private Zone_Book zBook;
 
+    //sharing with other scripts
     [HideInInspector] public Card_Pool Pool;
     [HideInInspector] public GameObject CraftMenu;
 
+    //blocking cards from acting weird
     [HideInInspector] public bool visibleMap;
     [HideInInspector] public bool UIDown;
 
+    //placement on map
     [HideInInspector] public GameObject selectedTile;   //updated by Player_Control
     [HideInInspector] public bool draggedBuilding;      //updated by Card_Drag
     [HideInInspector] public bool draggedUnit;          //updated by Card_Drag
     [HideInInspector] public Sprite draggedSprite;      //updated by Card_Drag
+
+    //notification messages
+    private string UnitMsg = "New card arrived arrived at the Town Hall! Choose what to do with it next";
+    private string CraftMsg = "Attempting to craft! Pick another card to combine";
+    private string CreativeMsg = "Creative game mode, click cards to add to your deck";
+    private string StorageDayMsg = "Town Storage currently closed! You can only take cards out at night";
+    private string StorageNightMsg = "Town Storage, choose your deck for the next day";
 
     void Start()    //initilizing in case something was off
     {
@@ -50,6 +63,8 @@ public class Screen_Cards : MonoBehaviour
 
         Storage.SetActive(true);    //let Storage instantiate itself
         Storage.SetActive(false);
+        Unit.SetActive(true);
+        Unit.SetActive(false);
         zStorage.skipDay = skipDay;
         storageButton.transform.GetComponent<Zone_StoragePt2>().Storage = zStorage;
 
@@ -57,8 +72,6 @@ public class Screen_Cards : MonoBehaviour
 
         for (int i = 0; i < Card_Pool.count; i++)                   //returning all fields in cards back to default 
             Card_Pool.cards[i].neverDiscovered = true;              //done here instead of Card_Pool to ensure that it only happens once
-
-        Unit.SetActive(false);
 
         CloseUI();
 
@@ -72,6 +85,7 @@ public class Screen_Cards : MonoBehaviour
         }
         storageButton.SetActive(true);
         cardsButton.SetActive(true);
+        visibleMap = true;
     }
     public void Update()
     {
@@ -106,10 +120,8 @@ public class Screen_Cards : MonoBehaviour
     }
     private void OpenUI()
     {
-
         Hand.SetActive(true);
         destroyButton.SetActive(true);
-        visibleMap = true;
         UIDown = false;
     }
     private void CloseUI()
@@ -121,8 +133,9 @@ public class Screen_Cards : MonoBehaviour
         Storage.SetActive(false);
         Book.SetActive(false);
         destroyButton.SetActive(false);
-        visibleMap = false;
         UIDown = true;
+
+        Time.timeScale = 1f;    //unpause game
     }
     public void SwitchCreative()//close/open Book
     {
@@ -138,7 +151,7 @@ public class Screen_Cards : MonoBehaviour
     }
     private void OpenBook()
     {
-        TopMessage("Creative game mode, click cards to add to your deck");
+        TopMessage(CreativeMsg);
         visibleMap = false;
         Storage.SetActive(false);
         Book.SetActive(true);
@@ -173,9 +186,9 @@ public class Screen_Cards : MonoBehaviour
         Storage.SetActive(true);
         zStorage.RefreshZone();
         if (zStorage.time.isDay)
-            TopMessage("Town Storage currently closed! Come back at night");
+            TopMessage(StorageDayMsg);
         else
-            TopMessage("Town Storage, choose your deck for the next day");
+            TopMessage(StorageNightMsg);
         visibleMap = false;
         Book.SetActive(false);
         Hand.SetActive(true);
@@ -197,25 +210,29 @@ public class Screen_Cards : MonoBehaviour
         //if card is in hand - move it
         if (pickedCard.transform.parent == Hand.transform)  
         {
-            if (visibleMap)                   //move to Craft
+            if (pickedCard.card != Pool.GetCard("Creation"))
             {
-                Craft.SetActive(true);
-                if (Craft.transform.childCount < zCraft.Size)
+                if (visibleMap)                   //move to Craft
                 {
-                    TopMessage("Attempting to craft! Pick another card to combine");
-                    pickedCard.transform.SetParent(Craft.transform);
-                    if (Craft.transform.childCount == zCraft.Size)
+                    Craft.SetActive(true);
+                    if (Craft.transform.childCount < zCraft.Size)
                     {
-                        zCraft.EventClick();
+                        TopMessage(CraftMsg);
+                        pickedCard.transform.SetParent(Craft.transform);
+                        if (Craft.transform.childCount == zCraft.Size)
+                        {
+                            zCraft.EventClick();
+                        }
+                        CheckEmpty();
                     }
                 }
-            }
-            else if (Storage.activeSelf)    //move to Storage
-            {
-                if (zStorage.AddToStorage(pickedCard.card, false))
+                else if (Storage.activeSelf)    //move to Storage
                 {
-                    Destroy(pickedCard.gameObject);
-                    CheckEmpty();
+                    if (zStorage.AddToStorage(pickedCard.card))
+                    {
+                        Destroy(pickedCard.gameObject);
+                        CheckEmpty();
+                    }
                 }
             }
         }
@@ -233,19 +250,21 @@ public class Screen_Cards : MonoBehaviour
                 pickedCard.gameObject.transform.SetParent(Hand.transform);
                 zCraft.ClearMenu();
                 visibleMap = true;
+                CheckUnit();
             }
             else if (pickedCard.transform.parent == Craft.transform)         //if card is in Craft - move to hand
             {
                 Craft.SetActive(false);
                 pickedCard.gameObject.transform.SetParent(Hand.transform);
+                CheckUnit();
             }
             else if (pickedCard.transform.parent == Unit.transform)     //if card is in Unit prompt - move to hand
             {
                 zUnit.FreeUnit();
                 pickedCard.gameObject.transform.SetParent(Hand.transform);
-                zHand.NotEmpty();
+                Message.gameObject.SetActive(false);
             }
-            Message.gameObject.SetActive(false);
+            CheckEmpty();
         }
     }
     public void DisplayCardClick(Card_Display pickedCard)   //add Card_Display to hand based on what was picked in Book/Storage
@@ -278,9 +297,12 @@ public class Screen_Cards : MonoBehaviour
         else    //no space in Hand
         {
             OpenUI();
-            TopMessage("New card arrived arrived at the Town Hall! Choose what to do with it next");
-            Unit.SetActive(true);
             zUnit.CardAdded(pickedCard, waitingUnit);
+            if (Craft.activeSelf == false) 
+            {
+                TopMessage(UnitMsg);
+                zUnit.RefreshZone();
+            }
             return false; //unit needs to wait
         }
     }
@@ -297,16 +319,31 @@ public class Screen_Cards : MonoBehaviour
             GameObject newCard = Instantiate(zHand.CardPrefab, Hand.transform);     //create and instantiate object in scene
             newCard.GetComponent<Card_Drag>().AddCard(pickedCard);                  //add cards to objects 
             newCard.name = string.Format("{0} (Card)", pickedCard.name);            //update new card name (for displaying in Scene)
-            zHand.NotEmpty();   //if Creation was in hand, remove it
+            CheckEmpty();   //if Creation was in hand, remove it
             return true;
         }
         return false;
     }
-    public void CheckEmpty()     //add Creation to hand if empty
+    public void CheckEmpty()    //add Creation to hand if empty
     {
-        if (Hand.transform.childCount <= 1)
+        Card_Drag[] cardObjects = zHand.transform.GetComponentsInChildren<Card_Drag>(); //walkaround to ignore placeholders and only check cards
+        if (cardObjects.Length < 1)
         {
             zHand.EmptyHand();
         }
+        else if (cardObjects.Length > 1)
+        {
+            zHand.NotEmpty();
+        }
+    }
+    public void CheckUnit()     //open Unit Zone if it has cards
+    {
+        if (zUnit.hasBacklog)
+        {
+            TopMessage(UnitMsg);
+            zUnit.RefreshZone();
+        }
+        else
+            Message.gameObject.SetActive(false);
     }
 }

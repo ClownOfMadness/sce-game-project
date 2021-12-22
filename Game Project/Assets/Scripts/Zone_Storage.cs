@@ -12,13 +12,11 @@ public class Zone_Storage : Zone_Behaviour
     [HideInInspector] public int count;     //amount of full slots in the storage
     [HideInInspector] public System_DayNight time;
     private Card_Pool Pool;
-    private int realSize;
 
     public void Awake()
     {
         time = FindObjectOfType<System_DayNight>();
-        realSize = 8;
-        RefreshTime();
+        Size = 8;   //max Zone size
         InstantiateZone();
 
         slots = new List<Data_Card>();
@@ -29,7 +27,7 @@ public class Zone_Storage : Zone_Behaviour
     {
         Page = Instantiate(PagePrefab, this.transform);              //create and instantiate Page objects in scene
         Page.name = string.Format("Cards");                             //new Page name (for displaying in Scene)
-        for (int i = count; i < this.realSize; i++)
+        for (int i = count; i < this.Size; i++)
         {
             GameObject newCard = Instantiate(CardPrefab, Page.transform);   //create and instantiate objects in scene
             newCard.GetComponent<Card_Display>().ClearCard();
@@ -40,11 +38,10 @@ public class Zone_Storage : Zone_Behaviour
     }
     public override void EventDrop(Card_Drag cardObject)
     {
-        if (AddToStorage(cardObject.card, false))
+        if (AddToStorage(cardObject.card))
         {
             GameObject placeholder = cardObject.placeholder;    //get the card's placeholder in the Hand to delete it
             Destroy(placeholder);
-            cardObject.screen.CheckEmpty();     //create Creation if last card was destroyed
             Destroy(cardObject.gameObject);
         }
     }
@@ -61,23 +58,16 @@ public class Zone_Storage : Zone_Behaviour
             else
                 cards[i].gameObject.GetComponent<CanvasGroup>().alpha = .6f;
         }
-        for (int i = count; i < this.realSize; i++)
+        for (int i = count; i < this.Size; i++)
         {
             cards[i].ClearCard();
             cards[i].gameObject.GetComponent<CanvasGroup>().alpha = .6f;
         }
     }
-    public void RefreshTime()   //change zone Size according to time
+
+    public bool AddToStorage(Data_Card newCard)//adds card to zone at night or if given by Unit
     {
-        if (time.isDay && skipDay == false) 
-            Size = 0;           //max Zone size at day
-        else
-            Size = 8;           //max Zone size at night
-    }
-    public bool AddToStorage(Data_Card newCard, bool ignoreTime)//adds card to zone at night or if given by Unit
-    {
-        RefreshTime();
-        if ((count < Size || (count < realSize && ignoreTime)) && newCard != Pool.GetCard("Creation"))
+        if ((count < Size))
         {
             slots.Add(newCard);
             slots.OrderBy(Card => Card.code);

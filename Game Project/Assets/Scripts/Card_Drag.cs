@@ -16,8 +16,6 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     [HideInInspector] public Transform storagept2;
     [HideInInspector] public Transform destroy;
 
-    [HideInInspector] public bool night;
-
     private Player_SpawnBuilding Tiles;
     private Unit_List Units;
 
@@ -75,7 +73,8 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                 GetComponent<CanvasGroup>().alpha = 0f; //hide unit until placed/returned to hand
             }
         }
-        night = !storage.GetComponent<Zone_Storage>().time.isDay;
+        if (this.card != screen.Pool.GetCard("Creation"))
+            screen.CheckEmpty();
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -101,6 +100,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     {
         //needed to allow building placement only outside of UI, don't change
         bool validPlacement = this.transform.parent != hand && this.transform.parent != destroy && this.transform.parent != unit && this.transform.parent != storagept2;
+        bool snap = true;
         if (validPlacement && screen.visibleMap) 
         {
             if (placeholderParent == hand)
@@ -112,6 +112,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                         Destroy(placeholder);
                         Destroy(this.gameObject);           //destroy card that was placed successfully
                         screen.CheckEmpty();
+                        snap = false;
                     }
                 }
                 else if (int.TryParse(card.unitIndex, out int index))             //if unit, try to place
@@ -122,20 +123,27 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                         Destroy(placeholder);
                         Destroy(this.gameObject);           //destroy card that was placed successfully
                         screen.CheckEmpty();
+                        snap = false;
                     }
                 }
         }
         screen.draggedBuilding = false; //close selectedTile updates
         screen.draggedUnit = false;     //close selectedTile updates
-        if (this.gameObject)      //if object still exists, snap back to Hand
+
+        if (snap)      //if object still exists, snap back to Hand
             SnapToParent();
     }
     public void SnapToParent()
     {
+        if (this.card == screen.Pool.GetCard("Creation"))   //doesn't snap on its own
+        {
+            this.transform.position = placeholder.transform.position;
+        }
         this.transform.SetParent(parentReturnTo);
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().alpha = 1f; //reset effect for card (can be changed)
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeholder);
+        screen.CheckEmpty();
     }
 }

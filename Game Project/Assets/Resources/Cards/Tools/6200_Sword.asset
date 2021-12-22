@@ -17,11 +17,10 @@ MonoBehaviour:
   type: 5
   source: 00000000
   combinationOf:
-  - card1: {fileID: 11400000, guid: 6690953aab85a944b8c6b2b1a7d36bf4, type: 2}
+  - card1: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
     card2: {fileID: 11400000, guid: d7a171c14aac58b43aadc541818a9769, type: 2}
   gatheredBy: []
-  tier: 
-  complexity: 8
+  complexity: 4
   description: Hack and Slash
   artwork: {fileID: 21300000, guid: 82d12da025939a140b00d7ea51fc7302, type: 3}
   buildingPrefab: {fileID: 0}

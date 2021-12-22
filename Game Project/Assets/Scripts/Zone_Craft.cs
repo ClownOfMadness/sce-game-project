@@ -55,8 +55,6 @@ public class Zone_Craft : MonoBehaviour
 
                     Destroy(cardObjects[0].gameObject);
                     Destroy(cardObjects[1].gameObject);
-                   
-                    Time.timeScale = 0f;    //pause game
                 }
             }
             else //nothing was crafted
@@ -73,6 +71,5 @@ public class Zone_Craft : MonoBehaviour
             GameObject.Destroy(cardObject.gameObject);
         }
         craftMenu.gameObject.SetActive(false);
-        Time.timeScale = 1f;    //resume game
     }
 }

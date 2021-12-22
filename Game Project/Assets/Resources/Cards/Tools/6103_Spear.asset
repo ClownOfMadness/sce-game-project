@@ -18,10 +18,9 @@ MonoBehaviour:
   source: 00000000
   combinationOf:
   - card1: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
-    card2: {fileID: 11400000, guid: c6ebb2dab03cfb347b08872e42059186, type: 2}
+    card2: {fileID: 11400000, guid: 3224aa7c34724cb44ae5a91ea7dc9ba0, type: 2}
   gatheredBy: []
-  tier: 
-  complexity: 2
+  complexity: 1
   description: 'How to use: "Point the sharp end at the opponent"'
   artwork: {fileID: 21300000, guid: b964776524d6c98499728e09ad33315f, type: 3}
   buildingPrefab: {fileID: 0}
