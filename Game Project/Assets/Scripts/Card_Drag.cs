@@ -13,8 +13,11 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     [HideInInspector] public Transform craft;
     [HideInInspector] public Transform unit;
     [HideInInspector] public Transform storage;
+    [HideInInspector] public Transform storagept2;
     [HideInInspector] public Transform destroy;
-    
+
+    [HideInInspector] public bool night;
+
     private Player_SpawnBuilding Tiles;
     private Unit_List Units;
 
@@ -27,6 +30,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         craft = screen.Craft.transform;
         unit = screen.Unit.transform;
         storage = screen.Storage.transform;
+        storagept2 = screen.storageButton.transform;
         destroy = screen.destroyButton.transform;
 
         Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
@@ -71,6 +75,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                 GetComponent<CanvasGroup>().alpha = 0f; //hide unit until placed/returned to hand
             }
         }
+        night = !storage.GetComponent<Zone_Storage>().time.isDay;
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -94,7 +99,9 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (this.transform.parent != hand && this.transform.parent != destroy && this.transform.parent != unit) //needed to allow building placement only outside of UI, don't change
+        //needed to allow building placement only outside of UI, don't change
+        bool validPlacement = this.transform.parent != hand && this.transform.parent != destroy && this.transform.parent != unit && this.transform.parent != storagept2;
+        if (validPlacement && screen.visibleMap) 
         {
             if (placeholderParent == hand)
                 if (card.buildingPrefab)                    //if building, try to place
@@ -122,7 +129,6 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         screen.draggedUnit = false;     //close selectedTile updates
         if (this.gameObject)      //if object still exists, snap back to Hand
             SnapToParent();
-        
     }
     public void SnapToParent()
     {

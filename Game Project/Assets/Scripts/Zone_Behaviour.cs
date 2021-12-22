@@ -41,11 +41,14 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
         Card_Drag d = eventData.pointerDrag.GetComponent<Card_Drag>();
         if (d != null)
         {
+            bool validStorage = this.transform == d.storage && d.card != d.screen.Pool.GetCard("Creation") && (d.night || d.screen.skipDay);
+            bool validStoragePt2 = this.transform == d.storagept2 && d.card != d.screen.Pool.GetCard("Creation") && (d.night || d.screen.skipDay || d.parentReturnTo == d.unit);
             Card_Drag[] deck = this.transform.GetComponentsInChildren<Card_Drag>(); //walkaround to ignore placeholders and only check cards
             if (deck.Length < this.Size)
             {
-                if (this.transform == d.storage && d.card != d.screen.Pool.GetCard("Creation") || this.transform != d.storage)
-                {  //Creation can't be placed in Storage
+                if (validStorage || this.transform != d.storage) //Creation can't be placed in Storage and Storagebutton
+                    if ( validStoragePt2 || this.transform != d.storagept2) 
+                    {  
                     if (d.parentReturnTo == d.menu && this.transform != d.menu)         //close menu prompt
                     {
                         d.craft.GetComponent<Zone_Craft>().ClearMenu();
@@ -57,9 +60,9 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
                     }
                     else if (d.parentReturnTo == d.unit && this.transform != d.unit)    //close unit prompt
                     {
+                        d.storagept2.GetComponent<Zone_StoragePt2>().ignoreTime = true;
                         d.unit.GetComponent<Zone_Unit>().FreeUnit();
                     }
-
                     d.parentReturnTo = this.transform;
                     d.gameObject.transform.SetParent(this.transform);
                     this.EventDrop(d);      //run response function to dropping a card (of the fitting Zone)

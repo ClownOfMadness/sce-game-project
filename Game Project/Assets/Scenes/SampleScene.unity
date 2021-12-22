@@ -3882,6 +3882,7 @@ GameObject:
   - component: {fileID: 710504991}
   - component: {fileID: 710504990}
   - component: {fileID: 710504989}
+  - component: {fileID: 710504992}
   - component: {fileID: 710504988}
   m_Layer: 5
   m_Name: StorageUI
@@ -4029,6 +4030,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 710504986}
   m_CullTransparentMesh: 1
+--- !u!114 &710504992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 710504986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be47ab71e905cbb45afd0c387908d2a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Size: 0
+  CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
+  Storage: {fileID: 0}
+  ignoreTime: 0
 --- !u!1 &725015704
 GameObject:
   m_ObjectHideFlags: 0
@@ -4313,7 +4330,7 @@ MonoBehaviour:
   Size: 0
   CardPrefab: {fileID: 7543181373760247667, guid: bcfdfa184052e48408485752b40ed668, type: 3}
   PagePrefab: {fileID: 2908852931765812924, guid: d1344730b81bca24a8f4d6e613dcd300, type: 3}
-  StorageButton: {fileID: 710504986}
+  skipDay: 0
   count: 0
   time: {fileID: 0}
 --- !u!114 &806583745
@@ -12446,11 +12463,12 @@ MonoBehaviour:
   Book: {fileID: 466822438}
   destroyButton: {fileID: 1997176663}
   creativeButton: {fileID: 328613848}
+  storageButton: {fileID: 710504986}
   cardsButton: {fileID: 1714407379}
   SkipLogin: 1
+  skipDay: 0
   Pool: {fileID: 0}
   CraftMenu: {fileID: 0}
-  storageButton: {fileID: 710504986}
   visibleMap: 0
   UIDown: 0
   selectedTile: {fileID: 0}

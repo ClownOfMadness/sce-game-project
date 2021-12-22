@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//responsible for creating Unit prompt zone, extension of ZoneBehaviour
+//responsible for creating Unit prompt zone
 public class Zone_Unit : MonoBehaviour
 {
     [HideInInspector] public int Size;              //Zone size

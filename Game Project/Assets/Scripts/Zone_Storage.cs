@@ -2,19 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;  //needed for ToList function
 
-//responsible for creating and storing Storage zone
+//responsible for creating and storing Storage zone, extension of ZoneBehaviour
 public class Zone_Storage : Zone_Behaviour
 {
     public GameObject PagePrefab;       //type of prefab for Page (attached via Inspector)
-    public GameObject StorageButton;
+    [HideInInspector] public bool skipDay = false;      //for development testing
     [HideInInspector] private GameObject Page;
-    [HideInInspector] private List<Data_Card> slots;  //what is in the storage
-    [HideInInspector] public int count;  //amount of full slots in the storage
+    [HideInInspector] private List<Data_Card> slots;    //what is in the storage
+    [HideInInspector] public int count;     //amount of full slots in the storage
     [HideInInspector] public System_DayNight time;
     private Card_Pool Pool;
     private int realSize;
 
-    void Awake()
+    public void Awake()
     {
         time = FindObjectOfType<System_DayNight>();
         realSize = 8;
@@ -23,14 +23,13 @@ public class Zone_Storage : Zone_Behaviour
 
         slots = new List<Data_Card>();
         count = 0;
-
         Pool = ScriptableObject.CreateInstance<Card_Pool>();
     }
     private void InstantiateZone()
     {
-        Page = Instantiate(PagePrefab, this.transform);             //create and instantiate Page objects in scene
-        Page.name = string.Format("Cards");                         //new Page name (for displaying in Scene)
-        for (int i = count; i < this.realSize; i++) 
+        Page = Instantiate(PagePrefab, this.transform);              //create and instantiate Page objects in scene
+        Page.name = string.Format("Cards");                             //new Page name (for displaying in Scene)
+        for (int i = count; i < this.realSize; i++)
         {
             GameObject newCard = Instantiate(CardPrefab, Page.transform);   //create and instantiate objects in scene
             newCard.GetComponent<Card_Display>().ClearCard();
@@ -57,7 +56,7 @@ public class Zone_Storage : Zone_Behaviour
         {
             cards[i].AddCard(slots[i]);
             cards[i].gameObject.name = string.Format("{0} (Card)", slots[i].name);  //updates name in scene
-            if (time.isDay == false) 
+            if (time.isDay == false || skipDay) 
                 cards[i].gameObject.GetComponent<CanvasGroup>().alpha = 1f;
             else
                 cards[i].gameObject.GetComponent<CanvasGroup>().alpha = .6f;
@@ -70,7 +69,7 @@ public class Zone_Storage : Zone_Behaviour
     }
     public void RefreshTime()   //change zone Size according to time
     {
-        if (time.isDay)
+        if (time.isDay && skipDay == false) 
             Size = 0;           //max Zone size at day
         else
             Size = 8;           //max Zone size at night
@@ -90,7 +89,7 @@ public class Zone_Storage : Zone_Behaviour
     }
     public void RemoveFromStorage(Card_Display pickedCard)      //removes card from storage on click
     {
-        if (time.isDay == false) 
+        if (time.isDay == false || skipDay)
         {
             slots.Remove(pickedCard.card);
             count--;

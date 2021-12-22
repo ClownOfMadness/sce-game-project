@@ -13,10 +13,13 @@ public class Screen_Cards : MonoBehaviour
 
     public GameObject destroyButton;
     public GameObject creativeButton;
+    public GameObject storageButton;
     public GameObject cardsButton;
 
     [Header("Game State:")]
-    public bool SkipLogin;  //for development testing
+    public bool SkipLogin;      //for development testing
+    [Header("Simulate night:")]
+    public bool skipDay;        //for development testing
 
     private Zone_Hand zHand;
     private Zone_Craft zCraft;
@@ -26,7 +29,6 @@ public class Screen_Cards : MonoBehaviour
 
     [HideInInspector] public Card_Pool Pool;
     [HideInInspector] public GameObject CraftMenu;
-    [HideInInspector] public GameObject storageButton;
 
     [HideInInspector] public bool visibleMap;
     [HideInInspector] public bool UIDown;
@@ -45,7 +47,11 @@ public class Screen_Cards : MonoBehaviour
         zBook = Book.transform.GetComponent<Zone_Book>();
 
         CraftMenu = zCraft.craftMenu;
-        storageButton = zStorage.StorageButton;
+
+        Storage.SetActive(true);    //let Storage instantiate itself
+        Storage.SetActive(false);
+        zStorage.skipDay = skipDay;
+        storageButton.transform.GetComponent<Zone_StoragePt2>().Storage = zStorage;
 
         Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions;
 
@@ -244,11 +250,12 @@ public class Screen_Cards : MonoBehaviour
     }
     public void DisplayCardClick(Card_Display pickedCard)   //add Card_Display to hand based on what was picked in Book/Storage
     {
-        if (CreateInHand(pickedCard.card))
-        {
-            if (Storage.activeSelf)
-                zStorage.RemoveFromStorage(pickedCard);
-        }
+        if (Book.activeSelf || (zStorage.time.isDay == false || skipDay)) 
+            if (CreateInHand(pickedCard.card))
+            {
+                if (Storage.activeSelf)
+                    zStorage.RemoveFromStorage(pickedCard);
+            }
     }
     public bool AddGathered(Data_Unit unit, bool gathered)  //add card from Unit to Hand (if there's space)
     {
