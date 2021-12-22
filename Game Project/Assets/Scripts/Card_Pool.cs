@@ -129,7 +129,7 @@ public class Card_Pool : ScriptableObject
             List<Data_Card.Combinations> Combos = CombineAttempt.combinationOf;
             if (Combos.Count > 0) //failsafe - will catch bugged out cards that don't have all their fields filled out
             {
-                if (IsCombination(CombineAttempt))          //if card can be created
+                if (IsCombination(CombineAttempt)||IsMenuCombination(CombineAttempt))   //if card can be created
                 {
                     for (int startCombo = 0; startCombo < Combos.Count; startCombo++)   //check all possible combinations of current CombineAttempt
                     {

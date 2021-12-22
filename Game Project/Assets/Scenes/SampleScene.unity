@@ -548,6 +548,108 @@ Transform:
   m_Father: {fileID: 11710809}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &142446976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 142446977}
+  - component: {fileID: 142446981}
+  - component: {fileID: 142446980}
+  - component: {fileID: 142446979}
+  m_Layer: 5
+  m_Name: CraftMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &142446977
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142446976}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2133596454}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 29}
+  m_SizeDelta: {x: 700, y: 150}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &142446979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142446976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: -15
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 1
+  m_ChildScaleHeight: 1
+  m_ReverseArrangement: 0
+--- !u!114 &142446980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142446976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &142446981
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142446976}
+  m_CullTransparentMesh: 1
 --- !u!1 &158650945
 GameObject:
   m_ObjectHideFlags: 0
@@ -2104,7 +2206,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2133596454}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -2675,7 +2777,7 @@ RectTransform:
   - {fileID: 634676989}
   - {fileID: 1407714009}
   m_Father: {fileID: 2133596454}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2795,8 +2897,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
   Size: 0
-  success: 0
   CombosTotal: 0
+  craftMenu: {fileID: 142446976}
 --- !u!114 &542042819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2873,12 +2975,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2133596454}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000062926, y: -56}
-  m_SizeDelta: {x: 179, y: 280}
+  m_AnchoredPosition: {x: 0, y: 29}
+  m_SizeDelta: {x: 100, y: 150}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &549329536
 GameObject:
@@ -3800,7 +3902,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2133596454}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -4189,7 +4291,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2133596454}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4208,11 +4310,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec56481108482924fa368d27d6e068fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PagePrefab: {fileID: 2908852931765812924, guid: d1344730b81bca24a8f4d6e613dcd300, type: 3}
-  CardPrefab: {fileID: 7543181373760247667, guid: bcfdfa184052e48408485752b40ed668, type: 3}
   Size: 0
+  CardPrefab: {fileID: 7543181373760247667, guid: bcfdfa184052e48408485752b40ed668, type: 3}
+  PagePrefab: {fileID: 2908852931765812924, guid: d1344730b81bca24a8f4d6e613dcd300, type: 3}
+  StorageButton: {fileID: 710504986}
   count: 0
-  night: {fileID: 0}
+  time: {fileID: 0}
 --- !u!114 &806583745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9124,9 +9227,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Size: 0
   CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
-  ZoneUnit: {fileID: 1936515017}
   Fill: 0
   Damage: 0
+  Preset: 0
 --- !u!114 &1697456046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9324,7 +9427,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2133596454}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -10831,7 +10934,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2133596454}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -10916,7 +11019,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Size: 0
   CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
-  ZoneUnit: {fileID: 1936515017}
 --- !u!1 &1962350186
 GameObject:
   m_ObjectHideFlags: 0
@@ -11317,7 +11419,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Size: 0
   CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
-  ZoneUnit: {fileID: 1936515017}
 --- !u!114 &1997176665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11394,7 +11495,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2133596454}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -12340,16 +12441,17 @@ MonoBehaviour:
   Message: {fileID: 2020261449}
   Hand: {fileID: 1697456044}
   Craft: {fileID: 542042817}
+  Unit: {fileID: 1936515017}
   Storage: {fileID: 806583742}
   Book: {fileID: 466822438}
-  Unit: {fileID: 1936515017}
   destroyButton: {fileID: 1997176663}
   creativeButton: {fileID: 328613848}
-  storageButton: {fileID: 710504986}
   cardsButton: {fileID: 1714407379}
   SkipLogin: 1
   Pool: {fileID: 0}
-  canCraft: 0
+  CraftMenu: {fileID: 0}
+  storageButton: {fileID: 710504986}
+  visibleMap: 0
   UIDown: 0
   selectedTile: {fileID: 0}
   draggedBuilding: 0
@@ -12429,10 +12531,11 @@ RectTransform:
   m_Children:
   - {fileID: 2020261451}
   - {fileID: 1697456049}
+  - {fileID: 142446977}
   - {fileID: 542042822}
+  - {fileID: 1936515018}
   - {fileID: 806583743}
   - {fileID: 466822443}
-  - {fileID: 1936515018}
   - {fileID: 1997176668}
   - {fileID: 328613853}
   - {fileID: 710504987}

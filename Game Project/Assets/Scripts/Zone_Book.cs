@@ -11,12 +11,10 @@ public class Zone_Book : MonoBehaviour
     private int pageIndex;
     private int pagesInBook;
     [HideInInspector] public int Size;  //Page size
-    private Card_Pool Pool;
 
-    void Start()
+    void Awake()
     {
         Size = 8;           //max Zone size
-        Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions;
         InstantiateZone();
     }
     private void InstantiateZone()

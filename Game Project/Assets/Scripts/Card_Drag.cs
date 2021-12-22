@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
 
 //responsible for the Card Drag commands, extension of CardDisplay
 public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -10,9 +9,12 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     [HideInInspector] public GameObject placeholder = null;           //saves the dragged card's spot (for changing card order)
     [HideInInspector] public Transform placeholderParent = null;      //saves the dragged card's parent
     [HideInInspector] public Transform hand;
+    [HideInInspector] public Transform menu;
+    [HideInInspector] public Transform craft;
     [HideInInspector] public Transform unit;
+    [HideInInspector] public Transform storage;
     [HideInInspector] public Transform destroy;
-    private Zone_Hand zHand;
+    
     private Player_SpawnBuilding Tiles;
     private Unit_List Units;
 
@@ -21,17 +23,16 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         canvas = this.transform.parent.parent.GetComponent<Canvas>();
         screen = canvas.GetComponent<Screen_Cards>();
         hand = screen.Hand.transform;
+        menu = screen.CraftMenu.transform;
+        craft = screen.Craft.transform;
         unit = screen.Unit.transform;
+        storage = screen.Storage.transform;
         destroy = screen.destroyButton.transform;
-        zHand = hand.GetComponent<Zone_Hand>();
+
         Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
         Units = FindObjectOfType<Unit_List>();              //connection to use UnitList functions
     }
-    public void ReturnToHand()          //return to hand after craft attempt
-    {
-        screen.CraftToHand(this);       //needs to happen here to get the "this" of the object
-    }
-    public void SwitchCardPlace()       //move card between hand-craft on click
+    public void SwitchCardPlace()       //move card between zones on click
     {
         screen.CardClick(this);         //needs to happen here to get the "this" of the object
     }
@@ -54,17 +55,21 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         SavePlaceholder();
         this.transform.SetParent(this.transform.parent.parent); //changes parent once the card is picked
         GetComponent<CanvasGroup>().blocksRaycasts = false;
-        if (card.buildingPrefab && placeholderParent == hand)                           //if building, start recieving selectedTile updates and hide card
+
+        if (screen.visibleMap && placeholderParent == hand)     //enable pointer change only for cards leaving hand when UI is down
         {
-            screen.draggedBuilding = true;
-            screen.draggedSprite = card.artwork;
-            GetComponent<CanvasGroup>().alpha = 0f; //hide building until placed/returned to hand
-        }
-        if (int.TryParse(card.unitIndex, out int index) && placeholderParent == hand)   //if unit, start recieving selectedTile updates and hide card
-        {
-            screen.draggedUnit = true;
-            screen.draggedSprite = card.artwork;
-            GetComponent<CanvasGroup>().alpha = 0f; //hide unit until placed/returned to hand
+            if (card.buildingPrefab)                                //if building, start recieving selectedTile updates and hide card
+            {
+                screen.draggedBuilding = true;
+                screen.draggedSprite = card.artwork;
+                GetComponent<CanvasGroup>().alpha = 0f; //hide building until placed/returned to hand
+            }
+            else if (int.TryParse(card.unitIndex, out int index))   //if unit, start recieving selectedTile updates and hide card
+            {
+                screen.draggedUnit = true;
+                screen.draggedSprite = card.artwork;
+                GetComponent<CanvasGroup>().alpha = 0f; //hide unit until placed/returned to hand
+            }
         }
     }
     public void OnDrag(PointerEventData eventData)
@@ -99,29 +104,31 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                         //Debug.Log("Card_Drag: placing " + card.buildingPrefab.name + " at " + screen.selectedTile.name);
                         Destroy(placeholder);
                         Destroy(this.gameObject);           //destroy card that was placed successfully
+                        screen.CheckEmpty();
                     }
                 }
                 else if (int.TryParse(card.unitIndex, out int index))             //if unit, try to place
                 {
                     if (Units.AddUnit(index, screen.selectedTile))     //spawn the card's unit on the tile that's under the pointer
                     {
-                        Debug.Log("Card_Drag: placing unit #" + card.unitIndex + " at " + screen.selectedTile.name);
+                        //Debug.Log("Card_Drag: placing unit #" + card.unitIndex + " at " + screen.selectedTile.name);
                         Destroy(placeholder);
                         Destroy(this.gameObject);           //destroy card that was placed successfully
+                        screen.CheckEmpty();
                     }
                 }
         }
         screen.draggedBuilding = false; //close selectedTile updates
         screen.draggedUnit = false;     //close selectedTile updates
-        if (this.gameObject)     //if object still exists, snap back to Hand
+        if (this.gameObject)      //if object still exists, snap back to Hand
             SnapToParent();
+        
     }
-    private void SnapToParent()
+    public void SnapToParent()
     {
         this.transform.SetParent(parentReturnTo);
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().alpha = 1f; //reset effect for card (can be changed)
-        this.transform.localScale = new Vector3(zHand.CardPrefab.transform.localScale.x, zHand.CardPrefab.transform.localScale.y, 0);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeholder);
     }

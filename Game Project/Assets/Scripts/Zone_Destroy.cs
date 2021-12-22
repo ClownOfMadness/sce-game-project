@@ -21,7 +21,6 @@ public class Zone_Destroy : Zone_Behaviour
             cardObject.screen.draggedUnit = false;      //close selectedTile updates
             GameObject placeholder = cardObject.placeholder;    //get the card's placeholder in the Hand to delete it
             Destroy(placeholder);
-            cardObject.screen.CheckEmpty();             //create Creation if last card was destroyed
             Destroy(cardObject.gameObject);     
         }
     }

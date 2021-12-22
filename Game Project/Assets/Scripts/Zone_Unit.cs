@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //responsible for creating Unit prompt zone, extension of ZoneBehaviour
-public class Zone_Unit : Zone_Behaviour
+public class Zone_Unit : MonoBehaviour
 {
+    [HideInInspector] public int Size;              //Zone size
+    public GameObject CardPrefab;       //type of prefab for Card (attached via Inspector)
     private class Backlog  //organizing the cards and units still waiting to be sorted out
     {
         public Data_Card card;
@@ -21,10 +23,9 @@ public class Zone_Unit : Zone_Behaviour
     public void CardAdded(Data_Card pickedCard, Data_Unit unit)
     {
         queue.Add(new Backlog { card = pickedCard, waiting = unit });
-        Debug.Log("Backlog: " + queue.Count);
         RefreshZone();
     } 
-    public void FreeUnit()
+    public void FreeUnit()      //let the Unit know that it can go back to work
     {
         if (current.waiting)
         {
@@ -33,7 +34,7 @@ public class Zone_Unit : Zone_Behaviour
         queue.Remove(current);
         RefreshZone();
     }
-    public void RefreshZone()
+    public void RefreshZone()   //display the next card in the queue
     {
         if (queue.Count > 0)     //failsafe - verifying that there's no objects displayed in the Zone
         {

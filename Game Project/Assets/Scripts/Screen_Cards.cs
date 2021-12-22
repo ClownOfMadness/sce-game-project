@@ -7,12 +7,12 @@ public class Screen_Cards : MonoBehaviour
     public Text Message;
     public GameObject Hand;
     public GameObject Craft;
+    public GameObject Unit;
     public GameObject Storage;
     public GameObject Book;
-    public GameObject Unit;
+
     public GameObject destroyButton;
     public GameObject creativeButton;
-    public GameObject storageButton;
     public GameObject cardsButton;
 
     [Header("Game State:")]
@@ -20,13 +20,15 @@ public class Screen_Cards : MonoBehaviour
 
     private Zone_Hand zHand;
     private Zone_Craft zCraft;
+    private Zone_Unit zUnit;
     private Zone_Storage zStorage;
     private Zone_Book zBook;
-    private Zone_Unit zUnit;
 
-    public Card_Pool Pool;
+    [HideInInspector] public Card_Pool Pool;
+    [HideInInspector] public GameObject CraftMenu;
+    [HideInInspector] public GameObject storageButton;
 
-    [HideInInspector] public bool canCraft;
+    [HideInInspector] public bool visibleMap;
     [HideInInspector] public bool UIDown;
 
     [HideInInspector] public GameObject selectedTile;   //updated by Player_Control
@@ -38,9 +40,12 @@ public class Screen_Cards : MonoBehaviour
     {
         zHand = Hand.transform.GetComponent<Zone_Hand>();
         zCraft = Craft.transform.GetComponent<Zone_Craft>();
+        zUnit = Unit.transform.GetComponent<Zone_Unit>();
         zStorage = Storage.transform.GetComponent<Zone_Storage>();
         zBook = Book.transform.GetComponent<Zone_Book>();
-        zUnit = Unit.transform.GetComponent<Zone_Unit>();
+
+        CraftMenu = zCraft.craftMenu;
+        storageButton = zStorage.StorageButton;
 
         Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions;
 
@@ -98,7 +103,7 @@ public class Screen_Cards : MonoBehaviour
 
         Hand.SetActive(true);
         destroyButton.SetActive(true);
-        canCraft = true;
+        visibleMap = true;
         UIDown = false;
     }
     private void CloseUI()
@@ -110,7 +115,7 @@ public class Screen_Cards : MonoBehaviour
         Storage.SetActive(false);
         Book.SetActive(false);
         destroyButton.SetActive(false);
-        canCraft = false;
+        visibleMap = false;
         UIDown = true;
     }
     public void SwitchCreative()//close/open Book
@@ -128,7 +133,7 @@ public class Screen_Cards : MonoBehaviour
     private void OpenBook()
     {
         TopMessage("Creative game mode, click cards to add to your deck");
-        canCraft = false;
+        visibleMap = false;
         Storage.SetActive(false);
         Book.SetActive(true);
         Hand.SetActive(true);
@@ -143,7 +148,7 @@ public class Screen_Cards : MonoBehaviour
 
         zBook.FirstPage();
         Book.SetActive(false);
-        canCraft = true;
+        visibleMap = true;
         Time.timeScale = 1f;    //unpause game
     }
     public void SwitchStorage() //close/open Storage
@@ -161,11 +166,11 @@ public class Screen_Cards : MonoBehaviour
     {
         Storage.SetActive(true);
         zStorage.RefreshZone();
-        if (zStorage.night.isDay)
+        if (zStorage.time.isDay)
             TopMessage("Town Storage currently closed! Come back at night");
         else
             TopMessage("Town Storage, choose your deck for the next day");
-        canCraft = false;
+        visibleMap = false;
         Book.SetActive(false);
         Hand.SetActive(true);
         destroyButton.SetActive(true);
@@ -178,14 +183,15 @@ public class Screen_Cards : MonoBehaviour
         Message.gameObject.SetActive(false);
 
         Storage.SetActive(false);
-        canCraft = true;
+        visibleMap = true;
         Time.timeScale = 1f;    //unpause game
     }
-    public void CardClick(Card_Drag pickedCard)     //move card between Hand zone and Craft on click
+    public void CardClick(Card_Drag pickedCard)             //move Card_Drag between zones on click
     {
-        if (canCraft)
+        //if card is in hand - move it
+        if (pickedCard.transform.parent == Hand.transform)  
         {
-            if (pickedCard.transform.parent == Hand.transform)  //if card is in hand - move to craft
+            if (visibleMap)                   //move to Craft
             {
                 Craft.SetActive(true);
                 if (Craft.transform.childCount < zCraft.Size)
@@ -198,88 +204,53 @@ public class Screen_Cards : MonoBehaviour
                     }
                 }
             }
-            else if (Hand.transform.childCount < zHand.Size)    //make sure there's space in Hand
-            {
-
-                if (pickedCard.transform.parent == Craft.transform)    //if card is in craft - move to hand
-                {
-                    CraftToHand(pickedCard);
-                }
-                else if (pickedCard.transform.parent == Unit.transform)    //if card is in Unit - move to hand
-                {
-                    UnitToHand(pickedCard);
-                }
-            }
-        }
-        else if (Storage.activeSelf)
-        {
-            if (pickedCard.transform.parent == Hand.transform)  //if card is in hand - move to storage
+            else if (Storage.activeSelf)    //move to Storage
             {
                 if (zStorage.AddToStorage(pickedCard.card, false))
                 {
                     Destroy(pickedCard.gameObject);
+                    CheckEmpty();
                 }
             }
-            else    //if card is in storage - move to hand
+        }
+        //if card isn't in hand - try to move it to hand
+        else if (Hand.transform.childCount < zHand.Size)    //if there's space in Hand
+        {
+            if (pickedCard.card.neverDiscovered)
             {
-                ClickToHand(pickedCard);
-            }
-        }
-    }
-    public void CraftToHand(Card_Drag card)         //move card from Craft zone to Hand on click
-    {
-        if (zCraft.success)
-        {
-            TopMessage(string.Format("Craft succeseful! Created {0}", card.card.name));
-        }
-        else
-        {
-            TopMessage("Uh oh, craft didn't succeed");
-        }
-        //card.gameObject.transform.SetParent(Craft.transform);
-        //[insert timer]
-        card.gameObject.transform.SetParent(Hand.transform);
-        Craft.SetActive(false);
-    }
-    public void UnitToHand(Card_Drag card)          //move card from Craft zone to Hand on click
-    {
-        zUnit.FreeUnit();
-        card.gameObject.transform.SetParent(Hand.transform);
-        Message.gameObject.SetActive(false);
-    }
-    public void ClickToHand(Card_Display pickedCard)//adds card to hand based on what was picked in Book/Storage
-    {
-        if (Book.activeSelf)    //only run if book is open
-        {
-            CreateInHand(pickedCard.card);
-        }
-        else if (Storage.activeSelf && zStorage.night.isDay == false) //only run if storage is open at night
-        {
-            if (CreateInHand(pickedCard.card))
-            {
-                zStorage.RemoveFromStorage(pickedCard);
-            }
-        }
-    }
-    private bool CreateInHand(Data_Card pickedCard)
-    {
-        if (Hand.transform.childCount < zHand.Size)
-        {
-            if (pickedCard.neverDiscovered)
-            {
-                pickedCard.neverDiscovered = false;
-                //Debug.Log("New card found: " + pickedCard.name);
+                pickedCard.card.neverDiscovered = false;
+                //Debug.Log("New card found: " + combination.name);
                 Pool.discoveredTotal++;
             }
-            GameObject newCard = Instantiate(zHand.CardPrefab, Hand.transform);     //create and instantiate object in scene
-            newCard.GetComponent<Card_Drag>().AddCard(pickedCard);                  //add cards to objects 
-            newCard.name = string.Format("{0} (Card)", pickedCard.name);                   //update new card name (for displaying in Scene)
-            zHand.NotEmpty();   //if Creation was in hand, remove it
-            return true;
+            if (pickedCard.transform.parent == CraftMenu.transform)     //if card is in Craft Menu prompt - move to hand
+            {
+                pickedCard.gameObject.transform.SetParent(Hand.transform);
+                zCraft.ClearMenu();
+                visibleMap = true;
+            }
+            else if (pickedCard.transform.parent == Craft.transform)         //if card is in Craft - move to hand
+            {
+                Craft.SetActive(false);
+                pickedCard.gameObject.transform.SetParent(Hand.transform);
+            }
+            else if (pickedCard.transform.parent == Unit.transform)     //if card is in Unit prompt - move to hand
+            {
+                zUnit.FreeUnit();
+                pickedCard.gameObject.transform.SetParent(Hand.transform);
+                zHand.NotEmpty();
+            }
+            Message.gameObject.SetActive(false);
         }
-        return false;
     }
-    public bool AddGathered(Data_Unit unit, bool gathered)   //add card from Unit to Hand (if there's space)
+    public void DisplayCardClick(Card_Display pickedCard)   //add Card_Display to hand based on what was picked in Book/Storage
+    {
+        if (CreateInHand(pickedCard.card))
+        {
+            if (Storage.activeSelf)
+                zStorage.RemoveFromStorage(pickedCard);
+        }
+    }
+    public bool AddGathered(Data_Unit unit, bool gathered)  //add card from Unit to Hand (if there's space)
     {
         Data_Card pickedCard;
         Data_Unit waitingUnit;
@@ -305,6 +276,24 @@ public class Screen_Cards : MonoBehaviour
             zUnit.CardAdded(pickedCard, waitingUnit);
             return false; //unit needs to wait
         }
+    }
+    private bool CreateInHand(Data_Card pickedCard)
+    {
+        if (Hand.transform.childCount < zHand.Size)
+        {
+            if (pickedCard.neverDiscovered)
+            {
+                pickedCard.neverDiscovered = false;
+                //Debug.Log("New card found: " + pickedCard.name);
+                Pool.discoveredTotal++;
+            }
+            GameObject newCard = Instantiate(zHand.CardPrefab, Hand.transform);     //create and instantiate object in scene
+            newCard.GetComponent<Card_Drag>().AddCard(pickedCard);                  //add cards to objects 
+            newCard.name = string.Format("{0} (Card)", pickedCard.name);            //update new card name (for displaying in Scene)
+            zHand.NotEmpty();   //if Creation was in hand, remove it
+            return true;
+        }
+        return false;
     }
     public void CheckEmpty()     //add Creation to hand if empty
     {
