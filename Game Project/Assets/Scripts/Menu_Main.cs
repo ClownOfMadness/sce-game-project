@@ -27,7 +27,7 @@ public class Menu_Main : MonoBehaviour
 
     IEnumerator LoadAsynchronic()
     { 
-        AsyncOperation asy = SceneManager.LoadSceneAsync("SampleScene");
+        AsyncOperation asy = SceneManager.LoadSceneAsync("Game");
         GameObject loadScreen = LoadPanel.transform.GetChild(1).gameObject;
         Image img = loadScreen.GetComponent<Image>();
         SpriteRenderer spt = loadScreen.GetComponent<SpriteRenderer>();

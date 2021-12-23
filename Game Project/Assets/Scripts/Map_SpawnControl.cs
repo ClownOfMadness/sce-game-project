@@ -128,7 +128,7 @@ public class Map_SpawnControl : MonoBehaviour
             if (peasentsCount != 0)
             {
                 PosList = PeasentPosList();
-                Map.RandomPeasents(PosList, peasentsCount);
+                Map.RandomPeasents(PosList, peasentsCount, false);
                 UnitTotal += peasentsCount;
             }
         }

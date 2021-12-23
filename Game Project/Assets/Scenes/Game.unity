@@ -8161,6 +8161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ruins: {fileID: 5063894248013108221, guid: 6140dc54305d6584c98f3f765c05a2ff, type: 3}
   ruins: 100
+  Road: {fileID: 3826430950631521278, guid: 8525f9ee45bd8024abb0d79b6d8d1e9d, type: 3}
   townHall: {fileID: 9034094746195452373, guid: 67cb9a8e55611e648a782b97987f1138, type: 3}
   fog: {fileID: 5062480754815206708, guid: fae7873e9aec0f145bbed66ac6486951, type: 3}
   mapSize: 100
