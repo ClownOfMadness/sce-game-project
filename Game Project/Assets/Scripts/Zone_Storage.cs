@@ -11,17 +11,21 @@ public class Zone_Storage : Zone_Behaviour
     [HideInInspector] private List<Data_Card> slots;    //what is in the storage
     [HideInInspector] public int count;     //amount of full slots in the storage
     [HideInInspector] public System_DayNight time;
+
     private Card_Pool Pool;
+    [HideInInspector] public Screen_Cards screen;
 
-    public void Awake()
+    public void Start()
     {
-        time = FindObjectOfType<System_DayNight>();
         Size = 8;   //max Zone size
-        InstantiateZone();
 
+        Pool = screen.Pool;
+
+        time = FindObjectOfType<System_DayNight>();
         slots = new List<Data_Card>();
         count = 0;
-        Pool = ScriptableObject.CreateInstance<Card_Pool>();
+
+        InstantiateZone();
     }
     private void InstantiateZone()
     {

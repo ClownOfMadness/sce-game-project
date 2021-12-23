@@ -5,8 +5,8 @@ using System.Linq;  //needed for ToList function
 //collection of all existing cards
 public class Card_Pool : ScriptableObject
 {
-    public static List<Data_Card> cards;    //list of all existing cards, can be called from any part of the program
-    public static int count;
+    public List<Data_Card> cards;    //list of all existing cards, can be called from any part of the program
+    public int count;
     public int discoveredTotal = 0;         //for statistics
 
     void Awake()               
@@ -125,6 +125,11 @@ public class Card_Pool : ScriptableObject
         Data_Card newCard = cards[FindCard(cardName)];
         cardObject.GetComponent<Card_Display>().AddCard(newCard);
         return newCard.name;
+    }
+    public string FillObject(GameObject cardObject, Data_Card card)//add card of given name to object + return the new card name (for displaying in Scene)
+    {
+        cardObject.GetComponent<Card_Display>().AddCard(card);
+        return card.name;
     }
     public Data_Card FindCombo(Data_Card first, Data_Card second)               //returns card created from first+second
     {

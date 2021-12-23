@@ -12,26 +12,31 @@ public class Zone_Book : MonoBehaviour
     private int pagesInBook;
     [HideInInspector] public int Size;  //Page size
 
-    void Awake()
+    private Card_Pool Pool;
+    [HideInInspector] public Screen_Cards screen;
+
+    public void Start()
     {
         Size = 8;           //max Zone size
+        Pool = screen.Pool; //open Card_Pool connection to use its functions
+
         InstantiateZone();
     }
     private void InstantiateZone()
     {
         int cardIndex = 0;  //keep track of what card we're adding
         pagesInBook = 0;    //will store maximum pages in book
-        while (cardIndex < Card_Pool.count)
+        while (cardIndex < Pool.count)
         {
             GameObject newPage = Instantiate(PagePrefab, this.transform);           //create and instantiate Page objects in scene
             newPage.name = string.Format("Page {0}", pagesInBook + 1);              //new Page name (for displaying in Scene)
-            for (int inPage = 0; inPage < Size && cardIndex < Card_Pool.count; cardIndex++) 
+            for (int inPage = 0; inPage < Size && cardIndex < Pool.count; cardIndex++) 
             {
-                if (Card_Pool.cards[cardIndex].source[0].ToString()!="None") //don't show non real cards (Cardmaster, Creation, TownHall)
+                if (Pool.cards[cardIndex].source[0].ToString()!="None") //don't show non real cards (Cardmaster, Creation, TownHall)
                 {
                     GameObject newCard = Instantiate(CardPrefab, newPage.transform);            //create and instantiate card objects in scene
-                    newCard.GetComponent<Card_Display>().AddCard(Card_Pool.cards[cardIndex]);
-                    string newName = Card_Pool.cards[cardIndex].name;                           //save the new card name (for displaying in Scene)
+                    newCard.GetComponent<Card_Display>().AddCard(Pool.cards[cardIndex]);
+                    string newName = Pool.cards[cardIndex].name;                           //save the new card name (for displaying in Scene)
                     newCard.name = string.Format("{0} (Card)", newName);                        //updates name in scene
                     newCard.transform.localScale -= new Vector3((CardPrefab.transform.localScale.x) / 10, (CardPrefab.transform.localScale.y) / 10, 0);
                     inPage++;

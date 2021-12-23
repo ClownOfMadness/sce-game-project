@@ -44,7 +44,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
             Card_Drag[] cardObjects = this.transform.GetComponentsInChildren<Card_Drag>(); //walkaround to ignore placeholders and only check cards
 
             //Creation can't be placed in Storage and Storagebutton, also Storage Size works differently from Hand/Destroy Size
-            bool notStoringCreation = ((this.transform == d.storage || this.transform == d.storagept2) && d.card != d.screen.Pool.GetCard("Creation"));
+            bool notStoringCreation = ((this.transform == d.storage || this.transform == d.storagept2) && d.card != d.screen.Creation);
             bool spaceInStorage = (this.transform == d.storagept2 || this.transform == d.storage) && d.storage.GetComponent<Zone_Storage>().count < d.storage.GetComponent<Zone_Storage>().Size;
             bool spaceInZones = cardObjects.Length < this.Size && (this.transform != d.storage && this.transform != d.storagept2);
 
@@ -59,6 +59,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
                 else if (d.parentReturnTo == d.craft && this.transform != d.craft)  //close craft
                 {
                     d.screen.Craft.SetActive(false);
+                    d.screen.visibleMap = true;
                     d.screen.CheckUnit();
                 }
                 else if (d.parentReturnTo == d.unit && this.transform != d.unit)    //close unit prompt

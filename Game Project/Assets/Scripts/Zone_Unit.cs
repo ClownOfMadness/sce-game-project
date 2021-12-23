@@ -15,7 +15,7 @@ public class Zone_Unit : MonoBehaviour
     private List<Backlog> queue;
     private Backlog current;
 
-    void Awake()
+    public void Start()
     {
         Size = 1;               //max Zone size
         queue = new List<Backlog>();

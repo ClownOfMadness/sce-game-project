@@ -5,11 +5,15 @@ using UnityEngine.UI;
 //responsible for creating and storing Hand zone, extension of ZoneBehaviour
 public class Zone_Hand : Zone_Behaviour
 {
+    private Card_Pool Pool;
+    private Data_Card Creation;
+    [HideInInspector] public Screen_Cards screen;
+
     [Header("Fill Hand:")]
     public bool Fill = false;
     [Header("Attack Cardmaster:")]
     public bool Damage = false;
-    private Card_Pool Pool;
+
     public enum decksList       //enum for preset menu
     {
         CraftMenuPrompt,
@@ -33,10 +37,13 @@ public class Zone_Hand : Zone_Behaviour
     private List<string> buildings = new List<string>       //building testing preset
     { "Town Hall","Town Hall","House","Hut","Cabin","Bakery","Wood","Stick" };
 
-    void Awake()
+    public void Start()
     {
         Size = 8;               //max Zone size
-        Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions;
+
+        Pool = screen.Pool;
+        Creation = screen.Creation;
+
         if (deck.Count == 0)
             switch (Preset)
             {
@@ -74,9 +81,9 @@ public class Zone_Hand : Zone_Behaviour
     {
         for (int i = this.transform.childCount; i < this.Size && i < deck.Count; i++)
         {
-            if (Card_Pool.cards[Pool.FindCard(deck[i])].neverDiscovered)
+            if (Pool.cards[Pool.FindCard(deck[i])].neverDiscovered)
             {
-                Card_Pool.cards[Pool.FindCard(deck[i])].neverDiscovered = false;
+                Pool.cards[Pool.FindCard(deck[i])].neverDiscovered = false;
                 //Debug.Log("New card found: " + deck[i]);
                 Pool.discoveredTotal++;
             }
@@ -103,7 +110,7 @@ public class Zone_Hand : Zone_Behaviour
         if (count > 0)
         {
             int random = Random.Range(0, count);
-            if (cardObjects[random].card == Pool.GetCard("Creation"))
+            if (cardObjects[random].card == Creation)
             {
                 Debug.Log("Game lost.");
             }
@@ -119,7 +126,7 @@ public class Zone_Hand : Zone_Behaviour
     public void EmptyHand()     //add Creation to hand
     {
         GameObject newCard = Instantiate(CardPrefab, this.transform);   //create and instantiate objects in scene
-        string newName = Pool.FillObject(newCard, "Creation");          //add cards to objects + save the new card name (for displaying in Scene)
+        string newName = Pool.FillObject(newCard, Creation);          //add cards to objects + save the new card name (for displaying in Scene)
         newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
         newCard.GetComponent<LayoutElement>().ignoreLayout = true;
         Debug.Log("Creation was revealed.");
@@ -131,7 +138,7 @@ public class Zone_Hand : Zone_Behaviour
         if (cardObjects.Length > 1)
         {
             foreach (Card_Drag card in cardObjects)
-                if (card.card == Pool.GetCard("Creation"))
+                if (card.card == Creation)
                 {
                     hidden = true;
                     GameObject placeholder = card.placeholder;    //get the card's placeholder in the Hand to delete it

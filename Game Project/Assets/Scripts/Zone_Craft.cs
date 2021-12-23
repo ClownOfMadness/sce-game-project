@@ -8,12 +8,14 @@ public class Zone_Craft : MonoBehaviour
     [HideInInspector] public int Size;              //Zone size
     [HideInInspector] public int CombosTotal = 0;   //for statistics
     public GameObject craftMenu;
-    private Card_Pool Pool;
 
-    void Awake()
+    private Card_Pool Pool;
+    [HideInInspector] public Screen_Cards screen;
+
+   public void Start()
     {
         Size = 2;   //max Zone size
-        Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions
+        Pool = screen.Pool; //open Card_Pool connection to use its functions
     }
     public void EventClick()
     {
@@ -28,7 +30,7 @@ public class Zone_Craft : MonoBehaviour
                 if (Pool.IsCombination(combination))        //if it's a normal combination
                 {
                     CombosTotal++;
-                    cardObjects[0].screen.TopMessage(string.Format("Craft succeseful! Created {0}", cardObjects[0].card.name));
+                    screen.TopMessage(string.Format("Craft succeseful! Created {0}", cardObjects[0].card.name));
 
                     Destroy(cardObjects[1].gameObject);
                     cardObjects[0].AddCard(combination);    
@@ -46,7 +48,7 @@ public class Zone_Craft : MonoBehaviour
                     }
 
                     CombosTotal++;
-                    cardObjects[0].screen.TopMessage(string.Format("Craft succeseful! Pick one card to add to your deck"));
+                    screen.TopMessage(string.Format("Craft succeseful! Pick one card to add to your deck"));
 
                     this.gameObject.SetActive(false);
                     craftMenu.SetActive(true);
@@ -68,6 +70,6 @@ public class Zone_Craft : MonoBehaviour
         {
             GameObject.Destroy(cardObject.gameObject);
         }
-        craftMenu.gameObject.SetActive(false);
+        craftMenu.SetActive(false);
     }
 }

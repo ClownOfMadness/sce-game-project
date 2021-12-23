@@ -3,17 +3,20 @@ using UnityEngine;
 //responsible for creating Destroy zone and deleting cards on contact, extension of ZoneBehaviour
 public class Zone_Destroy : Zone_Behaviour
 {
-    private Card_Pool Pool;
-    void Awake()
+    private Data_Card Creation;
+    [HideInInspector] public Screen_Cards screen;
+
+    public void Start()
     {
         Size = 1;       //max Zone size
-        Pool = ScriptableObject.CreateInstance<Card_Pool>();    //open Card_Pool connection to use its functions;
+
+        Creation = screen.Creation;
     }
     public override void EventDrop(Card_Drag cardObject)
     {
         if (this.transform.childCount >= this.Size)     //failsafe - verifying that there's an object in the Zone
         {
-            if (cardObject.card == Pool.GetCard("Creation"))
+            if (cardObject.card == Creation)
             {
                 Debug.Log("Game lost.");
             }

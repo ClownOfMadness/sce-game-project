@@ -104,24 +104,24 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         if (validPlacement && screen.visibleMap) 
         {
             if (placeholderParent == hand)
-                if (card.buildingPrefab)                    //if building, try to place
+                if (card.buildingPrefab)    //if building, try to place
                 {
                     if (Tiles.Spawn(card.buildingPrefab, screen.selectedTile))     //spawn the card's building on the tile that's under the pointer
                     {
                         //Debug.Log("Card_Drag: placing " + card.buildingPrefab.name + " at " + screen.selectedTile.name);
                         Destroy(placeholder);
-                        Destroy(this.gameObject);           //destroy card that was placed successfully
+                        Destroy(this.gameObject);   //destroy card that was placed successfully
                         screen.CheckEmpty();
                         snap = false;
                     }
                 }
-                else if (int.TryParse(card.unitIndex, out int index))             //if unit, try to place
+                else if (int.TryParse(card.unitIndex, out int index))   //if unit, try to place
                 {
-                    if (Units.AddUnit(index, screen.selectedTile))     //spawn the card's unit on the tile that's under the pointer
+                    if (Units.CreateUnit(index, screen.selectedTile, null))         //spawn the card's unit on the tile that's under the pointer
                     {
                         //Debug.Log("Card_Drag: placing unit #" + card.unitIndex + " at " + screen.selectedTile.name);
                         Destroy(placeholder);
-                        Destroy(this.gameObject);           //destroy card that was placed successfully
+                        Destroy(this.gameObject);   //destroy card that was placed successfully
                         screen.CheckEmpty();
                         snap = false;
                     }

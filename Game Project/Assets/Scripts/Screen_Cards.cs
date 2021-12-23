@@ -29,11 +29,17 @@ public class Screen_Cards : MonoBehaviour
     private Zone_Craft zCraft;
     private Zone_Unit zUnit;
     private Zone_Storage zStorage;
+    private Zone_StoragePt2 zStoragePt2;
     private Zone_Book zBook;
+    private Zone_Destroy zDestroy;
+
+    //consistent things between zHand, zStorage, zStoragept2, zDestroy
+    //private Zone_Behaviour Zones;
 
     //sharing with other scripts
     [HideInInspector] public Card_Pool Pool;
     [HideInInspector] public GameObject CraftMenu;
+    [HideInInspector] public Data_Card Creation;
 
     //blocking cards from acting weird
     [HideInInspector] public bool visibleMap;
@@ -52,29 +58,18 @@ public class Screen_Cards : MonoBehaviour
     private string StorageDayMsg = "Town Storage currently closed! You can only take cards out at night";
     private string StorageNightMsg = "Town Storage, choose your deck for the next day";
 
-    void Start()    //initilizing in case something was off
+    void Awake()    //initilizing the entire cards' canvas
     {
-        zHand = Hand.transform.GetComponent<Zone_Hand>();
-        zCraft = Craft.transform.GetComponent<Zone_Craft>();
-        zUnit = Unit.transform.GetComponent<Zone_Unit>();
-        zStorage = Storage.transform.GetComponent<Zone_Storage>();
-        zBook = Book.transform.GetComponent<Zone_Book>();
+        SetZones();
 
-        CraftMenu = zCraft.craftMenu;
+        for (int i = 0; i < Pool.count; i++)                   //returning all fields in cards back to default 
+            Pool.cards[i].neverDiscovered = true;              //done here instead of Card_Pool to ensure that it only happens once
 
-        Storage.SetActive(true);    //let Storage instantiate itself
-        Storage.SetActive(false);
-        Unit.SetActive(true);
-        Unit.SetActive(false);
-        zStorage.skipDay = skipDay;
-        storageButton.transform.GetComponent<Zone_StoragePt2>().Storage = zStorage;
-
-        Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions;
-
-        for (int i = 0; i < Card_Pool.count; i++)                   //returning all fields in cards back to default 
-            Card_Pool.cards[i].neverDiscovered = true;              //done here instead of Card_Pool to ensure that it only happens once
-
-        CloseUI();
+        //Storage.SetActive(true);    //let Storage instantiate itself
+        //Storage.SetActive(false);
+        //Unit.SetActive(true);       //let Unit instantiate itself
+        //Unit.SetActive(false);
+       
 
         if (SkipLogin || Screen_Login.IsLogin)
         {
@@ -86,7 +81,42 @@ public class Screen_Cards : MonoBehaviour
         }
         storageButton.SetActive(true);
         cardsButton.SetActive(true);
+        
+        zStorage.skipDay = skipDay;
         visibleMap = true;
+        CloseUI();  //game starts with UI closed
+    }
+    private void SetZones() //handles everything to do with initiating zones and getting access to their scripts
+    {
+        Pool = ScriptableObject.CreateInstance<Card_Pool>();//open Card_Pool connection to use its functions;
+        Creation = Pool.GetCard("Creation");
+
+        //finding all Zones
+        zHand = Hand.transform.GetComponent<Zone_Hand>();
+        zCraft = Craft.transform.GetComponent<Zone_Craft>();
+        zUnit = Unit.transform.GetComponent<Zone_Unit>();
+        zStorage = Storage.transform.GetComponent<Zone_Storage>();
+        zStoragePt2 = storageButton.transform.GetComponent<Zone_StoragePt2>();
+        zBook = Book.transform.GetComponent<Zone_Book>();
+        zDestroy = destroyButton.transform.GetComponent<Zone_Destroy>();
+
+        CraftMenu = zCraft.craftMenu;
+
+        //giving Screen_Cards to the Zones so they can access stuff
+        zHand.screen = this;
+        zCraft.screen = this;
+        //Unit doesn't need anything cause it's a special boi
+        zStorage.screen = this;
+        zStoragePt2.Storage = zStorage;
+        zBook.screen = this;
+        zDestroy.screen = this;
+
+        zHand.Start();
+        zCraft.Start();
+        zUnit.Start();
+        zStorage.Start();
+        zBook.Start();
+        zDestroy.Start();
     }
     public void Update()
     {
@@ -156,10 +186,8 @@ public class Screen_Cards : MonoBehaviour
         visibleMap = false;
         Storage.SetActive(false);
         Book.SetActive(true);
-        Hand.SetActive(true);
-        destroyButton.SetActive(true);
+        OpenUI();
 
-        UIDown = false;
         Time.timeScale = 0f;    //pause game
     }
     private void CloseBook()
@@ -185,18 +213,16 @@ public class Screen_Cards : MonoBehaviour
     }
     public void OpenStorage()
     {
-        Storage.SetActive(true);
-        zStorage.RefreshZone();
         if (zStorage.time.isDay)
             TopMessage(StorageDayMsg);
         else
             TopMessage(StorageNightMsg);
         visibleMap = false;
         Book.SetActive(false);
-        Hand.SetActive(true);
-        destroyButton.SetActive(true);
+        Storage.SetActive(true);
+        zStorage.RefreshZone();
+        OpenUI();
 
-        UIDown = false;
         Time.timeScale = 0f;    //pause game
     }
     public void CloseStorage()
@@ -364,8 +390,8 @@ public class Screen_Cards : MonoBehaviour
         export.Discovered = Pool.discoveredTotal;
         export.Combos = zCraft.CombosTotal;
         List<bool> status = new List<bool>(0);
-        for (int i = 0; i < Card_Pool.count; i++)                   //returning all fields in cards back to default 
-            status.Add(Card_Pool.cards[i].neverDiscovered);         //done here instead of Card_Pool to ensure that it only happens once
+        for (int i = 0; i < Pool.count; i++)                   //returning all fields in cards back to default 
+            status.Add(Pool.cards[i].neverDiscovered);         //done here instead of Card_Pool to ensure that it only happens once
         export.DisStatus = status;
         return export;
     }
@@ -376,8 +402,8 @@ public class Screen_Cards : MonoBehaviour
         Pool.discoveredTotal = import.Discovered;
         zCraft.CombosTotal = import.Combos;
         List<bool> status = new List<bool>(0);
-        for (int i = 0; i < Card_Pool.count; i++)
-            Card_Pool.cards[i].neverDiscovered = import.DisStatus[i];
+        for (int i = 0; i < Pool.count; i++)
+            Pool.cards[i].neverDiscovered = import.DisStatus[i];
     }
     public class Cards_Info   //used for saves
     {
