@@ -230,19 +230,29 @@ MonoBehaviour:
   tileName: ShallowSea
   canBuild: 0
   canBuildAtDefault: 0
+  hasExtra: 0
+  thereIsRandom: 0
+  extraChance: 0
+  extraGameobject: {fileID: 0}
   spriteRenderer: {fileID: 2074042174584661545}
   workplaceRenderer: {fileID: 5407659325261123504}
   gizmoRenderer: {fileID: 1294283396888494141}
   pointerRenderer: {fileID: 7013536755015136958}
   fullSprite: {fileID: 21300000, guid: 7cf77a04a6ca5c6468001149efc108b8, type: 3}
-  halfSprite: {fileID: 0}
-  emptySprite: {fileID: 0}
+  halfSprite: {fileID: 21300000, guid: 7cf77a04a6ca5c6468001149efc108b8, type: 3}
+  emptySprite: {fileID: 21300000, guid: 1378be04a30dfa94187e1a43a5f7b565, type: 3}
   buildSprite: {fileID: 0}
-  works: []
-  maxDurability: 0
-  durability: 0
-  recharge: 0
+  works:
+  - job: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
+    card: {fileID: 11400000, guid: aed14c0c460df934a967e2513141aa80, type: 2}
+    workTime: 10
+    extra: 0
+    random: 0
+  maxDurability: 50
+  durability: 50
+  recharge: 1
   height: 0
+  parentExtra: {fileID: 0}
   revealed: 0
   building: {fileID: 0}
   hasTownHall: 0

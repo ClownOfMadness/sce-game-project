@@ -35,7 +35,7 @@ public class Unit_List : MonoBehaviour
             }
             else
             {
-                unitData.unitList = this;
+                //unitData.unitList = this;
             }
         }
     }
@@ -61,7 +61,7 @@ public class Unit_List : MonoBehaviour
                 }
                 else
                 {
-                    unitData.unitList = this;
+                    //unitData.unitList = this;
                 }
                 return true;
             }
@@ -82,7 +82,7 @@ public class Unit_List : MonoBehaviour
             Data_Tile dataTile = tile.GetComponent<Data_Tile>();
             if (dataTile.revealed && !dataTile.hasBuilding && dataTile.gameObject.layer != 7)
             {
-                GameObject newUnit = Instantiate(units[unit].unitPrefab, tile.transform.position + new Vector3(0, 0, 0), rotation, units[unit].unitGroup.transform);
+                GameObject newUnit = Instantiate(units[unit].unitPrefab, tile.transform.position, rotation, units[unit].unitGroup.transform);
                 if (!(unitData = newUnit.GetComponent<Data_Unit>()))
                 {
                     Debug.LogError("Cannot find Data_Unit when creating new unit in Unit_List");
@@ -90,8 +90,8 @@ public class Unit_List : MonoBehaviour
                 }
                 else
                 {
-                    unitData.unitList = this;
-                    unitData.card = card;
+                    if (card)
+                        unitData.card = card;
                 }
                 return true;
             }

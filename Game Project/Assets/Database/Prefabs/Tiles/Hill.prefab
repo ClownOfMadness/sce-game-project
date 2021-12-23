@@ -396,6 +396,10 @@ MonoBehaviour:
   tileName: Hill
   canBuild: 0
   canBuildAtDefault: 1
+  hasExtra: 0
+  thereIsRandom: 0
+  extraChance: 0
+  extraGameobject: {fileID: 0}
   spriteRenderer: {fileID: 3076318938891684442}
   workplaceRenderer: {fileID: 8627134715255109737}
   gizmoRenderer: {fileID: 1731485481801499928}
@@ -404,11 +408,17 @@ MonoBehaviour:
   halfSprite: {fileID: 21300000, guid: 5665d61c83626b14183f60100a43a237, type: 3}
   emptySprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
   buildSprite: {fileID: 21300000, guid: 394b4a164372e984bbfb852becb73d01, type: 3}
-  works: []
-  maxDurability: 0
-  durability: 0
-  recharge: 0
+  works:
+  - job: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
+    card: {fileID: 11400000, guid: 8b4f93d821dcd0548a1ebca2a0fad563, type: 2}
+    workTime: 10
+    extra: 0
+    random: 0
+  maxDurability: 8
+  durability: 8
+  recharge: 2
   height: 0
+  parentExtra: {fileID: 0}
   revealed: 0
   building: {fileID: 0}
   hasTownHall: 0

@@ -64,6 +64,10 @@ MonoBehaviour:
   tileName: Marsh
   canBuild: 1
   canBuildAtDefault: 1
+  hasExtra: 0
+  thereIsRandom: 0
+  extraChance: 0
+  extraGameobject: {fileID: 0}
   spriteRenderer: {fileID: 1117207641636505315}
   workplaceRenderer: {fileID: 7493239243553623926}
   gizmoRenderer: {fileID: 3612126631118777533}
@@ -72,11 +76,17 @@ MonoBehaviour:
   halfSprite: {fileID: 21300000, guid: d7f909efeaa0c8946b842c69079db062, type: 3}
   emptySprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
   buildSprite: {fileID: 21300000, guid: 394b4a164372e984bbfb852becb73d01, type: 3}
-  works: []
-  maxDurability: 0
-  durability: 0
-  recharge: 0
+  works:
+  - job: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
+    card: {fileID: 11400000, guid: aa451c770152a2e4e92089bbb2afd921, type: 2}
+    workTime: 10
+    extra: 0
+    random: 0
+  maxDurability: 4
+  durability: 4
+  recharge: 1
   height: 0
+  parentExtra: {fileID: 0}
   revealed: 0
   building: {fileID: 0}
   hasTownHall: 0

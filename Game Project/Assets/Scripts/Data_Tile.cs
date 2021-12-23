@@ -19,6 +19,7 @@ public class Data_Tile : MonoBehaviour
     public bool canBuildAtDefault = false; // Determines if in its default tile buildings can be build or rebuild
     public bool hasExtra = false;
     public bool thereIsRandom = false;
+    public bool isAbyss = false;
     [Range(0.0f, 100.0f)]
     public float extraChance = 0f;
     public GameObject extraGameobject = null;
@@ -77,17 +78,24 @@ public class Data_Tile : MonoBehaviour
     [HideInInspector] public bool hasResources = false; // True if it has resources
 
     // [Tile Build]
-    public List<GameObject> builders = null;
+    private List<GameObject> builders = new List<GameObject>();
     private int progress = 0;
     private bool buildDone = false;
     private bool canProgress = true;
     private float nextProgress = 0f;
+
+    // [Abyss]
+    [HideInInspector] public List<Data_Card> cards = new List<Data_Card>();
+    private List<GameObject> enemies = new List<GameObject>();
+    private bool abyssSetup = false;
+    private bool canSpawn = true;
 
     // [Find Once Function]
     private Player_Control playerControl;
     private System_DayNight systemDayNight; // Script for day night cycle
     private Data_CommonDataHolder commonData;
     private Screen_Cards screenCards;
+    private Enemy_List enemyList;
     private int loadCount = 0; // Amount of times to search before declaring a fail
 
     private void Awake()
@@ -105,6 +113,14 @@ public class Data_Tile : MonoBehaviour
 
     private void Setup() // Setups the tile
     {
+        if (isAbyss)
+        {
+            hasResources = false;
+            maxDurability = 0;
+            durability = 0;
+            recharge = 0;
+        }
+        
         if (works.Length > 0) // If the tile has no resources to gather
         {
             hasResources = true;
@@ -209,6 +225,14 @@ public class Data_Tile : MonoBehaviour
                     loadCount++;
                 }
             }
+
+            if (!enemyList)
+            {
+                if (!(enemyList = GameObject.Find("Enemies").GetComponent<Enemy_List>()))
+                {
+                    loadCount++;
+                }
+            }
         }
     }
 
@@ -216,6 +240,9 @@ public class Data_Tile : MonoBehaviour
     {
         if (!hasBuilding && !hasTownHall)
         {
+            if (durability > maxDurability)
+                durability = maxDurability;
+            
             // If the tile has no building
             if (durability <= 0 && hasResources)
             {
@@ -234,6 +261,26 @@ public class Data_Tile : MonoBehaviour
 
             if (hasExtra)
                 ExtraChance();
+        }
+
+        if (isAbyss)
+        {
+            if (!abyssSetup)
+            {
+                while (cards.Count < 5)
+                {
+                    cards.Add(screenCards.Pool.GetLoot(3));
+                }
+                abyssSetup = true;
+            }
+
+            if (abyssSetup)
+            {
+                if (enemies.Count < cards.Count)
+                {
+                    Spawn();
+                }
+            }
         }
 
         if (playerControl.gizmoObject == this.gameObject && (playerControl.draggedType == "unit" || playerControl.draggedType == "building"))
@@ -281,6 +328,37 @@ public class Data_Tile : MonoBehaviour
                 // if it cannot recharge
                 canRecharge = true;
             }
+        }
+    }
+
+    private void Spawn()
+    {
+        if (!systemDayNight.isDay)
+        {
+            // If it is daytime
+            if (canSpawn)
+            {
+                // If it can recharge
+                canSpawn = false;
+                enemies.Add(enemyList.CreateEnemy(0, this.gameObject));
+            }
+        }
+        else
+        {
+            // if it is nighttime
+            if (!canSpawn)
+            {
+                // if it cannot recharge
+                canSpawn = true;
+            }
+        }
+    }
+
+    public void TransferCard(Data_Card _card)
+    {
+        if (isAbyss)
+        {
+            cards.Add(_card);
         }
     }
 

@@ -397,6 +397,9 @@ MonoBehaviour:
   canBuild: 0
   canBuildAtDefault: 0
   hasExtra: 0
+  thereIsRandom: 0
+  isAbyss: 1
+  extraChance: 0
   extraGameobject: {fileID: 0}
   spriteRenderer: {fileID: 3776088101216642229}
   workplaceRenderer: {fileID: 3042096548071704330}
@@ -411,10 +414,11 @@ MonoBehaviour:
   durability: 0
   recharge: 0
   height: 0
+  parentExtra: {fileID: 0}
   revealed: 0
   building: {fileID: 0}
   hasTownHall: 0
   hasBuilding: 0
   buildingComplete: 0
   hasResources: 0
-  builders: []
+  cards: []

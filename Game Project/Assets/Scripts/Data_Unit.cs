@@ -8,14 +8,16 @@ public class Data_Unit : MonoBehaviour
     //--------------------------------------[To-Do List]-----------------------------------------------
 
     // to add:
-    // - hurt system
     // - Add tile walking priority
     // - (AP) Disable work on unrevealed tiles
+    // - Add panic mode
 
     //-------------------------------------[Configuration]---------------------------------------------
 
     // [Input Data]
     public string unitJob = "None"; // Units job name
+    public int unitHealth = 10;
+    public int regen = 5;
     public int jobDurability = 0; // Units job durability
     public List<RuntimeAnimatorController> design; // Units sprite controller
     public SpriteRenderer sprite; // Units sprite renderer
@@ -36,7 +38,8 @@ public class Data_Unit : MonoBehaviour
     private float minWaitToWander = 5f; // Min delay between each wander
     private float nextWander = 0f; // Trigger for next wander
     private bool impassable = false;
-    public GameObject currentTileOn = null;
+    private GameObject currentTileOn = null;
+    private bool reachedTownHall = false;
 
     // [Unit Control]
     private GameObject townHall; // TownHall object
@@ -48,7 +51,10 @@ public class Data_Unit : MonoBehaviour
 
     // [Unit Health]
     private bool hurt = false; // Becomes true if an enemy attacked the unit
+    private Rigidbody unitRigidbody;
     private int durability = 0;
+    private int health = 0;
+    private bool canRegen = false;
     
     // [Work routine]
     private Data_Card workCard; // Work card that the unit will recieve after finishin job
@@ -102,6 +108,10 @@ public class Data_Unit : MonoBehaviour
         {
             Debug.LogError("Detector gameobject is missing in the " + unitJob + " Data_Unit");
         }
+        if (design.Count <= 0)
+        {
+            Debug.LogError("Design list is empty in the " + unitJob + " Data_Unit");
+        }
         
         // Sets random design
         animator.runtimeAnimatorController = design[Random.Range(0, (design.Count))];
@@ -113,6 +123,12 @@ public class Data_Unit : MonoBehaviour
         }
 
         durability = jobDurability;
+        health = unitHealth;
+
+        if (!(unitRigidbody = GetComponent<Rigidbody>()))
+        {
+            Debug.LogError("Rigidbody Component is missing in the " + unitJob + " Data_Unit");
+        }
     }
 
     private void Update()
@@ -121,6 +137,7 @@ public class Data_Unit : MonoBehaviour
         Animator(); // Controls the animation
         WorkRoutine(); // Units work routine
         WanderAround(); // Wander around if not busy
+        Health();
         JobCheck();
         GroundCheck();
     }
@@ -223,6 +240,43 @@ public class Data_Unit : MonoBehaviour
             if (canBuild && buildBegun) // Checks if the unit has started building
             {
                 animator.SetBool("building", true);
+            }
+        }
+    }
+
+    private void Health()
+    {
+        if (health >= unitHealth)
+        {
+            health = unitHealth;
+        }
+        else if (health <= 0)
+        {
+            // Drop card - maybe in future
+            Destroy(this.gameObject);
+        }
+
+        if (time.isDay)
+        {
+            // If it is daytime
+            if (canRegen)
+            {
+                // If it can recharge
+                canRegen = false;
+                if (health < unitHealth)
+                {
+                    // If the durability is below max durability
+                    health += regen;
+                }
+            }
+        }
+        else
+        {
+            // if it is nighttime
+            if (!canRegen)
+            {
+                // if it cannot recharge
+                canRegen = true;
             }
         }
     }
@@ -346,6 +400,11 @@ public class Data_Unit : MonoBehaviour
 
     private void WorkRoutine()
     {
+        if (time.isDay)
+        {
+            reachedTownHall = false;
+        }
+        
         if (working)
         {
             workInMemory = false;
@@ -500,9 +559,39 @@ public class Data_Unit : MonoBehaviour
                 BackToWork();
             }
         }
-        else if (!time.isDay)
+        else if (!time.isDay && !busy && !working && !building)
         {
             // Send unit back to townhall
+            if (!reachedTownHall)
+            {
+                path.speed = 7f;
+                path.destination = townHall.transform.position;
+                if (buildingInteraction == "TownHall")
+                {
+                    reachedTownHall = true;
+                    path.speed = 3f;
+                    path.destination = this.transform.position;
+                }
+            }
+        }
+    }
+
+    public void Hurt(int damage, Data_Enemy enemy)
+    {
+        Vector3 moveDirection = this.transform.position - enemy.gameObject.transform.position;
+        unitRigidbody.AddForce(moveDirection.normalized * 4000f);
+        if (card)
+        {
+            enemy.card = card;
+            card = null;
+        }
+        else
+        {
+            if (health - damage <= 0)
+            {
+                enemy.card = unitCard;
+            }
+            health -= damage;
         }
     }
 

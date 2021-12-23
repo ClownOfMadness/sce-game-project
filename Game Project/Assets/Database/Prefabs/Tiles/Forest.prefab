@@ -398,6 +398,7 @@ MonoBehaviour:
   canBuildAtDefault: 1
   hasExtra: 0
   thereIsRandom: 0
+  isAbyss: 0
   extraChance: 0
   extraGameobject: {fileID: 0}
   spriteRenderer: {fileID: 3524023000276873429}
@@ -430,4 +431,4 @@ MonoBehaviour:
   hasBuilding: 0
   buildingComplete: 0
   hasResources: 0
-  builders: []
+  cards: []
