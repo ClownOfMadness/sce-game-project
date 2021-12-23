@@ -5,15 +5,18 @@ using UnityEngine.UI;
 //responsible for creating and storing Hand zone, extension of ZoneBehaviour
 public class Zone_Hand : Zone_Behaviour
 {
-    private Card_Pool Pool;
-    private Data_Card Creation;
+    //internal fields:
+    private Data_Card Creation;     //card of Creation
+
+    //external access:
     [HideInInspector] public Screen_Cards screen;
+    private Card_Pool Pool; //open Card_Pool connection to use its functions
 
+    //for development testing:
     [Header("Fill Hand:")]
-    public bool Fill = false;
+    public bool Fill = false;   //refill hand according to preset
     [Header("Attack Cardmaster:")]
-    public bool Damage = false;
-
+    public bool Damage = false; //simulate attacking the Cardmaster
     public enum decksList       //enum for preset menu
     {
         CraftMenuPrompt,
@@ -24,49 +27,24 @@ public class Zone_Hand : Zone_Behaviour
     [Header("Starting Deck Preset:")]
     public decksList Preset;    //enables picking a deck preset via the inspector
 
-    private List<string> deck = new List<string>();   //The cards that are in hand in the beginning
-
-    private List<string> emptyHand = new List<string>();    //empty Hand
-
+    //internal fields:
+    private List<string> deck = new List<string>(); //The cards that are in hand in the beginning
     private List<string> craftMenuPrompt = new List<string> //craft menu preset
     { "Flint","Stick","Flint","Stick","Iron","Stick","Steel","Stick" };
-
-    private List<string> units = new List<string> //craft menu preset
+    private List<string> units = new List<string>           //unit placement preset
     { "Peasant","Peasant","Woodcutter (Flint)","Woodcutter (Flint)" };
-
-    private List<string> buildings = new List<string>       //building testing preset
+    private List<string> buildings = new List<string>       //building placement preset
     { "Town Hall","Town Hall","House","Hut","Cabin","Bakery","Wood","Stick" };
+    private List<string> emptyHand = new List<string>       //empty Hand preset
+    {"Creation"};
 
-    public void Start()
-    {
-        Size = 8;               //max Zone size
-
-        Pool = screen.Pool;
-        Creation = screen.Creation;
-
-        if (deck.Count == 0)
-            switch (Preset)
-            {
-                case decksList.EmptyHand: deck = emptyHand; break;
-                case decksList.CraftMenuPrompt: deck = craftMenuPrompt; break;
-                case decksList.Units: deck = units; break;
-                case decksList.Buildings: deck = buildings; break;
-                default: deck = emptyHand; break;
-            }
-        InstantiateZone();      //create and instantiate objects in scene in runtime
-    }
     void Update()
     {
         if (Fill)
         {
-            NotEmpty();
-            switch (Preset)
+            foreach (Transform cardObject in this.transform)
             {
-                case decksList.EmptyHand: deck = emptyHand; break;
-                case decksList.CraftMenuPrompt: deck = craftMenuPrompt; break;
-                case decksList.Units: deck = units; break;
-                case decksList.Buildings: deck = buildings; break;
-                default: deck = emptyHand; break;
+                GameObject.Destroy(cardObject.gameObject);
             }
             InstantiateZone();   //add objects to hand up to 8 in runtime
             Fill = false;
@@ -79,7 +57,21 @@ public class Zone_Hand : Zone_Behaviour
     }
     public void InstantiateZone()
     {
-        for (int i = this.transform.childCount; i < this.Size && i < deck.Count; i++)
+        Size = 8;               //max Zone size
+
+        Pool = screen.Pool;
+        Creation = screen.Creation;
+
+        deck = Preset switch
+        {
+            decksList.EmptyHand => emptyHand,
+            decksList.CraftMenuPrompt => craftMenuPrompt,
+            decksList.Units => units,
+            decksList.Buildings => buildings,
+            _ => emptyHand,
+        };
+
+        for (int i = 0; i < this.Size && i < deck.Count; i++)
         {
             if (Pool.cards[Pool.FindCard(deck[i])].neverDiscovered)
             {
@@ -87,14 +79,10 @@ public class Zone_Hand : Zone_Behaviour
                 //Debug.Log("New card found: " + deck[i]);
                 Pool.discoveredTotal++;
             }
-            GameObject newCard = Instantiate(CardPrefab, this.transform);   //create and instantiate objects in scene
-            string newName = Pool.FillObject(newCard, deck[i]);             //add cards to objects + save the new card name (for displaying in Scene)
-            newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
+            screen.CreateObject(this.transform, deck[i]);
         }
-        if (this.transform.childCount == 0) //creates Creation if deck was empty
-            EmptyHand();
     }
-    public override void EventDrop(Card_Drag cardObject)
+    public override void EventDrop(Card_Drag cardObject)    //card was dropped into Zone
     {
         if (cardObject.card.neverDiscovered)
         {
@@ -123,11 +111,21 @@ public class Zone_Hand : Zone_Behaviour
             }
         }
     }
+    public void RefreshZone() 
+    {
+        Card_Drag[] cardObjects = this.transform.GetComponentsInChildren<Card_Drag>(); //walkaround to ignore placeholders and only check cards
+        if (cardObjects.Length < 1)
+        {
+            EmptyHand();
+        }
+        else if (cardObjects.Length > 1)
+        {
+            NotEmpty();
+        }
+    }
     public void EmptyHand()     //add Creation to hand
     {
-        GameObject newCard = Instantiate(CardPrefab, this.transform);   //create and instantiate objects in scene
-        string newName = Pool.FillObject(newCard, Creation);          //add cards to objects + save the new card name (for displaying in Scene)
-        newCard.name = string.Format("{0} (Card)", newName);            //updates name in scene
+        GameObject newCard = screen.CreateObject(this.transform, Creation); //create and instantiate object in zone
         newCard.GetComponent<LayoutElement>().ignoreLayout = true;
         Debug.Log("Creation was revealed.");
     }

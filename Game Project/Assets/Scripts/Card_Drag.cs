@@ -2,12 +2,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-//responsible for the Card Drag commands, extension of CardDisplay
+//responsible for the draggable cards, extension of Card_Display
 public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [HideInInspector] public Transform parentReturnTo = null;         //helps snapping the card back to place
-    [HideInInspector] public GameObject placeholder = null;           //saves the dragged card's spot (for changing card order)
-    [HideInInspector] public Transform placeholderParent = null;      //saves the dragged card's parent
+    //public fields:
+    [HideInInspector] public Transform parentReturnTo = null;       //saves the dragged card's parent
+    [HideInInspector] public Transform placeholderParent = null;    //saves the dragged card's spot (for changing card order)
+    [HideInInspector] public GameObject placeholder = null;         //saves the dragged card's spot (for changing card order)
+    [HideInInspector] public Canvas canvas;   //needed for moving the card
+
+    //public Zones:
     [HideInInspector] public Transform hand;
     [HideInInspector] public Transform menu;
     [HideInInspector] public Transform craft;
@@ -16,21 +20,16 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     [HideInInspector] public Transform storagept2;
     [HideInInspector] public Transform destroy;
 
+    //external access:
+    [HideInInspector] public Zone_Hand zHand;
+    [HideInInspector] public Zone_Craft zCraft;
+    [HideInInspector] public Zone_Unit zUnit;
+    [HideInInspector] public Zone_Storage zStorage;
     private Player_SpawnBuilding Tiles;
     private Unit_List Units;
 
     void Start()
     {
-        canvas = this.transform.parent.parent.GetComponent<Canvas>();
-        screen = canvas.GetComponent<Screen_Cards>();
-        hand = screen.Hand.transform;
-        menu = screen.CraftMenu.transform;
-        craft = screen.Craft.transform;
-        unit = screen.Unit.transform;
-        storage = screen.Storage.transform;
-        storagept2 = screen.storageButton.transform;
-        destroy = screen.destroyButton.transform;
-
         Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
         Units = FindObjectOfType<Unit_List>();              //connection to use UnitList functions
     }
@@ -73,8 +72,8 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                 GetComponent<CanvasGroup>().alpha = 0f; //hide unit until placed/returned to hand
             }
         }
-        if (this.card != screen.Pool.GetCard("Creation"))
-            screen.CheckEmpty();
+        if (this.card != screen.Creation)
+            zHand.RefreshZone();
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -99,7 +98,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         //needed to allow building placement only outside of UI, don't change
-        bool validPlacement = this.transform.parent != hand && this.transform.parent != destroy && this.transform.parent != unit && this.transform.parent != storagept2;
+        bool validPlacement = this.transform.parent != hand && this.transform.parent != destroy && this.transform.parent != storagept2;
         bool snap = true;
         if (validPlacement && screen.visibleMap) 
         {
@@ -111,18 +110,18 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                         //Debug.Log("Card_Drag: placing " + card.buildingPrefab.name + " at " + screen.selectedTile.name);
                         Destroy(placeholder);
                         Destroy(this.gameObject);   //destroy card that was placed successfully
-                        screen.CheckEmpty();
+                        zHand.RefreshZone();
                         snap = false;
                     }
                 }
                 else if (int.TryParse(card.unitIndex, out int index))   //if unit, try to place
                 {
-                    if (Units.CreateUnit(index, screen.selectedTile, null))         //spawn the card's unit on the tile that's under the pointer
+                    if (Units.SummonUnit(index, screen.selectedTile, null, false))  //spawn the card's unit on the tile that's under the pointer
                     {
                         //Debug.Log("Card_Drag: placing unit #" + card.unitIndex + " at " + screen.selectedTile.name);
                         Destroy(placeholder);
                         Destroy(this.gameObject);   //destroy card that was placed successfully
-                        screen.CheckEmpty();
+                        zHand.RefreshZone();
                         snap = false;
                     }
                 }
@@ -135,7 +134,7 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void SnapToParent()
     {
-        if (this.card == screen.Pool.GetCard("Creation"))   //doesn't snap on its own
+        if (this.card == screen.Creation)   //doesn't snap on its own
         {
             this.transform.position = placeholder.transform.position;
         }
@@ -144,6 +143,6 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         GetComponent<CanvasGroup>().alpha = 1f; //reset effect for card (can be changed)
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         Destroy(placeholder);
-        screen.CheckEmpty();
+        zHand.RefreshZone();
     }
 }

@@ -5,42 +5,46 @@ using System.Linq;  //needed for ToList function
 //responsible for creating and storing Storage zone, extension of ZoneBehaviour
 public class Zone_Storage : Zone_Behaviour
 {
+    //attached via Inspector:
     public GameObject PagePrefab;       //type of prefab for Page (attached via Inspector)
-    [HideInInspector] public bool skipDay = false;      //for development testing
-    [HideInInspector] private GameObject Page;
-    [HideInInspector] private List<Data_Card> slots;    //what is in the storage
-    [HideInInspector] public int count;     //amount of full slots in the storage
-    [HideInInspector] public System_DayNight time;
 
-    private Card_Pool Pool;
+    //public fields:
+    [HideInInspector] public int pageSize;  //amount of cards allowed per page
+    [HideInInspector] public int count;     //amount of full slots in the storage (serves as this zone's childCount)
+
+    //internal fields:
+    private GameObject Page;
+    private List<Data_Card> slots;    //what is in the storage
+
+    //external access:
     [HideInInspector] public Screen_Cards screen;
+    [HideInInspector] public System_DayNight time;
+    private Card_Pool Pool; //open Card_Pool connection to use its functions
 
-    public void Start()
+    //for development testing:
+    [HideInInspector] public bool skipDay = false;     
+    
+    public void InstantiateZone()
     {
-        Size = 8;   //max Zone size
-
-        Pool = screen.Pool;
+        Size = 8;
+        pageSize = 8;   //max Zone size
 
         time = FindObjectOfType<System_DayNight>();
+        Pool = screen.Pool;
+
+        skipDay = screen.skipDay; //for development testing
+
         slots = new List<Data_Card>();
         count = 0;
 
-        InstantiateZone();
-    }
-    private void InstantiateZone()
-    {
-        Page = Instantiate(PagePrefab, this.transform);              //create and instantiate Page objects in scene
-        Page.name = string.Format("Cards");                             //new Page name (for displaying in Scene)
-        for (int i = count; i < this.Size; i++)
+        Page = Instantiate(PagePrefab, this.transform); //create and instantiate Page objects in zone
+        Page.name = string.Format("Cards");             //new Page name (for displaying in Scene)
+        for (int i = 0; i < pageSize; i++)
         {
-            GameObject newCard = Instantiate(CardPrefab, Page.transform);   //create and instantiate objects in scene
-            newCard.GetComponent<Card_Display>().ClearCard();
-            newCard.name = string.Format("Slot {0}", i);                    //updates name in scene
-            newCard.transform.localScale -= new Vector3((CardPrefab.transform.localScale.x) / 10, (CardPrefab.transform.localScale.y) / 10, 0);
-            newCard.GetComponent<CanvasGroup>().alpha = .6f;
+            screen.CreateDisplay(Page.transform, i);
         }
     }
-    public override void EventDrop(Card_Drag cardObject)
+    public override void EventDrop(Card_Drag cardObject)    //card was dropped into Zone
     {
         if (AddToStorage(cardObject.card))
         {
@@ -51,6 +55,7 @@ public class Zone_Storage : Zone_Behaviour
     }
     public void RefreshZone()   //clear/add cards to zone visually
     {
+        Size = pageSize-count;
         slots = slots.OrderBy(Card => Card.code).ToList();
         Card_Display[] cards = Page.gameObject.transform.GetComponentsInChildren<Card_Display>();
         for (int i = 0; i < count; i++)
@@ -62,7 +67,7 @@ public class Zone_Storage : Zone_Behaviour
             else
                 cards[i].gameObject.GetComponent<CanvasGroup>().alpha = .6f;
         }
-        for (int i = count; i < this.Size; i++)
+        for (int i = count; i < pageSize; i++)
         {
             cards[i].ClearCard();
             cards[i].gameObject.GetComponent<CanvasGroup>().alpha = .6f;
@@ -70,17 +75,16 @@ public class Zone_Storage : Zone_Behaviour
     }
     public bool AddToStorage(Data_Card newCard)//adds card to zone at night or if given by Unit
     {
-        if ((count < Size))
+        if ((count < pageSize))
         {
             slots.Add(newCard);
-            slots.OrderBy(Card => Card.code);
             count++;
             RefreshZone();
             return true;
         }
         return false;
     }
-    public void RemoveFromStorage(Card_Display pickedCard)      //removes card from storage on click
+    public void RemoveFromStorage(Card_Display pickedCard)  //removes card from storage on click
     {
         if (time.isDay == false || skipDay)
         {
@@ -98,9 +102,7 @@ public class Zone_Storage : Zone_Behaviour
     }
     public void ImportDeck(List<int> import)//will be used to load the game
     {
-        for (int i = 0; i < this.Size; i++)
+        for (int i = 0; i < import.Count && i < pageSize; i++) 
             AddToStorage(Pool.GetCard(import[i]));
     }
 }
-
-

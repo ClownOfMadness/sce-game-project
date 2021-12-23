@@ -7,7 +7,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
     [HideInInspector] public int Size;  //used by other Zones
     public GameObject CardPrefab;       //type of prefab for Card (attached via Inspector)
 
-    public virtual void EventDrop(Card_Drag cardObject) { }
+    public virtual void EventDrop(Card_Drag cardObject) { } //lets other Zones override it
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null)
@@ -43,35 +43,36 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
         {
             Card_Drag[] cardObjects = this.transform.GetComponentsInChildren<Card_Drag>(); //walkaround to ignore placeholders and only check cards
 
-            //Creation can't be placed in Storage and Storagebutton, also Storage Size works differently from Hand/Destroy Size
-            bool notStoringCreation = ((this.transform == d.storage || this.transform == d.storagept2) && d.card != d.screen.Creation);
-            bool spaceInStorage = (this.transform == d.storagept2 || this.transform == d.storage) && d.storage.GetComponent<Zone_Storage>().count < d.storage.GetComponent<Zone_Storage>().Size;
-            bool spaceInZones = cardObjects.Length < this.Size && (this.transform != d.storage && this.transform != d.storagept2);
-
-            if (spaceInZones || (spaceInStorage && notStoringCreation))
+            //Creation can't be placed in Storage and Storagebutton, also Storage Size works differently from other Zones' Size
+            bool storage = this.transform == d.storage || this.transform == d.storagept2;
+            bool notStoringCreation = d.card != d.screen.Creation;
+            bool spaceInStorage = cardObjects.Length < d.zStorage.Size;
+            bool spaceInZones = cardObjects.Length < this.Size && !storage;
+            if (spaceInZones || (storage && spaceInStorage && notStoringCreation)) 
             {
                 if (d.parentReturnTo == d.menu && this.transform != d.menu)         //close menu prompt
                 {
-                    d.craft.GetComponent<Zone_Craft>().ClearMenu();
+                    d.zCraft.ClearMenu();
                     d.screen.visibleMap = true;
-                    d.screen.CheckUnit();
+                    d.screen.MenuUp = false;
                 }
                 else if (d.parentReturnTo == d.craft && this.transform != d.craft)  //close craft
                 {
                     d.screen.Craft.SetActive(false);
                     d.screen.visibleMap = true;
-                    d.screen.CheckUnit();
+                    d.screen.CraftUp = false;
                 }
                 else if (d.parentReturnTo == d.unit && this.transform != d.unit)    //close unit prompt
                 {
-                    d.unit.GetComponent<Zone_Unit>().FreeUnit();
+                    d.zUnit.FreeUnit();
                 }
                 d.parentReturnTo = this.transform;
                 d.gameObject.transform.SetParent(this.transform);
-                this.EventDrop(d);      //run response function to dropping a card (of the fitting Zone)
-                if (d.screen.visibleMap)
-                    d.screen.Message.gameObject.SetActive(false);
-                d.screen.CheckEmpty();  //create Creation if last card left Hand
+                d.screen.draggedBuilding = false;  //close selectedTile updates
+                d.screen.draggedUnit = false;      //close selectedTile updates
+                this.EventDrop(d);  //run response function to dropping a card (of the fitting Zone)
+                d.screen.CheckUnit();
+                d.zHand.RefreshZone();
             }
         }
     }

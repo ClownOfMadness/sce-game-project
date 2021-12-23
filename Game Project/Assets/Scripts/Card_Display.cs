@@ -1,21 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-//stores the Card_Displays that appear in the Zones
+//responsible for the display only cards
 public class Card_Display : MonoBehaviour
 {
+    //public fields:
     public Data_Card card;
     public Text nameText;
     public Image artwork;
-    private bool clickeable;
-    [HideInInspector] public Canvas canvas;   //needed for DragCard & clicking on cards functions
-    [HideInInspector] public Screen_Cards screen;   //needed for DragCard & clicking on cards functions
 
-    void Start()
-    {
-        canvas = this.transform.parent.parent.parent.GetComponent<Canvas>();
-        screen = canvas.GetComponent<Screen_Cards>();
-    }
+    //internal fields:
+    private bool clickeable;    //blocks empty cards from being clicked
+
+    //external access:
+    [HideInInspector] public Screen_Cards screen;   //needed for Card_Drag & clicking on cards functions
+
     public void AddCard(Data_Card _card) //fill fields in card on screen according to card data
     {
         card = _card;

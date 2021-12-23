@@ -4,20 +4,29 @@ using UnityEngine;
 //responsible for creating Craft zone
 public class Zone_Craft : MonoBehaviour
 {
-    public GameObject CardPrefab;                   //type of prefab for Card (attached via Inspector)
+    //attached via Inspector:
+    public GameObject CardPrefab;                   //type of prefab for Card
+    public GameObject craftMenu; //[remove after scene update]
+
+    //public fields:
     [HideInInspector] public int Size;              //Zone size
     [HideInInspector] public int CombosTotal = 0;   //for statistics
-    public GameObject craftMenu;
 
-    private Card_Pool Pool;
+    //internal fields:
+    private GameObject CraftMenu;
+
+    //external access:
     [HideInInspector] public Screen_Cards screen;
+    private Card_Pool Pool; //open Card_Pool connection to use its functions
 
-   public void Start()
+    public void InstantiateZone()
     {
         Size = 2;   //max Zone size
-        Pool = screen.Pool; //open Card_Pool connection to use its functions
+
+        Pool = screen.Pool;
+        CraftMenu = screen.CraftMenu;
     }
-    public void EventClick()
+    public void RefreshZone()    //card was added to Zone
     {
         if (this.transform.childCount == this.Size)     //failsafe - verifying that there's two objects in the Zone
         {
@@ -26,32 +35,30 @@ public class Zone_Craft : MonoBehaviour
             Data_Card second = cardObjects[1].card;
             Data_Card combination = Pool.FindCombo(first, second);         //find if cards can be combined
             if (combination)
-            {
-                if (Pool.IsCombination(combination))        //if it's a normal combination
+            {   //if it's a normal combination
+                if (Pool.IsCombination(combination))
                 {
                     CombosTotal++;
-                    screen.TopMessage(string.Format("Craft succeseful! Created {0}", cardObjects[0].card.name));
+                    screen.TopMessage(string.Format("Craft succeseful! Created {0}", combination.name));
 
                     Destroy(cardObjects[1].gameObject);
-                    cardObjects[0].AddCard(combination);    
-                    string newName = combination.name;                                  //add cards to objects + save the new card name (for displaying in Scene)
-                    cardObjects[0].name = string.Format("{0} (Card)", newName);         //updates name in scene
+                    cardObjects[0].AddCard(combination);//add cards to objects + save the new card name (for displaying in Scene)
+                    cardObjects[0].name = string.Format("{0} (Card)", combination.name);    //updates name in scene
                 }
-                else if (Pool.IsMenuCombination(combination)) //if it's a combination that you pick via a menu
+                //if it's a combination that you pick via a menu
+                else if (Pool.IsMenuCombination(combination))
                 {
                     List<Data_Card> combinations = Pool.FindMenuCombo(first, second);   //find all cards that first+second make
                     for (int i = 0; i < combinations.Count; i++)
                     {
-                        GameObject newCard = Instantiate(CardPrefab, craftMenu.transform);     //create and instantiate object in scene
-                        newCard.GetComponent<Card_Drag>().AddCard(combinations[i]);            //add cards to objects 
-                        newCard.name = string.Format("{0} (Card)", combinations[i].name);      //update new card name (for displaying in Scene)
+                        screen.CreateObject(CraftMenu.transform, combinations[i]);
                     }
 
                     CombosTotal++;
                     screen.TopMessage(string.Format("Craft succeseful! Pick one card to add to your deck"));
 
                     this.gameObject.SetActive(false);
-                    craftMenu.SetActive(true);
+                    CraftMenu.SetActive(true);
 
                     Destroy(cardObjects[0].gameObject);
                     Destroy(cardObjects[1].gameObject);
@@ -66,10 +73,11 @@ public class Zone_Craft : MonoBehaviour
     }
     public void ClearMenu()
     {
-        foreach (Transform cardObject in craftMenu.transform)
+        foreach (Transform cardObject in CraftMenu.transform)
         {
             GameObject.Destroy(cardObject.gameObject);
         }
-        craftMenu.SetActive(false);
+        CraftMenu.SetActive(false);
     }
+
 }

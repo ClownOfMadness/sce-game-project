@@ -14,6 +14,9 @@ public class Card_Pool : ScriptableObject
         cards = Resources.LoadAll<Data_Card>("Cards").ToList();  //fills list from Resources folder
         count = cards.Count;
         CheckCards();
+
+        for (int i = 0; i < count; i++)                   //returning all fields in cards back to default 
+            cards[i].neverDiscovered = true;
     }
     private void CheckCards()   //verifies card fields in case their fields are incorrect (can be removed at a later stage)
     {
@@ -108,30 +111,13 @@ public class Card_Pool : ScriptableObject
         }
         return possibleCards[Random.Range(0, possibleCards.Count)];
     }
-    public string FillObject(GameObject cardObject)                 //add random card to object + return the new card name (for displaying in Scene)
+    public string FillObject(GameObject cardObject)     //add random card to object + return the new card name (for displaying in Scene)
     {
         Data_Card newCard = cards[Random.Range(0, count)];
         cardObject.GetComponent<Card_Display>().AddCard(newCard);
         return newCard.name;
     }
-    public string FillObject(GameObject cardObject, int cardCode)   //add card of given code to object + return the new card name (for displaying in Scene)
-    {
-        Data_Card newCard = cards[FindCard(cardCode)];
-        cardObject.GetComponent<Card_Display>().AddCard(newCard);
-        return newCard.name;
-    }
-    public string FillObject(GameObject cardObject, string cardName)//add card of given name to object + return the new card name (for displaying in Scene)
-    {
-        Data_Card newCard = cards[FindCard(cardName)];
-        cardObject.GetComponent<Card_Display>().AddCard(newCard);
-        return newCard.name;
-    }
-    public string FillObject(GameObject cardObject, Data_Card card)//add card of given name to object + return the new card name (for displaying in Scene)
-    {
-        cardObject.GetComponent<Card_Display>().AddCard(card);
-        return card.name;
-    }
-    public Data_Card FindCombo(Data_Card first, Data_Card second)               //returns card created from first+second
+    public Data_Card FindCombo(Data_Card first, Data_Card second)           //returns card created from first+second
     {
         Data_Card CombineAttempt;
         for (int startCard = 0; startCard < count; startCard++)
@@ -154,7 +140,7 @@ public class Card_Pool : ScriptableObject
         }
         return null;
     }
-    public List<Data_Card> FindMenuCombo(Data_Card first, Data_Card second)     //returns list of all cards created from first+second
+    public List<Data_Card> FindMenuCombo(Data_Card first, Data_Card second) //returns list of all cards created from first+second
     {
         List<Data_Card> cardList = new List<Data_Card>();
         Data_Card CombineAttempt;
@@ -178,7 +164,7 @@ public class Card_Pool : ScriptableObject
         }
         return cardList;
     }
-    public List<string> GetAllCombos()               //returns list of all combinations in the format Card1 + Card2 = Card3
+    public List<string> GetAllCombos()  //returns list of all combinations in the format Card1 + Card2 = Card3
     {
         List<string> cardList = new List<string>();
         Data_Card card;

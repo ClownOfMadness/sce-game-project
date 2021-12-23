@@ -3,16 +3,19 @@ using UnityEngine;
 //responsible for creating Destroy zone and deleting cards on contact, extension of ZoneBehaviour
 public class Zone_Destroy : Zone_Behaviour
 {
+    //internal fields:
     private Data_Card Creation;
+
+    //external access:
     [HideInInspector] public Screen_Cards screen;
 
-    public void Start()
+    public void InstantiateZone()
     {
         Size = 1;       //max Zone size
 
         Creation = screen.Creation;
     }
-    public override void EventDrop(Card_Drag cardObject)
+    public override void EventDrop(Card_Drag cardObject)    //card was dropped into Zone
     {
         if (this.transform.childCount >= this.Size)     //failsafe - verifying that there's an object in the Zone
         {
@@ -20,8 +23,6 @@ public class Zone_Destroy : Zone_Behaviour
             {
                 Debug.Log("Game lost.");
             }
-            cardObject.screen.draggedBuilding = false;  //close selectedTile updates
-            cardObject.screen.draggedUnit = false;      //close selectedTile updates
             GameObject placeholder = cardObject.placeholder;    //get the card's placeholder in the Hand to delete it
             Destroy(placeholder);
             Destroy(cardObject.gameObject);     
