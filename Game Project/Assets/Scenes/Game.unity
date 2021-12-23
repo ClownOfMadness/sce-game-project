@@ -8249,7 +8249,7 @@ MonoBehaviour:
   DayCount: 0
   UnitTotal: 3
   BuildingCapacity: 0
-  MaxPeasentSpawn: 2
+  MaxPeasentSpawn: 1
   EnemySpawn: 1
   resources:
   - ID: 0

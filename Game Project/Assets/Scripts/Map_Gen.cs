@@ -126,6 +126,7 @@ public class Map_Gen : MonoBehaviour
                 if ((curHeight >= minHeight && curHeight <= maxHeight) && !(data.hasTownHall || data.hasBuilding) &&
                     (data.canBuildAtDefault || data.tileName != "Ruins"))  //might be changed in the future
                     PosDic.Add(count++, new Vector2Int(x, y));
+
             }
         }
         return PosDic;
