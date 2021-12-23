@@ -8,10 +8,9 @@ public class Data_Enemy : MonoBehaviour
     //--------------------------------------[To-Do List]-----------------------------------------------
 
     // to add:
-    // - attack and hurt system
+    // - hurt system
     // - Add tile walking priority
-    // - Add animations
-    // - Let the enemy run away with card
+    // - Add die animation
 
     //-------------------------------------[Configuration]---------------------------------------------
 
@@ -247,15 +246,15 @@ public class Data_Enemy : MonoBehaviour
         }
         else
         {
-            if (spottedTownHall)
+            if (spottedBuilding)
             {
-                target = spottedTownHall;
+                target = spottedBuilding;
             }
             else
             {
-                if (spottedBuilding)
+                if (spottedTownHall)
                 {
-                    target = spottedBuilding;
+                    target = spottedTownHall;
                 }
                 else
                 {
@@ -335,11 +334,23 @@ public class Data_Enemy : MonoBehaviour
         {
             if (Time.time > nextAttack)
             {
-                if (target.gameObject.layer == 8)
+                if (target == spottedUnit)
                 {
                     animator.SetTrigger("attack");
                     nextAttack = Time.time + attackCD;
                     target.GetComponent<Data_Unit>().Hurt(damage, this);
+                }
+                else if (target == spottedBuilding)
+                {
+                    animator.SetTrigger("attack");
+                    nextAttack = Time.time + attackCD;
+                    target.GetComponent<Data_Building>().Hurt(damage, this);
+                }
+                else if (target == spottedTownHall)
+                {
+                    animator.SetTrigger("attack");
+                    nextAttack = Time.time + attackCD;
+                    target.GetComponent<Data_Building>().Hurt(damage, this);
                 }
             }
         }
@@ -347,11 +358,11 @@ public class Data_Enemy : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (!spottedBuilding && other.gameObject.layer == 14 && other.gameObject.name != "TownHall" && other.gameObject.name != "Impassable")
+        if (!spottedBuilding && other.gameObject.layer == 9)
         {
             spottedBuilding = other.gameObject;
         }
-        if (!spottedTownHall && other.gameObject.layer == 14 && other.gameObject.name == "TownHall")
+        if (!spottedTownHall && other.gameObject.layer == 11)
         {
             spottedTownHall = other.gameObject;
         }

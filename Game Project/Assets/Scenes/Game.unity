@@ -2725,6 +2725,7 @@ MonoBehaviour:
   backButton: {fileID: 634676986}
   nextButton: {fileID: 1407714006}
   Size: 0
+  screen: {fileID: 0}
 --- !u!114 &466822441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2899,6 +2900,7 @@ MonoBehaviour:
   Size: 0
   CombosTotal: 0
   craftMenu: {fileID: 142446976}
+  screen: {fileID: 0}
 --- !u!114 &542042819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4409,6 +4411,7 @@ MonoBehaviour:
   skipDay: 0
   count: 0
   time: {fileID: 0}
+  screen: {fileID: 0}
 --- !u!114 &806583745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9320,6 +9323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Size: 0
   CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
+  screen: {fileID: 0}
   Fill: 0
   Damage: 0
   Preset: 0
@@ -11513,6 +11517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Size: 0
   CardPrefab: {fileID: 5074725883179339444, guid: e95085b2bed62744f95935cfc5e92d1c, type: 3}
+  screen: {fileID: 0}
 --- !u!114 &1997176665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12546,6 +12551,7 @@ MonoBehaviour:
   skipDay: 0
   Pool: {fileID: 0}
   CraftMenu: {fileID: 0}
+  Creation: {fileID: 0}
   visibleMap: 0
   UIDown: 0
   selectedTile: {fileID: 0}

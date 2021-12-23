@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8949725470464598698}
   - component: {fileID: 506153970870493651}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,6 +302,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: TownHall
+  buildingCard: {fileID: 0}
+  buildingHealth: 100
+  buildTime: 0
   isTownHall: 1
   hasLight: 1
   canBuild: {fileID: 0}
@@ -310,3 +313,4 @@ MonoBehaviour:
   buildingComplete: {fileID: 21300000, guid: 20db585077ce3ce47a8b5712f386aa8f, type: 3}
   buildingLight: {fileID: 21300000, guid: 46d87fb2fc527dc479c9e07ff4f9ad7a, type: 3}
   townHallGround: {fileID: 21300000, guid: 394b4a164372e984bbfb852becb73d01, type: 3}
+  health: 0

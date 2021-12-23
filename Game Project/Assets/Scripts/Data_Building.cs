@@ -13,6 +13,8 @@ public class Data_Building : MonoBehaviour
 
     // [Building Description]
     public string buildingName = "None"; // Name of the building
+    public Data_Card buildingCard = null;
+    public int buildingHealth = 20;
     public int buildTime = 0;
     public bool isTownHall = false; // Is this a townhall?
     public bool hasLight = false; // Does the building have light
@@ -30,6 +32,10 @@ public class Data_Building : MonoBehaviour
     private Color transparency; // Secondary sprite transparancy
     private Color originalColor; // Save of the original color
     private bool night; // Checks if its night and updates the bool
+    private bool inProgress = false;
+
+    // [Building Health]
+    private int health;
 
     // [Find Once Function]
     private int loadCount = 0; // Amount of times to search before declaring a fail
@@ -50,16 +56,22 @@ public class Data_Building : MonoBehaviour
         }
         if (!buildingComplete)
         {
-            Debug.LogError("Building complete sprite is missing from the " + buildingName + " Data_building");
+            Debug.LogError("Building complete sprite is missing from the " + buildingName + " Data_Building");
         }
         if (!buildingLight && hasLight)
         {
-            Debug.LogError("Building light sprite is missing from the " + buildingName + " Data_building");
+            Debug.LogError("Building light sprite is missing from the " + buildingName + " Data_Building");
         }
         if (!townHallGround && isTownHall)
         {
-            Debug.LogError("TownHall ground sprite is missing from the " + buildingName + " Data_building");
+            Debug.LogError("TownHall ground sprite is missing from the " + buildingName + " Data_Building");
         }
+        if (!isTownHall && !buildingCard)
+        {
+            Debug.LogError("BuildingCard is missing from the " + buildingName + " Data_Building");
+        }
+
+        health = buildingHealth;
     }
 
     private void Start()
@@ -113,6 +125,7 @@ public class Data_Building : MonoBehaviour
 
     public void Complete()
     {
+        inProgress = true;
         spriteRenderer.enabled = true;
         spriteRenderer.sprite = buildingComplete;
         if (hasLight)
@@ -139,6 +152,28 @@ public class Data_Building : MonoBehaviour
                 transparency.a = 0f;
                 secondaryRenderer.color = transparency;
             }
+        }
+    }
+
+    public void Hurt(int damage, Data_Enemy enemy)
+    {
+        if (inProgress || isTownHall)
+        {
+            if (health - damage <= 0)
+            {
+                enemy.card = buildingCard;
+                health -= damage;
+                GetComponentInParent<Data_Tile>().DestroyBuilding();
+            }
+            else
+            {
+                health -= damage;
+            }
+        }
+        else
+        {
+            enemy.card = buildingCard;
+            GetComponentInParent<Data_Tile>().DestroyBuilding();
         }
     }
 }

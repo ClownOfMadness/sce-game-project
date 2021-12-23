@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9173838073134683471}
   - component: {fileID: 316926119335482934}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,6 +302,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingName: Bakery
+  buildingCard: {fileID: 11400000, guid: 1de9c75b930005a408d035a087f6095c, type: 2}
+  buildingHealth: 30
   buildTime: 20
   isTownHall: 0
   hasLight: 1
@@ -311,3 +313,4 @@ MonoBehaviour:
   buildingComplete: {fileID: 21300000, guid: 8eb46a5aa3dd8de42ba01573b616bea2, type: 3}
   buildingLight: {fileID: 21300000, guid: c110e639eff296445b75aeddd6f58100, type: 3}
   townHallGround: {fileID: 0}
+  health: 0

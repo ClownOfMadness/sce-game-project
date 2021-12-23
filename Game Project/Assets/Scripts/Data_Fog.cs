@@ -8,6 +8,7 @@ public class Data_Fog : MonoBehaviour
     public Sprite halfFog;
     public SpriteRenderer sprite;
     public Data_Tile Data_Tile;
+    private GameObject unit;
 
     private void Awake()
     {
@@ -28,6 +29,11 @@ public class Data_Fog : MonoBehaviour
         {
             sprite.enabled = false;
             Data_Tile.revealed = true;
+        }
+        else if (other.gameObject.layer != 15)
+        {
+            sprite.enabled = true;
+            Data_Tile.revealed = false;
         }
     }
 

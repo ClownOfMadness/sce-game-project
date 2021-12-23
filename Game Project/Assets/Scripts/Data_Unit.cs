@@ -10,7 +10,6 @@ public class Data_Unit : MonoBehaviour
     // to add:
     // - Add tile walking priority
     // - (AP) Disable work on unrevealed tiles
-    // - Add panic mode
 
     //-------------------------------------[Configuration]---------------------------------------------
 
@@ -405,7 +404,24 @@ public class Data_Unit : MonoBehaviour
             reachedTownHall = false;
         }
         
-        if (working)
+        if (hurt)
+        {
+            busy = true;
+            path.speed = 7f;
+            if (path.destination != townHall.transform.position)
+                path.destination = townHall.transform.position;
+            else
+            {
+                if (buildingInteraction == "TownHall")
+                {
+                    hurt = false;
+                    busy = false;
+                    path.speed = 3f;
+                    path.destination = this.transform.position;
+                }
+            }
+        }
+        else if (working)
         {
             workInMemory = false;
             if (!workPlace || !townHall)
@@ -435,6 +451,7 @@ public class Data_Unit : MonoBehaviour
                                 workBegun = false;
                                 tileData.durability--;
                                 path.destination = townHall.transform.position;
+                                RememberWork();
                             }
                         }
                         else
@@ -454,33 +471,33 @@ public class Data_Unit : MonoBehaviour
                         }
                     }
                 }
-                else if (path.destination == townHall.transform.position)
-                {
-                    // if target is townhall
-                    if (buildingInteraction == "TownHall")
-                    {
-                        // [[Here add additional check if the hand is free or full and the unit will wait if needed]]
-                        if (screenCards.AddGathered(this, true))
-                        {
-                            card = null;
-                            cardToDeliver = false;
-                            if (!time.isDay)
-                            {
-                                // It is nightTime
-                                RememberWork();
-                            }
-                            else
-                            {
-                                // If it is daytime
-                                path.destination = workPlace.transform.position;
-                            }
-                        }
-                        else
-                        {
-                            WaitingWithCard();
-                        }
-                    }
-                }
+                //else if (path.destination == townHall.transform.position)
+                //{
+                //    // if target is townhall
+                //    if (buildingInteraction == "TownHall")
+                //    {
+                //        // [[Here add additional check if the hand is free or full and the unit will wait if needed]]
+                //        if (screenCards.AddGathered(this, true))
+                //        {
+                //            card = null;
+                //            cardToDeliver = false;
+                //            if (!time.isDay)
+                //            {
+                //                // It is nightTime
+                //                RememberWork();
+                //            }
+                //            else
+                //            {
+                //                // If it is daytime
+                //                path.destination = workPlace.transform.position;
+                //            }
+                //        }
+                //        else
+                //        {
+                //            WaitingWithCard();
+                //        }
+                //    }
+                //}
             }
         }
         else if (building)
@@ -519,6 +536,7 @@ public class Data_Unit : MonoBehaviour
             {
                 if (buildingInteraction == "TownHall")
                 {
+                    hurt = false;
                     if (screenCards.AddGathered(this, true))
                     {
                         card = null;
@@ -545,6 +563,7 @@ public class Data_Unit : MonoBehaviour
             if (buildingInteraction == "TownHall")
             {
                 // If the unit has reached the townhall
+                hurt = false;
                 screenCards.AddGathered(this, false);
 
                 tileData.DetachWork();
@@ -568,6 +587,7 @@ public class Data_Unit : MonoBehaviour
                 path.destination = townHall.transform.position;
                 if (buildingInteraction == "TownHall")
                 {
+                    hurt = false;
                     reachedTownHall = true;
                     path.speed = 3f;
                     path.destination = this.transform.position;
@@ -593,6 +613,7 @@ public class Data_Unit : MonoBehaviour
             }
             health -= damage;
         }
+        hurt = true;
     }
 
     private void RememberWork()

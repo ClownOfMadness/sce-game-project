@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class Data_Tile : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class Data_Tile : MonoBehaviour
 
     // To add:
     // - display additional sprite if resources are about to end
-    // - Add random loot to ruins
 
     //-------------------------------------[Configuration]---------------------------------------------
 
@@ -83,12 +83,14 @@ public class Data_Tile : MonoBehaviour
     private bool buildDone = false;
     private bool canProgress = true;
     private float nextProgress = 0f;
+    [HideInInspector] public AstarPath path;
 
     // [Abyss]
     [HideInInspector] public List<Data_Card> cards = new List<Data_Card>();
     private List<GameObject> enemies = new List<GameObject>();
     private bool abyssSetup = false;
     private bool canSpawn = true;
+    private bool hasAbyss = false;
 
     // [Find Once Function]
     private Player_Control playerControl;
@@ -119,6 +121,7 @@ public class Data_Tile : MonoBehaviour
             maxDurability = 0;
             durability = 0;
             recharge = 0;
+            hasAbyss = true;
         }
         
         if (works.Length > 0) // If the tile has no resources to gather
@@ -173,7 +176,7 @@ public class Data_Tile : MonoBehaviour
 
     private void Random()
     {
-        if (!check && thereIsRandom)
+        if (!check && thereIsRandom && hasResources)
         {
             foreach (Work workRandom in works)
             {
@@ -233,6 +236,14 @@ public class Data_Tile : MonoBehaviour
                     loadCount++;
                 }
             }
+
+            if (!path)
+            {
+                if (!(path = GameObject.Find("Pathfinder Grid").GetComponent<AstarPath>()))
+                {
+                    loadCount++;
+                }
+            }
         }
     }
 
@@ -259,11 +270,11 @@ public class Data_Tile : MonoBehaviour
                 Recharge();
             }
 
-            if (hasExtra)
+            if (hasExtra && hasResources)
                 ExtraChance();
         }
 
-        if (isAbyss)
+        if (isAbyss && hasAbyss)
         {
             if (!abyssSetup)
             {
@@ -356,10 +367,30 @@ public class Data_Tile : MonoBehaviour
 
     public void TransferCard(Data_Card _card)
     {
-        if (isAbyss)
+        if (isAbyss && hasAbyss)
         {
             cards.Add(_card);
         }
+    }
+
+    public void DestroyBuilding()
+    {
+        Destroy(building);
+        AstarPath.active.UpdateGraphs(GetComponent<BoxCollider>().bounds);
+        hasAbyss = false;
+        hasTownHall = false;
+        hasBuilding = false;
+        canBuild = true;
+        canRecharge = false;
+        building = null;
+        dataBuilding = null;
+        buildingComplete = false;
+        works = null;
+        maxDurability = 0;
+        durability = 0;
+        recharge = 0;
+        hasResources = false;
+        spriteRenderer.sprite = emptySprite;
     }
 
     private void ExtraChance()
@@ -443,6 +474,7 @@ public class Data_Tile : MonoBehaviour
     public void ReturnToDefault() // Returns the tile to dafault state, removing its resources
     {
         works = null;
+        hasAbyss = false;
         maxDurability = 0;
         durability = 0;
         recharge = 0;
@@ -484,6 +516,8 @@ public class Data_Tile : MonoBehaviour
         recharge = 0;
         hasResources = false;
         spriteRenderer.sprite = commonData.workSiteSprite;
+        if (theExtra)
+            NoExtra();
     }
 
     public int CanWork(Data_Unit _unit) // Sends what work can unit work in, otherwise sends that it cannot
