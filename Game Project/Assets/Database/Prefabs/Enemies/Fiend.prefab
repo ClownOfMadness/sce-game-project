@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2628596888334074493}
   - component: {fileID: 6133491182868957675}
   - component: {fileID: 5186850180566981543}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ MonoBehaviour:
   enemyType: Fiend
   enemyHealth: 10
   damage: 5
-  attackCD: 1.5
+  attackCD: 2
   design:
   - {fileID: 9100000, guid: 21e1ff83bd20fbd4c956e09f9f3b8640, type: 2}
   sprite: {fileID: 6133491182868957675}
@@ -289,7 +289,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 784002215328177369}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}

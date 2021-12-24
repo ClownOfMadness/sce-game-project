@@ -8,6 +8,7 @@ public class Data_CommonDataHolder : MonoBehaviour
     public Sprite buildLocationTrue;
     public Sprite buildLocationFalse;
     public Sprite workPlace;
+    public Sprite patrolPlace;
     public Sprite pointer;
     public Data_Card peasantCard;
     private void Awake()
@@ -26,7 +27,11 @@ public class Data_CommonDataHolder : MonoBehaviour
         }
         if (!workPlace)
         {
-            Debug.LogError("Workplace False sprite is missing from the Data_CommonDataHolder");
+            Debug.LogError("Workplace sprite is missing from the Data_CommonDataHolder");
+        }
+        if (!patrolPlace)
+        {
+            Debug.LogError("Patrolplace sprite is missing from the Data_CommonDataHolder");
         }
         if (!pointer)
         {

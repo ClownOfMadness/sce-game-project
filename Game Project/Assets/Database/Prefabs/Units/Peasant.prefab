@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7005894630475348682}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 5738152316269519982}
   - component: {fileID: 4523351716890472440}
   - component: {fileID: 3180598046372167092}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,6 +296,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitJob: Peasant
+  unitHealth: 10
+  regen: 5
   jobDurability: 0
   design:
   - {fileID: 9100000, guid: f09c87d319baefc4abacfaf570de6e30, type: 2}
@@ -306,6 +308,9 @@ MonoBehaviour:
   unitCard: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
   detector: {fileID: 282022237114063151}
   canBuild: 1
+  canFight: 0
+  damage: 0
+  attackCD: 1
   card: {fileID: 0}
   busy: 0
   cardToDeliver: 0

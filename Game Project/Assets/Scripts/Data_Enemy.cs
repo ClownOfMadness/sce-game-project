@@ -50,7 +50,7 @@ public class Data_Enemy : MonoBehaviour
     // [Enemy Control]
     [HideInInspector] public GameObject abyss; // TownHall object
     [HideInInspector] public Data_Tile abyssData;
-    [HideInInspector] public Data_Card card; // Shows the card that the unit carries
+    public Data_Card card; // Shows the card that the unit carries
     [HideInInspector] public bool busy = false; // Toggles on if the unit is doing something
 
     // [Enemy Health]
@@ -351,14 +351,15 @@ public class Data_Enemy : MonoBehaviour
         }
     }
 
-    public void Hurt(int damage, Data_Unit unit)
+    public void Hurt(int damage, Data_Unit _unit)
     {
-        Vector3 moveDirection = this.transform.position - unit.gameObject.transform.position;
+        Vector3 moveDirection = this.transform.position - _unit.gameObject.transform.position;
         enemyRigidbody.AddForce(moveDirection.normalized * 4000f);
-        if (card)
+        if (health - damage <= 0 && card)
         {
-            unit.card = card;
+            _unit.card = card;
             card = null;
+            DestroyEnemy();
         }
         else
         {
@@ -427,7 +428,7 @@ public class Data_Enemy : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (target != null)
+        if (target != null && path.canMove == true)
         {
             if (target == collision.gameObject)
             {
@@ -443,6 +444,9 @@ public class Data_Enemy : MonoBehaviour
 
     public IEnumerator RemoveEnemy()
     {
+        animator.SetBool("die", true);
+        path.canMove = false;
+        yield return new WaitForSeconds(0.35f);
         this.transform.position = new Vector3(-500, -500, -500);
         yield return new WaitForSeconds(1);
         Destroy(this.gameObject);

@@ -124,13 +124,16 @@ public class Player_Control : MonoBehaviour
                             if (!selectedData_Tile.GetData())
                             {
                                 selectedUnit = UnitSelection(selectedJob, selectedObject, selectedData_Tile.hasTownHall);
-                                Data_Unit = selectedUnit.GetComponent<Data_Unit>();
-                                if (selectedUnit && Data_Unit)
+                                if (selectedUnit)
                                 {
-                                    if ((Data_Unit.canBuild && selectedData_Tile.hasBuilding && !selectedData_Tile.buildingComplete) || (!selectedData_Tile.hasBuilding))
+                                    Data_Unit = selectedUnit.GetComponent<Data_Unit>();
+                                    if (Data_Unit)
                                     {
-                                        Data_Unit.UpdateTargetLocation(selectedObject);
-                                        selectedData_Tile.DrawPointer();
+                                        if ((Data_Unit.canBuild && selectedData_Tile.hasBuilding && !selectedData_Tile.buildingComplete) || (!selectedData_Tile.hasBuilding))
+                                        {
+                                            Data_Unit.UpdateTargetLocation(selectedObject);
+                                            selectedData_Tile.DrawPointer();
+                                        }
                                     }
                                 }
                             }
@@ -188,6 +191,10 @@ public class Player_Control : MonoBehaviour
         if (Input.GetKey("2"))
         {
             selectedJob = 1;
+        }
+        if (Input.GetKey("3"))
+        {
+            selectedJob = 2;
         }
     }
     private GameObject UnitSelection(int _selectedJob, GameObject target, bool townhall) // Searches for a free unit in a job category

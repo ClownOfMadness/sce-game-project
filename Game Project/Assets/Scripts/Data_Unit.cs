@@ -42,10 +42,11 @@ public class Data_Unit : MonoBehaviour
     private bool impassable = false;
     private GameObject currentTileOn = null;
     private bool reachedTownHall = false;
+    private GameObject detectedImpassable = null;
 
     // [Unit Control]
     private GameObject townHall; // TownHall object
-    [HideInInspector] public Data_Card card; // Shows the card that the unit carries
+    public Data_Card card; // Shows the card that the unit carries
     [HideInInspector] public bool busy = false; // Toggles on if the unit is doing something
     private bool toTownHall = false; // Determines if the unit was send to townhall
     [HideInInspector] public bool cardToDeliver = false; // Toggles on when the unit is in waiting mode
@@ -221,6 +222,11 @@ public class Data_Unit : MonoBehaviour
             sprite.flipX = false;
         }
 
+        if (!target && canFight)
+        {
+            animator.SetBool("spotted", false);
+        }
+
         if (hurt) // Checks if the unit is hurt
         {
             animator.SetBool("hurt", true);
@@ -237,6 +243,10 @@ public class Data_Unit : MonoBehaviour
         else
         {
             animator.SetBool("hasCard", false);
+            if (canFight && target)
+            {
+                animator.SetBool("spotted", true);
+            }
         }
 
         if (!workBegun) // Checks if the unit is not working
@@ -299,6 +309,7 @@ public class Data_Unit : MonoBehaviour
         {
             busy = true;
             impassable = false;
+            detectedImpassable = null;
             path.speed = 7f;
             tileData = tile.GetComponent<Data_Tile>();
             //tileData.AttachWork(this.gameObject);
@@ -325,7 +336,7 @@ public class Data_Unit : MonoBehaviour
                 }
                 else if (canFight)
                 {
-                    tileData.AttachWork(this.gameObject);
+                    tileData.AttachPatrol(this.gameObject);
                     patroling = true;
                     patrolPlace = tile;
                 }
@@ -411,7 +422,8 @@ public class Data_Unit : MonoBehaviour
                     animator.SetTrigger("attack");
                     nextAttack = Time.time + attackCD;
                     target.GetComponent<Data_Enemy>().Hurt(damage, this);
-                    durability--;
+                    if (jobDurability > 0)
+                        durability--;
                 }
             }
         }
@@ -460,24 +472,6 @@ public class Data_Unit : MonoBehaviour
                     busy = false;
                     path.speed = 3f;
                     path.destination = this.transform.position;
-                }
-            }
-        }
-        else if (patroling && canFight)
-        {
-            if (!card)
-            {
-                if (target)
-                {
-                    busy = true;
-                    path.speed = 7f;
-                    path.destination = target.transform.position;
-                }
-                else
-                {
-                    busy = true;
-                    path.speed = 7f;
-                    path.destination = patrolPlace.transform.position;
                 }
             }
         }
@@ -616,6 +610,37 @@ public class Data_Unit : MonoBehaviour
         else if (cardToDeliver && !card)
         {
             cardToDeliver = false;
+        }
+        else if (canFight)
+        {
+            if (!card)
+            {
+                if (target)
+                {
+                    busy = true;
+                    path.speed = 10f;
+                    path.destination = target.transform.position;
+                }
+                else if (patroling && patrolPlace)
+                {
+                    busy = true;
+                    path.speed = 7f;
+                    path.destination = patrolPlace.transform.position;
+                    if (detectedImpassable)
+                    {
+                        if (detectedImpassable == patrolPlace)
+                        {
+                            busy = false;
+                            path.speed = 3f;
+                            path.destination = this.transform.position;
+                            tileData.DetachWork();
+                            detectedImpassable = null;
+                            patrolPlace = null;
+                            patroling = false;
+                        }
+                    }
+                }
+            }
         }
         else if (toTownHall)
         {
@@ -808,6 +833,7 @@ public class Data_Unit : MonoBehaviour
             if (other.gameObject == tileData.gameObject)
             {
                 impassable = true;
+                detectedImpassable = other.gameObject;
             }
         }
         if (!spottedEnemy && other.gameObject.layer == 15 && canFight)
@@ -824,6 +850,7 @@ public class Data_Unit : MonoBehaviour
         else if (other.gameObject.layer == 7)
         {
             impassable = false;
+            detectedImpassable = null;
         }
         if (spottedEnemy == other.gameObject && canFight)
         {

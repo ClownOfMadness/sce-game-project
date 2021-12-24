@@ -76,6 +76,7 @@ public class Data_Tile : MonoBehaviour
     [HideInInspector] public bool hasBuilding = false; // True if it has building
     [HideInInspector] public bool buildingComplete = false; // True if the building is complete
     [HideInInspector] public bool hasResources = false; // True if it has resources
+    private bool patrol = false;
 
     // [Tile Build]
     private List<GameObject> builders = new List<GameObject>();
@@ -307,7 +308,14 @@ public class Data_Tile : MonoBehaviour
         if (unit)
         {
             workplaceRenderer.enabled = true;
-            workplaceRenderer.sprite = commonData.workPlace;
+            if (patrol)
+            {
+                workplaceRenderer.sprite = commonData.patrolPlace;
+            }
+            else
+            {
+                workplaceRenderer.sprite = commonData.workPlace;
+            }    
         }
         else
         {
@@ -549,8 +557,20 @@ public class Data_Tile : MonoBehaviour
 
     public void AttachWork(GameObject _unit) // Adds unit to the work place
     {
-        if (hasResources && !hasBuilding)
+        if (hasResources && !hasBuilding && this.gameObject.layer != 7)
         {
+            patrol = false;
+            workplaceRenderer.transform.localPosition = new Vector3(0f, 0f, 0.625f);
+            unit = _unit;
+        }
+    }
+
+    public void AttachPatrol(GameObject _unit)
+    {
+        if (this.gameObject.layer != 7)
+        {
+            patrol = true;
+            workplaceRenderer.transform.localPosition = new Vector3(0f, 0f, 0.155f);
             unit = _unit;
         }
     }
@@ -608,7 +628,9 @@ public class Data_Tile : MonoBehaviour
                 return builders[UnityEngine.Random.Range(0, (builders.Count - 1))];
             }
         }
+        if (unit)
             return unit;
+        return null;
     }
 
     private void ShowGizmo()

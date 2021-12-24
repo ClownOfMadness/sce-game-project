@@ -307,6 +307,7 @@ Transform:
   m_Children:
   - {fileID: 109604075}
   - {fileID: 1466614226}
+  - {fileID: 516399684}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -325,8 +326,13 @@ MonoBehaviour:
   units:
   - unitPrefab: {fileID: 6511593569209969031, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
     unitGroup: {fileID: 109604074}
+    unitCard: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
   - unitPrefab: {fileID: 8390930572215930690, guid: 3df830c09a11a9a4e9d36515a963aa0d, type: 3}
     unitGroup: {fileID: 1466614225}
+    unitCard: {fileID: 11400000, guid: 38cbf1107cd6117479a8cde0b2445682, type: 2}
+  - unitPrefab: {fileID: 1958434150507516296, guid: 6df84ba2601e63c4c8b813c4c881345a, type: 3}
+    unitGroup: {fileID: 516399683}
+    unitCard: {fileID: 11400000, guid: 80254fc122ba7b14c8d68fd8203605e8, type: 2}
   townhall: {fileID: 0}
 --- !u!1 &47301224
 GameObject:
@@ -2784,6 +2790,36 @@ RectTransform:
   m_AnchoredPosition: {x: -1.1966, y: -101}
   m_SizeDelta: {x: 850, y: 310}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!1 &516399683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 516399684}
+  m_Layer: 0
+  m_Name: Spearman
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &516399684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516399683}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 11710809}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &535643348
 GameObject:
   m_ObjectHideFlags: 0
@@ -8432,7 +8468,9 @@ MonoBehaviour:
   buildLocationTrue: {fileID: 21300000, guid: edc46f98a1fa9e4498a7641a68dda79d, type: 3}
   buildLocationFalse: {fileID: 21300000, guid: 21c50b4bbf2ac1347bab3684f347cee8, type: 3}
   workPlace: {fileID: 21300000, guid: 46143e9116c160a43ba7b548db73cf9b, type: 3}
+  patrolPlace: {fileID: 21300000, guid: 572401b9825935640b08388833d9493b, type: 3}
   pointer: {fileID: 21300000, guid: 912f1cae176c9fa40826a4907eb797c7, type: 3}
+  peasantCard: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
 --- !u!1 &1506372238
 GameObject:
   m_ObjectHideFlags: 0
@@ -11873,6 +11911,7 @@ MonoBehaviour:
   unitList: {fileID: 11710810}
   selectedJob: 0
   selectedUnit: {fileID: 0}
+  panScreen: 32
   startPosition: {x: 0, y: 0, z: 0}
   pos: {x: 0, y: 0, z: 0}
   panSpeed: 40
