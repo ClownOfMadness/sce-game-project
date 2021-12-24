@@ -9,6 +9,7 @@ public class Data_CommonDataHolder : MonoBehaviour
     public Sprite buildLocationFalse;
     public Sprite workPlace;
     public Sprite pointer;
+    public Data_Card peasantCard;
     private void Awake()
     {
         if (!workSiteSprite)
@@ -30,6 +31,10 @@ public class Data_CommonDataHolder : MonoBehaviour
         if (!pointer)
         {
             Debug.LogError("Pointer sprite is missing from the Data_CommonDataHolder");
+        }
+        if (!peasantCard)
+        {
+            Debug.LogError("Peasant Card is missing from the Data_CommonDataHolder");
         }
     }
 }

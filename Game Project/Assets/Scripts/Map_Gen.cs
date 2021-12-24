@@ -46,11 +46,12 @@ public class Map_Gen : MonoBehaviour
 
     float[,] falloffMap;
     public GameObject[,] TileArray;
+    private Map_Display mapDisplay;
 
     void Awake()
     {
         falloffMap = Map_FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
-
+        mapDisplay = GetComponent<Map_Display>();
     }
 
     //Generating the map.
@@ -94,6 +95,7 @@ public class Map_Gen : MonoBehaviour
                             tileType = regions[i].tile;
 
                         TileArray[x, y] = InstantiateTile(tileType, new Vector3(10 * x, 1, 10 * y), this, currentHeight);
+                        //mapDisplay.list.Add(TileArray[x, y].GetComponent<Data_Tile>());
 
                         if (FogMap)
                         {
@@ -161,8 +163,10 @@ public class Map_Gen : MonoBehaviour
                     PeasentPos.Add(new Vector3(j * 10, 1, i * 10));
 
                 float currentHeight = TileArray[j, i].GetComponent<Data_Tile>().height;
+                //mapDisplay.list.Remove(TileArray[j, i].GetComponent<Data_Tile>());
                 GameObject.DestroyImmediate(TileArray[j, i]);
                 TileArray[j, i] = InstantiateTile(Road, new Vector3(j * 10, 1, i * 10), this, currentHeight);
+                //mapDisplay.list.Add(TileArray[j, i].GetComponent<Data_Tile>());
 
                 if (FogMap)//Create fog if it enabled.
                 {
@@ -183,6 +187,7 @@ public class Map_Gen : MonoBehaviour
     public GameObject InstantiateTile(GameObject tileType, Vector3 pos, Map_Gen parent, float currentHeight)
     {
         GameObject tile = Instantiate(tileType, pos, Quaternion.Euler(0, 0, 0));
+        //mapDisplay.list.Add(tile.GetComponent<Data_Tile>());
         tile.transform.parent = parent.transform;
         tile.name = string.Format("tile_x{0}_y{1}", pos.x / 10, pos.z / 10);
         tile.GetComponent<Data_Tile>().height = currentHeight;
@@ -219,6 +224,7 @@ public class Map_Gen : MonoBehaviour
         {
             foreach (Transform child in this.transform)
             {
+                //mapDisplay.list.Remove(child.GetComponent<Data_Tile>());
                 GameObject.DestroyImmediate(child.gameObject);
             }
         }

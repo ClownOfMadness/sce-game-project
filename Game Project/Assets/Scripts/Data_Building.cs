@@ -103,6 +103,7 @@ public class Data_Building : MonoBehaviour
     {
         FindOnce();
         NightMode();
+        Rebuild();
     }
 
     private void FindOnce()
@@ -151,6 +152,17 @@ public class Data_Building : MonoBehaviour
                 night = false;
                 transparency.a = 0f;
                 secondaryRenderer.color = transparency;
+            }
+        }
+    }
+
+    private void Rebuild()
+    {
+        if (inProgress)
+        {
+            if (dayNight.isDay && health != buildingHealth)
+            {
+                health = buildingHealth;
             }
         }
     }

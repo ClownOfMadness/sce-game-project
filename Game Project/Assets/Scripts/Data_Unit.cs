@@ -26,6 +26,9 @@ public class Data_Unit : MonoBehaviour
 
     // [Build routine]
     public bool canBuild = false; // Can the unit build?
+    public bool canFight = false;
+    public int damage = 0;
+    public float attackCD = 1f;
 
     //---------------------------------------[Automatic]-----------------------------------------------
 
@@ -53,9 +56,10 @@ public class Data_Unit : MonoBehaviour
     private Rigidbody unitRigidbody;
     private int durability = 0;
     private int health = 0;
-    private bool canRegen = false;
+    private float regenCD = 5f;
+    private float nextRegen = 0f;
     
-    // [Work routine]
+    // [Work Routine]
     private Data_Card workCard; // Work card that the unit will recieve after finishin job
     private GameObject workPlace; // WorkPlace object
     private bool working = false; // Shows if the unit is currently working
@@ -65,11 +69,19 @@ public class Data_Unit : MonoBehaviour
     private float workDone = 0f; // Time until work is done
     private bool workExtra = false;
 
-    // [Build routine]
+    // [Build Routine]
     private GameObject buildPlace; // BuildPlace object
     private bool building = false; // Shows if the unit is currently building
     private bool buildBegun = false; // Shows if the build has begun
-    
+
+    // [Patrol Routine]
+    private bool patroling = false;
+    private GameObject patrolPlace;
+    private GameObject target = null;
+    //private GameObject spottedAbyss = null;
+    private GameObject spottedEnemy = null;
+    private float nextAttack = 0f;
+
     // [Work in memory]
     private bool workInMemory = false; // Shows if the unit got a work remembered
     private Data_Tile rmbTileData; // Remembered TileData
@@ -86,6 +98,7 @@ public class Data_Unit : MonoBehaviour
     [HideInInspector] public Unit_List unitList; // Unit list script
     private System_DayNight time; // DayNight script
     private Screen_Cards screenCards; // ScreenCards script
+    private Data_CommonDataHolder commonData;
     private int loadCount = 0; // Amount of time to try to find components until claiming a fail
 
     private void Awake()
@@ -139,6 +152,10 @@ public class Data_Unit : MonoBehaviour
         Health();
         JobCheck();
         GroundCheck();
+        if (canFight)
+        {
+            Priority();
+        }
     }
 
     private void FindOnce() // Seeks needed scripts once
@@ -176,6 +193,14 @@ public class Data_Unit : MonoBehaviour
             if (!screenCards)
             {
                 if(!(screenCards = GameObject.Find("CardsScreen").GetComponent<Screen_Cards>()))
+                {
+                    loadCount++;
+                }
+            }
+
+            if (!commonData)
+            {
+                if(!(commonData = GameObject.Find("Map Generator").GetComponent<Data_CommonDataHolder>()))
                 {
                     loadCount++;
                 }
@@ -252,30 +277,15 @@ public class Data_Unit : MonoBehaviour
         else if (health <= 0)
         {
             // Drop card - maybe in future
-            Destroy(this.gameObject);
+            DestroyUnit();
         }
 
         if (time.isDay)
         {
-            // If it is daytime
-            if (canRegen)
+            if (health < unitHealth && Time.time > nextRegen)
             {
-                // If it can recharge
-                canRegen = false;
-                if (health < unitHealth)
-                {
-                    // If the durability is below max durability
-                    health += regen;
-                }
-            }
-        }
-        else
-        {
-            // if it is nighttime
-            if (!canRegen)
-            {
-                // if it cannot recharge
-                canRegen = true;
+                nextRegen = Time.time + regenCD;
+                health += regen;
             }
         }
     }
@@ -313,6 +323,12 @@ public class Data_Unit : MonoBehaviour
                     building = true;
                     buildPlace = tile;
                 }
+                else if (canFight)
+                {
+                    tileData.AttachWork(this.gameObject);
+                    patroling = true;
+                    patrolPlace = tile;
+                }
             }
         }
     }
@@ -323,6 +339,8 @@ public class Data_Unit : MonoBehaviour
         busy = false;
         working = false;
         building = false;
+        patroling = false;
+        patrolPlace = null;
         buildBegun = false;
         buildPlace = null;
         workPlace = null;
@@ -355,7 +373,7 @@ public class Data_Unit : MonoBehaviour
         }
         else // if busy
         {
-            if ((path.reachedDestination || (impassable)) && !working && !building)
+            if ((path.reachedDestination || (impassable)) && !working && !building && !patroling)
             {
                 busy = false;
             }
@@ -370,6 +388,35 @@ public class Data_Unit : MonoBehaviour
         return point;
     }
 
+    private void Priority()
+    {
+        if (spottedEnemy)
+        {
+            target = spottedEnemy;
+        }
+        else
+        {
+            target = null;
+        }
+    }
+
+    private void Attack()
+    {
+        if (target)
+        {
+            if (Time.time > nextAttack)
+            {
+                if (target == spottedEnemy)
+                {
+                    animator.SetTrigger("attack");
+                    nextAttack = Time.time + attackCD;
+                    target.GetComponent<Data_Enemy>().Hurt(damage, this);
+                    durability--;
+                }
+            }
+        }
+    }
+
     private void GroundCheck()
     {
         RaycastHit hit;
@@ -377,11 +424,6 @@ public class Data_Unit : MonoBehaviour
         if (Physics.Raycast(detector.transform.position, Vector3.down, out hit, 0.1f))
         {
             currentTileOn = hit.transform.gameObject;
-        }
-
-        if (currentTileOn)
-        {
-            //
         }
     }
 
@@ -392,7 +434,7 @@ public class Data_Unit : MonoBehaviour
             if (durability <= 0)
             {
                 unitList.CreateUnit(0, currentTileOn, card);
-                Destroy(this.gameObject);
+                DestroyUnit();
             }
         }
     }
@@ -404,7 +446,7 @@ public class Data_Unit : MonoBehaviour
             reachedTownHall = false;
         }
         
-        if (hurt)
+        if (hurt && !canFight)
         {
             busy = true;
             path.speed = 7f;
@@ -418,6 +460,24 @@ public class Data_Unit : MonoBehaviour
                     busy = false;
                     path.speed = 3f;
                     path.destination = this.transform.position;
+                }
+            }
+        }
+        else if (patroling && canFight)
+        {
+            if (!card)
+            {
+                if (target)
+                {
+                    busy = true;
+                    path.speed = 7f;
+                    path.destination = target.transform.position;
+                }
+                else
+                {
+                    busy = true;
+                    path.speed = 7f;
+                    path.destination = patrolPlace.transform.position;
                 }
             }
         }
@@ -564,10 +624,11 @@ public class Data_Unit : MonoBehaviour
             {
                 // If the unit has reached the townhall
                 hurt = false;
+                unitCard = commonData.peasantCard;
                 screenCards.AddGathered(this, false);
 
                 tileData.DetachWork();
-                Destroy(this.gameObject);
+                DestroyUnit();
             }
         }
         else if (time.isDay && workInMemory)
@@ -578,7 +639,7 @@ public class Data_Unit : MonoBehaviour
                 BackToWork();
             }
         }
-        else if (!time.isDay && !busy && !working && !building)
+        else if (!time.isDay && !busy && !working && !building && !canFight)
         {
             // Send unit back to townhall
             if (!reachedTownHall)
@@ -749,6 +810,10 @@ public class Data_Unit : MonoBehaviour
                 impassable = true;
             }
         }
+        if (!spottedEnemy && other.gameObject.layer == 15 && canFight)
+        {
+            spottedEnemy = other.gameObject;
+        }
     }
     private void OnTriggerExit(Collider other)
     {
@@ -760,5 +825,33 @@ public class Data_Unit : MonoBehaviour
         {
             impassable = false;
         }
+        if (spottedEnemy == other.gameObject && canFight)
+        {
+            spottedEnemy = null;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (target != null && canFight)
+        {
+            if (target == collision.gameObject)
+            {
+                Attack();
+            }
+        }
+    }
+
+    private void DestroyUnit()
+    {
+        StartCoroutine(RemoveUnit());
+    }
+
+    public IEnumerator RemoveUnit()
+    {
+        this.transform.position = new Vector3(-500, -500, -500);
+        yield return new WaitForSeconds(1);
+        Destroy(this.gameObject);
+        yield return null;
     }
 }

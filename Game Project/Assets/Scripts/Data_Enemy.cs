@@ -16,7 +16,9 @@ public class Data_Enemy : MonoBehaviour
 
     // [Input Data]
     public string enemyType = "None"; // Units job name
+    public int enemyHealth = 10;
     public int damage = 5;
+    public float attackCD = 1f;
     public List<RuntimeAnimatorController> design; // Units sprite controller
     public SpriteRenderer sprite; // Units sprite renderer
     public Animator animator; // Units animator
@@ -37,16 +39,13 @@ public class Data_Enemy : MonoBehaviour
     private Data_Tile dataTile = null;
 
     // [Enemy Chase]
-    private bool chasing = false;
     private bool reachedTown = false;
     private bool reachedAbyss = false;
-    public GameObject target = null;
-    private bool invasion = false;
+    [HideInInspector] public GameObject target = null;
     private GameObject spottedUnit = null;
     private GameObject spottedBuilding = null;
     private GameObject spottedTownHall = null;
     private float nextAttack = 0f;
-    private float attackCD = 1f;
 
     // [Enemy Control]
     [HideInInspector] public GameObject abyss; // TownHall object
@@ -55,7 +54,8 @@ public class Data_Enemy : MonoBehaviour
     [HideInInspector] public bool busy = false; // Toggles on if the unit is doing something
 
     // [Enemy Health]
-    private bool hurt = false; // Becomes true if an enemy attacked the unit
+    private Rigidbody enemyRigidbody;
+    private int health = 0;
 
     // [Find Once function]
     [HideInInspector] public Enemy_List enemyList; // Unit list script
@@ -89,6 +89,13 @@ public class Data_Enemy : MonoBehaviour
         {
             Debug.LogError("AIPath Component is missing in the " + enemyType + " Data_Enemy");
         }
+
+        health = enemyHealth;
+
+        if (!(enemyRigidbody = GetComponent<Rigidbody>()))
+        {
+            Debug.LogError("Rigidbody Component is missing in the " + enemyType + " Data_Enemy");
+        }
     }
 
     private void Update()
@@ -99,6 +106,7 @@ public class Data_Enemy : MonoBehaviour
         GroundCheck();
         Hunt();
         Priority();
+        Health();
     }
 
     private void FindOnce() // Seeks needed scripts once
@@ -228,6 +236,19 @@ public class Data_Enemy : MonoBehaviour
         return point;
     }
 
+    private void Health()
+    {
+        if (health >= enemyHealth)
+        {
+            health = enemyHealth;
+        }
+        else if (health <= 0)
+        {
+            // Drop card - maybe in future
+            DestroyEnemy();
+        }
+    }
+
     private void GroundCheck()
     {
         RaycastHit hit;
@@ -303,6 +324,7 @@ public class Data_Enemy : MonoBehaviour
                         {
                             busy = false;
                             reachedAbyss = true;
+                            health = enemyHealth;
                         }
                     }
                 }
@@ -321,10 +343,26 @@ public class Data_Enemy : MonoBehaviour
             {
                 busy = false;
                 reachedAbyss = true;
+                health = enemyHealth;
                 if (card)
                     abyssData.TransferCard(card);
                 card = null;
             }
+        }
+    }
+
+    public void Hurt(int damage, Data_Unit unit)
+    {
+        Vector3 moveDirection = this.transform.position - unit.gameObject.transform.position;
+        enemyRigidbody.AddForce(moveDirection.normalized * 4000f);
+        if (card)
+        {
+            unit.card = card;
+            card = null;
+        }
+        else
+        {
+            health -= damage;
         }
     }
 
@@ -396,5 +434,18 @@ public class Data_Enemy : MonoBehaviour
                 Attack();
             }
         }
+    }
+
+    private void DestroyEnemy()
+    {
+        StartCoroutine(RemoveEnemy());
+    }
+
+    public IEnumerator RemoveEnemy()
+    {
+        this.transform.position = new Vector3(-500, -500, -500);
+        yield return new WaitForSeconds(1);
+        Destroy(this.gameObject);
+        yield return null;
     }
 }

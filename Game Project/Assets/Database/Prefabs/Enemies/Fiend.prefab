@@ -266,12 +266,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: Fiend
+  enemyHealth: 10
+  damage: 5
+  attackCD: 1.5
   design:
   - {fileID: 9100000, guid: 21e1ff83bd20fbd4c956e09f9f3b8640, type: 2}
   sprite: {fileID: 6133491182868957675}
   animator: {fileID: 5186850180566981543}
   detector: {fileID: 7507874871158521660}
+  target: {fileID: 0}
   abyss: {fileID: 0}
+  abyssData: {fileID: 0}
   card: {fileID: 0}
   busy: 0
   enemyList: {fileID: 0}

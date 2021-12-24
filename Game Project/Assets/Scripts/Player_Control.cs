@@ -25,6 +25,9 @@ public class Player_Control : MonoBehaviour
     public GameObject selectedUnit; // Current selected unit from the job
     private Data_Tile selectedData_Tile; // Current selected tile data
 
+    // Key Binding
+    [HideInInspector] public KeyCode panScreen = KeyCode.Space;
+
     // Screen Panning
     public Vector3 startPosition;
     public Vector3 pos; // Camera movement vector
@@ -102,73 +105,76 @@ public class Player_Control : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
-            // Functions for when the mouse hovers over an interactable layer
-            if (EventSystem.current.currentSelectedGameObject == null) 
+            if (Time.timeScale != 0)
             {
-                // Checks if raycast doesnt hit ui
-                if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7)
+                // Functions for when the mouse hovers over an interactable layer
+                if (EventSystem.current.currentSelectedGameObject == null)
                 {
-                    // if it is terrain or impassable or townhall
-                    if (Input.GetMouseButtonDown(0) && !Input.GetKey("space"))
+                    // Checks if raycast doesnt hit ui
+                    if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7)
                     {
-                        // Functions for when the mouse clicks on interactable layer
-
-                        // Gives order to the unit if they are available
-                        selectedObject = raycastHit.transform.gameObject;
-                        selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
-                        if (!selectedData_Tile.GetData())
+                        // if it is terrain or impassable or townhall
+                        if (Input.GetMouseButtonDown(0) && !Input.GetKey(panScreen))
                         {
-                            selectedUnit = UnitSelection(selectedJob, selectedObject, selectedData_Tile.hasTownHall);
-                            if ((selectedUnit && selectedData_Tile.hasBuilding && !selectedData_Tile.buildingComplete) || (selectedUnit && !selectedData_Tile.hasBuilding))
+                            // Functions for when the mouse clicks on interactable layer
+
+                            // Gives order to the unit if they are available
+                            selectedObject = raycastHit.transform.gameObject;
+                            selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
+                            if (!selectedData_Tile.GetData())
                             {
+                                selectedUnit = UnitSelection(selectedJob, selectedObject, selectedData_Tile.hasTownHall);
                                 Data_Unit = selectedUnit.GetComponent<Data_Unit>();
-                                if (Data_Unit)
+                                if (selectedUnit && Data_Unit)
                                 {
-                                    Data_Unit.UpdateTargetLocation(selectedObject);
-                                    selectedData_Tile.DrawPointer();
+                                    if ((Data_Unit.canBuild && selectedData_Tile.hasBuilding && !selectedData_Tile.buildingComplete) || (!selectedData_Tile.hasBuilding))
+                                    {
+                                        Data_Unit.UpdateTargetLocation(selectedObject);
+                                        selectedData_Tile.DrawPointer();
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if (Input.GetMouseButtonDown(1))
-                    {
-                        // Cancels units current job
-                        selectedObject = raycastHit.transform.gameObject;
-                        selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
-                        if (selectedData_Tile.GetData() || selectedData_Tile.GetBuildData())
+                        if (Input.GetMouseButtonDown(1))
                         {
-                            GameObject theUnit = selectedData_Tile.GetObject();
-                            if (theUnit)
-                                theUnit.GetComponent<Data_Unit>().RemoveTargetLocation();
-                            selectedData_Tile.DetachWork();
-                            selectedData_Tile.DetachBuild(theUnit);
+                            // Cancels units current job
+                            selectedObject = raycastHit.transform.gameObject;
+                            selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
+                            if (selectedData_Tile.GetData() || selectedData_Tile.GetBuildData())
+                            {
+                                GameObject theUnit = selectedData_Tile.GetObject();
+                                if (theUnit)
+                                    theUnit.GetComponent<Data_Unit>().RemoveTargetLocation();
+                                selectedData_Tile.DetachWork();
+                                selectedData_Tile.DetachBuild(theUnit);
+                            }
                         }
                     }
                 }
-            }
 
-            if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7)
-            {
-                if ((screenCards.draggedBuilding || screenCards.draggedUnit) && screenCards.draggedSprite)
+                if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7)
                 {
-                    gizmoObject = raycastHit.transform.gameObject;
-                    draggedSprite = screenCards.draggedSprite;
-                    if (screenCards.draggedBuilding)
-                        draggedType = "building";
-                    else if (screenCards.draggedUnit)
-                        draggedType = "unit";
-                    // Checks if the selected object is a terrain tile
-                    if (screenCards.selectedTile != raycastHit.transform.gameObject)
+                    if ((screenCards.draggedBuilding || screenCards.draggedUnit) && screenCards.draggedSprite)
                     {
-                        screenCards.selectedTile = raycastHit.transform.gameObject;
+                        gizmoObject = raycastHit.transform.gameObject;
+                        draggedSprite = screenCards.draggedSprite;
+                        if (screenCards.draggedBuilding)
+                            draggedType = "building";
+                        else if (screenCards.draggedUnit)
+                            draggedType = "unit";
+                        // Checks if the selected object is a terrain tile
+                        if (screenCards.selectedTile != raycastHit.transform.gameObject)
+                        {
+                            screenCards.selectedTile = raycastHit.transform.gameObject;
+                        }
                     }
-                }
-                else
-                {
-                    gizmoObject = null;
-                    draggedSprite = null;
-                    draggedType = "none";
+                    else
+                    {
+                        gizmoObject = null;
+                        draggedSprite = null;
+                        draggedType = "none";
+                    }
                 }
             }
         }
@@ -259,11 +265,11 @@ public class Player_Control : MonoBehaviour
 
     private void CameraControl()
     {
-        if (Input.GetMouseButtonDown(2) || (Input.GetKey("space") && Input.GetMouseButtonDown(0)))
+        if (Input.GetMouseButtonDown(2) || (Input.GetKey(panScreen) && Input.GetMouseButtonDown(0)))
         {
             startPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
-        if (Input.GetMouseButton(2) || (Input.GetKey("space") && Input.GetMouseButton(0)))
+        if (Input.GetMouseButton(2) || (Input.GetKey(panScreen) && Input.GetMouseButton(0)))
         {
             Vector3 newPos = startPosition - Camera.main.ScreenToWorldPoint(Input.mousePosition);
             camera.transform.position = ClampCamera(camera.transform.position + newPos);

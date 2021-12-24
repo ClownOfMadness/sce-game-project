@@ -10,6 +10,7 @@ public class Unit_List : MonoBehaviour
     {
         public GameObject unitPrefab;
         public GameObject unitGroup;
+        public Data_Card unitCard;
     }
 
     public Units[] units;

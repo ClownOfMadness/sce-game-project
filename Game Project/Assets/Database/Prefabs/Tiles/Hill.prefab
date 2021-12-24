@@ -398,6 +398,7 @@ MonoBehaviour:
   canBuildAtDefault: 1
   hasExtra: 0
   thereIsRandom: 0
+  isAbyss: 0
   extraChance: 0
   extraGameobject: {fileID: 0}
   spriteRenderer: {fileID: 3076318938891684442}
@@ -406,7 +407,7 @@ MonoBehaviour:
   pointerRenderer: {fileID: 1773223343658929898}
   fullSprite: {fileID: 21300000, guid: 5665d61c83626b14183f60100a43a237, type: 3}
   halfSprite: {fileID: 21300000, guid: 5665d61c83626b14183f60100a43a237, type: 3}
-  emptySprite: {fileID: 21300000, guid: 470c969f85e3f1a4491cdcdf9a4bbdaa, type: 3}
+  emptySprite: {fileID: 21300000, guid: 394b4a164372e984bbfb852becb73d01, type: 3}
   buildSprite: {fileID: 21300000, guid: 394b4a164372e984bbfb852becb73d01, type: 3}
   works:
   - job: {fileID: 6964371378365923616, guid: cf4f41912bfb7054cac657f36be9fc23, type: 3}
@@ -425,4 +426,5 @@ MonoBehaviour:
   hasBuilding: 0
   buildingComplete: 0
   hasResources: 0
-  builders: []
+  path: {fileID: 0}
+  cards: []

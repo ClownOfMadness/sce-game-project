@@ -30,11 +30,6 @@ public class Data_Fog : MonoBehaviour
             sprite.enabled = false;
             Data_Tile.revealed = true;
         }
-        else if (other.gameObject.layer != 15)
-        {
-            sprite.enabled = true;
-            Data_Tile.revealed = false;
-        }
     }
 
     private void OnTriggerExit(Collider other)

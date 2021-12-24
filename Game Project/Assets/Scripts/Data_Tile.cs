@@ -105,7 +105,7 @@ public class Data_Tile : MonoBehaviour
         Setup(); // Setups the tile
     }
 
-    private void Update()
+    public void Update()
     {
         FindOnce(); // Searches for the needed components
         OnUpdate(); // Functions that work on update
@@ -375,7 +375,7 @@ public class Data_Tile : MonoBehaviour
 
     public void DestroyBuilding()
     {
-        Destroy(building);
+        StartCoroutine(RemoveBuilding());
         AstarPath.active.UpdateGraphs(GetComponent<BoxCollider>().bounds);
         hasAbyss = false;
         hasTownHall = false;
@@ -669,6 +669,14 @@ public class Data_Tile : MonoBehaviour
         yield return new WaitForSeconds(1);
         pointerRenderer.sprite = null;
         pointerRenderer.enabled = false;
+        yield return null;
+    }
+
+    public IEnumerator RemoveBuilding()
+    {
+        building.transform.position = new Vector3(-500, -500, -500);
+        yield return new WaitForSeconds(1);
+        Destroy(building);
         yield return null;
     }
 }

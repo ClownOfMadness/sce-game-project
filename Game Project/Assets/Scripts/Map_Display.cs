@@ -10,6 +10,7 @@ public class Map_Display : MonoBehaviour
     public AstarPath path;
     [HideInInspector] public GameObject TownHall;
     public Unit_List unitlist;
+    //public List<Data_Tile> list = new List<Data_Tile>();
 
     private void Awake()
     {
@@ -32,6 +33,10 @@ public class Map_Display : MonoBehaviour
 
     private void Update()
     {
-        
+        //if (list.Count != 0)
+        //{
+        //    var count = list.Count;
+        //    for (var i = 0; i < count; i++) list[i].UpdateMe();
+        //}
     }
 }
