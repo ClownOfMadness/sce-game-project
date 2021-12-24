@@ -24,9 +24,8 @@ public class Data_Player
 
     //-----------------------------------[Map data]--------------------------------------
 
-    public Save_Tile[,] TileMap;
-
-    
+    public Save_Tile[,] TileMap; //The map of tiles
+    public Vector3 townHallPos; //Town Hall position on the map
     
 
     //-----------------------------------------------------------------------------------

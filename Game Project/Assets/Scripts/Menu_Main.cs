@@ -26,7 +26,7 @@ public class Menu_Main : MonoBehaviour
     }
 
     IEnumerator LoadAsynchronic()
-    { 
+    {
         AsyncOperation asy = SceneManager.LoadSceneAsync("Game");
         GameObject loadScreen = LoadPanel.transform.GetChild(1).gameObject;
         Image img = loadScreen.GetComponent<Image>();
@@ -43,7 +43,7 @@ public class Menu_Main : MonoBehaviour
                     loadText.text = string.Format("Loading...{0}%", i);
                     img.transform.localPosition = img.transform.localPosition + new Vector3(12, 0, 0);
                 }
-                    yield return new WaitForSeconds(0.07f);
+                yield return new WaitForSeconds(0.07f);
                 asy.allowSceneActivation = false;
             }
             LoadPanel.SetActive(false);
@@ -52,7 +52,7 @@ public class Menu_Main : MonoBehaviour
         yield return null;
     }
 
-    private void Update()
+private void Update()
     {
         if (LoadPanel.activeSelf)
         {

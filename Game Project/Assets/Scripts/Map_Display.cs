@@ -12,6 +12,9 @@ public class Map_Display : MonoBehaviour
     public Unit_List unitlist;
     //public List<Data_Tile> list = new List<Data_Tile>();
 
+    //Save System//
+    public Save_Tile tile;
+
     private void Awake()
     {
         if (!(unitlist = GameObject.Find("Units").GetComponent<Unit_List>()))
