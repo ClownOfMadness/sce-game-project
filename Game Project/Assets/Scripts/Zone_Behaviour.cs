@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [HideInInspector] public int Size;  //used by other Zones
-    public GameObject CardPrefab;       //type of prefab for Card (attached via Inspector)
 
     public virtual void EventDrop(Card_Drag cardObject) { } //lets other Zones override it
     public void OnPointerEnter(PointerEventData eventData)

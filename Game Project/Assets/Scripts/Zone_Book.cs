@@ -7,7 +7,6 @@ public class Zone_Book : MonoBehaviour
 {
     //attached via Inspector:
     public GameObject PagePrefab;   //type of prefab for Page
-    public GameObject CardPrefab;   //type of prefab for Card
     public Text backButton;
     public Text nextButton;
 

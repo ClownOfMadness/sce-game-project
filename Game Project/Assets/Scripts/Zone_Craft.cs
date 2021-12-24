@@ -4,10 +4,6 @@ using UnityEngine;
 //responsible for creating Craft zone
 public class Zone_Craft : MonoBehaviour
 {
-    //attached via Inspector:
-    public GameObject CardPrefab;                   //type of prefab for Card
-    public GameObject craftMenu; //[remove after scene update]
-
     //public fields:
     [HideInInspector] public int Size;              //Zone size
     [HideInInspector] public int CombosTotal = 0;   //for statistics

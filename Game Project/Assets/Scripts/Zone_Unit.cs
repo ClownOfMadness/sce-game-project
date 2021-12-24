@@ -4,9 +4,6 @@ using UnityEngine;
 //responsible for creating Unit prompt zone
 public class Zone_Unit : MonoBehaviour
 {
-    //attached via Inspector:
-    public GameObject CardPrefab;               //type of prefab for Card
-
     //public fields:
     [HideInInspector] public int Size;          //Zone size
     [HideInInspector] public bool hasBacklog;   //used to avoid it clashing with the Craft Menu screen

@@ -6,24 +6,25 @@ using UnityEngine.UI;
 public class Screen_Cards : MonoBehaviour
 {
     //attached via Inspector:
-    //[Header("Panels:")]
+    [Header("- Panels:")]
     public Text Message;
     public GameObject Hand;
-    //public GameObject CraftMenu;
+    public GameObject CraftMenu;
     public GameObject Craft;
     public GameObject Unit;
     public GameObject Storage;
     public GameObject Book;
 
-    //[Header("Buttons:")]
+    [Header("- Buttons:")]
     public GameObject destroyButton;
+    public GameObject hintsButton;
     public GameObject creativeButton;
     public GameObject storageButton;
     public GameObject cardsButton;
 
-    //[Header("Prefabs:")]
-    //public GameObject CardObject;    //type of prefab for draggable Cards
-    //public GameObject CardDisplay;   //type of prefab for draggable Cards
+    [Header("- Prefabs:")]
+    public GameObject CardObject;    //type of prefab for draggable Cards
+    public GameObject CardDisplay;   //type of prefab for draggable Cards
 
     //blocking cards from acting weird:
     [HideInInspector] public bool visibleMap;
@@ -34,6 +35,7 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public bool CraftUp;
     [HideInInspector] public bool UnitUp;
     [HideInInspector] public bool StorageUp;
+    [HideInInspector] public bool HintUp;
     [HideInInspector] public bool BookUp;
 
     //private Zones:
@@ -54,9 +56,6 @@ public class Screen_Cards : MonoBehaviour
 
     //sharing with other scripts:
     [HideInInspector] public Card_Pool Pool;
-    [HideInInspector] public GameObject CraftMenu; //remove when scene gets updated and enable
-    [HideInInspector] public GameObject CardObject; //remove when scene gets updated and enable 
-    [HideInInspector] public GameObject CardDisplay; //remove when scene gets updated and enable
     [HideInInspector] public Data_Card Creation;
 
     //placement on map:
@@ -66,16 +65,32 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public Sprite draggedSprite;      //updated by Card_Drag
 
     //for development testing:
-    [Header("Game State:")]
-    public bool SkipLogin;
+    [Header("Premium User:")]
+    public bool TestSkipLogin;
+    [Header("Parental Control:")]
+    public bool TestHintsOn;
     [Header("Simulate night:")]
-    public bool skipDay;
+    public bool TestSkipDay;
+
+    //game state:
+    [HideInInspector] public bool premiumUser = false;
+    [HideInInspector] public bool hintsOn = false;
 
     void Awake()    //initilizing the entire cards' canvas
     {
+        premiumUser = Screen_Login.IsLogin;
+        //hintsOn should be loaded from save file
         SetZones();
 
-        if (SkipLogin || Screen_Login.IsLogin)
+        if (TestHintsOn || hintsOn)  //change when testing phase ends
+        {
+            hintsButton.SetActive(true);
+        }
+        else
+        {
+            hintsButton.SetActive(false);
+        }
+        if (TestSkipLogin || premiumUser)  //change when testing phase ends
         {
             creativeButton.SetActive(true);
         }
@@ -124,11 +139,6 @@ public class Screen_Cards : MonoBehaviour
         zDestroy = destroyButton.transform.GetComponent<Zone_Destroy>();
         zStoragePt2 = storageButton.transform.GetComponent<Zone_StoragePt2>();
 
-        CraftMenu = zCraft.craftMenu; //[remove when scene gets updates]
-        //zStoragePt2.Storage = zStorage;
-        CardObject = zHand.CardPrefab; //[remove when scene gets updates]
-        CardDisplay = zStorage.CardPrefab; //[remove when scene gets updates]
-
         //giving Screen_Cards to the Zones so they can access stuff
         zHand.screen = this;
         zCraft.screen = this;
@@ -174,6 +184,8 @@ public class Screen_Cards : MonoBehaviour
             Unit.SetActive(true);
         else if (StorageUp)
             Storage.SetActive(true);
+        else if (HintUp)
+            Message.gameObject.SetActive(true);
         else if (BookUp)
             Book.SetActive(true);
         if (MenuUp || CraftUp || UnitUp || StorageUp || BookUp)
@@ -199,6 +211,20 @@ public class Screen_Cards : MonoBehaviour
         UIDown = true;
 
         Time.timeScale = 1f;    //unpause game
+    }
+    public void SwitchHints()   //close/open Book
+    {
+        if (visibleMap)
+            if (HintUp)
+            {
+                Message.gameObject.SetActive(false);
+                HintUp = false;
+            }
+            else
+            {
+                TopMessage("hint");
+                HintUp = true;
+            }
     }
     public void SwitchCreative()//close/open Book
     {
@@ -354,7 +380,7 @@ public class Screen_Cards : MonoBehaviour
     }
     public void DisplayCardClick(Card_Display pickedCard)   //add Card_Display to hand based on what was picked in Book/Storage
     {
-        if (Book.activeSelf || (zStorage.time.isDay == false || skipDay)) 
+        if (Book.activeSelf || (zStorage.time.isDay == false || TestSkipDay)) 
             if (CreateInHand(pickedCard.card))
             {
                 if (Storage.activeSelf)

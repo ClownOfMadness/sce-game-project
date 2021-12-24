@@ -13,9 +13,9 @@ public class Zone_Hand : Zone_Behaviour
     private Card_Pool Pool; //open Card_Pool connection to use its functions
 
     //for development testing:
-    [Header("Fill Hand:")]
+    [Header("- Fill Hand:")]
     public bool Fill = false;   //refill hand according to preset
-    [Header("Attack Cardmaster:")]
+    [Header("- Attack Cardmaster:")]
     public bool Damage = false; //simulate attacking the Cardmaster
     public enum decksList       //enum for preset menu
     {
@@ -24,7 +24,7 @@ public class Zone_Hand : Zone_Behaviour
         Buildings,
         EmptyHand,
     }
-    [Header("Starting Deck Preset:")]
+    [Header("- Starting Deck Preset:")]
     public decksList Preset;    //enables picking a deck preset via the inspector
 
     //internal fields:

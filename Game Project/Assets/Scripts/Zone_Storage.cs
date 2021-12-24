@@ -22,7 +22,7 @@ public class Zone_Storage : Zone_Behaviour
     private Card_Pool Pool; //open Card_Pool connection to use its functions
 
     //for development testing:
-    [HideInInspector] public bool skipDay = false;     
+    private bool skipDay = false;     
     
     public void InstantiateZone()
     {
@@ -32,7 +32,7 @@ public class Zone_Storage : Zone_Behaviour
         time = FindObjectOfType<System_DayNight>();
         Pool = screen.Pool;
 
-        skipDay = screen.skipDay; //for development testing
+        skipDay = screen.TestSkipDay; //for development testing
 
         slots = new List<Data_Card>();
         count = 0;
