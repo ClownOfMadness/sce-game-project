@@ -44,7 +44,7 @@ public class Switch : MonoBehaviour
             index = 0;
             Time.timeScale = 1f;
         }
-        Debug.Log(index);
+       //Debug.Log(index);
     }
 
     public void Previous()
@@ -54,7 +54,7 @@ public class Switch : MonoBehaviour
         background[index + 1].gameObject.SetActive(false);
         background[index].gameObject.SetActive(true);
         }
-        Debug.Log(index);
+        //Debug.Log(index);
     }
 
 

@@ -63,6 +63,9 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public bool draggedBuilding;      //updated by Card_Drag
     [HideInInspector] public bool draggedUnit;          //updated by Card_Drag
     [HideInInspector] public Sprite draggedSprite;      //updated by Card_Drag
+    [HideInInspector] public static KeyCode handK;
+    [HideInInspector] public static KeyCode creativeK;
+    [HideInInspector] public static KeyCode storageK;
 
     //for development testing:
     [Header("Premium User:")]
@@ -106,21 +109,25 @@ public class Screen_Cards : MonoBehaviour
         UnitUp = false;
         StorageUp = false;
         BookUp = false;
+        handK = KeyCode.H;// the default keycodes -> will later be implemented in saves
+        storageK = KeyCode.S;//
+        creativeK = KeyCode.C;//
+
 
         visibleMap = true;
         CloseUI();  //game starts with UI closed
     }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H)) //can close and open "Hand" with keyboard as well
+        if (Input.GetKeyDown(handK)) //to close and open "Hand" with keyboard as well
         {
             SwitchCards();
         }
-        if (Input.GetKeyDown(KeyCode.C)) //can close and open "Creative" with keyboard as well
+        if (Input.GetKeyDown(creativeK)) //to close and open "Creative" with keyboard as well
         {
             SwitchCreative();
         }
-        if (Input.GetKeyDown(KeyCode.S)) //can close and open "Storage" with keyboard as well
+        if (Input.GetKeyDown(storageK)) //to close and open "Storage" with keyboard as well
         {
             SwitchStorage();
         }
