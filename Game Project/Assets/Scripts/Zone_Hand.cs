@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 //responsible for creating and storing Hand zone, extension of ZoneBehaviour
-public class Zone_Hand : Zone_Behaviour
+public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandler
 {
     //internal fields:
     private Data_Card Creation;     //card of Creation
@@ -11,6 +12,12 @@ public class Zone_Hand : Zone_Behaviour
     //external access:
     [HideInInspector] public Screen_Cards screen;
     private Card_Pool Pool; //open Card_Pool connection to use its functions
+
+    //ohHover:
+    private int shift = 100;
+    [HideInInspector] public int handShift = 100;     //changes to indicate current position
+    [HideInInspector] public Vector3 handReturnTo;  //gets saved once
+    [HideInInspector] public bool handUp = false;
 
     //for development testing:
     [Header("- Fill Hand:")]
@@ -81,6 +88,7 @@ public class Zone_Hand : Zone_Behaviour
             }
             screen.CreateObject(this.transform, deck[i]);
         }
+        handReturnTo = transform.position;  //original position
     }
     public override void EventDrop(Card_Drag cardObject)    //card was dropped into Zone
     {
@@ -90,6 +98,40 @@ public class Zone_Hand : Zone_Behaviour
             //Debug.Log("New card found: " + combination.name);
             Pool.discoveredTotal++;
         }
+    }
+    public override void OnPointerEnter(PointerEventData eventData)
+    {
+        if (handUp == false)
+        {
+            RefreshCards();
+            transform.position = new Vector3(handReturnTo.x, handReturnTo.y + handShift, 0);
+            Card_Drag d = eventData.pointerEnter.GetComponent<Card_Drag>();
+            if (d != null)
+            {
+                //shifts up the card the mouse is already on when opening the zone
+                d.transform.position = new Vector3(d.positionReturnTo.x, d.positionReturnTo.y + d.cardShift + handShift, 0);
+            }
+            handUp = true;
+        }                           
+        HandleCardsEnter(eventData);//calls Zone_Behaviours' OnPointerEnter    
+    }
+    public override void OnPointerExit(PointerEventData eventData)
+    {
+        if (handUp && screen.visibleMap) 
+        {
+            transform.position = handReturnTo;
+            if (eventData.pointerEnter)
+            {
+                Card_Drag d = eventData.pointerEnter.GetComponent<Card_Drag>();
+                if (d != null)
+                {
+                    d.transform.position = new Vector3(d.positionReturnTo.x, d.positionReturnTo.y, 0);
+                }
+            }
+            handUp = false;
+            RefreshCards();
+        }
+        HandleCardsExit(eventData);//calls Zone_Behaviours' OnPointerExit  
     }
     public void DamageDeck()    //lose a random card from hand, if Creation is lost game is lost
     {
@@ -111,7 +153,7 @@ public class Zone_Hand : Zone_Behaviour
             }
         }
     }
-    public void RefreshZone() 
+    public void RefreshZone(bool refreshCards) 
     {
         Card_Drag[] cardObjects = this.transform.GetComponentsInChildren<Card_Drag>(); //walkaround to ignore placeholders and only check cards
         if (cardObjects.Length < 1)
@@ -121,6 +163,19 @@ public class Zone_Hand : Zone_Behaviour
         else if (cardObjects.Length > 1)
         {
             NotEmpty();
+        }
+        if(refreshCards)
+            RefreshCards();
+    }
+    public void RefreshCards()
+    {
+        Card_Drag[] cardObjects = this.GetComponentsInChildren<Card_Drag>();
+        for (int i = 0; i < cardObjects.Length; i++)      //loops to move the placeholder to the left
+        {
+            if (handUp)
+                cardObjects[i].positionReturnTo = new Vector3(cardObjects[i].transform.position.x, cardObjects[i].transform.position.y - handShift, 0);  //original position
+            else
+                cardObjects[i].positionReturnTo = new Vector3(cardObjects[i].transform.position.x, cardObjects[i].transform.position.y, 0);  //original position
         }
     }
     public void EmptyHand()     //add Creation to hand

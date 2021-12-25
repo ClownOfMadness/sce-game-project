@@ -7,23 +7,35 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
     [HideInInspector] public int Size;  //used by other Zones
 
     public virtual void EventDrop(Card_Drag cardObject) { } //lets other Zones override it
-    public void OnPointerEnter(PointerEventData eventData)
+    public virtual void OnPointerEnter(PointerEventData eventData)
+    {
+        HandleCardsEnter(eventData);//allows Hand to call OnPointerEnter
+    }
+    public void HandleCardsEnter(PointerEventData eventData)//allows Hand to call OnPointerEnter
     {
         if (eventData.pointerDrag == null)
         {
             return;
         }
         Card_Drag d = eventData.pointerDrag.GetComponent<Card_Drag>();
-        if (d != null && this.transform.childCount < this.Size)
+        if (d != null)
         {
-            //d.GetComponent<CanvasGroup>().alpha = 1f;     //reenables itself in a loop for no reason
-            if (this.transform == d.hand)
+            if (this.transform.childCount < this.Size)
             {
                 d.placeholderParent = this.transform;       //only make a placeholder in Hand
             }
+            bool zones = this.transform == d.hand || this.transform == d.destroy || this.transform == d.storagept2;
+            if (zones)
+            {
+                d.cGroup.alpha = 1f; //reset effect for card (can be changed)
+            }
         }
     }
-    public void OnPointerExit(PointerEventData eventData)
+    public virtual void OnPointerExit(PointerEventData eventData)
+    {
+        HandleCardsExit(eventData);//allows Hand to call OnPointerEnter
+    }
+    public void HandleCardsExit(PointerEventData eventData)//allows Hand to call OnPointerEnter
     {
         if (eventData.pointerDrag == null)
         {
@@ -33,6 +45,12 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
         if ((d != null) && (d.placeholderParent == this.transform))
         {
             d.placeholderParent = d.parentReturnTo;
+            d.positionReturnTo = d.transform.position;
+            bool zones = this.transform == d.hand || this.transform == d.destroy || this.transform == d.storagept2;
+            if (zones && d.screen.visibleMap && (d.card.buildingPrefab || int.TryParse(d.card.unitIndex, out int index))) 
+            {
+                d.cGroup.alpha = 0f; //reset effect for card (can be changed)
+            }
         }
     }
     public void OnDrop(PointerEventData eventData)
@@ -65,13 +83,28 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
                 {
                     d.zUnit.FreeUnit();
                 }
+                if (this.transform == d.hand)
+                {
+                    //d.positionReturnTo = d.transform.position;  //original position
+                    d.transform.position = new Vector3(d.placeholder.transform.position.x, d.placeholder.transform.position.y, 0);  //original position
+                }
+                //move card
                 d.parentReturnTo = this.transform;
                 d.gameObject.transform.SetParent(this.transform);
+
+                //close Building/Unit placement attempt
                 d.screen.draggedBuilding = false;  //close selectedTile updates
                 d.screen.draggedUnit = false;      //close selectedTile updates
+
+                //reset for onHover
+                d.dragged = false;
+                d.clicked = false;
+                d.screen.draggingCard = false;
+               
+                //run Zones
                 this.EventDrop(d);  //run response function to dropping a card (of the fitting Zone)
                 d.screen.CheckUnit();
-                d.zHand.RefreshZone();
+                d.zHand.RefreshZone(false);
             }
         }
     }

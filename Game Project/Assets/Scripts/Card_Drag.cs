@@ -3,13 +3,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 //responsible for the draggable cards, extension of Card_Display
-public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     //public fields:
     [HideInInspector] public Transform parentReturnTo = null;       //saves the dragged card's parent
     [HideInInspector] public Transform placeholderParent = null;    //saves the dragged card's spot (for changing card order)
     [HideInInspector] public GameObject placeholder = null;         //saves the dragged card's spot (for changing card order)
     [HideInInspector] public Canvas canvas;   //needed for moving the card
+    [HideInInspector] public CanvasGroup cGroup;
 
     //public Zones:
     [HideInInspector] public Transform hand;
@@ -28,8 +29,18 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     private Player_SpawnBuilding Tiles;
     private Unit_List Units;
 
+    //ohHover:
+    [HideInInspector] public Vector3 positionReturnTo;
+    [HideInInspector] public int cardShift;     //changes to indicate current position
+    [HideInInspector] public bool dragged;
+    [HideInInspector] public bool clicked;
+
     void Start()
     {
+        dragged = false;
+        clicked = false;
+        cardShift = 10;
+        cGroup = GetComponent<CanvasGroup>();
         Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
         Units = FindObjectOfType<Unit_List>();              //connection to use UnitList functions
     }
@@ -37,25 +48,58 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
     {
         screen.CardClick(this);         //needs to happen here to get the "this" of the object
     }
-    private void SavePlaceholder()      //enables card order
+    public void OnPointerEnter(PointerEventData eventData)   //onHover set
+    {
+        if (!dragged && !screen.draggingCard && transform.parent == hand) 
+        {
+            screen.overlapingCard = false;
+            clicked = false;
+            if (zHand.handUp)
+            {
+                positionReturnTo = new Vector3(transform.position.x, transform.position.y - zHand.handShift, 0);  //original position
+                transform.position = new Vector3(transform.position.x, positionReturnTo.y + zHand.handShift + cardShift, 0);
+            }
+        }
+    }
+    public void OnPointerExit(PointerEventData eventData)   //onHover reset
+    {
+        Card_Drag d = eventData.pointerEnter.GetComponent<Card_Drag>();
+        if (d == null && screen.draggingCard) //prevent cards from acting weird when placed on top of each other
+        {
+            screen.overlapingCard = true;
+        }
+        //blocks: cards that are in the Craft, cards that have other cards on top
+        if (!screen.draggingCard && !clicked && !screen.overlapingCard && transform.parent == hand) 
+        {
+            if (zHand.handUp)
+            {
+                positionReturnTo = new Vector3(transform.position.x, transform.position.y - zHand.handShift - cardShift, 0);  //original position
+                transform.position = new Vector3(positionReturnTo.x, positionReturnTo.y + zHand.handShift, 0);
+            }
+        }
+    }
+    private void SavePlaceholder()  //enables card order
     {
         placeholder = new GameObject(); //initalizing the temp object to save the card's spot
         placeholder.transform.SetParent(this.transform.parent);
         placeholder.name = "Placeholder";
-        LayoutElement le = placeholder.AddComponent<LayoutElement>();
-        le.preferredWidth = this.GetComponent<LayoutElement>().preferredWidth;
-        le.preferredHeight = this.GetComponent<LayoutElement>().preferredHeight;
-        le.flexibleWidth = 0;
-        le.flexibleHeight = 0;
+        LayoutElement lep = placeholder.AddComponent<LayoutElement>();
+        LayoutElement led = this.GetComponent<LayoutElement>();
+        lep.preferredWidth = led.preferredWidth;
+        lep.preferredHeight = led.preferredHeight;
+        lep.flexibleWidth = 0;
+        lep.flexibleHeight = 0;
         placeholder.transform.SetSiblingIndex(this.transform.GetSiblingIndex());    //saves size and position of card
         placeholderParent = parentReturnTo;
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
+        dragged = true;
+        screen.draggingCard = true;
         parentReturnTo = this.transform.parent;
         SavePlaceholder();
         this.transform.SetParent(this.transform.parent.parent); //changes parent once the card is picked
-        GetComponent<CanvasGroup>().blocksRaycasts = false;
+        cGroup.blocksRaycasts = false;
 
         if (screen.visibleMap && placeholderParent == hand)     //enable pointer change only for cards leaving hand when UI is down
         {
@@ -63,17 +107,17 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
             {
                 screen.draggedBuilding = true;
                 screen.draggedSprite = card.artwork;
-                GetComponent<CanvasGroup>().alpha = 0f; //hide building until placed/returned to hand
+                cGroup.alpha = 0f; //hide building until placed/returned to hand
             }
             else if (int.TryParse(card.unitIndex, out int index))   //if unit, start recieving selectedTile updates and hide card
             {
                 screen.draggedUnit = true;
                 screen.draggedSprite = card.artwork;
-                GetComponent<CanvasGroup>().alpha = 0f; //hide unit until placed/returned to hand
+                cGroup.alpha = 0f; //hide unit until placed/returned to hand
             }
         }
         if (this.card != screen.Creation)
-            zHand.RefreshZone();
+            zHand.RefreshZone(true);
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -93,7 +137,9 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                 break;
             }
         }
-        placeholder.transform.SetSiblingIndex(newSiblingIndex);     //the abillity to swap places with cards in hand
+        placeholder.transform.SetSiblingIndex(newSiblingIndex); //the abillity to swap places with cards in hand
+        zHand.RefreshCards();
+        positionReturnTo = new Vector3(placeholder.transform.position.x, placeholder.transform.position.y - zHand.handShift, 0);  //original position
     }
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -110,7 +156,8 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                         //Debug.Log("Card_Drag: placing " + card.buildingPrefab.name + " at " + screen.selectedTile.name);
                         Destroy(placeholder);
                         Destroy(this.gameObject);   //destroy card that was placed successfully
-                        zHand.RefreshZone();
+                        screen.draggingCard = false;
+                        zHand.RefreshZone(true);
                         snap = false;
                     }
                 }
@@ -121,7 +168,8 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
                         //Debug.Log("Card_Drag: placing unit #" + card.unitIndex + " at " + screen.selectedTile.name);
                         Destroy(placeholder);
                         Destroy(this.gameObject);   //destroy card that was placed successfully
-                        zHand.RefreshZone();
+                        screen.draggingCard = false;
+                        zHand.RefreshZone(true);
                         snap = false;
                     }
                 }
@@ -138,11 +186,21 @@ public class Card_Drag : Card_Display, IBeginDragHandler, IDragHandler, IEndDrag
         {
             this.transform.position = placeholder.transform.position;
         }
+       
+        if (transform.parent == hand)
+        {
+            transform.position = positionReturnTo;
+        }
+
         this.transform.SetParent(parentReturnTo);
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
-        GetComponent<CanvasGroup>().alpha = 1f; //reset effect for card (can be changed)
-        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        cGroup.alpha = 1f; //reset effect for card (can be changed)
+        cGroup.blocksRaycasts = true;
         Destroy(placeholder);
-        zHand.RefreshZone();
+
+        dragged = false;
+        clicked = false;
+        screen.draggingCard = false;
+        zHand.RefreshZone(false);
     }
 }

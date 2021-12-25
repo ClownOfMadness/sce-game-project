@@ -20,7 +20,6 @@ public class Screen_Cards : MonoBehaviour
     public GameObject hintsButton;
     public GameObject creativeButton;
     public GameObject storageButton;
-    public GameObject cardsButton;
 
     [Header("- Prefabs:")]
     public GameObject CardObject;    //type of prefab for draggable Cards
@@ -28,7 +27,7 @@ public class Screen_Cards : MonoBehaviour
 
     //blocking cards from acting weird:
     [HideInInspector] public bool visibleMap;
-    [HideInInspector] public bool UIDown;
+    [HideInInspector] public bool UIDown; //needs testing if needed
 
     //blocking zones from acting weird:
     [HideInInspector] public bool MenuUp;
@@ -63,6 +62,10 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public bool draggedBuilding;      //updated by Card_Drag
     [HideInInspector] public bool draggedUnit;          //updated by Card_Drag
     [HideInInspector] public Sprite draggedSprite;      //updated by Card_Drag
+    [HideInInspector] public bool draggingCard;         //updated by Card_Drag
+    [HideInInspector] public bool overlapingCard;       //updated by Card_Drag
+
+    //key mapping:
     [HideInInspector] public static KeyCode handK;
     [HideInInspector] public static KeyCode creativeK;
     [HideInInspector] public static KeyCode storageK;
@@ -74,6 +77,8 @@ public class Screen_Cards : MonoBehaviour
     public bool TestHintsOn;
     [Header("Simulate night:")]
     public bool TestSkipDay;
+    [Header("Hide Hand:")]
+    public bool TestUICards;
 
     //game state:
     [HideInInspector] public bool premiumUser = false;
@@ -102,7 +107,6 @@ public class Screen_Cards : MonoBehaviour
             creativeButton.SetActive(false);
         }
         storageButton.SetActive(true);
-        cardsButton.SetActive(true);
 
         MenuUp = false;
         CraftUp = false;
@@ -113,9 +117,9 @@ public class Screen_Cards : MonoBehaviour
         storageK = KeyCode.S;//
         creativeK = KeyCode.C;//
 
-
         visibleMap = true;
-        CloseUI();  //game starts with UI closed
+        //CloseUI();  //game starts with UI closed
+        OpenUI();  //game starts with UI open
     }
     public void Update()
     {
@@ -130,6 +134,11 @@ public class Screen_Cards : MonoBehaviour
         if (Input.GetKeyDown(storageK)) //to close and open "Storage" with keyboard as well
         {
             SwitchStorage();
+        }
+        if (TestUICards)
+        {
+            SwitchCards();               //replacement for the UICards button
+            TestUICards = false;
         }
     }
     private void SetZones()     //handles everything to do with initiating zones and getting access to their scripts
@@ -229,13 +238,44 @@ public class Screen_Cards : MonoBehaviour
             }
             else
             {
-                TopMessage("hint");
-                HintUp = true;
+                string hint = GetHint();
+                if (hint != "")
+                {
+                    TopMessage(hint);
+                    HintUp = true;
+                }
+                else
+                {
+                    TopMessage("There are no hints at the time!");
+                    HintUp = true;
+                }
+
             }
+    }
+    private string GetHint()
+    {
+        string hint = "";
+        Card_Drag[] cardObjects = Hand.transform.GetComponentsInChildren<Card_Drag>(); //walkaround to ignore placeholders and only check cards
+        List<string> combinations = new List<string>();
+        for (int i = 0; i < cardObjects.Length - 1; i++)
+            for (int j = i; j < cardObjects.Length; j++)
+            {
+                Data_Card combination = Pool.FindCombo(cardObjects[i].card, cardObjects[j].card);         //find if cards can be combined
+                if (combination)
+                {
+                    combinations.Add(string.Format("{0} + {1}", cardObjects[i].card.name, cardObjects[j].card.name));
+                }
+            }
+        if (combinations.Count > 0)
+        {
+            int random = Random.Range(1, combinations.Count);
+            hint = combinations[random];
+        }
+        return hint;
     }
     public void SwitchCreative()//close/open Book
     {
-        if (BookUp)
+        if (BookUp && !UIDown)
         {
             CloseBook();
         }
@@ -253,7 +293,7 @@ public class Screen_Cards : MonoBehaviour
            
             Storage.SetActive(false);
             StorageUp = false;
-
+            HintUp = false;
             BookUp = true;
             OpenUI();
 
@@ -273,7 +313,7 @@ public class Screen_Cards : MonoBehaviour
     }
     public void SwitchStorage() //close/open Storage
     {
-        if (StorageUp)
+        if (StorageUp && !UIDown) 
         {
             CloseStorage();
         }
@@ -294,7 +334,7 @@ public class Screen_Cards : MonoBehaviour
 
             Book.SetActive(false);
             BookUp = false;
-
+            HintUp = false;
             zStorage.RefreshZone();
 
             StorageUp = true;
@@ -320,12 +360,14 @@ public class Screen_Cards : MonoBehaviour
         {
             if (pickedCard.card != Creation)
             {
+                //pickedCard.cGroup.blocksRaycasts = false;
                 if (visibleMap || CraftUp) //move to Craft
                 {
                     if (Craft.transform.childCount < zCraft.Size)
                     {
                         TopMessage(CraftMsg);
                         visibleMap = false;
+                        HintUp = false;
                         Craft.SetActive(true);
                         CraftUp = true;
                         pickedCard.transform.SetParent(Craft.transform);
@@ -348,12 +390,13 @@ public class Screen_Cards : MonoBehaviour
                         Destroy(pickedCard.gameObject);
                     }
                 }
-                zHand.RefreshZone();
+                zHand.RefreshZone(true);
             }
         }
         //if card isn't in hand - try to move it to hand
         else if (Hand.transform.childCount < zHand.Size)    //if there's space in Hand
         {
+            pickedCard.clicked = true;
             if (pickedCard.card.neverDiscovered)
             {
                 pickedCard.card.neverDiscovered = false;
@@ -382,7 +425,7 @@ public class Screen_Cards : MonoBehaviour
                 pickedCard.gameObject.transform.SetParent(Hand.transform);
                 CheckUnit();
             }
-            zHand.RefreshZone();
+            zHand.RefreshZone(true);
         }
     }
     public void DisplayCardClick(Card_Display pickedCard)   //add Card_Display to hand based on what was picked in Book/Storage
@@ -487,7 +530,7 @@ public class Screen_Cards : MonoBehaviour
                 Pool.discoveredTotal++;
             }
             CreateObject(Hand.transform, pickedCard);
-            zHand.RefreshZone();
+            zHand.RefreshZone(false);
             return true;
         }
         return false;
@@ -503,7 +546,8 @@ public class Screen_Cards : MonoBehaviour
         }
         else
         {
-            Message.gameObject.SetActive(false);
+            if(visibleMap)
+                Message.gameObject.SetActive(false);
             UnitUp = false;
         }
     }
