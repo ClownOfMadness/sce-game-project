@@ -102,10 +102,8 @@ public class Map_SpawnControl : MonoBehaviour
                 float currentHeight = Map.TileArray[x, y].GetComponent<Data_Tile>().height; //get the height from the old tile
                 GameObject fog = Map.TileArray[x, y].transform.GetChild(4).gameObject; //get the fog from the old tile
 
-                //display.list.Remove(Map.TileArray[x, y].GetComponent<Data_Tile>());
                 GameObject.Destroy(Map.TileArray[x, y]); //destroy the old tile
                 Map.TileArray[x, y] = Map.InstantiateTile(resources[index].prefab, new Vector3(x * 10, 1, y * 10), Map, currentHeight);
-                //display.list.Add(Map.TileArray[x, y].GetComponent<Data_Tile>());
                 fog.transform.parent = Map.TileArray[x, y].transform;
                 Debug.Log("Spawned " + resources[index].name + " at: " + Map.TileArray[x, y]);
             }

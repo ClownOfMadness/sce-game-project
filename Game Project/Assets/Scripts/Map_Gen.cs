@@ -46,13 +46,15 @@ public class Map_Gen : MonoBehaviour
 
     float[,] falloffMap;
     public GameObject[,] TileArray;
-    public Data_Tile[,] DataTileArray; //new
+    public Data_Tile[,] DataTileArray;
     public List<GameObject> tileList;
+    Player_Control playerControl;
 
     void Awake()
     {
         falloffMap = Map_FalloffGen.generateFalloffMap(mapSize, falloffA, falloffB);
         tileList = CreateTileList();
+        playerControl = FindObjectOfType<Player_Control>();
     }
 
     //Create a list of all the prefabs in the Tiles folder.
@@ -73,6 +75,7 @@ public class Map_Gen : MonoBehaviour
         int seed = Random.Range(int.MinValue, int.MaxValue);//Seed get a random value.
         int randP2;
         TileArray = new GameObject[mapSize, mapSize];
+        DataTileArray = new Data_Tile[mapSize, mapSize];
 
         //Create a noise map.
         float[,] noiseMap = Map_Noise.noiseMapGen(mapSize, mapSize, seed, noiseScale, octaves, persistance, lacunarity, offset);
@@ -141,7 +144,6 @@ public class Map_Gen : MonoBehaviour
                 if ((curHeight >= minHeight && curHeight <= maxHeight) && !(data.hasTownHall || data.hasBuilding) &&
                     (data.canBuildAtDefault || data.tileName != "Ruins"))  //might be changed in the future
                     PosDic.Add(count++, new Vector2Int(x, y));
-
             }
         }
         return PosDic;
@@ -188,6 +190,8 @@ public class Map_Gen : MonoBehaviour
         Player_SpawnBuilding TownHall = FindObjectOfType<Player_SpawnBuilding>();
         TownHall.Spawn(townHall, TileArray[x, y]); //spawn the town hall
         RandomPeasents(PeasentPos, 3, true); //spawn 3 random peasents around the town hall
+        playerControl.CreatePlayer(TileArray[x, y + 1]);
+
         hallCo = new Vector2(x, y); //save the coordenates of the town hall 
 
         return TileArray[x, y]; //return the position of the town hall
@@ -199,7 +203,8 @@ public class Map_Gen : MonoBehaviour
         GameObject tile = Instantiate(tileType, pos, Quaternion.Euler(0, 0, 0));
         tile.transform.parent = parent.transform;
         tile.name = string.Format("tile_x{0}_y{1}", pos.x / 10, pos.z / 10);
-        tile.GetComponent<Data_Tile>().height = currentHeight;
+        DataTileArray[(int)(pos.x / 10), (int)(pos.z / 10)] = tile.GetComponent<Data_Tile>();
+        DataTileArray[(int)(pos.x / 10), (int)(pos.z / 10)].height = currentHeight;
         return tile;
     }
 

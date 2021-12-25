@@ -67,7 +67,7 @@ public class Data_Tile : MonoBehaviour
 
     // [Tile Fog]
     [HideInInspector] public bool revealed = false; // Checks it the tile has been discovered
-    
+
     // [Tile Work]
     private GameObject unit = null; // holds the unit that works here
     [HideInInspector] public GameObject building = null; // holds the building that is on it
@@ -106,7 +106,7 @@ public class Data_Tile : MonoBehaviour
         Setup(); // Setups the tile
     }
 
-    public void Update()
+    public void UpdateMe()
     {
         FindOnce(); // Searches for the needed components
         OnUpdate(); // Functions that work on update
@@ -124,7 +124,7 @@ public class Data_Tile : MonoBehaviour
             recharge = 0;
             hasAbyss = true;
         }
-        
+
         if (works.Length > 0) // If the tile has no resources to gather
         {
             hasResources = true;
@@ -254,7 +254,7 @@ public class Data_Tile : MonoBehaviour
         {
             if (durability > maxDurability)
                 durability = maxDurability;
-            
+
             // If the tile has no building
             if (durability <= 0 && hasResources)
             {
@@ -315,7 +315,7 @@ public class Data_Tile : MonoBehaviour
             else
             {
                 workplaceRenderer.sprite = commonData.workPlace;
-            }    
+            }
         }
         else
         {
@@ -600,7 +600,7 @@ public class Data_Tile : MonoBehaviour
                 }
             }
         }
-    }    
+    }
 
     public bool GetData() // Returns the unit that works here
     {
@@ -701,4 +701,34 @@ public class Data_Tile : MonoBehaviour
         Destroy(building);
         yield return null;
     }
+
+    public Tile_Info CreateTile_Info()
+    {
+        return new Tile_Info();
+    }
+
+    public class Tile_Info
+    {
+        public bool gizmoUse; 
+        public bool canRecharge;
+        public bool canRandom;
+        public GameObject theExtra; 
+        public GameObject parentExtra;
+        public bool extra; 
+        public bool check; 
+        public GameObject unit; 
+        public Data_Building dataBuilding;
+        public List<GameObject> builders;
+        public int progress;
+        public bool buildDone;
+        public bool canProgress;
+        public float nextProgress;
+        public AstarPath path;
+        public List<GameObject> enemies;
+        public bool abyssSetup;
+        public bool canSpawn;
+        public bool hasAbyss;
+    }
 }
+
+

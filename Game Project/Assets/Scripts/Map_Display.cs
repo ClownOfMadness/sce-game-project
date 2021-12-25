@@ -10,7 +10,10 @@ public class Map_Display : MonoBehaviour
     public AstarPath path;
     [HideInInspector] public GameObject TownHall;
     public Unit_List unitlist;
-    //public List<Data_Tile> list = new List<Data_Tile>();
+
+    Map_Gen Map;
+    int size;
+
 
     //Save System//
     public Save_Tile tile;
@@ -26,20 +29,21 @@ public class Map_Display : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Map_Gen Map = FindObjectOfType<Map_Gen>();
-        int size = Map.mapSize;
+        Map = FindObjectOfType<Map_Gen>();
+        size = Map.mapSize;
         TownHall = Map.generateMap();
         MainCamera.transform.position = TownHall.transform.position + new Vector3(0, 150, 0);
         unitlist.townhall = TownHall;
         path.Scan();
     }
 
-    private void Update()
+     void Update()
     {
-        //if (list.Count != 0)
-        //{
-        //    var count = list.Count;
-        //    for (var i = 0; i < count; i++) list[i].UpdateMe();
-        //}
+        if (size != 0)
+        {
+            for (int y = 0; y < size; y++)
+                for (int x = 0; x < size; x++)
+                    Map.DataTileArray[x, y].UpdateMe();
+        }
     }
 }
