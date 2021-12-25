@@ -8,7 +8,10 @@ using TMPro;
 public class Menu_Main : MonoBehaviour
 {
     public GameObject LoadPanel;
-    public GameObject SaveSlots;
+    public GameObject MenuMain;
+    public GameObject GameMenu;
+
+
     public TextMeshProUGUI Logo;
     TextMeshProUGUI loadText;
 
@@ -20,7 +23,7 @@ public class Menu_Main : MonoBehaviour
     public void NewGame()
     {
         LoadPanel.SetActive(true);
-        SaveSlots.SetActive(false);
+        GameMenu.SetActive(false);
 
         StartCoroutine(LoadAsynchronic());
     }
@@ -52,7 +55,7 @@ public class Menu_Main : MonoBehaviour
         yield return null;
     }
 
-private void Update()
+    private void Update()
     {
         if (LoadPanel.activeSelf)
         {
