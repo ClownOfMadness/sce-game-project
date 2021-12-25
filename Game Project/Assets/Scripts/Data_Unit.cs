@@ -419,9 +419,8 @@ public class Data_Unit : MonoBehaviour
             {
                 if (target == spottedEnemy)
                 {
-                    animator.SetTrigger("attack");
                     nextAttack = Time.time + attackCD;
-                    target.GetComponent<Data_Enemy>().Hurt(damage, this);
+                    StartCoroutine(AttackAnim(target));
                     if (jobDurability > 0)
                         durability--;
                 }
@@ -621,7 +620,7 @@ public class Data_Unit : MonoBehaviour
                     path.speed = 10f;
                     path.destination = target.transform.position;
                 }
-                else if (patroling && patrolPlace)
+                else if (patroling)
                 {
                     busy = true;
                     path.speed = 7f;
@@ -639,6 +638,10 @@ public class Data_Unit : MonoBehaviour
                             patroling = false;
                         }
                     }
+                }
+                else
+                {
+                    busy = false;
                 }
             }
         }
@@ -684,6 +687,7 @@ public class Data_Unit : MonoBehaviour
 
     public void Hurt(int damage, Data_Enemy enemy)
     {
+        StartCoroutine(HurtAnim());
         Vector3 moveDirection = this.transform.position - enemy.gameObject.transform.position;
         unitRigidbody.AddForce(moveDirection.normalized * 4000f);
         if (card)
@@ -879,6 +883,24 @@ public class Data_Unit : MonoBehaviour
         this.transform.position = new Vector3(-500, -500, -500);
         yield return new WaitForSeconds(1);
         Destroy(this.gameObject);
+        yield return null;
+    }
+
+    private IEnumerator HurtAnim()
+    {
+        sprite.material.shader = commonData.shaderGUItext;
+        sprite.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        sprite.material.shader = commonData.shaderSpritesDefault;
+        sprite.color = Color.white;
+        yield return null;
+    }
+
+    private IEnumerator AttackAnim(GameObject _target)
+    {
+        animator.SetTrigger("attack");
+        yield return new WaitForSeconds(0.1f);
+        _target.GetComponent<Data_Enemy>().Hurt(damage, this);
         yield return null;
     }
 }

@@ -62,13 +62,15 @@ public class Player_Control : MonoBehaviour
     private float speed = 0f;
     private float amplitude = 0f;
     private bool sprinting = false;
-    public int maxStamina = 10;
-    public int stamina = 10;
+    public int maxStamina = 3;
+    public int stamina = 3;
     private bool tired = false;
     private float nextDrain = 0f;
-    private float drainCD = 1f;
+    private float drainCD = 0.5f;
     private bool chargeDone = false;
     private Vector3 mousePosition = Vector3.zero;
+    public bool gameLost = false;
+    private Data_CommonDataHolder commonData;
 
     // Card
     public Screen_Cards screenCards;
@@ -137,6 +139,14 @@ public class Player_Control : MonoBehaviour
                     loadCount++;
                 }
             }
+
+            if (!commonData)
+            {
+                if (!(commonData = GameObject.Find("Map Generator").GetComponent<Data_CommonDataHolder>()))
+                {
+                    loadCount++;
+                }
+            }
         }
     }
     private void UnitCommand()
@@ -145,7 +155,7 @@ public class Player_Control : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
         {
-            if (Time.timeScale != 0)
+            if (Time.timeScale != 0 && !gameLost)
             {
                 mousePosition = raycastHit.point;
                 // Functions for when the mouse hovers over an interactable layer
@@ -364,6 +374,7 @@ public class Player_Control : MonoBehaviour
                 sprite = player.GetComponentInChildren<SpriteRenderer>();
                 animator = player.GetComponentInChildren<Animator>();
                 rb = player.GetComponent<Rigidbody>();
+                camera.GetComponent<Camera>().orthographicSize = 40f;
                 return true;
             }
         }
@@ -385,6 +396,15 @@ public class Player_Control : MonoBehaviour
                 sprite.flipX = false;
             }
 
+            if (screenCards.CreationRevealed)
+            {
+                animator.SetBool("hasCard", true);
+            }
+            else
+            {
+                animator.SetBool("hasCard", false);
+            }
+
             if (tired)
             {
                 animator.SetBool("tired", true);
@@ -397,14 +417,6 @@ public class Player_Control : MonoBehaviour
             if (normMagnitude > 0)
             {
                 animator.SetBool("running", true);
-                if (sprinting)
-                {
-                    animator.SetBool("sprinting", true);
-                }
-                else
-                {
-                    animator.SetBool("sprinting", false);
-                }
             }
             else
             {
@@ -415,20 +427,20 @@ public class Player_Control : MonoBehaviour
 
     private void PlayerController()
     {
-        if (player)
+        if (player && !gameLost)
         {
             if (!tired)
             {
                 if (Input.GetKey(sprint))
                 {
-                    amplitude = 30f;
+                    amplitude = 20f;
                     sprinting = true;
                     if (animator.GetBool("running") == true)
                         animator.speed = 2f;
                 }
                 else
                 {
-                    amplitude = 15f;
+                    amplitude = 10f;
                     sprinting = false;
                     if (animator.speed != 1f)
                         animator.speed = 1f;
@@ -486,21 +498,40 @@ public class Player_Control : MonoBehaviour
 
     private void Movement()
     {
-        if (rb)
+        if (rb && !gameLost)
         {
-            camera.transform.position = rb.position + new Vector3(0f, 148.99f, 0f);
+            //camera.transform.position = rb.position + new Vector3(0f, 148.99f, 0f);
             rb.velocity = normDirection * speed;
         }
     }
 
     public void Hurt(Data_Enemy enemy)
     {
-        //screenCards.
+        StartCoroutine(HurtAnim());
+        if (screenCards.CreationRevealed)
+        {
+            Vector3 moveDirection = rb.transform.position - enemy.gameObject.transform.position;
+            rb.AddForce(moveDirection.normalized * 1000f);
+            Data_Card tmp = screenCards.DamageMaster();
+            enemy.card = tmp;
+            tmp = null;
+            gameLost = true;
+            player.gameObject.layer = 0;
+            animator.SetBool("die", true);
+        }
+        else
+        {
+            Vector3 moveDirection = rb.transform.position - enemy.gameObject.transform.position;
+            rb.AddForce(moveDirection.normalized * 4000f);
+            Data_Card tmp = screenCards.DamageMaster();
+            enemy.card = tmp;
+            tmp = null;
+        }
     }
 
     private void Tired()
     {
-        if (player)
+        if (player && !gameLost)
         {
             if (stamina >= maxStamina)
             {
@@ -517,7 +548,7 @@ public class Player_Control : MonoBehaviour
                 tired = false;
             }
 
-            if (sprinting)
+            if (sprinting && normMagnitude > 0)
             {
                 if (!tired)
                 {
@@ -545,7 +576,7 @@ public class Player_Control : MonoBehaviour
     private IEnumerator Recharge()
     {
         chargeDone = true;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         stamina++;
         chargeDone = false;
         yield return null;
@@ -553,10 +584,27 @@ public class Player_Control : MonoBehaviour
 
     private void CameraFollow()
     {
-        Vector3 mousePosition2D = new Vector3(mousePosition.x, rb.position.y, mousePosition.z);
-        Vector3 combinedPosition = (rb.position + ((rb.position + mousePosition2D) / 2f)) / 2f;
-        Vector3 targetPosition = combinedPosition + new Vector3(0f, 148.99f, 0f);
-        Vector3 smoothedPosition = Vector3.Lerp(camera.transform.position, targetPosition, 9f * Time.fixedDeltaTime);
-        camera.transform.position = smoothedPosition;
+        if (!gameLost)
+        {
+            Vector3 mousePosition2D = new Vector3(mousePosition.x, rb.position.y, mousePosition.z);
+            Vector3 combinedPosition = (rb.position + ((rb.position + mousePosition2D) / 2f)) / 2f;
+            Vector3 targetPosition = combinedPosition + new Vector3(0f, 148.99f, 0f);
+            Vector3 smoothedPosition = Vector3.Lerp(camera.transform.position, targetPosition, 9f * Time.fixedDeltaTime);
+            camera.transform.position = smoothedPosition;
+        }
+        else
+        {
+            camera.transform.position = rb.position + new Vector3(0f, 148.99f, 0f);
+        }
+    }
+
+    private IEnumerator HurtAnim()
+    {
+        sprite.material.shader = commonData.shaderGUItext;
+        sprite.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        sprite.material.shader = commonData.shaderSpritesDefault;
+        sprite.color = Color.white;
+        yield return null;
     }
 }

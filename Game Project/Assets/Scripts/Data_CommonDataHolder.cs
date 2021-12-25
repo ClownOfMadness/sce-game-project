@@ -11,6 +11,8 @@ public class Data_CommonDataHolder : MonoBehaviour
     public Sprite patrolPlace;
     public Sprite pointer;
     public Data_Card peasantCard;
+    public Shader shaderGUItext;
+    public Shader shaderSpritesDefault;
     private void Awake()
     {
         if (!workSiteSprite)
@@ -40,6 +42,14 @@ public class Data_CommonDataHolder : MonoBehaviour
         if (!peasantCard)
         {
             Debug.LogError("Peasant Card is missing from the Data_CommonDataHolder");
+        }
+        if (!(shaderGUItext = Shader.Find("GUI/Text Shader")))
+        {
+            Debug.LogError("GUI Shader is missing from the Data_CommonDataHolder");
+        }
+        if (!(shaderSpritesDefault = Shader.Find("Sprites/Default")))
+        {
+            Debug.LogError("Default Sprite Shader is missing from the Data_CommonDataHolder");
         }
     }
 }

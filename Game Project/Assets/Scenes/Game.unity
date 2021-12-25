@@ -8509,6 +8509,8 @@ MonoBehaviour:
   patrolPlace: {fileID: 21300000, guid: 572401b9825935640b08388833d9493b, type: 3}
   pointer: {fileID: 21300000, guid: 912f1cae176c9fa40826a4907eb797c7, type: 3}
   peasantCard: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
+  shaderGUItext: {fileID: 0}
+  shaderSpritesDefault: {fileID: 0}
 --- !u!1 &1506372238
 GameObject:
   m_ObjectHideFlags: 0
@@ -9555,8 +9557,6 @@ MonoBehaviour:
   Size: 0
   screen: {fileID: 0}
   handShift: 100
-  handReturnTo: {x: 0, y: 0, z: 0}
-  handUp: 0
   Fill: 0
   Damage: 0
   Preset: 0
@@ -11813,6 +11813,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 8043511729971891358, guid: 97468b6b6b738694e87f82eebdce8305, type: 3}
   maxStamina: 10
   stamina: 10
+  gameLost: 0
   screenCards: {fileID: 2133596450}
 --- !u!4 &2032034142
 Transform:
@@ -12642,6 +12643,7 @@ MonoBehaviour:
   BookUp: 0
   Pool: {fileID: 0}
   Creation: {fileID: 0}
+  CreationRevealed: 0
   selectedTile: {fileID: 0}
   draggedBuilding: 0
   draggedUnit: 0

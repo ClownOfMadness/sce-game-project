@@ -64,6 +64,7 @@ public class Data_Enemy : MonoBehaviour
     private System_DayNight time; // DayNight script
     private Screen_Cards screenCards; // ScreenCards script
     private Player_Control player;
+    private Data_CommonDataHolder commonData;
     private int loadCount = 0; // Amount of time to try to find components until claiming a fail
 
     private void Awake()
@@ -146,6 +147,14 @@ public class Data_Enemy : MonoBehaviour
             if (!player)
             {
                 if (!(player = GameObject.Find("PlayerControl").GetComponent<Player_Control>()))
+                {
+                    loadCount++;
+                }
+            }
+
+            if (!commonData)
+            {
+                if (!(commonData = GameObject.Find("Map Generator").GetComponent<Data_CommonDataHolder>()))
                 {
                     loadCount++;
                 }
@@ -370,6 +379,7 @@ public class Data_Enemy : MonoBehaviour
 
     public void Hurt(int damage, Data_Unit _unit)
     {
+        StartCoroutine(HurtAnim());
         Vector3 moveDirection = this.transform.position - _unit.gameObject.transform.position;
         enemyRigidbody.AddForce(moveDirection.normalized * 4000f);
         if (health - damage <= 0 && card)
@@ -392,27 +402,23 @@ public class Data_Enemy : MonoBehaviour
             {
                 if (target == spottedUnit)
                 {
-                    animator.SetTrigger("attack");
                     nextAttack = Time.time + attackCD;
-                    target.GetComponent<Data_Unit>().Hurt(damage, this);
+                    StartCoroutine(AttackUnit(target));
                 }
                 else if (target == spottedBuilding)
                 {
-                    animator.SetTrigger("attack");
                     nextAttack = Time.time + attackCD;
-                    target.GetComponent<Data_Building>().Hurt(damage, this);
+                    StartCoroutine(AttackBuilding(target));
                 }
                 else if (target == spottedTownHall)
                 {
-                    animator.SetTrigger("attack");
                     nextAttack = Time.time + attackCD;
-                    target.GetComponent<Data_Building>().Hurt(damage, this);
+                    StartCoroutine(AttackBuilding(target));
                 }
                 else if (target == spottedPlayer)
                 {
-                    animator.SetTrigger("attack");
                     nextAttack = Time.time + attackCD;
-                    player.Hurt(this);
+                    StartCoroutine(AttackPlayer());
                 }
             }
         }
@@ -481,6 +487,40 @@ public class Data_Enemy : MonoBehaviour
         this.transform.position = new Vector3(-500, -500, -500);
         yield return new WaitForSeconds(1);
         Destroy(this.gameObject);
+        yield return null;
+    }
+
+    private IEnumerator HurtAnim()
+    {
+        sprite.material.shader = commonData.shaderGUItext;
+        sprite.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        sprite.material.shader = commonData.shaderSpritesDefault;
+        sprite.color = Color.white;
+        yield return null;
+    }
+
+    private IEnumerator AttackUnit(GameObject _target)
+    {
+        animator.SetTrigger("attack");
+        yield return new WaitForSeconds(0.1f);
+        _target.GetComponent<Data_Unit>().Hurt(damage, this);
+        yield return null;
+    }
+
+    private IEnumerator AttackBuilding(GameObject _target)
+    {
+        animator.SetTrigger("attack");
+        yield return new WaitForSeconds(0.1f);
+        _target.GetComponent<Data_Building>().Hurt(damage, this);
+        yield return null;
+    }
+
+    private IEnumerator AttackPlayer()
+    {
+        animator.SetTrigger("attack");
+        yield return new WaitForSeconds(0.1f);
+        player.Hurt(this);
         yield return null;
     }
 }
