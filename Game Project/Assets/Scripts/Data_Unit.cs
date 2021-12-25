@@ -445,7 +445,7 @@ public class Data_Unit : MonoBehaviour
         {
             if (durability <= 0)
             {
-                unitList.CreateUnit(0, currentTileOn, card);
+                unitList.SummonUnit(0, currentTileOn, card, false);
                 DestroyUnit();
             }
         }

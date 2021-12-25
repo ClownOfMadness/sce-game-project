@@ -8,7 +8,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Terrain
@@ -22,7 +22,7 @@ TagManager:
   - BuildingInteraction
   - Enemy
   - Abyss
-  - 
+  - ImpassableForPlayer
   - 
   - 
   - 

@@ -27,6 +27,11 @@ public class Player_Control : MonoBehaviour
 
     // Key Binding
     [HideInInspector] public KeyCode panScreen = KeyCode.Space;
+    [HideInInspector] public KeyCode sprint = KeyCode.LeftShift;
+    [HideInInspector] public KeyCode up = KeyCode.W;
+    [HideInInspector] public KeyCode down = KeyCode.S;
+    [HideInInspector] public KeyCode right = KeyCode.D;
+    [HideInInspector] public KeyCode left = KeyCode.A;
 
     // Screen Panning
     public Vector3 startPosition;
@@ -42,6 +47,28 @@ public class Player_Control : MonoBehaviour
     private Vector3 originalCameraPos; // Stores camera original position
     public Map_Gen mapGen;
     private int loadCount = 0;
+
+    // Player
+    public GameObject playerPrefab = null;
+    private GameObject player = null;
+    private Rigidbody rb = null;
+    private SpriteRenderer sprite = null;
+    private Animator animator = null;
+    private float zMov = 0f;
+    private float xMov = 0f;
+    private Vector3 rawDirection = Vector3.zero;
+    private Vector3 normDirection = Vector3.zero;
+    private float normMagnitude = 0f;
+    private float speed = 0f;
+    private float amplitude = 0f;
+    private bool sprinting = false;
+    public int maxStamina = 10;
+    public int stamina = 10;
+    private bool tired = false;
+    private float nextDrain = 0f;
+    private float drainCD = 1f;
+    private bool chargeDone = false;
+    private Vector3 mousePosition = Vector3.zero;
 
     // Card
     public Screen_Cards screenCards;
@@ -75,11 +102,24 @@ public class Player_Control : MonoBehaviour
         UnitCommand(); // Unit pathfinding control;
         FindOnce();
         PlayerInput();
+        Animator();
+        PlayerController();
+        Tired();
+    }
+
+    private void FixedUpdate()
+    {
+        if (player)
+        {
+            Movement();
+            CameraFollow();
+        }
     }
 
     private void LateUpdate()
     {
-        CameraControl(); // Screen panning functions
+        if (!player)
+            CameraControl(); // Screen panning functions
     }
 
     private void FindOnce()
@@ -107,6 +147,7 @@ public class Player_Control : MonoBehaviour
         {
             if (Time.timeScale != 0)
             {
+                mousePosition = raycastHit.point;
                 // Functions for when the mouse hovers over an interactable layer
                 if (EventSystem.current.currentSelectedGameObject == null)
                 {
@@ -152,6 +193,13 @@ public class Player_Control : MonoBehaviour
                                 selectedData_Tile.DetachWork();
                                 selectedData_Tile.DetachBuild(theUnit);
                             }
+                        }
+
+                        // [[Temporary]]
+                        if (Input.GetKeyDown(KeyCode.P))
+                        {
+                            selectedObject = raycastHit.transform.gameObject;
+                            CreatePlayer(selectedObject);
                         }
                     }
                 }
@@ -303,5 +351,212 @@ public class Player_Control : MonoBehaviour
         float newZ = Mathf.Clamp(targetPosition.z, minY, maxY);
 
         return new Vector3(newX, 150f, newZ);
+    }
+
+    public bool CreatePlayer(GameObject tile)
+    {
+        if (!player)
+        {
+            Data_Tile dataTile = tile.GetComponent<Data_Tile>();
+            if (!dataTile.hasBuilding && dataTile.gameObject.layer != 7)
+            {
+                player = Instantiate(playerPrefab, tile.transform.position + new Vector3(0,0.01f,0), Quaternion.Euler(0, 0, 0));
+                sprite = player.GetComponentInChildren<SpriteRenderer>();
+                animator = player.GetComponentInChildren<Animator>();
+                rb = player.GetComponent<Rigidbody>();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void Animator()
+    {
+        if (sprite && animator)
+        {
+            sprite.sortingOrder = -(int)Mathf.Abs(player.transform.position.z);
+
+            if (normDirection.x > 0.01f)
+            {
+                sprite.flipX = true;
+            }
+            else if (normDirection.x < -0.01f)
+            {
+                sprite.flipX = false;
+            }
+
+            if (tired)
+            {
+                animator.SetBool("tired", true);
+            }
+            else
+            {
+                animator.SetBool("tired", false);
+            }
+
+            if (normMagnitude > 0)
+            {
+                animator.SetBool("running", true);
+                if (sprinting)
+                {
+                    animator.SetBool("sprinting", true);
+                }
+                else
+                {
+                    animator.SetBool("sprinting", false);
+                }
+            }
+            else
+            {
+                animator.SetBool("running", false);
+            }
+        }
+    }
+
+    private void PlayerController()
+    {
+        if (player)
+        {
+            if (!tired)
+            {
+                if (Input.GetKey(sprint))
+                {
+                    amplitude = 30f;
+                    sprinting = true;
+                    if (animator.GetBool("running") == true)
+                        animator.speed = 2f;
+                }
+                else
+                {
+                    amplitude = 15f;
+                    sprinting = false;
+                    if (animator.speed != 1f)
+                        animator.speed = 1f;
+                }
+            }
+            else
+            {
+                amplitude = 0f;
+                sprinting = false;
+                if (animator.speed != 1f)
+                    animator.speed = 1f;
+            }
+            
+            if (Input.GetKey(up) && !Input.GetKey(down))
+            {
+                zMov = 1;
+            }
+            else if (Input.GetKey(down) && !Input.GetKey(up))
+            {
+                zMov = -1;
+            }
+            else
+            {
+                zMov = 0;
+            }
+
+            if (Input.GetKey(right) && !Input.GetKey(left))
+            {
+                xMov = 1;
+            }
+            else if (Input.GetKey(left) && !Input.GetKey(right))
+            {
+                xMov = -1;
+            }
+            else
+            {
+                xMov = 0;
+            }
+
+            rawDirection = new Vector3(xMov, 0, zMov);
+
+            if (rawDirection.magnitude > 1)
+            {
+                normDirection = rawDirection.normalized;
+            }
+            else
+            {
+                normDirection = rawDirection;
+            }
+
+            normMagnitude = normDirection.magnitude;
+            speed = normMagnitude * amplitude;
+        }
+    }
+
+    private void Movement()
+    {
+        if (rb)
+        {
+            camera.transform.position = rb.position + new Vector3(0f, 148.99f, 0f);
+            rb.velocity = normDirection * speed;
+        }
+    }
+
+    public void Hurt(Data_Enemy enemy)
+    {
+        //screenCards.
+    }
+
+    private void Tired()
+    {
+        if (player)
+        {
+            if (stamina >= maxStamina)
+            {
+                stamina = maxStamina;
+            }
+
+            if (stamina <= 0)
+            {
+                stamina = 0;
+                tired = true;
+            }
+            else
+            {
+                tired = false;
+            }
+
+            if (sprinting)
+            {
+                if (!tired)
+                {
+                    if (Time.time > nextDrain)
+                    {
+                        nextDrain = Time.time + drainCD;
+                        stamina--;
+                    }
+                }
+            }
+            else
+            {
+                if (stamina < maxStamina)
+                {
+                    if (!chargeDone)
+                    {
+                        chargeDone = true;
+                        StartCoroutine(Recharge());
+                    }
+                }
+            }
+        }
+    }
+
+    private IEnumerator Recharge()
+    {
+        chargeDone = true;
+        yield return new WaitForSeconds(2f);
+        stamina++;
+        chargeDone = false;
+        yield return null;
+    }
+
+    private void CameraFollow()
+    {
+        Vector3 mousePosition2D = new Vector3(mousePosition.x, rb.position.y, mousePosition.z);
+        Vector3 combinedPosition = (rb.position + ((rb.position + mousePosition2D) / 2f)) / 2f;
+        Vector3 targetPosition = combinedPosition + new Vector3(0f, 148.99f, 0f);
+        Vector3 smoothedPosition = Vector3.Lerp(camera.transform.position, targetPosition, 9f * Time.fixedDeltaTime);
+        camera.transform.position = smoothedPosition;
     }
 }

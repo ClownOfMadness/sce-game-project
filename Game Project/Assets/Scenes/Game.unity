@@ -9640,7 +9640,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -75}
   m_SizeDelta: {x: 700, y: 150}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &1707741526
@@ -11794,6 +11794,11 @@ MonoBehaviour:
   selectedJob: 0
   selectedUnit: {fileID: 0}
   panScreen: 32
+  sprint: 304
+  up: 119
+  down: 115
+  right: 100
+  left: 97
   startPosition: {x: 0, y: 0, z: 0}
   pos: {x: 0, y: 0, z: 0}
   panSpeed: 40
@@ -11805,6 +11810,9 @@ MonoBehaviour:
   maxScroll: 50
   scroll: 40
   mapGen: {fileID: 1505982683}
+  playerPrefab: {fileID: 8043511729971891358, guid: 97468b6b6b738694e87f82eebdce8305, type: 3}
+  maxStamina: 10
+  stamina: 10
   screenCards: {fileID: 2133596450}
 --- !u!4 &2032034142
 Transform:

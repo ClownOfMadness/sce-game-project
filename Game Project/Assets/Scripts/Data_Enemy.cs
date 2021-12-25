@@ -45,6 +45,7 @@ public class Data_Enemy : MonoBehaviour
     private GameObject spottedUnit = null;
     private GameObject spottedBuilding = null;
     private GameObject spottedTownHall = null;
+    private GameObject spottedPlayer = null;
     private float nextAttack = 0f;
 
     // [Enemy Control]
@@ -62,6 +63,7 @@ public class Data_Enemy : MonoBehaviour
     private Unit_List unitList;
     private System_DayNight time; // DayNight script
     private Screen_Cards screenCards; // ScreenCards script
+    private Player_Control player;
     private int loadCount = 0; // Amount of time to try to find components until claiming a fail
 
     private void Awake()
@@ -136,6 +138,14 @@ public class Data_Enemy : MonoBehaviour
             if (!unitList)
             {
                 if (!(unitList = GameObject.Find("Units").GetComponent<Unit_List>()))
+                {
+                    loadCount++;
+                }
+            }
+
+            if (!player)
+            {
+                if (!(player = GameObject.Find("PlayerControl").GetComponent<Player_Control>()))
                 {
                     loadCount++;
                 }
@@ -273,13 +283,20 @@ public class Data_Enemy : MonoBehaviour
             }
             else
             {
-                if (spottedTownHall)
+                if (spottedPlayer)
                 {
-                    target = spottedTownHall;
+                    target = spottedPlayer;
                 }
                 else
                 {
-                    target = null;
+                    if (spottedTownHall)
+                    {
+                        target = spottedTownHall;
+                    }
+                    else
+                    {
+                        target = null;
+                    }
                 }
             }
         }
@@ -391,6 +408,12 @@ public class Data_Enemy : MonoBehaviour
                     nextAttack = Time.time + attackCD;
                     target.GetComponent<Data_Building>().Hurt(damage, this);
                 }
+                else if (target == spottedPlayer)
+                {
+                    animator.SetTrigger("attack");
+                    nextAttack = Time.time + attackCD;
+                    player.Hurt(this);
+                }
             }
         }
     }
@@ -409,6 +432,10 @@ public class Data_Enemy : MonoBehaviour
         {
             spottedUnit = other.gameObject;
         }
+        if (!spottedPlayer && other.gameObject.layer == 3)
+        {
+            spottedPlayer = other.gameObject;
+        }
     }
     private void OnTriggerExit(Collider other)
     {
@@ -423,6 +450,10 @@ public class Data_Enemy : MonoBehaviour
         if (spottedUnit == other.gameObject)
         {
             spottedUnit = null;
+        }
+        if (spottedPlayer == other.gameObject)
+        {
+            spottedPlayer = null;
         }
     }
 
