@@ -10,10 +10,16 @@ public class Menu_Pause : MonoBehaviour
     public GameObject optionsMenuUI;//Options Menu
     public GameObject LoginUI;//Login Menu
     public GameObject KeyBindingUI;//Key Binding Menu
+    [HideInInspector] public static KeyCode EscK; //key mapping:
+
+    private void Start()
+    {
+        EscK = KeyCode.Escape;
+    }
 
     void Update()
     {
-       if(Input.GetKeyDown(KeyCode.Escape))
+       if(Input.GetKeyDown(EscK))
         {
             if(IsPaused)
                 Resume();

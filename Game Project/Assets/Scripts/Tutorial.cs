@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Switch : MonoBehaviour
+public class Tutorial : MonoBehaviour
 {
 
     public GameObject[] background;
@@ -57,5 +57,13 @@ public class Switch : MonoBehaviour
         //Debug.Log(index);
     }
 
+    public void Skip()
+    {
+            this.gameObject.SetActive(false);
+            background[index].gameObject.SetActive(false);
+            background[0].gameObject.SetActive(true);
+            index = 0;
+            Time.timeScale = 1f;
+    }
 
 }
