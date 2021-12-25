@@ -31,7 +31,6 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
 
     //ohHover:
     [HideInInspector] public Vector3 positionReturnTo;
-    [HideInInspector] public int cardShift;     //changes to indicate current position
     [HideInInspector] public bool dragged;
     [HideInInspector] public bool clicked;
 
@@ -39,7 +38,6 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
     {
         dragged = false;
         clicked = false;
-        cardShift = 10;
         cGroup = GetComponent<CanvasGroup>();
         Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
         Units = FindObjectOfType<Unit_List>();              //connection to use UnitList functions
@@ -50,15 +48,12 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
     }
     public void OnPointerEnter(PointerEventData eventData)   //onHover set
     {
+       
         if (!dragged && !screen.draggingCard && transform.parent == hand) 
         {
+            positionReturnTo = new Vector3(transform.position.x, transform.position.y, 0);  //original position
             screen.overlapingCard = false;
-            clicked = false;
-            if (zHand.handUp)
-            {
-                positionReturnTo = new Vector3(transform.position.x, transform.position.y - zHand.handShift, 0);  //original position
-                transform.position = new Vector3(transform.position.x, positionReturnTo.y + zHand.handShift + cardShift, 0);
-            }
+            transform.position = new Vector3(transform.position.x, positionReturnTo.y + zHand.handShift, 0);
         }
     }
     public void OnPointerExit(PointerEventData eventData)   //onHover reset
@@ -68,14 +63,14 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
         {
             screen.overlapingCard = true;
         }
-        //blocks: cards that are in the Craft, cards that have other cards on top
-        if (!screen.draggingCard && !clicked && !screen.overlapingCard && transform.parent == hand) 
+        if (clicked)
         {
-            if (zHand.handUp)
-            {
-                positionReturnTo = new Vector3(transform.position.x, transform.position.y - zHand.handShift - cardShift, 0);  //original position
-                transform.position = new Vector3(positionReturnTo.x, positionReturnTo.y + zHand.handShift, 0);
-            }
+            positionReturnTo = new Vector3(transform.position.x, transform.position.y, 0);  //original position
+            clicked = false;
+        }
+        if (transform.parent == hand && !screen.overlapingCard) 
+        {
+                transform.position = positionReturnTo;
         }
     }
     private void SavePlaceholder()  //enables card order
@@ -117,7 +112,8 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
             }
         }
         if (this.card != screen.Creation)
-            zHand.RefreshZone(true);
+            zHand.RefreshZone();
+        //refresh cards?
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -138,8 +134,8 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
             }
         }
         placeholder.transform.SetSiblingIndex(newSiblingIndex); //the abillity to swap places with cards in hand
-        zHand.RefreshCards();
-        positionReturnTo = new Vector3(placeholder.transform.position.x, placeholder.transform.position.y - zHand.handShift, 0);  //original position
+        //zHand.RefreshCards();
+        //positionReturnTo = new Vector3(placeholder.transform.position.x, placeholder.transform.position.y, 0);  //original position
     }
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -157,7 +153,8 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
                         Destroy(placeholder);
                         Destroy(this.gameObject);   //destroy card that was placed successfully
                         screen.draggingCard = false;
-                        zHand.RefreshZone(true);
+                        zHand.RefreshZone();
+                        //refresh cards?
                         snap = false;
                     }
                 }
@@ -169,7 +166,8 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
                         Destroy(placeholder);
                         Destroy(this.gameObject);   //destroy card that was placed successfully
                         screen.draggingCard = false;
-                        zHand.RefreshZone(true);
+                        zHand.RefreshZone();
+                        //refresh cards?
                         snap = false;
                     }
                 }
@@ -182,16 +180,14 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
     }
     public void SnapToParent()
     {
-        if (this.card == screen.Creation)   //doesn't snap on its own
+        if (card == screen.Creation)   //doesn't snap on its own
         {
-            this.transform.position = placeholder.transform.position;
+            transform.position = placeholder.transform.position;
         }
-       
-        if (transform.parent == hand)
+        else if (transform.parent == hand)
         {
             transform.position = positionReturnTo;
         }
-
         this.transform.SetParent(parentReturnTo);
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
         cGroup.alpha = 1f; //reset effect for card (can be changed)
@@ -201,6 +197,6 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
         dragged = false;
         clicked = false;
         screen.draggingCard = false;
-        zHand.RefreshZone(false);
+        zHand.RefreshZone();
     }
 }

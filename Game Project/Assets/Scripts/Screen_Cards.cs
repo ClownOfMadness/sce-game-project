@@ -56,12 +56,15 @@ public class Screen_Cards : MonoBehaviour
     //sharing with other scripts:
     [HideInInspector] public Card_Pool Pool;
     [HideInInspector] public Data_Card Creation;
+    [HideInInspector] public bool CreationRevealed;
 
     //placement on map:
     [HideInInspector] public GameObject selectedTile;   //updated by Player_Control
     [HideInInspector] public bool draggedBuilding;      //updated by Card_Drag
     [HideInInspector] public bool draggedUnit;          //updated by Card_Drag
     [HideInInspector] public Sprite draggedSprite;      //updated by Card_Drag
+
+    //OnHover:
     [HideInInspector] public bool draggingCard;         //updated by Card_Drag
     [HideInInspector] public bool overlapingCard;       //updated by Card_Drag
 
@@ -114,7 +117,7 @@ public class Screen_Cards : MonoBehaviour
         StorageUp = false;
         BookUp = false;
         handK = KeyCode.H;// the default keycodes -> will later be implemented in saves
-        storageK = KeyCode.S;//
+        storageK = KeyCode.I;//
         creativeK = KeyCode.C;//
 
         visibleMap = true;
@@ -390,7 +393,7 @@ public class Screen_Cards : MonoBehaviour
                         Destroy(pickedCard.gameObject);
                     }
                 }
-                zHand.RefreshZone(true);
+                zHand.RefreshZone();
             }
         }
         //if card isn't in hand - try to move it to hand
@@ -425,7 +428,7 @@ public class Screen_Cards : MonoBehaviour
                 pickedCard.gameObject.transform.SetParent(Hand.transform);
                 CheckUnit();
             }
-            zHand.RefreshZone(true);
+            zHand.RefreshZone();
         }
     }
     public void DisplayCardClick(Card_Display pickedCard)   //add Card_Display to hand based on what was picked in Book/Storage
@@ -530,7 +533,7 @@ public class Screen_Cards : MonoBehaviour
                 Pool.discoveredTotal++;
             }
             CreateObject(Hand.transform, pickedCard);
-            zHand.RefreshZone(false);
+            zHand.RefreshZone();
             return true;
         }
         return false;
@@ -550,6 +553,10 @@ public class Screen_Cards : MonoBehaviour
                 Message.gameObject.SetActive(false);
             UnitUp = false;
         }
+    }
+    public Data_Card DamageMaster() //open Unit Zone if it has cards
+    {
+        return zHand.DamageDeck();
     }
     public Cards_Info ExportCards()             //will be used to save the game
     {

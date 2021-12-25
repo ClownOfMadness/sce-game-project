@@ -14,10 +14,7 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
     private Card_Pool Pool; //open Card_Pool connection to use its functions
 
     //ohHover:
-    private int shift = 100;
-    [HideInInspector] public int handShift = 100;     //changes to indicate current position
-    [HideInInspector] public Vector3 handReturnTo;  //gets saved once
-    [HideInInspector] public bool handUp = false;
+    [HideInInspector] public float handShift;     //changes to indicate current position
 
     //for development testing:
     [Header("- Fill Hand:")]
@@ -88,7 +85,7 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
             }
             screen.CreateObject(this.transform, deck[i]);
         }
-        handReturnTo = transform.position;  //original position
+        handShift = Mathf.Abs(this.gameObject.transform.position.y);
     }
     public override void EventDrop(Card_Drag cardObject)    //card was dropped into Zone
     {
@@ -99,48 +96,16 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
             Pool.discoveredTotal++;
         }
     }
-    public override void OnPointerEnter(PointerEventData eventData)
-    {
-        if (handUp == false)
-        {
-            RefreshCards();
-            transform.position = new Vector3(handReturnTo.x, handReturnTo.y + handShift, 0);
-            Card_Drag d = eventData.pointerEnter.GetComponent<Card_Drag>();
-            if (d != null)
-            {
-                //shifts up the card the mouse is already on when opening the zone
-                d.transform.position = new Vector3(d.positionReturnTo.x, d.positionReturnTo.y + d.cardShift + handShift, 0);
-            }
-            handUp = true;
-        }                           
-        HandleCardsEnter(eventData);//calls Zone_Behaviours' OnPointerEnter    
-    }
-    public override void OnPointerExit(PointerEventData eventData)
-    {
-        if (handUp && screen.visibleMap) 
-        {
-            transform.position = handReturnTo;
-            if (eventData.pointerEnter)
-            {
-                Card_Drag d = eventData.pointerEnter.GetComponent<Card_Drag>();
-                if (d != null)
-                {
-                    d.transform.position = new Vector3(d.positionReturnTo.x, d.positionReturnTo.y, 0);
-                }
-            }
-            handUp = false;
-            RefreshCards();
-        }
-        HandleCardsExit(eventData);//calls Zone_Behaviours' OnPointerExit  
-    }
-    public void DamageDeck()    //lose a random card from hand, if Creation is lost game is lost
+    public Data_Card DamageDeck()    //lose a random card from hand, if Creation is lost game is lost
     {
         Card_Drag[] cardObjects = this.GetComponentsInChildren<Card_Drag>();
+        Data_Card lostCard = null;
         int count = cardObjects.Length;
         if (count > 0)
         {
             int random = Random.Range(0, count);
-            if (cardObjects[random].card == Creation)
+            lostCard = cardObjects[random].card;
+            if (lostCard == Creation)
             {
                 Debug.Log("Game lost.");
             }
@@ -152,8 +117,9 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
                     EmptyHand();    //spawn Creation if took too much damage
             }
         }
+        return lostCard;
     }
-    public void RefreshZone(bool refreshCards) 
+    public void RefreshZone() 
     {
         Card_Drag[] cardObjects = this.transform.GetComponentsInChildren<Card_Drag>(); //walkaround to ignore placeholders and only check cards
         if (cardObjects.Length < 1)
@@ -164,25 +130,21 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
         {
             NotEmpty();
         }
-        if(refreshCards)
-            RefreshCards();
     }
-    public void RefreshCards()
-    {
-        Card_Drag[] cardObjects = this.GetComponentsInChildren<Card_Drag>();
-        for (int i = 0; i < cardObjects.Length; i++)      //loops to move the placeholder to the left
-        {
-            if (handUp)
-                cardObjects[i].positionReturnTo = new Vector3(cardObjects[i].transform.position.x, cardObjects[i].transform.position.y - handShift, 0);  //original position
-            else
-                cardObjects[i].positionReturnTo = new Vector3(cardObjects[i].transform.position.x, cardObjects[i].transform.position.y, 0);  //original position
-        }
-    }
+    //public void RefreshCards()
+    //{
+    //    Card_Drag[] cardObjects = this.GetComponentsInChildren<Card_Drag>();
+    //    for (int i = 0; i < cardObjects.Length; i++)      //loops to move the placeholder to the left
+    //    {
+    //        cardObjects[i].positionReturnTo = new Vector3(cardObjects[i].transform.position.x, cardObjects[i].transform.position.y, 0);  //original position
+    //    }
+    //}
     public void EmptyHand()     //add Creation to hand
     {
         GameObject newCard = screen.CreateObject(this.transform, Creation); //create and instantiate object in zone
         newCard.GetComponent<LayoutElement>().ignoreLayout = true;
         Debug.Log("Creation was revealed.");
+        screen.CreationRevealed = true;
     }
     public void NotEmpty()      //remove Creation
     {
@@ -199,7 +161,10 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
                     Destroy(card.gameObject);   //if Creation used to be in hand and card was added, remove Creation
                 }
             if (hidden) //if Creation was found and removed
+            {
                 Debug.Log("Creation was hidden, you're safe for now.");
+                screen.CreationRevealed = false;
+            }
         }
     }
     public List<int> ExportDeck()           //will be used to save the game

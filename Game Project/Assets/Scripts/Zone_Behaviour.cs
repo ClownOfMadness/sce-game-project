@@ -7,11 +7,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
     [HideInInspector] public int Size;  //used by other Zones
 
     public virtual void EventDrop(Card_Drag cardObject) { } //lets other Zones override it
-    public virtual void OnPointerEnter(PointerEventData eventData)
-    {
-        HandleCardsEnter(eventData);//allows Hand to call OnPointerEnter
-    }
-    public void HandleCardsEnter(PointerEventData eventData)//allows Hand to call OnPointerEnter
+    public void OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null)
         {
@@ -31,11 +27,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
             }
         }
     }
-    public virtual void OnPointerExit(PointerEventData eventData)
-    {
-        HandleCardsExit(eventData);//allows Hand to call OnPointerEnter
-    }
-    public void HandleCardsExit(PointerEventData eventData)//allows Hand to call OnPointerEnter
+    public void OnPointerExit(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null)
         {
@@ -47,7 +39,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
             d.placeholderParent = d.parentReturnTo;
             d.positionReturnTo = d.transform.position;
             bool zones = this.transform == d.hand || this.transform == d.destroy || this.transform == d.storagept2;
-            if (zones && d.screen.visibleMap && (d.card.buildingPrefab || int.TryParse(d.card.unitIndex, out int index))) 
+            if (zones && d.screen.visibleMap && (d.card.buildingPrefab || int.TryParse(d.card.unitIndex, out int index)))
             {
                 d.cGroup.alpha = 0f; //reset effect for card (can be changed)
             }
@@ -85,8 +77,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
                 }
                 if (this.transform == d.hand)
                 {
-                    //d.positionReturnTo = d.transform.position;  //original position
-                    d.transform.position = new Vector3(d.placeholder.transform.position.x, d.placeholder.transform.position.y, 0);  //original position
+                    d.transform.position = new Vector3(d.placeholder.transform.position.x, d.placeholder.transform.position.y - d.zHand.handShift, 0);  //original position
                 }
                 //move card
                 d.parentReturnTo = this.transform;
@@ -104,7 +95,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
                 //run Zones
                 this.EventDrop(d);  //run response function to dropping a card (of the fitting Zone)
                 d.screen.CheckUnit();
-                d.zHand.RefreshZone(false);
+                d.zHand.RefreshZone();
             }
         }
     }
