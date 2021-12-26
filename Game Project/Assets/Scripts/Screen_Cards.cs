@@ -126,15 +126,15 @@ public class Screen_Cards : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKeyDown(handK)) //to close and open "Hand" with keyboard as well
+        if (Input.GetKeyDown(handK) && (!Menu_Pause.IsPaused)) //to close and open "Hand" with keyboard as well
         {
             SwitchCards();
         }
-        if (Input.GetKeyDown(creativeK)) //to close and open "Creative" with keyboard as well
+        if (Input.GetKeyDown(creativeK) && (!Menu_Pause.IsPaused)) //to close and open "Creative" with keyboard as well
         {
             SwitchCreative();
         }
-        if (Input.GetKeyDown(storageK)) //to close and open "Storage" with keyboard as well
+        if (Input.GetKeyDown(storageK) && (!Menu_Pause.IsPaused)) //to close and open "Storage" with keyboard as well
         {
             SwitchStorage();
         }

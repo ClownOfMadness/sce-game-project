@@ -75,12 +75,6 @@ public class Player_Control : MonoBehaviour
     // Card
     public Screen_Cards screenCards;
 
-    //key mapping:
-    [HideInInspector] public static KeyCode UpK;
-    [HideInInspector] public static KeyCode DownK;
-    [HideInInspector] public static KeyCode RightK;
-    [HideInInspector] public static KeyCode LeftK;
-
     private void Awake()
     {
         camera = Camera.main.gameObject; // Finds the main camera in game
@@ -102,11 +96,6 @@ public class Player_Control : MonoBehaviour
     }
     private void Start()
     {
-        //key mapping:
-        UpK = KeyCode.W;
-        DownK = KeyCode.S;
-        RightK = KeyCode.D;
-        LeftK = KeyCode.A;
         // Screen Pan
         //border = (mapGen.mapSize - 1f) * 10f;
     }
@@ -465,11 +454,11 @@ public class Player_Control : MonoBehaviour
                     animator.speed = 1f;
             }
             
-            if (Input.GetKey(UpK) && !Input.GetKey(DownK))
+            if (Input.GetKey(up) && !Input.GetKey(down))
             {
                 zMov = 1;
             }
-            else if (Input.GetKey(DownK) && !Input.GetKey(UpK))
+            else if (Input.GetKey(down) && !Input.GetKey(up))
             {
                 zMov = -1;
             }
@@ -478,11 +467,11 @@ public class Player_Control : MonoBehaviour
                 zMov = 0;
             }
 
-            if (Input.GetKey(RightK) && !Input.GetKey(LeftK))
+            if (Input.GetKey(right) && !Input.GetKey(left))
             {
                 xMov = 1;
             }
-            else if (Input.GetKey(LeftK) && !Input.GetKey(RightK))
+            else if (Input.GetKey(left) && !Input.GetKey(right))
             {
                 xMov = -1;
             }

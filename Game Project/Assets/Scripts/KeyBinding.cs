@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -14,6 +12,8 @@ public class KeyBinding : MonoBehaviour
     Event e; //holds the key (e.keycode)
     private Color32 normal = new Color32(255, 255, 255, 255); //white
     private Color32 selected = new Color32(39, 171, 249, 255); //blue to highlight a selected button
+
+    public Player_Control playerControl;
 
     private void Start()
     {
@@ -83,27 +83,22 @@ public class KeyBinding : MonoBehaviour
         else if(ne == Keys["Escape"]) {
             Menu_Pause.EscK = ne;
         }
-        //I HAVE NO IDEA WHAT IS ACTUALLY RESPONSIBLE FOR PLAYER MOVEMENT
+
         else if(ne == Keys["MoveUp"])
         {
-            Player_Control.UpK = ne;
+            playerControl.up = ne;
         }
         else if (ne == Keys["MoveDown"])
         {
-            Player_Control.DownK = ne;
+            playerControl.down = ne;
         }
         else if (ne == Keys["MoveRight"])
         {
-            Player_Control.RightK = ne;
+            playerControl.right = ne;
         }
         else if (ne == Keys["MoveLeft"])
         {
-            Player_Control.LeftK = ne;
+            playerControl.left = ne;
         }
-        else
-        {
-            return;
-        }
-
     }
 }
