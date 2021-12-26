@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class KeyBinding : MonoBehaviour
 {
     private Dictionary<string, KeyCode> Keys = new Dictionary<string, KeyCode>(); //setting up a keys dictionary
-    public Text Hand,Creative,Storage,Escape,MoveUp,MoveDown,MoveRight,MoveLeft;
+    public Text Hand,Creative,Storage,Escape,MoveUp,MoveDown,MoveRight,MoveLeft,Sprint;
     public GameObject CurrentKey;
     Event e; //holds the key (e.keycode)
     private Color32 normal = new Color32(255, 255, 255, 255); //white
@@ -27,6 +27,7 @@ public class KeyBinding : MonoBehaviour
         Keys.Add("MoveDown", KeyCode.S);
         Keys.Add("MoveRight", KeyCode.D);
         Keys.Add("MoveLeft", KeyCode.A);
+        //Keys.Add("Sprint", KeyCode.LeftShift);
 
         //Attaching the correct text to display on the buttons
         Hand.text = Keys["Hand"].ToString();
@@ -37,7 +38,7 @@ public class KeyBinding : MonoBehaviour
         MoveDown.text = Keys["MoveDown"].ToString();
         MoveRight.text = Keys["MoveRight"].ToString();
         MoveLeft.text = Keys["MoveLeft"].ToString();
-
+        //Sprint.text = Keys["Sprint"].ToString();
     }
 
     private void OnGUI() //changes the keys, (only ongui works fast enough for this)
@@ -100,5 +101,15 @@ public class KeyBinding : MonoBehaviour
         {
             playerControl.left = ne;
         }
+        else if (ne == Keys["Sprint"])
+        {
+            playerControl.sprint = ne;
+        }
+    }
+
+    private bool IsKeyTaken(KeyCode ne)
+    {
+
+        return false;
     }
 }
