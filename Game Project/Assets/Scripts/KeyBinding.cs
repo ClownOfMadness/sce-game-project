@@ -48,10 +48,13 @@ public class KeyBinding : MonoBehaviour
             e = Event.current;
             if (e.isKey)
             {
-                Keys[CurrentKey.name] = e.keyCode;
-                CurrentKey.transform.GetChild(0).GetComponent<Text>().text = e.keyCode.ToString();
-                CurrentKey.GetComponent<Image>().color = normal;
+                if (IsKeyFree(e.keyCode))
+                {
+                    Keys[CurrentKey.name] = e.keyCode;
+                    CurrentKey.transform.GetChild(0).GetComponent<Text>().text = e.keyCode.ToString();
                 SetKey(e.keyCode); //the part that actually changes the key's functionality to match the new one
+                }
+                CurrentKey.GetComponent<Image>().color = normal;
                 CurrentKey = null;
             }
         } 
@@ -107,9 +110,16 @@ public class KeyBinding : MonoBehaviour
         }
     }
 
-    private bool IsKeyTaken(KeyCode ne)
+    private bool IsKeyFree(KeyCode ne)
     {
-
-        return false;
+        foreach (KeyCode tk in Keys.Values)
+        {
+            if (tk == ne)
+            {
+                Debug.Log("key is already taken!");
+                return false;
+            }
+        }
+        return true;
     }
 }
