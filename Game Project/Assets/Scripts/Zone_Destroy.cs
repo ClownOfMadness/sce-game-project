@@ -22,6 +22,7 @@ public class Zone_Destroy : Zone_Behaviour
         {
             if (cardObject.card == Creation)
             {
+                screen.gameLost = true;
                 Debug.Log("Game lost.");
             }
             GameObject placeholder = cardObject.placeholder;    //get the card's placeholder in the Hand to delete it

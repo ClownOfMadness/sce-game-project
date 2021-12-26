@@ -62,8 +62,7 @@ public class Zone_Craft : MonoBehaviour
             }
             else //nothing was crafted
             {
-                cardObjects[0].SwitchCardPlace();
-                cardObjects[1].SwitchCardPlace();
+                screen.CraftFail(cardObjects[0], cardObjects[1]);
             }
         }
     }

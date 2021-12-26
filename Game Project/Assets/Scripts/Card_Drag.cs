@@ -33,6 +33,7 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
     [HideInInspector] public Vector3 positionReturnTo;
     [HideInInspector] public bool dragged;
     [HideInInspector] public bool clicked;
+    [HideInInspector] public bool automatic;
 
     void Start()
     {
@@ -42,13 +43,12 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
         Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
         Units = FindObjectOfType<Unit_List>();              //connection to use UnitList functions
     }
-    public void SwitchCardPlace()       //move card between zones on click
+    public void SwitchCardPlace()   //move card between zones on click, used by button
     {
         screen.CardClick(this);         //needs to happen here to get the "this" of the object
     }
     public void OnPointerEnter(PointerEventData eventData)   //onHover set
     {
-       
         if (!dragged && !screen.draggingCard && transform.parent == hand) 
         {
             positionReturnTo = new Vector3(transform.position.x, transform.position.y, 0);  //original position
@@ -63,14 +63,17 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
         {
             screen.overlapingCard = true;
         }
-        if (clicked)
+        if (clicked || automatic || screen.automaticCard)  //handles cards being added from Craft&Unit
         {
-            positionReturnTo = new Vector3(transform.position.x, transform.position.y, 0);  //original position
-            clicked = false;
+            positionReturnTo = transform.position;  //save position (used by cards that never entered the OnPointerEnter function)
+            if (clicked)    //handles cards being added by click from Craft&Unit
+                clicked = false;
+            if (automatic)  //handles automatic addition of cards from failed Craft
+                automatic = false;
         }
-        if (transform.parent == hand && !screen.overlapingCard) 
+        else if (transform.parent == hand && !screen.overlapingCard) 
         {
-                transform.position = positionReturnTo;
+            transform.position = positionReturnTo;
         }
     }
     private void SavePlaceholder()  //enables card order

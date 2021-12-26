@@ -57,6 +57,7 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public Card_Pool Pool;
     [HideInInspector] public Data_Card Creation;
     [HideInInspector] public bool CreationRevealed;
+    [HideInInspector] public bool gameLost;
 
     //placement on map:
     [HideInInspector] public GameObject selectedTile;   //updated by Player_Control
@@ -64,9 +65,10 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public bool draggedUnit;          //updated by Card_Drag
     [HideInInspector] public Sprite draggedSprite;      //updated by Card_Drag
 
-    //OnHover:
+    //onHover:
     [HideInInspector] public bool draggingCard;         //updated by Card_Drag
     [HideInInspector] public bool overlapingCard;       //updated by Card_Drag
+    [HideInInspector] public bool automaticCard;        //updated by Card_Drag
 
     //key mapping:
     [HideInInspector] public static KeyCode handK;
@@ -111,16 +113,22 @@ public class Screen_Cards : MonoBehaviour
         }
         storageButton.SetActive(true);
 
+        handK = KeyCode.H;// the default keycodes -> will later be implemented in saves
+        storageK = KeyCode.I;//
+        creativeK = KeyCode.C;//
+
         MenuUp = false;
         CraftUp = false;
         UnitUp = false;
         StorageUp = false;
         BookUp = false;
-        handK = KeyCode.H;// the default keycodes -> will later be implemented in saves
-        storageK = KeyCode.I;//
-        creativeK = KeyCode.C;//
 
+        automaticCard = false; //used by card onHover
         visibleMap = true;
+
+        CreationRevealed = false;
+        gameLost = false;
+       
         //CloseUI();  //game starts with UI closed
         OpenUI();  //game starts with UI open
     }
@@ -363,7 +371,6 @@ public class Screen_Cards : MonoBehaviour
         {
             if (pickedCard.card != Creation)
             {
-                //pickedCard.cGroup.blocksRaycasts = false;
                 if (visibleMap || CraftUp) //move to Craft
                 {
                     if (Craft.transform.childCount < zCraft.Size)
@@ -373,6 +380,8 @@ public class Screen_Cards : MonoBehaviour
                         HintUp = false;
                         Craft.SetActive(true);
                         CraftUp = true;
+                        pickedCard.automatic = true; 
+                        Debug.Log(string.Format("{0} {1} {2} {3}", pickedCard.card.name, pickedCard.transform.position.x, pickedCard.transform.position.y, pickedCard.transform.position.z));
                         pickedCard.transform.SetParent(Craft.transform);
                         if (Craft.transform.childCount == zCraft.Size)
                         {
@@ -431,6 +440,18 @@ public class Screen_Cards : MonoBehaviour
             zHand.RefreshZone();
         }
     }
+    public void CraftFail(Card_Drag pickedCard1, Card_Drag pickedCard2)
+    {
+        Craft.SetActive(false);
+        pickedCard1.gameObject.transform.SetParent(Hand.transform);
+        pickedCard2.gameObject.transform.SetParent(Hand.transform);
+
+        pickedCard1.clicked = false;
+        pickedCard2.clicked = false;
+        visibleMap = true;
+        CraftUp = false;
+        CheckUnit();
+    }
     public void DisplayCardClick(Card_Display pickedCard)   //add Card_Display to hand based on what was picked in Book/Storage
     {
         if (Book.activeSelf || (zStorage.time.isDay == false || TestSkipDay)) 
@@ -439,38 +460,6 @@ public class Screen_Cards : MonoBehaviour
                 if (Storage.activeSelf)
                     zStorage.RemoveFromStorage(pickedCard);
             }
-    }
-    public bool AddGathered(Data_Unit unit, bool gathered)  //add card from Unit to Hand (if there's space)
-    {
-        Data_Card pickedCard;
-        Data_Unit waitingUnit;
-        if (gathered)
-        {
-            pickedCard = unit.card;
-            waitingUnit = unit;
-        }
-        else
-        {
-            pickedCard = unit.unitCard;
-            waitingUnit = null;
-        }
-        if (visibleMap) //nothing is open
-        {
-            if (CreateInHand(pickedCard))
-            {
-                return true;    //unit doesn't need to wait
-            }
-            else    //no space in Hand
-            {
-                zUnit.CardAdded(pickedCard, waitingUnit);
-                CheckUnit();
-                OpenUI();
-                return false; //unit needs to wait
-            }
-        }
-        else //something is open on screen
-            zUnit.CardAdded(pickedCard, waitingUnit);
-        return false;
     }
     public GameObject CreateObject(Transform Zone, Data_Card pickedCard)//creates draggable cards
     {
@@ -526,6 +515,7 @@ public class Screen_Cards : MonoBehaviour
     {
         if (Hand.transform.childCount < zHand.Size)
         {
+            automaticCard = true;
             if (pickedCard.neverDiscovered)
             {
                 pickedCard.neverDiscovered = false;
@@ -533,6 +523,7 @@ public class Screen_Cards : MonoBehaviour
                 Pool.discoveredTotal++;
             }
             CreateObject(Hand.transform, pickedCard);
+            automaticCard = false;
             zHand.RefreshZone();
             return true;
         }
@@ -553,6 +544,38 @@ public class Screen_Cards : MonoBehaviour
                 Message.gameObject.SetActive(false);
             UnitUp = false;
         }
+    }
+    public bool AddGathered(Data_Unit unit, bool gathered)  //add card from Unit to Hand (if there's space)
+    {
+        Data_Card pickedCard;
+        Data_Unit waitingUnit;
+        if (gathered)
+        {
+            pickedCard = unit.card;
+            waitingUnit = unit;
+        }
+        else
+        {
+            pickedCard = unit.unitCard;
+            waitingUnit = null;
+        }
+        if (visibleMap) //nothing is open
+        {
+            if (CreateInHand(pickedCard))
+            {
+                return true;    //unit doesn't need to wait
+            }
+            else    //no space in Hand
+            {
+                zUnit.CardAdded(pickedCard, waitingUnit);
+                CheckUnit();
+                OpenUI();
+                return false; //unit needs to wait
+            }
+        }
+        else //something is open on screen
+            zUnit.CardAdded(pickedCard, waitingUnit);
+        return false;
     }
     public Data_Card DamageMaster() //open Unit Zone if it has cards
     {

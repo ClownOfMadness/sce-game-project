@@ -16,7 +16,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
         Card_Drag d = eventData.pointerDrag.GetComponent<Card_Drag>();
         if (d != null)
         {
-            if (this.transform.childCount < this.Size)
+            if (this.transform.childCount < this.Size && this.transform == d.hand) 
             {
                 d.placeholderParent = this.transform;       //only make a placeholder in Hand
             }
@@ -57,6 +57,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
             bool notStoringCreation = d.card != d.screen.Creation;
             bool spaceInStorage = cardObjects.Length < d.zStorage.Size;
             bool spaceInZones = cardObjects.Length < this.Size && !storage;
+           
             if (spaceInZones || (storage && spaceInStorage && notStoringCreation)) 
             {
                 if (d.parentReturnTo == d.menu && this.transform != d.menu)         //close menu prompt
@@ -95,7 +96,12 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
                 //run Zones
                 this.EventDrop(d);  //run response function to dropping a card (of the fitting Zone)
                 d.screen.CheckUnit();
-                d.zHand.RefreshZone();
+                if (d.card != d.screen.Creation) 
+                    d.zHand.RefreshZone();
+            }
+            else if (d.card == d.screen.Creation)   //doesn't snap on its own
+            {
+                d.transform.position = d.placeholder.transform.position;
             }
         }
     }

@@ -105,17 +105,16 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
         {
             int random = Random.Range(0, count);
             lostCard = cardObjects[random].card;
+
+            Debug.Log("Cardmaster took damage! Card " + lostCard.name + " was lost.");
+            Destroy(cardObjects[random].gameObject);
             if (lostCard == Creation)
             {
+                screen.gameLost = true;
                 Debug.Log("Game lost.");
             }
-            else
-            {
-                Debug.Log("Cardmaster took damage! Card " + cardObjects[random].card.name + " was lost.");
-                Destroy(cardObjects[random].gameObject);
-                if (count <= 1)
-                    EmptyHand();    //spawn Creation if took too much damage
-            }
+            else if (count <= 1)
+                EmptyHand();    //spawn Creation if took too much damage
         }
         return lostCard;
     }
