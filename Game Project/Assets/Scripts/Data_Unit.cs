@@ -903,4 +903,143 @@ public class Data_Unit : MonoBehaviour
         _target.GetComponent<Data_Enemy>().Hurt(damage, this);
         yield return null;
     }
+
+    public void LoadData(Unit_Info data)
+    {
+        nextWander = data.nextWander;
+        impassable = data.impassable;
+        currentTileOn = data.currentTileOn;
+        reachedTownHall = data.reachedTownHall;
+        detectedImpassable = data.detectedImpassable;
+        townHall = data.townHall;
+        card = data.card;
+        busy = data.busy;
+        toTownHall = data.toTownHall;
+        cardToDeliver = data.cardToDeliver;
+        buildingInteraction = data.buildingInteraction;
+        hurt = data.hurt;
+        durability = data.durability;
+        health = data.health;
+        regenCD = data.regenCD;
+        nextRegen = data.nextRegen;
+        workCard = data.workCard;
+        workPlace = data.workPlace;
+        working = data.working;
+        workBegun = data.workBegun;
+        workIndex = data.workIndex;
+        workTime = data.workTime;
+        workDone = data.workDone;
+        workExtra = data.workExtra;
+        buildPlace = data.buildPlace;
+        building = data.building;
+        buildBegun = data.buildBegun;
+        patroling = data.patroling;
+        patrolPlace = data.patrolPlace;
+        target = data.target;
+        //spottedAbyss = data.spottedAbyss;
+        spottedEnemy = data.spottedEnemy;
+        nextAttack = data.nextAttack;
+        workInMemory = data.workInMemory;
+        rmbTileData = data.rmbTileData;
+        rmbWorkCard = data.rmbWorkCard;
+        rmbWorkPlace = data.rmbWorkPlace;
+        rmbWorkIndex = data.rmbWorkIndex;
+        rmbWorkTime = data.rmbWorkTime;
+        rmbWorkExtra = data.rmbWorkExtra;
+        tileData = data.tileData;
+    }
+
+    public Unit_Info SaveData()
+    {
+        Unit_Info unit_info = new Unit_Info();
+
+        unit_info.nextWander = nextWander;
+        unit_info.impassable = impassable;
+        unit_info.currentTileOn = currentTileOn;
+        unit_info.reachedTownHall = reachedTownHall;
+        unit_info.detectedImpassable = detectedImpassable;
+        unit_info.townHall = townHall;
+        unit_info.card = card;
+        unit_info.busy = busy;
+        unit_info.toTownHall = toTownHall;
+        unit_info.cardToDeliver = cardToDeliver;
+        unit_info.buildingInteraction = buildingInteraction;
+        unit_info.hurt = hurt;
+        unit_info.durability = durability;
+        unit_info.health = health;
+        unit_info.regenCD = regenCD;
+        unit_info.nextRegen = nextRegen;
+        unit_info.workCard = workCard;
+        unit_info.workPlace = workPlace;
+        unit_info.working = working;
+        unit_info.workBegun = workBegun;
+        unit_info.workIndex = workIndex;
+        unit_info.workTime = workTime;
+        unit_info.workDone = workDone;
+        unit_info.workExtra = workExtra;
+        unit_info.buildPlace = buildPlace;
+        unit_info.building = building;
+        unit_info.buildBegun = buildBegun;
+        unit_info.patroling = patroling;
+        unit_info.patrolPlace = patrolPlace;
+        unit_info.target = target;
+        //unit_info.spottedAbyss = spottedAbyss;
+        unit_info.spottedEnemy = spottedEnemy;
+        unit_info.nextAttack = nextAttack;
+        unit_info.workInMemory = workInMemory;
+        unit_info.rmbTileData = rmbTileData;
+        unit_info.rmbWorkCard = rmbWorkCard;
+        unit_info.rmbWorkPlace = rmbWorkPlace;
+        unit_info.rmbWorkIndex = rmbWorkIndex;
+        unit_info.rmbWorkTime = rmbWorkTime;
+        unit_info.rmbWorkExtra = rmbWorkExtra;
+        unit_info.tileData = tileData;
+        return unit_info;
+    }
+    
+
+    public class Unit_Info
+    {
+        public float nextWander;
+        public bool impassable;
+        public GameObject currentTileOn;
+        public bool reachedTownHall;
+        public GameObject detectedImpassable;
+        public GameObject townHall;
+        public Data_Card card; 
+        public bool busy;
+        public bool toTownHall;
+        public bool cardToDeliver;
+        public string buildingInteraction;
+        public bool hurt;
+        public int durability;
+        public int health;
+        public float regenCD;
+        public float nextRegen;
+        public Data_Card workCard;
+        public GameObject workPlace; 
+        public bool working;
+        public bool workBegun; 
+        public int workIndex; 
+        public float workTime;
+        public float workDone;
+        public bool workExtra;
+        public GameObject buildPlace;
+        public bool building;
+        public bool buildBegun;
+        public bool patroling;
+        public GameObject patrolPlace;
+        public GameObject target;
+        //public GameObject spottedAbyss;
+        public GameObject spottedEnemy;
+        public float nextAttack;
+        public bool workInMemory;
+        public Data_Tile rmbTileData;
+        public Data_Card rmbWorkCard;
+        public GameObject rmbWorkPlace;
+        public int rmbWorkIndex;
+        public float rmbWorkTime;
+        public bool rmbWorkExtra;
+        public Data_Tile tileData;
+    }
 }

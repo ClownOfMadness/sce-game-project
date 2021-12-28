@@ -701,28 +701,94 @@ public class Data_Tile : MonoBehaviour
         yield return null;
     }
 
-    public Tile_Info CreateTile_Info()
+
+    public void LoadData(Tile_Info data)
     {
-        return new Tile_Info();
+        height = data.height;
+        gizmoUse = data.gizmoUse;
+        canRecharge = data.canRecharge;
+        canRandom = data.canRandom;
+        theExtra = data.theExtra;
+        //parentExtra = data.parentExtra;
+        extra = data.extra;
+        check = data.check;
+        revealed = data.revealed;
+        unit = data.unit;
+        building = data.building;
+        dataBuilding = data.dataBuilding;
+        hasTownHall = data.hasTownHall;
+        hasBuilding = data.hasBuilding;
+        buildingComplete = data.buildingComplete;
+        hasResources = data.hasResources;
+        patrol = data.patrol;
+        builders = data.builders;
+        progress = data.progress;
+        buildDone = data.buildDone;
+        nextProgress = data.nextProgress;
+        cards = data.cards;
+        enemies = data.enemies;
+        abyssSetup = data.abyssSetup;
+        canSpawn = data.canSpawn;
+        hasAbyss = data.hasAbyss;
     }
 
+    public Tile_Info SaveData()
+    {
+        Tile_Info tile_info = new Tile_Info();
+
+        tile_info.height = height;
+        tile_info.gizmoUse = gizmoUse;
+        tile_info.canRecharge = canRecharge;
+        tile_info.canRandom = canRandom;
+        tile_info.theExtra = theExtra;
+        //tile_info.parentExtra = parentExtra;
+        tile_info.extra = extra;
+        tile_info.check = check;
+        tile_info.revealed = revealed;
+        tile_info.unit = unit;
+        tile_info.building = building;
+        tile_info.dataBuilding = dataBuilding;
+        tile_info.hasTownHall = hasTownHall;
+        tile_info.hasBuilding = hasBuilding;
+        tile_info.buildingComplete = buildingComplete;
+        tile_info.hasResources = hasResources;
+        tile_info.patrol = patrol;
+        tile_info.builders = builders;
+        tile_info.progress =progress;
+        tile_info.buildDone = buildDone;
+        tile_info.nextProgress = nextProgress;
+        tile_info.cards = cards;
+        tile_info. enemies = enemies;
+        tile_info.abyssSetup = abyssSetup;
+        tile_info.canSpawn = canSpawn;
+        tile_info.hasAbyss = hasAbyss;
+
+        return tile_info;
+    }
     public class Tile_Info
     {
-        public bool gizmoUse; 
+        public float height;
+        public bool gizmoUse;
         public bool canRecharge;
         public bool canRandom;
-        public GameObject theExtra; 
+        public GameObject theExtra;
         public GameObject parentExtra;
-        public bool extra; 
-        public bool check; 
-        public GameObject unit; 
+        public bool extra;
+        public bool check;
+        public bool revealed;
+        public GameObject unit;
+        public GameObject building;
         public Data_Building dataBuilding;
+        public bool hasTownHall;
+        public bool hasBuilding;
+        public bool buildingComplete;
+        public bool hasResources;
+        public bool patrol;
         public List<GameObject> builders;
         public int progress;
         public bool buildDone;
-        public bool canProgress;
         public float nextProgress;
-        public AstarPath path;
+        public List<Data_Card> cards;
         public List<GameObject> enemies;
         public bool abyssSetup;
         public bool canSpawn;

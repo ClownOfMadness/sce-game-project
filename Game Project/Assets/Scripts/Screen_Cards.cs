@@ -393,7 +393,6 @@ public class Screen_Cards : MonoBehaviour
                         Craft.SetActive(true);
                         CraftUp = true;
                         pickedCard.automatic = true; 
-                        Debug.Log(string.Format("{0} {1} {2} {3}", pickedCard.card.name, pickedCard.transform.position.x, pickedCard.transform.position.y, pickedCard.transform.position.z));
                         pickedCard.transform.SetParent(Craft.transform);
                         if (Craft.transform.childCount == zCraft.Size)
                         {

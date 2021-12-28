@@ -12,7 +12,7 @@ public class Data_Player
     public float TimeLimit;
     public bool SetBedTime;
     public float BedTime;
-    
+
     //public enum difficultiesList    //enum for difficulty
     //{
     //    Normal,
@@ -31,16 +31,16 @@ public class Data_Player
     //public Save_Tile[,] TileMap; //The map of tiles
     //public Vector3 townHallPos; //Town Hall position on the map
 
-    //public List<Save_Unit> units; //List of the units
-    //public List<Save_Enemy> enemies; //List of the enemies
-    //public Save_Player player; //The data on the player character
+    public List<Map_Display.Save_Unit> units; //List of the units
+    public List<Map_Display.Save_Enemy> enemies; //List of the enemies
+                                     //public Save_Player player; //The data on the player character
 
     //[Cards Data]//
-    //public List<int> Hand; //Cards in hand
-    //public List<int> Storage; //Cards in storage
-    //public int Discovered;
-    //public int Combos;
-    //public List<bool> DisStatus;
+    public List<int> Hand; //Cards in hand
+    public List<int> Storage; //Cards in storage
+    public int Discovered;
+    public int Combos;
+    public List<bool> DisStatus;
 
     //-----------------------------------------------------------------------------------
 
@@ -57,5 +57,5 @@ public class Data_Player
     //    AllowedHints = data.AllowedHints;
     //    IsPremium = data.IsPremium;
     //}
-
 }
+

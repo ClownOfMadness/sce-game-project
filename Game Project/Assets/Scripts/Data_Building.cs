@@ -188,4 +188,35 @@ public class Data_Building : MonoBehaviour
             GetComponentInParent<Data_Tile>().DestroyBuilding();
         }
     }
+
+    public void LoadData(Building_Info data)
+    {
+        transparency = data.transparency;
+        originalColor = data.originalColor;
+        night = data.night;
+        inProgress = data.inProgress;
+        health = data.health;
+    }
+
+    public Building_Info SaveData()
+    {
+        Building_Info building_info = new Building_Info();
+
+        building_info.transparency = transparency;
+        building_info.originalColor = originalColor;
+        building_info.night = night;
+        building_info.inProgress = inProgress;
+        building_info.health = health;
+
+        return building_info;
+    }
+
+    public class Building_Info
+    {
+        public Color transparency;
+        public Color originalColor;
+        public bool night;
+        public bool inProgress;
+        public int health;
+    }
 }

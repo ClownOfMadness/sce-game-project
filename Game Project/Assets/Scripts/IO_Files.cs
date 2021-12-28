@@ -60,7 +60,6 @@ public static class IO_Files
         Debug.Log("File deleted");
     }
 
-
     public static BinaryFormatter GetBinaryFormatter()
     {
         BinaryFormatter formatter = new BinaryFormatter();
