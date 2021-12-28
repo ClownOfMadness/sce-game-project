@@ -14,12 +14,14 @@ public class Screen_Cards : MonoBehaviour
     public GameObject Unit;
     public GameObject Storage;
     public GameObject Book;
+    public GameObject Job; //
 
     [Header("- Buttons:")]
     public GameObject destroyButton;
     public GameObject hintsButton;
     public GameObject creativeButton;
     public GameObject storageButton;
+    public GameObject JobButton; //
 
     [Header("- Prefabs:")]
     public GameObject CardObject;    //type of prefab for draggable Cards
@@ -36,6 +38,7 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public bool StorageUp;
     [HideInInspector] public bool HintUp;
     [HideInInspector] public bool BookUp;
+    [HideInInspector] public bool JobUp;
 
     //private Zones:
     private Zone_Hand zHand;
@@ -45,6 +48,7 @@ public class Screen_Cards : MonoBehaviour
     private Zone_Book zBook;
     private Zone_Destroy zDestroy;
     private Zone_StoragePt2 zStoragePt2;
+    private JobsHandler zJob; //
 
     //notification messages:
     private string UnitMsg = "New card arrived arrived at the Town Hall! Choose what to do with it next";
@@ -56,6 +60,7 @@ public class Screen_Cards : MonoBehaviour
     //sharing with other scripts:
     [HideInInspector] public Card_Pool Pool;
     [HideInInspector] public Data_Card Creation;
+    [HideInInspector] public JobsHandler jobsHandler;
     [HideInInspector] public bool CreationRevealed;
     [HideInInspector] public bool gameLost;
 
@@ -147,6 +152,10 @@ public class Screen_Cards : MonoBehaviour
         if (Input.GetKeyDown(storageK) && (!Menu_Pause.IsPaused)) //to close and open "Storage" with keyboard as well
         {
             SwitchStorage();
+        }
+        if (Input.GetKeyDown(KeyCode.J) && (!Menu_Pause.IsPaused)) //close and open job menu
+        {
+            SwitchJob();
         }
         if (TestUICards)
         {
@@ -370,6 +379,35 @@ public class Screen_Cards : MonoBehaviour
         StorageUp = false;
         Time.timeScale = 1f;    //unpause game
         CheckUnit();
+    }
+
+    public void SwitchJob() //
+    {
+        if (visibleMap)
+        {
+            OpenJob();
+        }
+        else
+        {
+            CloseJob();
+        }
+    }
+
+    private void OpenJob() //
+    {
+        visibleMap = false;
+        Job.SetActive(true);
+        JobUp = true;
+        jobsHandler.CheckUnitList();
+        Time.timeScale = 0f;
+    }
+
+    public void CloseJob() //
+    {
+        visibleMap = true;
+        Job.SetActive(false);
+        JobUp = false;
+        Time.timeScale = 1f;    //unpause game
     }
     public void CardClick(Card_Drag pickedCard) //move Card_Drag between zones on click
     {

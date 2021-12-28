@@ -41,7 +41,7 @@ public class KeyBinding : MonoBehaviour
         //Sprint.text = Keys["Sprint"].ToString();
     }
 
-    private void OnGUI() //changes the keys, (only ongui works fast enough for this)
+    private void OnGUI() //changes the keys, (only OnGui works fast enough for this)
     {
         if (CurrentKey != null)
         {
