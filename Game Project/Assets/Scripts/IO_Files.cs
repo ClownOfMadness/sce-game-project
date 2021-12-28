@@ -21,14 +21,14 @@ public static class IO_Files
         }
         return data;
     }
-    public static Data_Player ReadData(string path)  //load Data_Player from file
+    public static Map_Display.Data_Player ReadData(string path)  //load Data_Player from file
     {
-        Data_Player data = null;
+        Map_Display.Data_Player data = null;
         if (File.Exists(path))
         {
             BinaryFormatter formatter = GetBinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
-            data = formatter.Deserialize(stream) as Data_Player;
+            data = formatter.Deserialize(stream) as Map_Display.Data_Player;
             stream.Close();     //opened files must be closed when done with
         }
         return data;
@@ -43,7 +43,7 @@ public static class IO_Files
         stream.Close();         //opened files must be closed when done with
     }
 
-    public static void WriteData(string path, Data_Player data)  //save the player's data to file
+    public static void WriteData(string path, Map_Display.Data_Player data)  //save the player's data to file
     {
         Debug.Log("Attempting to create");
         BinaryFormatter formatter = GetBinaryFormatter();
@@ -59,7 +59,6 @@ public static class IO_Files
         File.Delete(path);
         Debug.Log("File deleted");
     }
-
 
     public static BinaryFormatter GetBinaryFormatter()
     {

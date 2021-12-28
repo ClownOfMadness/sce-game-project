@@ -523,4 +523,75 @@ public class Data_Enemy : MonoBehaviour
         player.Hurt(this);
         yield return null;
     }
+
+
+    public void LoadData(Enemy_Info data)
+    {
+        nextWander = data.nextWander;
+        impassable = data.impassable;
+        currentTileOn = data.currentTileOn;
+        previousTile = data.previousTile;
+        dataTile = data.dataTile;
+        reachedTown = data.reachedTown;
+        reachedAbyss = data.reachedAbyss;
+        target = data.target;
+        spottedUnit = data.spottedUnit;
+        spottedBuilding = data.spottedBuilding;
+        spottedTownHall = data.spottedTownHall;
+        spottedPlayer = data.spottedPlayer;
+        nextAttack = data.nextAttack;
+        abyss = data.abyss;
+        abyssData = data.abyssData;
+        card = data.card;
+        busy = data.busy;
+        health = data.health;
+    }
+
+    public Enemy_Info SaveData()
+    {
+        Enemy_Info enemy_info = new Enemy_Info();
+
+        enemy_info.nextWander = nextWander;
+        enemy_info.impassable = impassable;
+        enemy_info.currentTileOn = currentTileOn;
+        enemy_info.previousTile = previousTile;
+        enemy_info.dataTile = dataTile;
+        enemy_info.reachedTown = reachedTown;
+        enemy_info.reachedAbyss = reachedAbyss;
+        enemy_info.target = target;
+        enemy_info.spottedUnit = spottedUnit;
+        enemy_info.spottedBuilding = spottedBuilding;
+        enemy_info.spottedTownHall = spottedTownHall;
+        enemy_info.spottedPlayer = spottedPlayer;
+        enemy_info.nextAttack = nextAttack;
+        enemy_info.abyss = abyss;
+        enemy_info.abyssData = abyssData;
+        enemy_info.card = card;
+        enemy_info.busy = busy;
+        enemy_info.health = health;
+
+        return enemy_info;
+    }
+
+    public class Enemy_Info
+    {
+        public float nextWander;
+        public bool impassable;
+        public GameObject currentTileOn;
+        public GameObject previousTile;
+        public Data_Tile dataTile;
+        public bool reachedTown;
+        public bool reachedAbyss;
+        public GameObject target;
+        public GameObject spottedUnit;
+        public GameObject spottedBuilding;
+        public GameObject spottedTownHall;
+        public GameObject spottedPlayer;
+        public float nextAttack;
+        public GameObject abyss;
+        public Data_Tile abyssData;
+        public Data_Card card;
+        public bool busy;
+        public int health;
+    }
 }
