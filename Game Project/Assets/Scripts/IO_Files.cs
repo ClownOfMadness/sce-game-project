@@ -13,8 +13,7 @@ public static class IO_Files
         string data = null;
         if (File.Exists(path))
         {
-            //BinaryFormatter formatter = new BinaryFormatter();
-            BinaryFormatter formatter = GetBinaryFormatter();
+            BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
             data = formatter.Deserialize(stream) as string;
             Debug.Log(data);
@@ -27,7 +26,6 @@ public static class IO_Files
         Data_Player data = null;
         if (File.Exists(path))
         {
-            //BinaryFormatter formatter = new BinaryFormatter();
             BinaryFormatter formatter = GetBinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
             data = formatter.Deserialize(stream) as Data_Player;
@@ -38,7 +36,16 @@ public static class IO_Files
     public static void WriteFile(string path, string data)  //save string to file
     {
         Debug.Log("Attempting to create");
-        //BinaryFormatter formatter = new BinaryFormatter();
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Create);
+        formatter.Serialize(stream, data);
+        Debug.Log("File created");
+        stream.Close();         //opened files must be closed when done with
+    }
+
+    public static void WriteData(string path, Data_Player data)  //save the player's data to file
+    {
+        Debug.Log("Attempting to create");
         BinaryFormatter formatter = GetBinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
         formatter.Serialize(stream, data);
@@ -46,17 +53,27 @@ public static class IO_Files
         stream.Close();         //opened files must be closed when done with
     }
 
+    public static void DeleteData(string path)  //delete the file
+    {
+        Debug.Log("Attempting to delete");
+        File.Delete(path);
+        Debug.Log("File deleted");
+    }
+
 
     public static BinaryFormatter GetBinaryFormatter()
     {
         BinaryFormatter formatter = new BinaryFormatter();
         SurrogateSelector selector = new SurrogateSelector();
+
         Save_SurrogateVec3 surrogateVec3 = new Save_SurrogateVec3();
         Save_SurrogateQuat surrogateQuat = new Save_SurrogateQuat();
+        Save_SurrogateColor surrogateColor = new Save_SurrogateColor();
 
         //Replace type with serializable surrogate.
-        selector.AddSurrogate(typeof(Vector3), new StreamingContext(StreamingContextStates.All), surrogateVec3);
-        selector.AddSurrogate(typeof(Quaternion), new StreamingContext(StreamingContextStates.All), surrogateQuat);
+        selector.AddSurrogate(typeof(Vector3), new StreamingContext(StreamingContextStates.All), surrogateVec3); //Vector3
+        selector.AddSurrogate(typeof(Quaternion), new StreamingContext(StreamingContextStates.All), surrogateQuat); //Quaterion
+        selector.AddSurrogate(typeof(Color), new StreamingContext(StreamingContextStates.All), surrogateColor); //Color
 
         formatter.SurrogateSelector = selector;
         return formatter;

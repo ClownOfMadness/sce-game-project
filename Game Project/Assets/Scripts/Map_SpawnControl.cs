@@ -12,18 +12,19 @@ public class Map_SpawnControl : MonoBehaviour
 
     GameObject GameMap; //The map of the game
     Vector3 TownPos; //The position of the town hall
-    bool prevState = false; //previous day state
-    bool curState = false; //current day state
+    private bool prevState = false; //previous day state
+    private bool curState = false; //current day state
     [HideInInspector] public int DayCount; //still counting the days
-    [HideInInspector] public int UnitTotal = 3; //the current amount of units
+    [HideInInspector] public int UnitTotal = 3; //the current amount of units - (need to be changed by unit list)
     [HideInInspector] public int BuildingCapacity; //the capacity of all the buildings on the map
     public int MaxPeasentSpawn; //the maximum spawning of peasents in one day
 
     //Enemy spawn constants
     public bool EnemySpawn; //spawning activation
-    int reAbyss = 7; //the power of repetition, determining the recurrence of the spawn
-    int numAbyss = 1; //abyss's per spawn 
+    private int reAbyss = 7; //the power of repetition, determining the recurrence of the spawn
+    private int numAbyss = 1; //abyss's per spawn 
 
+   
     [System.Serializable]
     public struct ResourceType //Resource struct
     {

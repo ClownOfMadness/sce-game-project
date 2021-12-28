@@ -2143,7 +2143,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 361339073}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
-        m_MethodName: IsNewSlot
+        m_MethodName: ActivateSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3203,7 +3203,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 361339073}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
-        m_MethodName: IsNewSlot
+        m_MethodName: ActivateSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5433,7 +5433,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 361339073}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
-        m_MethodName: IsNewSlot
+        m_MethodName: ActivateSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7872,7 +7872,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 361339073}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
-        m_MethodName: IsNewSlot
+        m_MethodName: ActivateSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9017,7 +9017,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 361339073}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
-        m_MethodName: SavedSlots
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9778,7 +9778,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 361339073}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
-        m_MethodName: IsNewSlot
+        m_MethodName: ActivateSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19428,7 +19428,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 361339073}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
-        m_MethodName: IsNewSlot
+        m_MethodName: ActivateSlot
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -6,10 +6,13 @@ using UnityEngine;
 [System.Serializable]
 public class Data_Player
 {
-    //--------------------------------[Player Stats]------------------------------------
-    //public float TotalGameTime;    //in minutes, will be converted to hours for display??
-    //public float PlayTimeLimit;    //in minutes, will be converted to hours for display??
-    //public float Bedtime;
+    //--------------------------------[Configuration]------------------------------------
+
+    public bool SetTimeLimit;
+    public float TimeLimit;
+    public bool SetBedTime;
+    public float BedTime;
+    
     //public enum difficultiesList    //enum for difficulty
     //{
     //    Normal,
@@ -20,21 +23,29 @@ public class Data_Player
     //public int CardsCombined;
     //public bool AllowedHints;
     //public bool IsPremium;
-    //-----------------------------------------------------------------------------------
-
-    //-----------------------------------[Map data]--------------------------------------
-
-    public Save_Tile[,] TileMap; //The map of tiles
-    public Vector3 townHallPos; //Town Hall position on the map
-    
 
     //-----------------------------------------------------------------------------------
 
+    //------------------------------------[Game Data]------------------------------------
 
-    //cards
+    //public Save_Tile[,] TileMap; //The map of tiles
+    //public Vector3 townHallPos; //Town Hall position on the map
+
+    //public List<Save_Unit> units; //List of the units
+    //public List<Save_Enemy> enemies; //List of the enemies
+    //public Save_Player player; //The data on the player character
+
+    //[Cards Data]//
+    //public List<int> Hand; //Cards in hand
+    //public List<int> Storage; //Cards in storage
+    //public int Discovered;
+    //public int Combos;
+    //public List<bool> DisStatus;
+
+    //-----------------------------------------------------------------------------------
 
 
-    //units
+
 
     //public Data_Player(Data_Player data)
     //{
@@ -46,5 +57,5 @@ public class Data_Player
     //    AllowedHints = data.AllowedHints;
     //    IsPremium = data.IsPremium;
     //}
-    
+
 }

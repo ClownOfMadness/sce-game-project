@@ -14,10 +14,13 @@ public class Player_SpawnBuilding : MonoBehaviour
     public AstarPath path;
     private Vector3 buildingPosition = new Vector3(0, 1, 0);
     Map_SpawnControl spawnControl;
+    public List<GameObject> BuildingList;
+
 
     private void Awake()
     {
         spawnControl = FindObjectOfType<Map_SpawnControl>();
+        CreateBuildingsList();
 
         if (!(path = GameObject.Find("Pathfinder Grid").GetComponent<AstarPath>()))
         {
@@ -31,6 +34,7 @@ public class Player_SpawnBuilding : MonoBehaviour
          
         Data_Building dataBuilding = building.GetComponent<Data_Building>();
         Data_Tile dataTile = Tile.GetComponent<Data_Tile>();
+
         if (dataTile.hasTownHall)
         {
             return false;
@@ -60,6 +64,25 @@ public class Player_SpawnBuilding : MonoBehaviour
         return false;
     }
 
+    //Create a list of all the prefabs in the buildings folder.
+    public List<GameObject> CreateBuildingsList()
+    {
+        BuildingList = new List<GameObject>();
+        object[] files = Resources.LoadAll("Buildings", typeof(GameObject));
+        foreach (object file in files)
+        {
+            BuildingList.Add((GameObject)file);
+        }
+        return BuildingList;
+    }
+
+    //Find the building capacity in the buildings database.
+    //private void NewUpdateCapacity(Data_Tile dataTile)
+    //{
+    //    spawnControl.BuildingCapacity += dataTile.capacity;
+    //}
+
+
     //Find the building capacity in the buildings database.
     private void UpdateCapacity(string name)
     {
@@ -67,11 +90,11 @@ public class Player_SpawnBuilding : MonoBehaviour
         foreach (Building building in DB.BuildingList)
         {
             if (building.BuildingName == name)
-            { 
+            {
                 if (building.isLively)
                     spawnControl.BuildingCapacity += building.capacity;
                 break;
-            }     
+            }
         }
     }
 }
