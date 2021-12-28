@@ -7,8 +7,8 @@ using System.Collections.Generic;
 public class KeyBinding : MonoBehaviour
 {
     private Dictionary<string, KeyCode> Keys = new Dictionary<string, KeyCode>(); //setting up a keys dictionary
-    public Text Hand,Creative,Storage,Escape,MoveUp,MoveDown,MoveRight,MoveLeft,Sprint;
-    public GameObject CurrentKey;
+    public Text Creative,Storage,Hints,Jobs,MoveUp,MoveDown,MoveRight,MoveLeft,Sprint;
+    [HideInInspector] public GameObject CurrentKey;
     Event e; //holds the key (e.keycode)
     private Color32 normal = new Color32(255, 255, 255, 255); //white
     private Color32 selected = new Color32(39, 171, 249, 255); //blue to highlight a selected button
@@ -19,26 +19,26 @@ public class KeyBinding : MonoBehaviour
     {
         //The Dictionary Default settings
         //The dictionary values
-        Keys.Add("Hand", KeyCode.H);
         Keys.Add("Creative", KeyCode.C);
         Keys.Add("Storage", KeyCode.I);
-        Keys.Add("Hint", KeyCode.H);
+        Keys.Add("Hints", KeyCode.H);
+        Keys.Add("Jobs", KeyCode.J);
         Keys.Add("MoveUp", KeyCode.W);
         Keys.Add("MoveDown", KeyCode.S);
         Keys.Add("MoveRight", KeyCode.D);
         Keys.Add("MoveLeft", KeyCode.A);
-        //Keys.Add("Sprint", KeyCode.LeftShift);
+        Keys.Add("Sprint", KeyCode.LeftShift);
 
         //Attaching the correct text to display on the buttons
-        Hand.text = Keys["Hand"].ToString();
         Creative.text = Keys["Creative"].ToString();
         Storage.text = Keys["Storage"].ToString();
-        Escape.text = Keys["Hint"].ToString();
+        Hints.text = Keys["Hints"].ToString();
+        Jobs.text = Keys["Jobs"].ToString();
         MoveUp.text = Keys["MoveUp"].ToString();
         MoveDown.text = Keys["MoveDown"].ToString();
         MoveRight.text = Keys["MoveRight"].ToString();
         MoveLeft.text = Keys["MoveLeft"].ToString();
-        //Sprint.text = Keys["Sprint"].ToString();
+        Sprint.text = Keys["Sprint"].ToString();
     }
 
     private void OnGUI() //changes the keys, (only OnGui works fast enough for this)
@@ -72,11 +72,7 @@ public class KeyBinding : MonoBehaviour
 
     private void SetKey(KeyCode ne) //temp atm -> should be changed to switch case when I get it to work
     {
-        if (ne == Keys["Hand"])
-        {
-            Screen_Cards.handK = ne;
-        }
-        else if (ne == Keys["Creative"])
+        if (ne == Keys["Creative"])
         {
             Screen_Cards.creativeK = ne;
         }
@@ -84,10 +80,13 @@ public class KeyBinding : MonoBehaviour
         {
             Screen_Cards.storageK = ne;
         }
-        else if(ne == Keys["Hint"]) {
-            Screen_Cards.Hintk = ne;
+        else if(ne == Keys["Hints"]) {
+            Screen_Cards.Hintsk = ne;
         }
-
+        else if (ne == Keys["Jobs"])
+        {
+            Screen_Cards.Jobsk = ne;
+        }
         else if(ne == Keys["MoveUp"])
         {
             playerControl.up = ne;

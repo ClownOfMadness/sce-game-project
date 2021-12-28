@@ -76,10 +76,10 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public bool automaticCard;        //updated by Card_Drag
 
     //key mapping:
-    [HideInInspector] public static KeyCode handK;
     [HideInInspector] public static KeyCode creativeK;
     [HideInInspector] public static KeyCode storageK;
-    [HideInInspector] public static KeyCode Hintk;
+    [HideInInspector] public static KeyCode Hintsk;
+    [HideInInspector] public static KeyCode Jobsk;
 
     //for development testing:
     [Header("Premium User:")]
@@ -119,10 +119,11 @@ public class Screen_Cards : MonoBehaviour
         }
         storageButton.SetActive(true);
 
-        handK = KeyCode.H;// the default keycodes -> will later be implemented in saves
-        storageK = KeyCode.I;//
-        creativeK = KeyCode.C;//
-        Hintk = KeyCode.T;//
+        // the default keycodes -> will later be implemented in saves
+        storageK = KeyCode.I;
+        creativeK = KeyCode.C;
+        Hintsk = KeyCode.H;
+        Jobsk = KeyCode.J;
 
         MenuUp = false;
         CraftUp = false;
@@ -141,28 +142,20 @@ public class Screen_Cards : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKeyDown(handK) && (!Menu_Pause.IsPaused)) //to close and open "Hand" with keyboard as well
-        {
-            SwitchCards();
-        }
+ 
         if (Input.GetKeyDown(creativeK) && (!Menu_Pause.IsPaused)) //to close and open "Creative" with keyboard as well
         {
             SwitchCreative();
         }
-        if (Input.GetKeyDown(storageK) && (!Menu_Pause.IsPaused)) //to close and open "Storage" with keyboard as well
+        else if (Input.GetKeyDown(storageK) && (!Menu_Pause.IsPaused)) //to close and open "Storage" with keyboard as well
         {
             SwitchStorage();
         }
-        if (Input.GetKeyDown(KeyCode.J) && (!Menu_Pause.IsPaused)) //close and open job menu
+        else if (Input.GetKeyDown(Jobsk) && (!Menu_Pause.IsPaused)) //close and open job menu
         {
             SwitchJob();
         }
-        if (TestUICards)
-        {
-            SwitchCards();               //replacement for the UICards button
-            TestUICards = false;
-        }
-        if (Input.GetKeyDown(Hintk) && (!Menu_Pause.IsPaused)) //to close and open "Hand" with keyboard as well
+        else if (Input.GetKeyDown(Hintsk) && (!Menu_Pause.IsPaused)) //to display hints 
         {
             SwitchHints();
         }
@@ -204,17 +197,7 @@ public class Screen_Cards : MonoBehaviour
         Message.gameObject.SetActive(true);
         Message.text = text;
     }
-    public void SwitchCards()   //close/open all card related stuff
-    {
-        if (UIDown)
-        {
-            OpenUI();
-        }
-        else
-        {
-            CloseUI();
-        }
-    }
+
     private void OpenUI()
     {
         Hand.SetActive(true);
@@ -239,20 +222,6 @@ public class Screen_Cards : MonoBehaviour
             visibleMap = true;
         destroyButton.SetActive(true);
         UIDown = false;
-    }
-    private void CloseUI()
-    {
-        Message.gameObject.SetActive(false);
-        Hand.SetActive(false);
-        CraftMenu.SetActive(false);
-        Craft.SetActive(false);
-        Unit.SetActive(false);
-        Storage.SetActive(false);
-        Book.SetActive(false);
-        destroyButton.SetActive(false);
-        UIDown = true;
-
-        Time.timeScale = 1f;    //unpause game
     }
     public void SwitchHints()   //close/open Book
     {
@@ -322,7 +291,6 @@ public class Screen_Cards : MonoBehaviour
             StorageUp = false;
             HintUp = false;
             BookUp = true;
-            OpenUI();
 
             Time.timeScale = 0f;    //pause game
         }
@@ -365,7 +333,6 @@ public class Screen_Cards : MonoBehaviour
             zStorage.RefreshZone();
 
             StorageUp = true;
-            OpenUI();
 
             Time.timeScale = 0f;    //pause game
         }
@@ -614,7 +581,6 @@ public class Screen_Cards : MonoBehaviour
             {
                 zUnit.CardAdded(pickedCard, waitingUnit);
                 CheckUnit();
-                OpenUI();
                 return false; //unit needs to wait
             }
         }

@@ -7,11 +7,11 @@ public class JobsHandler : MonoBehaviour
 {
     public Player_Control PControl; //to access the units
     public Unit_List unit_List; //to access the unit count
-    public Screen_Cards screen_Cards;
-    public GameObject[] Jobs;
-    int i;
-    public Image unit;
-    public Image bg;
+    public Screen_Cards screen_Cards; //to close the job menu after selecting a unit
+    public GameObject[] Jobs; // an array of available jobs
+    int i; //an index for the jobs array
+    public Image unit; //for changing the button to the image of the chosen unit
+    public Image bg; //for changing the button to the image of the chosen unit's background
 
     public void CheckUnitList()
     {
