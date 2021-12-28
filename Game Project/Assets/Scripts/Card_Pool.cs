@@ -164,9 +164,9 @@ public class Card_Pool : ScriptableObject
         }
         return cardList;
     }
-    public List<string> GetAllCombos()  //returns list of all combinations in the format Card1 + Card2 = Card3
+    public string GetAllCombos()  //returns list of all combinations in the format Card1 + Card2 = Card3
     {
-        List<string> cardList = new List<string>();
+        string cardList = "";
         Data_Card card;
         for (int i = 0; i < count; i++) 
         {
@@ -178,7 +178,7 @@ public class Card_Pool : ScriptableObject
                 {
                     for (int startCombo = 0; startCombo < Combos.Count; startCombo++)    //check all possible combinations of current CombineAttempt
                     {
-                        cardList.Add(card.name + " = " + Combos[startCombo].card1.name + " + " + Combos[startCombo].card2.name + "\n");
+                        cardList = cardList + card.name + " = " + Combos[startCombo].card1.name + " + " + Combos[startCombo].card2.name + "\n";
                     }
                 }
             }

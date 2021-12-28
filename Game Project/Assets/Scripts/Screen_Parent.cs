@@ -18,6 +18,8 @@ public class Screen_Parent : MonoBehaviour
     public InputField InputNewPass;
     public GameObject ParentOptions;
     public GameObject PlayerStats;
+    public GameObject ComboGuide;
+    public Text combosText;
 
     public void Awake()
     {
@@ -100,19 +102,18 @@ public class Screen_Parent : MonoBehaviour
         }
 
     }
-    public void ReadSave(int index)    //load Save's stats
+    public void CombosScreen()
     {
-        string SavePath = Application.persistentDataPath + "/config" + index + ".player";
-        Data_Player SaveData = IO_Files.ReadData(SavePath);
-        if (SaveData!=null)
+        if (combosText.text == "")  //only fetch text if the object is empty
         {
-
+            Card_Pool Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions
+            string cards = Pool.GetAllCombos();
+            combosText.text = cards.ToString();
         }
-        else
-        {
-            
-        }
+        ParentOptions.SetActive(false);
+        ComboGuide.SetActive(true);
     }
+
     public void DisableParent()       //delete file, use carefully
     {
         File.Delete(path);
@@ -121,12 +122,70 @@ public class Screen_Parent : MonoBehaviour
         OptionsMenu.SetActive(true);
         firstLogin = true;
     }
-    public void CombosScreen()
+    public void SetFontSize()    //enable&set/disable time limit per save
     {
-        Card_Pool Pool = ScriptableObject.CreateInstance<Card_Pool>();        //open Card_Pool connection to use its functions
-        List<string> cards = Pool.GetAllCombos();
-        for (int i = 0; i < cards.Count; i++)
-            Debug.Log(cards[i]);
-        Debug.Log("Printed by Screen_Parent.CombosScreen, display on combos panel once one is made");
+        Debug.Log("Screen_Parent.SetFontSize: this function currently does nothing.");
+        //difficulty=dropdown; & update file
+    }
+    public void ReadSave(int index)    //load Save's stats to display
+    {
+        string SavePath = Application.persistentDataPath + "/config" + index + ".player"; //adjust when saves exist
+        Data_Player SaveData = IO_Files.ReadData(SavePath);
+        if (SaveData != null)
+        {
+            //fill objects in Player stats with fields from save file
+        }
+        else
+        {
+            //loading save failed
+        }
+    }
+    public void SetTimeLimit()    //enable&set/disable time limit per save
+    {
+        Debug.Log("Screen_Parent.SetTimeLimit: this function currently does nothing.");
+        //if InputField="";
+            //timeLimitSet=false; & update file
+        //else
+            //timeLimitSet=true; & update file
+            //timeLimit=convert InputField string to float & update file
+    }
+
+    public void SetBedtime()    //enable&set/disable bedtime per save
+    {
+        Debug.Log("Screen_Parent.SetBedtime: this function currently does nothing.");
+        //if InputField="";
+            //bedtimeSet=false; & update file
+        //else
+            //bedtimeSet=true; & update file
+            //bedtime=convert InputField string to float & update file
+    }
+
+    public void SetDificulty()    //set difficulty per save
+    {
+        Debug.Log("Screen_Parent.SetDifficulty: this function currently does nothing.");
+        //difficulty=dropdown; & update file
+    }
+    public void SetGameSpeed()    //set game speed per save
+    {
+        Debug.Log("Screen_Parent.SetGameSpeed: this function currently does nothing.");
+        //gameSpeed=dropdown; & update file
+    }
+
+    public void SetHints()       //enable/disable hints per save
+    {
+        Debug.Log("Screen_Parent.SetHints: this function currently does nothing.");
+        //if HintsOn==true in save file
+            //HintsOn=false; & update file
+        //else
+            //HintsOn=true; & update file
+    }
+
+    public void SetEnemies()       //enable/disable enemies per save
+    {
+        Debug.Log("Screen_Parent.SetEnemies: this function currently does nothing.");
+        //if EnemiesOff==true in save file
+            //EnemiesOff=false; & update file
+        //else
+            //EnemiesOff=true; & update file
     }
 }
