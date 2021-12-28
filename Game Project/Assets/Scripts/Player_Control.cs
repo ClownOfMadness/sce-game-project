@@ -11,7 +11,7 @@ public class Player_Control : MonoBehaviour
     // To add: (optional) add option to also move with keyboard
 
     // General
-    private GameObject camera; // Camera gameobject
+    private GameObject cameraObject; // Camera gameobject
 
     // Unit Command
     [SerializeField] private LayerMask layerMask; // List of layers that the mouse can interact with
@@ -62,11 +62,11 @@ public class Player_Control : MonoBehaviour
     private float speed = 0f;
     private float amplitude = 0f;
     private bool sprinting = false;
-    public int maxStamina = 3;
-    public int stamina = 3;
+    public int maxStamina = 5;
+    public int stamina = 5;
     private bool tired = false;
     private float nextDrain = 0f;
-    private float drainCD = 0.5f;
+    private float drainCD = 0.25f;
     private bool chargeDone = false;
     private Vector3 mousePosition = Vector3.zero;
     public bool gameLost = false;
@@ -77,8 +77,8 @@ public class Player_Control : MonoBehaviour
 
     private void Awake()
     {
-        camera = Camera.main.gameObject; // Finds the main camera in game
-        originalCameraPos = camera.transform.position; // Default camera position
+        cameraObject = Camera.main.gameObject; // Finds the main camera in game
+        originalCameraPos = cameraObject.transform.position; // Default camera position
 
         // Safe Check
         if (!unitList)
@@ -287,7 +287,7 @@ public class Player_Control : MonoBehaviour
         // [[In future, create a script or scriptable object that will contain key settings
         // and from there draw out the correct keys to be used in game]]
         
-        pos = camera.transform.position; // Stores original camera position
+        pos = cameraObject.transform.position; // Stores original camera position
         if (Input.GetKey("w")) // Up - old: Input.mousePosition.y >= Screen.height - panBorderTHICCNess
         {
             pos.z += panSpeed * Time.deltaTime;
@@ -312,7 +312,7 @@ public class Player_Control : MonoBehaviour
         if (Input.GetMouseButton(2))
         {
             Vector3 newPos = startPosition - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            camera.transform.position += newPos;
+            cameraObject.transform.position += newPos;
         }
 
         // Controls the zoom in and zoom out and limits it
@@ -337,14 +337,14 @@ public class Player_Control : MonoBehaviour
         if (Input.GetMouseButton(2) || (Input.GetKey(panScreen) && Input.GetMouseButton(0)))
         {
             Vector3 newPos = startPosition - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            camera.transform.position = ClampCamera(camera.transform.position + newPos);
+            cameraObject.transform.position = ClampCamera(cameraObject.transform.position + newPos);
         }
 
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
         scroll -= scrollInput * scrollSpeed * 100f * Time.deltaTime;
         scroll = Mathf.Clamp(scroll, minScroll, maxScroll);
         Camera.main.orthographicSize = scroll;
-        camera.transform.position = ClampCamera(camera.transform.position);
+        cameraObject.transform.position = ClampCamera(cameraObject.transform.position);
     }
 
     private Vector3 ClampCamera(Vector3 targetPosition)
@@ -374,7 +374,7 @@ public class Player_Control : MonoBehaviour
                 sprite = player.GetComponentInChildren<SpriteRenderer>();
                 animator = player.GetComponentInChildren<Animator>();
                 rb = player.GetComponent<Rigidbody>();
-                camera.GetComponent<Camera>().orthographicSize = 40f;
+                cameraObject.GetComponent<Camera>().orthographicSize = 40f;
                 return true;
             }
         }
@@ -589,12 +589,12 @@ public class Player_Control : MonoBehaviour
             Vector3 mousePosition2D = new Vector3(mousePosition.x, rb.position.y, mousePosition.z);
             Vector3 combinedPosition = (rb.position + ((rb.position + mousePosition2D) / 2f)) / 2f;
             Vector3 targetPosition = combinedPosition + new Vector3(0f, 148.99f, 0f);
-            Vector3 smoothedPosition = Vector3.Lerp(camera.transform.position, targetPosition, 9f * Time.fixedDeltaTime);
-            camera.transform.position = smoothedPosition;
+            Vector3 smoothedPosition = Vector3.Lerp(cameraObject.transform.position, targetPosition, 9f * Time.fixedDeltaTime);
+            cameraObject.transform.position = smoothedPosition;
         }
         else
         {
-            camera.transform.position = rb.position + new Vector3(0f, 148.99f, 0f);
+            cameraObject.transform.position = rb.position + new Vector3(0f, 148.99f, 0f);
         }
     }
 

@@ -82,7 +82,6 @@ public class Data_Tile : MonoBehaviour
     private List<GameObject> builders = new List<GameObject>();
     private int progress = 0;
     private bool buildDone = false;
-    private bool canProgress = true;
     private float nextProgress = 0f;
     [HideInInspector] public AstarPath path;
 
