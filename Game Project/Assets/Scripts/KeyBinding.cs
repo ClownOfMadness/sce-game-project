@@ -22,7 +22,7 @@ public class KeyBinding : MonoBehaviour
         Keys.Add("Hand", KeyCode.H);
         Keys.Add("Creative", KeyCode.C);
         Keys.Add("Storage", KeyCode.I);
-        Keys.Add("Escape", KeyCode.Escape);
+        Keys.Add("Hint", KeyCode.H);
         Keys.Add("MoveUp", KeyCode.W);
         Keys.Add("MoveDown", KeyCode.S);
         Keys.Add("MoveRight", KeyCode.D);
@@ -33,7 +33,7 @@ public class KeyBinding : MonoBehaviour
         Hand.text = Keys["Hand"].ToString();
         Creative.text = Keys["Creative"].ToString();
         Storage.text = Keys["Storage"].ToString();
-        Escape.text = Keys["Escape"].ToString();
+        Escape.text = Keys["Hint"].ToString();
         MoveUp.text = Keys["MoveUp"].ToString();
         MoveDown.text = Keys["MoveDown"].ToString();
         MoveRight.text = Keys["MoveRight"].ToString();
@@ -84,8 +84,8 @@ public class KeyBinding : MonoBehaviour
         {
             Screen_Cards.storageK = ne;
         }
-        else if(ne == Keys["Escape"]) {
-            Menu_Pause.EscK = ne;
+        else if(ne == Keys["Hint"]) {
+            Screen_Cards.Hintk = ne;
         }
 
         else if(ne == Keys["MoveUp"])

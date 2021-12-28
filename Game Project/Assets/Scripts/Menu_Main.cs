@@ -10,21 +10,28 @@ public class Menu_Main : MonoBehaviour
     public GameObject LoadPanel;
     public GameObject MenuMain;
     public GameObject GameMenu;
-
+    public GameObject tutorial;
 
     public TextMeshProUGUI Logo;
     TextMeshProUGUI loadText;
 
+
     private void Awake()
     {
         loadText = LoadPanel.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        
     }
 
     public void NewGame()
     {
         LoadPanel.SetActive(true);
         GameMenu.SetActive(false);
+        //tutorial.SetActive(true);
+        StartGame();
+    }
 
+    public void StartGame()
+    {
         StartCoroutine(LoadAsynchronic());
     }
 

@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour
 {
-
+    public Menu_Main mainMenu;
     public GameObject[] background;
     int index;
 
     void Start()
     {
         index = 0;
+        mainMenu = FindObjectOfType<Menu_Main>();
     }
 
 
@@ -43,6 +44,7 @@ public class Tutorial : MonoBehaviour
             background[0].gameObject.SetActive(true);
             index = 0;
             Time.timeScale = 1f;
+            //mainMenu.StartGame();
         }
        //Debug.Log(index);
     }
@@ -64,6 +66,12 @@ public class Tutorial : MonoBehaviour
             background[0].gameObject.SetActive(true);
             index = 0;
             Time.timeScale = 1f;
+            //mainMenu.StartGame();
+    }
+
+    public void OpenTutorial()
+    {
+        this.gameObject.SetActive(true);
     }
 
 }

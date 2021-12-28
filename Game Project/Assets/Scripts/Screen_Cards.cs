@@ -74,6 +74,7 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public static KeyCode handK;
     [HideInInspector] public static KeyCode creativeK;
     [HideInInspector] public static KeyCode storageK;
+    [HideInInspector] public static KeyCode Hintk;
 
     //for development testing:
     [Header("Premium User:")]
@@ -116,6 +117,7 @@ public class Screen_Cards : MonoBehaviour
         handK = KeyCode.H;// the default keycodes -> will later be implemented in saves
         storageK = KeyCode.I;//
         creativeK = KeyCode.C;//
+        Hintk = KeyCode.T;//
 
         MenuUp = false;
         CraftUp = false;
@@ -150,6 +152,10 @@ public class Screen_Cards : MonoBehaviour
         {
             SwitchCards();               //replacement for the UICards button
             TestUICards = false;
+        }
+        if (Input.GetKeyDown(Hintk) && (!Menu_Pause.IsPaused)) //to close and open "Hand" with keyboard as well
+        {
+            SwitchHints();
         }
     }
     private void SetZones()     //handles everything to do with initiating zones and getting access to their scripts
@@ -255,6 +261,7 @@ public class Screen_Cards : MonoBehaviour
                     TopMessage(hint);
                     HintUp = true;
                 }
+
                 else
                 {
                     TopMessage("There are no hints at the time!");
