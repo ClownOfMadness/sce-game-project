@@ -7,7 +7,7 @@ public class JobsHandler : MonoBehaviour
 {
     public Player_Control PControl; //to access the units
     public Unit_List unit_List; //to access the unit count
-    public Screen_Cards screen_Cards; //to close the job menu after selecting a unit
+    public Player_Jobs player_Jobs; //to close the job menu after selecting a unit
     public GameObject[] Jobs; // an array of available jobs
     int i; //an index for the jobs array
     public Image unit; //for changing the button to the image of the chosen unit
@@ -40,7 +40,7 @@ public class JobsHandler : MonoBehaviour
                     PControl.selectedJob = i;
                     unit.sprite = Jobs[i].transform.GetChild(1).GetComponent<Image>().sprite;
                     bg.color = Jobs[i].GetComponent<Image>().color;
-                    screen_Cards.CloseJob();
+                    player_Jobs.CloseJob();
                 }
             }
         }

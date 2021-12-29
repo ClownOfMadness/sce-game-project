@@ -110,7 +110,7 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
             Destroy(cardObjects[random].gameObject);
             if (lostCard == Creation)
             {
-                screen.gameLost = true;
+                screen.Game.gameLost = true;
                 Debug.Log("Game lost.");
             }
             else if (count <= 1)

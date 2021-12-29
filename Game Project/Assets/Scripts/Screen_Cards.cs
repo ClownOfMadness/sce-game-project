@@ -14,14 +14,14 @@ public class Screen_Cards : MonoBehaviour
     public GameObject Unit;
     public GameObject Storage;
     public GameObject Book;
-    public GameObject Job; //
+    public GameObject Desc;
+    public Text Desc_Text;
 
     [Header("- Buttons:")]
     public GameObject destroyButton;
     public GameObject hintsButton;
     public GameObject creativeButton;
     public GameObject storageButton;
-    public GameObject JobButton; //
 
     [Header("- Prefabs:")]
     public GameObject CardObject;    //type of prefab for draggable Cards
@@ -38,7 +38,6 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public bool StorageUp;
     [HideInInspector] public bool HintUp;
     [HideInInspector] public bool BookUp;
-    [HideInInspector] public bool JobUp;
 
     //private Zones:
     private Zone_Hand zHand;
@@ -48,7 +47,6 @@ public class Screen_Cards : MonoBehaviour
     private Zone_Book zBook;
     private Zone_Destroy zDestroy;
     private Zone_StoragePt2 zStoragePt2;
-    private JobsHandler zJob; //
 
     //notification messages:
     private string UnitMsg = "New card arrived arrived at the Town Hall! Choose what to do with it next";
@@ -58,11 +56,11 @@ public class Screen_Cards : MonoBehaviour
     private string StorageNightMsg = "Town Storage, choose your deck for the next day";
 
     //sharing with other scripts:
+    [HideInInspector] public Game_Master Game;
     [HideInInspector] public Card_Pool Pool;
     [HideInInspector] public Data_Card Creation;
-    [HideInInspector] public JobsHandler jobsHandler;
     [HideInInspector] public bool CreationRevealed;
-    [HideInInspector] public bool gameLost;
+    //[HideInInspector] public bool gameLost;
 
     //placement on map:
     [HideInInspector] public GameObject selectedTile;   //updated by Player_Control
@@ -75,12 +73,6 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public bool overlapingCard;       //updated by Card_Drag
     [HideInInspector] public bool automaticCard;        //updated by Card_Drag
 
-    //key mapping:
-    [HideInInspector] public static KeyCode creativeK;
-    [HideInInspector] public static KeyCode storageK;
-    [HideInInspector] public static KeyCode Hintsk;
-    [HideInInspector] public static KeyCode Jobsk;
-
     //for development testing:
     [Header("Premium User:")]
     public bool TestSkipLogin;
@@ -92,16 +84,14 @@ public class Screen_Cards : MonoBehaviour
     public bool TestUICards;
 
     //game state:
-    [HideInInspector] public bool premiumUser = false;
-    [HideInInspector] public bool hintsOn = false;
+    //[HideInInspector] public bool premiumUser = false;
+    //[HideInInspector] public bool hintsOn = false;
 
     void Awake()    //initilizing the entire cards' canvas
     {
-        premiumUser = Screen_Login.IsLogin;
-        //hintsOn should be loaded from save file
         SetZones();
 
-        if (TestHintsOn || hintsOn)  //change when testing phase ends
+        if (TestHintsOn || Game.hintsOn)  //change when testing phase ends
         {
             hintsButton.SetActive(true);
         }
@@ -109,7 +99,7 @@ public class Screen_Cards : MonoBehaviour
         {
             hintsButton.SetActive(false);
         }
-        if (TestSkipLogin || premiumUser)  //change when testing phase ends
+        if (TestSkipLogin || Game.premiumUser)  //change when testing phase ends
         {
             creativeButton.SetActive(true);
         }
@@ -119,11 +109,8 @@ public class Screen_Cards : MonoBehaviour
         }
         storageButton.SetActive(true);
 
-        // the default keycodes -> will later be implemented in saves
-        storageK = KeyCode.I;
-        creativeK = KeyCode.C;
-        Hintsk = KeyCode.H;
-        Jobsk = KeyCode.J;
+        Message.gameObject.SetActive(false);
+        Desc.SetActive(false);
 
         MenuUp = false;
         CraftUp = false;
@@ -135,29 +122,16 @@ public class Screen_Cards : MonoBehaviour
         visibleMap = true;
 
         CreationRevealed = false;
-        gameLost = false;
        
         //CloseUI();  //game starts with UI closed
         OpenUI();  //game starts with UI open
     }
-    public void Update()
+    private void Update()
     {
- 
-        if (Input.GetKeyDown(creativeK) && (!Menu_Pause.IsPaused)) //to close and open "Creative" with keyboard as well
+        if (TestUICards)
         {
-            SwitchCreative();
-        }
-        else if (Input.GetKeyDown(storageK) && (!Menu_Pause.IsPaused)) //to close and open "Storage" with keyboard as well
-        {
-            SwitchStorage();
-        }
-        else if (Input.GetKeyDown(Jobsk) && (!Menu_Pause.IsPaused)) //close and open job menu
-        {
-            SwitchJob();
-        }
-        else if (Input.GetKeyDown(Hintsk) && (!Menu_Pause.IsPaused)) //to display hints 
-        {
-            SwitchHints();
+            SwitchCards();               //replacement for the UICards button
+            TestUICards = false;
         }
     }
     private void SetZones()     //handles everything to do with initiating zones and getting access to their scripts
@@ -197,7 +171,17 @@ public class Screen_Cards : MonoBehaviour
         Message.gameObject.SetActive(true);
         Message.text = text;
     }
-
+    public void SwitchCards()   //close/open all card related stuff
+    {
+        if (UIDown)
+        {
+            OpenUI();
+        }
+        else
+        {
+            CloseUI();
+        }
+    }
     private void OpenUI()
     {
         Hand.SetActive(true);
@@ -223,6 +207,20 @@ public class Screen_Cards : MonoBehaviour
         destroyButton.SetActive(true);
         UIDown = false;
     }
+    private void CloseUI()
+    {
+        Message.gameObject.SetActive(false);
+        Hand.SetActive(false);
+        CraftMenu.SetActive(false);
+        Craft.SetActive(false);
+        Unit.SetActive(false);
+        Storage.SetActive(false);
+        Book.SetActive(false);
+        destroyButton.SetActive(false);
+        UIDown = true;
+
+        Time.timeScale = 1f;    //unpause game
+    }
     public void SwitchHints()   //close/open Book
     {
         if (visibleMap)
@@ -236,7 +234,7 @@ public class Screen_Cards : MonoBehaviour
                 string hint = GetHint();
                 if (hint != "")
                 {
-                    TopMessage(hint);
+                    TopMessage(string.Format("Hint: " + hint));
                     HintUp = true;
                 }
 
@@ -290,7 +288,9 @@ public class Screen_Cards : MonoBehaviour
             Storage.SetActive(false);
             StorageUp = false;
             HintUp = false;
+
             BookUp = true;
+            OpenUI();
 
             Time.timeScale = 0f;    //pause game
         }
@@ -321,7 +321,7 @@ public class Screen_Cards : MonoBehaviour
     {
         if (visibleMap || BookUp) 
         {
-            if (zStorage.time.isDay)
+            if (Game.Cycle.isDay)
                 TopMessage(StorageDayMsg);
             else
                 TopMessage(StorageNightMsg);
@@ -333,6 +333,7 @@ public class Screen_Cards : MonoBehaviour
             zStorage.RefreshZone();
 
             StorageUp = true;
+            OpenUI();
 
             Time.timeScale = 0f;    //pause game
         }
@@ -346,35 +347,6 @@ public class Screen_Cards : MonoBehaviour
         StorageUp = false;
         Time.timeScale = 1f;    //unpause game
         CheckUnit();
-    }
-
-    public void SwitchJob() //
-    {
-        if (visibleMap)
-        {
-            OpenJob();
-        }
-        else
-        {
-            CloseJob();
-        }
-    }
-
-    private void OpenJob() //
-    {
-        visibleMap = false;
-        Job.SetActive(true);
-        JobUp = true;
-        jobsHandler.CheckUnitList();
-        Time.timeScale = 0f;
-    }
-
-    public void CloseJob() //
-    {
-        visibleMap = true;
-        Job.SetActive(false);
-        JobUp = false;
-        Time.timeScale = 1f;    //unpause game
     }
     public void CardClick(Card_Drag pickedCard) //move Card_Drag between zones on click
     {
@@ -465,7 +437,7 @@ public class Screen_Cards : MonoBehaviour
     }
     public void DisplayCardClick(Card_Display pickedCard)   //add Card_Display to hand based on what was picked in Book/Storage
     {
-        if (Book.activeSelf || (zStorage.time.isDay == false || TestSkipDay)) 
+        if (Book.activeSelf || (Game.Cycle.isDay == false || TestSkipDay)) 
             if (CreateInHand(pickedCard.card))
             {
                 if (Storage.activeSelf)
@@ -580,6 +552,7 @@ public class Screen_Cards : MonoBehaviour
             {
                 zUnit.CardAdded(pickedCard, waitingUnit);
                 CheckUnit();
+                OpenUI();
                 return false; //unit needs to wait
             }
         }

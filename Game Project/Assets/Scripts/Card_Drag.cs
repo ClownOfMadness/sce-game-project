@@ -11,6 +11,7 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
     [HideInInspector] public GameObject placeholder = null;         //saves the dragged card's spot (for changing card order)
     [HideInInspector] public Canvas canvas;   //needed for moving the card
     [HideInInspector] public CanvasGroup cGroup;
+    [HideInInspector] public RectTransform rectT;
 
     //public Zones:
     [HideInInspector] public Transform hand;
@@ -34,14 +35,19 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
     [HideInInspector] public bool dragged;
     [HideInInspector] public bool clicked;
     [HideInInspector] public bool automatic;
+    private GameObject Desc;
+    private Text Desc_Text;
 
     void Start()
     {
+        cGroup = GetComponent<CanvasGroup>();
+        rectT = GetComponent<RectTransform>();
+        Tiles = screen.Game.Buildings;  //connection to use SpawnBuilding functions
+        Units = screen.Game.Units;      //connection to use UnitList functions
         dragged = false;
         clicked = false;
-        cGroup = GetComponent<CanvasGroup>();
-        Tiles = FindObjectOfType<Player_SpawnBuilding>();   //connection to use SpawnBuilding functions
-        Units = FindObjectOfType<Unit_List>();              //connection to use UnitList functions
+        Desc = screen.Desc;
+        Desc_Text = screen.Desc_Text;
     }
     public void SwitchCardPlace()   //move card between zones on click, used by button
     {
@@ -54,6 +60,10 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
             positionReturnTo = new Vector3(transform.position.x, transform.position.y, 0);  //original position
             screen.overlapingCard = false;
             transform.position = new Vector3(transform.position.x, positionReturnTo.y + zHand.handShift, 0);
+
+            Desc_Text.text = card.description;
+            Desc.gameObject.SetActive(true);
+            Desc.transform.position = new Vector3(transform.position.x, positionReturnTo.y + rectT.rect.height+20, 0);
         }
     }
     public void OnPointerExit(PointerEventData eventData)   //onHover reset
@@ -75,6 +85,7 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
         {
             transform.position = positionReturnTo;
         }
+        Desc.gameObject.SetActive(false);
     }
     private void SavePlaceholder()  //enables card order
     {
@@ -116,11 +127,10 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
         }
         if (this.card != screen.Creation)
             zHand.RefreshZone();
-        //refresh cards?
     }
     public void OnDrag(PointerEventData eventData)
     {
-        GetComponent<RectTransform>().anchoredPosition += eventData.delta / canvas.scaleFactor; //moves by wherever we picked the card instead of by the middle
+        rectT.anchoredPosition += eventData.delta / canvas.scaleFactor; //moves by wherever we picked the card instead of by the middle
         if (placeholder.transform.parent != placeholderParent)
         {
             placeholder.transform.SetParent(placeholderParent);
@@ -137,8 +147,6 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
             }
         }
         placeholder.transform.SetSiblingIndex(newSiblingIndex); //the abillity to swap places with cards in hand
-        //zHand.RefreshCards();
-        //positionReturnTo = new Vector3(placeholder.transform.position.x, placeholder.transform.position.y, 0);  //original position
     }
     public void OnEndDrag(PointerEventData eventData)
     {

@@ -74,18 +74,18 @@ public class KeyBinding : MonoBehaviour
     {
         if (ne == Keys["Creative"])
         {
-            Screen_Cards.creativeK = ne;
+            Game_Master.creativeK = ne;
         }
         else if (ne == Keys["Storage"])
         {
-            Screen_Cards.storageK = ne;
+            Game_Master.storageK = ne;
         }
         else if(ne == Keys["Hints"]) {
-            Screen_Cards.Hintsk = ne;
+            Game_Master.Hintsk = ne;
         }
         else if (ne == Keys["Jobs"])
         {
-            Screen_Cards.Jobsk = ne;
+            Game_Master.Jobsk = ne;
         }
         else if(ne == Keys["MoveUp"])
         {

@@ -18,7 +18,7 @@ public class Zone_Storage : Zone_Behaviour
 
     //external access:
     [HideInInspector] public Screen_Cards screen;
-    [HideInInspector] public System_DayNight time;
+    private System_DayNight time;
     private Card_Pool Pool; //open Card_Pool connection to use its functions
 
     //for development testing:
@@ -29,7 +29,7 @@ public class Zone_Storage : Zone_Behaviour
         Size = 8;
         pageSize = 8;   //max Zone size
 
-        time = FindObjectOfType<System_DayNight>();
+        time = screen.Game.Cycle;
         Pool = screen.Pool;
 
         skipDay = screen.TestSkipDay; //for development testing
