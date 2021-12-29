@@ -21,7 +21,7 @@ MonoBehaviour:
     card2: {fileID: 11400000, guid: 9dc53f43321834244a0789f0648d0c45, type: 2}
   gatheredBy: []
   complexity: 8
-  description: 
+  description: Quality pickaxe which will not break easily
   artwork: {fileID: 21300000, guid: c7fb3e74f532bd04e98baf632d895ea6, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 

@@ -21,6 +21,8 @@ MonoBehaviour:
     card2: {fileID: 11400000, guid: ebd35e72654e8364a8a5cd5332043de9, type: 2}
   gatheredBy: []
   complexity: 11
-  description: txt
+  description: To make something sturdy you have to use a sturdy wall
   artwork: {fileID: 21300000, guid: 33da4f6c004f0494a8ac687db6ae028f, type: 3}
   buildingPrefab: {fileID: 0}
+  unitIndex: 
+  neverDiscovered: 0

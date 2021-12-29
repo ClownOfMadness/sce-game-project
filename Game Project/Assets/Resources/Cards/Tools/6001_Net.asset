@@ -20,9 +20,8 @@ MonoBehaviour:
   - card1: {fileID: 11400000, guid: aa451c770152a2e4e92089bbb2afd921, type: 2}
     card2: {fileID: 11400000, guid: aa451c770152a2e4e92089bbb2afd921, type: 2}
   gatheredBy: []
-  tier: 
   complexity: 1
-  description: txt
+  description: Perfect for catching slippery things
   artwork: {fileID: 21300000, guid: 354241f3ac600f443a77318a30d14a43, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 

@@ -21,7 +21,7 @@ MonoBehaviour:
     card2: {fileID: 11400000, guid: ebd35e72654e8364a8a5cd5332043de9, type: 2}
   gatheredBy: []
   complexity: 7
-  description: with something this strong you can even make an entire building
+  description: With a strong tool you can even make an entire building
   artwork: {fileID: 21300000, guid: 4b85ed94d34d5e042b62c951d2ef2d04, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 

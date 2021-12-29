@@ -20,9 +20,8 @@ MonoBehaviour:
   - card1: {fileID: 11400000, guid: 4782869aef04d7b488027ccf13b82a06, type: 2}
     card2: {fileID: 11400000, guid: 6d0d526d3ccf25e4abf909e9f4ec94ee, type: 2}
   gatheredBy: []
-  tier: 
   complexity: 11
-  description: txt
+  description: Great for making a nice meal after a tough fight
   artwork: {fileID: 21300000, guid: 927f9c9bec8faea4a871a32d4a7f9854, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 

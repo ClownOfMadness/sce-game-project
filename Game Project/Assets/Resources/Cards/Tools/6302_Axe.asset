@@ -21,7 +21,7 @@ MonoBehaviour:
     card2: {fileID: 11400000, guid: 9dc53f43321834244a0789f0648d0c45, type: 2}
   gatheredBy: []
   complexity: 8
-  description: 
+  description: While very sharp,its better used against trees
   artwork: {fileID: 21300000, guid: ff0a9af511c1f71449387cdde96272eb, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 

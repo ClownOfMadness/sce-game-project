@@ -21,7 +21,7 @@ MonoBehaviour:
     card2: {fileID: 11400000, guid: 9dc53f43321834244a0789f0648d0c45, type: 2}
   gatheredBy: []
   complexity: 8
-  description: 
+  description: The perfect weapon to poke your enemy to death
   artwork: {fileID: 21300000, guid: b964776524d6c98499728e09ad33315f, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 

@@ -20,9 +20,8 @@ MonoBehaviour:
   - card1: {fileID: 11400000, guid: 4c6ed40fc58e10e48b1baa2491fbde18, type: 2}
     card2: {fileID: 11400000, guid: 3ed9877e28d2a27448847f1f88d09a32, type: 2}
   gatheredBy: []
-  tier: 
   complexity: 2
-  description: txt
+  description: Emits a bad smell but makes some nice stuff
   artwork: {fileID: 21300000, guid: 1a5a95384c71bff4bb73e56d5bf12231, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 

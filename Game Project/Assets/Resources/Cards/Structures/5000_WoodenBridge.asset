@@ -20,9 +20,8 @@ MonoBehaviour:
   - card1: {fileID: 11400000, guid: 6c59b2aaed79d23469b3b8469b6915b4, type: 2}
     card2: {fileID: 11400000, guid: ebd35e72654e8364a8a5cd5332043de9, type: 2}
   gatheredBy: []
-  tier: 
   complexity: 7
-  description: 
+  description: When water blocks your path, just build a bridge over it
   artwork: {fileID: 21300000, guid: e27fe8980b4b2bb4e9a8921e1d87415c, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 

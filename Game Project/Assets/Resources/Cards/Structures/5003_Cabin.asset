@@ -21,7 +21,7 @@ MonoBehaviour:
     card2: {fileID: 11400000, guid: 4781432241d2ec64ab855ecb93564724, type: 2}
   gatheredBy: []
   complexity: 15
-  description: 
+  description: Less finished or less architecturally sophisticated but is pretty
   artwork: {fileID: 21300000, guid: 3a66df323269fa341bb366ac5668dd50, type: 3}
   buildingPrefab: {fileID: 5601737541836290981, guid: 9228e62e5ad7a944cae84f96c36b93e6, type: 3}
   unitIndex: 

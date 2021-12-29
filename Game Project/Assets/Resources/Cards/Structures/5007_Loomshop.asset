@@ -21,6 +21,8 @@ MonoBehaviour:
     card2: {fileID: 11400000, guid: 571c3cf5474309345b700b75462426ff, type: 2}
   gatheredBy: []
   complexity: 32
-  description: 
+  description: String isn't going to make itself
   artwork: {fileID: 21300000, guid: f7c835af66e437549aa49b6dacd4cab3, type: 3}
   buildingPrefab: {fileID: 0}
+  unitIndex: 
+  neverDiscovered: 0

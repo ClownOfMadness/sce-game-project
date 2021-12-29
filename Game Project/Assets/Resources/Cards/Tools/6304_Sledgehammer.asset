@@ -21,7 +21,7 @@ MonoBehaviour:
     card2: {fileID: 11400000, guid: 9dc53f43321834244a0789f0648d0c45, type: 2}
   gatheredBy: []
   complexity: 8
-  description: 
+  description: Requires some serious strength to even lift it
   artwork: {fileID: 21300000, guid: 143ab4a7e9d637247aba35344f9a1e90, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
