@@ -60,7 +60,8 @@ public class Screen_Cards : MonoBehaviour
     [HideInInspector] public Card_Pool Pool;
     [HideInInspector] public Data_Card Creation;
     [HideInInspector] public bool CreationRevealed;
-    //[HideInInspector] public bool gameLost;
+    [HideInInspector] public int CardsCombined;
+    [HideInInspector] public int CardsDiscovered;
 
     //placement on map:
     [HideInInspector] public GameObject selectedTile;   //updated by Player_Control
@@ -82,10 +83,6 @@ public class Screen_Cards : MonoBehaviour
     public bool TestSkipDay;
     [Header("Hide Hand:")]
     public bool TestUICards;
-
-    //game state:
-    //[HideInInspector] public bool premiumUser = false;
-    //[HideInInspector] public bool hintsOn = false;
 
     void Awake()    //initilizing the entire cards' canvas
     {
@@ -122,7 +119,8 @@ public class Screen_Cards : MonoBehaviour
         visibleMap = true;
 
         CreationRevealed = false;
-       
+        CardsCombined = 0;      //will be replaced if save was loaded
+        CardsDiscovered = 0;    //will be replaced if save was loaded
         //CloseUI();  //game starts with UI closed
         OpenUI();  //game starts with UI open
     }
@@ -200,7 +198,7 @@ public class Screen_Cards : MonoBehaviour
         if (MenuUp || CraftUp || UnitUp || StorageUp || BookUp)
         {
             Message.gameObject.SetActive(true);
-            visibleMap = false; 
+            visibleMap = false;
         }
         else
             visibleMap = true;
@@ -280,11 +278,11 @@ public class Screen_Cards : MonoBehaviour
     }
     private void OpenBook()
     {
-        if (visibleMap || StorageUp) 
+        if (visibleMap || StorageUp)
         {
             TopMessage(CreativeMsg);
             visibleMap = false;
-           
+
             Storage.SetActive(false);
             StorageUp = false;
             HintUp = false;
@@ -308,7 +306,7 @@ public class Screen_Cards : MonoBehaviour
     }
     public void SwitchStorage() //close/open Storage
     {
-        if (StorageUp && !UIDown) 
+        if (StorageUp && !UIDown)
         {
             CloseStorage();
         }
@@ -319,7 +317,7 @@ public class Screen_Cards : MonoBehaviour
     }
     public void OpenStorage()
     {
-        if (visibleMap || BookUp) 
+        if (visibleMap || BookUp)
         {
             if (Game.Cycle.isDay)
                 TopMessage(StorageDayMsg);
@@ -351,7 +349,7 @@ public class Screen_Cards : MonoBehaviour
     public void CardClick(Card_Drag pickedCard) //move Card_Drag between zones on click
     {
         //if card is in hand - move it
-        if (pickedCard.transform.parent == Hand.transform)  
+        if (pickedCard.transform.parent == Hand.transform)
         {
             if (pickedCard.card != Creation)
             {
@@ -364,7 +362,7 @@ public class Screen_Cards : MonoBehaviour
                         HintUp = false;
                         Craft.SetActive(true);
                         CraftUp = true;
-                        pickedCard.automatic = true; 
+                        pickedCard.automatic = true;
                         pickedCard.transform.SetParent(Craft.transform);
                         if (Craft.transform.childCount == zCraft.Size)
                         {
@@ -396,7 +394,7 @@ public class Screen_Cards : MonoBehaviour
             {
                 pickedCard.card.neverDiscovered = false;
                 //Debug.Log("New card found: " + combination.name);
-                Pool.discoveredTotal++;
+                CardsDiscovered++;
             }
             if (pickedCard.transform.parent == CraftMenu.transform)     //if card is in Craft Menu prompt - move to hand
             {
@@ -437,7 +435,7 @@ public class Screen_Cards : MonoBehaviour
     }
     public void DisplayCardClick(Card_Display pickedCard)   //add Card_Display to hand based on what was picked in Book/Storage
     {
-        if (Book.activeSelf || (Game.Cycle.isDay == false || TestSkipDay)) 
+        if (Book.activeSelf || (Game.Cycle.isDay == false || TestSkipDay))
             if (CreateInHand(pickedCard.card))
             {
                 if (Storage.activeSelf)
@@ -503,7 +501,7 @@ public class Screen_Cards : MonoBehaviour
             {
                 pickedCard.neverDiscovered = false;
                 //Debug.Log("New card found: " + pickedCard.name);
-                Pool.discoveredTotal++;
+                CardsDiscovered++;
             }
             CreateObject(Hand.transform, pickedCard);
             automaticCard = false;
@@ -523,7 +521,7 @@ public class Screen_Cards : MonoBehaviour
         }
         else
         {
-            if(visibleMap)
+            if (visibleMap)
                 Message.gameObject.SetActive(false);
             UnitUp = false;
         }
@@ -570,8 +568,8 @@ public class Screen_Cards : MonoBehaviour
         Cards_Info export = new Cards_Info();
         export.Hand = zHand.ExportDeck();
         export.Storage = zStorage.ExportDeck();
-        export.Discovered = Pool.discoveredTotal;
-        export.Combos = zCraft.CombosTotal;
+        export.Discovered = CardsDiscovered;
+        export.Combos = CardsCombined;
         List<bool> status = new List<bool>(0);
         for (int i = 0; i < Pool.count; i++)                   //returning all fields in cards back to default 
             status.Add(Pool.cards[i].neverDiscovered);         //done here instead of Card_Pool to ensure that it only happens once
@@ -582,8 +580,8 @@ public class Screen_Cards : MonoBehaviour
     {
         zHand.ImportDeck(import.Hand);
         zStorage.ImportDeck(import.Storage);
-        Pool.discoveredTotal = import.Discovered;
-        zCraft.CombosTotal = import.Combos;
+        CardsDiscovered = import.Discovered;
+        CardsCombined = import.Combos;
         List<bool> status = new List<bool>(0);
         for (int i = 0; i < Pool.count; i++)
             Pool.cards[i].neverDiscovered = import.DisStatus[i];
@@ -596,23 +594,4 @@ public class Screen_Cards : MonoBehaviour
         public int Combos;
         public List<bool> DisStatus;
     }
-
-    //[Parent]//
-    public Cards_Stats ExportStats()             //will be used to parent stats
-    {
-        Cards_Stats export = new Cards_Stats();
-        export.Combos = zCraft.CombosTotal;
-        export.Discovered = Pool.discoveredTotal;
-        return export;
-    }
-    public void ImportStats(Cards_Stats import)  //will be used for parent stats
-    {
-        zCraft.CombosTotal = import.Combos;
-        Pool.discoveredTotal = import.Discovered;
-    }
-}
-public class Cards_Stats //used for parent stats
-{
-    public int Combos;
-    public int Discovered;
 }

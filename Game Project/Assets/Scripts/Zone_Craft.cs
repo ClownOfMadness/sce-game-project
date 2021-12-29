@@ -6,7 +6,7 @@ public class Zone_Craft : MonoBehaviour
 {
     //public fields:
     [HideInInspector] public int Size;              //Zone size
-    [HideInInspector] public int CombosTotal = 0;   //for statistics
+    //[HideInInspector] public int CombosTotal = 0;   //for statistics
 
     //internal fields:
     private GameObject CraftMenu;
@@ -34,7 +34,7 @@ public class Zone_Craft : MonoBehaviour
             {   //if it's a normal combination
                 if (Pool.IsCombination(combination))
                 {
-                    CombosTotal++;
+                    screen.CardsCombined++;
                     screen.TopMessage(string.Format("Craft succeseful! Created {0}", combination.name));
 
                     Destroy(cardObjects[1].gameObject);
@@ -50,7 +50,7 @@ public class Zone_Craft : MonoBehaviour
                         screen.CreateObject(CraftMenu.transform, combinations[i]);
                     }
 
-                    CombosTotal++;
+                    screen.CardsCombined++;
                     screen.TopMessage(string.Format("Craft succeseful! Pick one card to add to your deck"));
 
                     this.gameObject.SetActive(false);

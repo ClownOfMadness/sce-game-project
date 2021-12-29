@@ -7,7 +7,6 @@ public class Card_Pool : ScriptableObject
 {
     public List<Data_Card> cards;    //list of all existing cards, can be called from any part of the program
     public int count;
-    public int discoveredTotal = 0;         //for statistics
 
     void Awake()               
     {

@@ -32,12 +32,7 @@ public class Data_Parent
     public int CardsCombined;
     public int CardsDiscovered;
 
-    public Data_Parent(Cards_Stats data)
-    {
-        CardsCombined = data.Combos;
-        CardsDiscovered = data.Discovered;
-    }
-    public Data_Parent(Game_Config data)
+    public Data_Parent(Game_Parent data)
     {
         //22. bedtime:
         bedtimeSet = data.bedtimeSet;
@@ -47,6 +42,8 @@ public class Data_Parent
         timeLimit = data.timeLimit;
         //26. game statistics:
         TotalGameTime = data.TotalGameTime;
+        CardsCombined = data.CardsCombined;
+        CardsDiscovered = data.CardsDiscovered;
         //27. font:
         fontSize = data.fontSize;
         //28. hints:

@@ -238,9 +238,9 @@ public class Game_Master : MonoBehaviour
     }
 
     //[Parent]//
-    public Game_Config ExportConfig()             //will be used to save the game
+    public Game_Parent ExportConfig()             //will be used to save the game
     {
-        Game_Config export = new Game_Config();
+        Game_Parent export = new Game_Parent();
         //22. bedtime:
         export.bedtimeSet = bedtimeSet;
         export.bedtime = bedtime;
@@ -249,6 +249,8 @@ public class Game_Master : MonoBehaviour
         export.timeLimit = timeLimit;
         //26. game statistics:
         export.TotalGameTime = totalGameTime;
+        export.CardsCombined = Cards.CardsCombined;
+        export.CardsDiscovered = Cards.CardsDiscovered;
         //27. font:
         export.fontSize = (int)fontSize;
         //28. hints:
@@ -261,7 +263,7 @@ public class Game_Master : MonoBehaviour
         export.difficulty = (int)difficulty;
         return export;
     }
-    public void ImportConfig(Game_Config import)  //will be used to load the game
+    public void ImportConfig(Game_Parent import)  //will be used to load the game
     {
         //22. bedtime:
         bedtimeSet = import.bedtimeSet;
@@ -271,6 +273,8 @@ public class Game_Master : MonoBehaviour
         timeLimit = import.timeLimit;
         //26. game statistics:
         totalGameTime = import.TotalGameTime;
+        Cards.CardsCombined = import.CardsCombined;
+        Cards.CardsDiscovered = import.CardsDiscovered;
         //27. font:
         fontSize = (fontList)import.fontSize;
         //28. hints:
@@ -283,7 +287,7 @@ public class Game_Master : MonoBehaviour
         difficulty = (difficultyList)import.difficulty;
     }
 }
-public class Game_Config
+public class Game_Parent
 {
     //22. bedtime:
     public bool bedtimeSet;
@@ -293,6 +297,8 @@ public class Game_Config
     public float timeLimit;
     //26. game statistics:
     public float TotalGameTime;
+    public int CardsCombined;
+    public int CardsDiscovered;
     //27. font:
     public int fontSize;    //0=Normal, 1=Big
     //28. hints:

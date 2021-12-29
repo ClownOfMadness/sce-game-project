@@ -81,7 +81,7 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
             {
                 Pool.cards[Pool.FindCard(deck[i])].neverDiscovered = false;
                 //Debug.Log("New card found: " + deck[i]);
-                Pool.discoveredTotal++;
+                screen.CardsDiscovered++;
             }
             screen.CreateObject(this.transform, deck[i]);
         }
@@ -93,7 +93,7 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
         {
             cardObject.card.neverDiscovered = false;
             //Debug.Log("New card found: " + combination.name);
-            Pool.discoveredTotal++;
+            screen.CardsDiscovered++;
         }
     }
     public Data_Card DamageDeck()    //lose a random card from hand, if Creation is lost game is lost
