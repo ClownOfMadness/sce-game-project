@@ -564,7 +564,8 @@ public class Screen_Cards : MonoBehaviour
     {
         return zHand.DamageDeck();
     }
-    public Cards_Info ExportCards()             //will be used to save the game
+    //[General]//
+    public Cards_Info ExportCards()             //will be used to save the game[need to change after parent stats get separated from the rest]
     {
         Cards_Info export = new Cards_Info();
         export.Hand = zHand.ExportDeck();
@@ -577,7 +578,7 @@ public class Screen_Cards : MonoBehaviour
         export.DisStatus = status;
         return export;
     }
-    public void ImportCards(Cards_Info import)  //will be used to load the game
+    public void ImportCards(Cards_Info import)  //will be used to load the game[need to change after parent stats get separated from the rest]
     {
         zHand.ImportDeck(import.Hand);
         zStorage.ImportDeck(import.Storage);
@@ -587,7 +588,7 @@ public class Screen_Cards : MonoBehaviour
         for (int i = 0; i < Pool.count; i++)
             Pool.cards[i].neverDiscovered = import.DisStatus[i];
     }
-    public class Cards_Info //used for saves
+    public class Cards_Info //used for saves [need to change after parent stats get separated from the rest]
     {
         public List<int> Hand;
         public List<int> Storage;
@@ -595,4 +596,23 @@ public class Screen_Cards : MonoBehaviour
         public int Combos;
         public List<bool> DisStatus;
     }
+
+    //[Parent]//
+    public Cards_Stats ExportStats()             //will be used to parent stats
+    {
+        Cards_Stats export = new Cards_Stats();
+        export.Combos = zCraft.CombosTotal;
+        export.Discovered = Pool.discoveredTotal;
+        return export;
+    }
+    public void ImportStats(Cards_Stats import)  //will be used for parent stats
+    {
+        zCraft.CombosTotal = import.Combos;
+        Pool.discoveredTotal = import.Discovered;
+    }
+}
+public class Cards_Stats //used for parent stats
+{
+    public int Combos;
+    public int Discovered;
 }

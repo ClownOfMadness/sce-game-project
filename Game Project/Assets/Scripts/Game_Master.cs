@@ -6,7 +6,7 @@ using System;
 //responsible for game states and monitoring the entire game
 public class Game_Master : MonoBehaviour
 {
-    //general:
+    //[General]//
     [Header("---[Systems]---")]
     public Player_Jobs Jobs;
     public Screen_Cards Cards;
@@ -23,6 +23,7 @@ public class Game_Master : MonoBehaviour
     public Unit_List Units;
     public Enemy_List Enemies;
 
+    [HideInInspector] public float totalGameTime;
     [HideInInspector] public bool gameLost;
 
     public enum fontList        //used by fontSize
@@ -50,7 +51,7 @@ public class Game_Master : MonoBehaviour
         Hardcore    //for premium, make sure that it doesn't clash with Easy
     }
 
-    //[Premium]
+    //[Premium]//
     [HideInInspector] public bool premiumUser;
     //12. main character appearance:
     [HideInInspector] public windowList windowLook;
@@ -59,10 +60,10 @@ public class Game_Master : MonoBehaviour
     //17. main character appearance:
     [HideInInspector] public charList charLook;
 
-    //[Parent]
+    //[Parent]//
     //22. bedtime:
-    [HideInInspector] public bool bedTimeSet;
-    [HideInInspector] public float bedTime;
+    [HideInInspector] public bool bedtimeSet;
+    [HideInInspector] public float bedtime;
     private float realTime;
     //23. play time limit:
     [HideInInspector] public bool timeLimitSet;
@@ -75,7 +76,7 @@ public class Game_Master : MonoBehaviour
     //29. game speed:
     [HideInInspector] public speedList gameSpeed;
 
-    //[Premium+Parent]
+    //[Premium+Parent]//
     //15+24. enemies:
     [HideInInspector] public bool enemiesOff;
     //18+30. difficulty:
@@ -88,8 +89,6 @@ public class Game_Master : MonoBehaviour
 
     void Awake()
     {
-        gameLost = false;
-
         //giving access to other scripts: (enable whaterver is relevant)
         //Jobs.Game = this;
         Cards.Game = this;
@@ -104,12 +103,12 @@ public class Game_Master : MonoBehaviour
         //if save file wasnt picked, run new game
         NewGame();
 
-        //[testing bedtime functionality]
-        //bedTime = TimeToFloat("22:17");
-        //bedTimeSet = true;
+        //[testing bedtime functionality]//
+        //bedtime = TimeToFloat("22:17");
+        //bedtimeSet = true;
         //[testing bedtime functionality]
 
-        //[testing time limit functionality]
+        //[testing time limit functionality]//
         //timeLimit = TimeToFloat("00:01:10");
         //Debug.Log(FloatToTime(timeLimit));   
         //timeLeft = timeLimit;
@@ -118,7 +117,7 @@ public class Game_Master : MonoBehaviour
     }
     void Update() //main Update, handles constant checking of parameters for the rest of the game
     {
-        //[General]
+        //[General]//
         if(gameLost)
         {
             //this is where a lose screen will be called
@@ -143,15 +142,15 @@ public class Game_Master : MonoBehaviour
         //move other key listeners here
 
 
-        //[Premium]
+        //[Premium]//
         //
 
-        //[Parent]
+        //[Parent]//
         //22. bedtime:
-        if (bedTimeSet)
+        if (bedtimeSet)
         {
             realTime = (TimeToFloat(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second));
-            if (realTime > bedTime)
+            if (realTime > bedtime)
             {
                 Debug.Log("Reached bedtime");
                 //save game and exit
@@ -176,12 +175,29 @@ public class Game_Master : MonoBehaviour
         Hintsk = KeyCode.H;
         Jobsk = KeyCode.J;
 
-        // defaults for a new game:
-        hintsOn = false;
+        //defaults for a new game:
+        //[General]//
+        totalGameTime = 0;
+        gameLost = false;
+
+        //[Premium]//
+        premiumUser = false;
+        windowLook = (windowList)1;
+        fogOff = false;
+        charLook = (charList)1;
+
+        //[Parent]//
+        bedtimeSet = false;
+        bedtime = 0;
         timeLimitSet = false;
         timeLimit = 0;
-        bedTimeSet = false;
-        bedTime = 0;
+        fontSize = fontList.Normal;
+        hintsOn = false;
+        gameSpeed = speedList.Normal;
+
+        //[Premium+Parent]//
+        enemiesOff = false;
+        difficulty = difficultyList.Normal;
     }
     public float TimeToFloat(string time)   //converts time in hh:mm:ss or hh:mm format into float
     {
@@ -220,4 +236,71 @@ public class Game_Master : MonoBehaviour
     {
 
     }
+
+    //[Parent]//
+    public Game_Config ExportConfig()             //will be used to save the game
+    {
+        Game_Config export = new Game_Config();
+        //22. bedtime:
+        export.bedtimeSet = bedtimeSet;
+        export.bedtime = bedtime;
+        //23. play time limit:
+        export.timeLimitSet = timeLimitSet;
+        export.timeLimit = timeLimit;
+        //26. game statistics:
+        export.TotalGameTime = totalGameTime;
+        //27. font:
+        export.fontSize = (int)fontSize;
+        //28. hints:
+        export.hintsOn=hintsOn;
+        //29. game speed:
+        export.gameSpeed = (int)gameSpeed;
+        //15+24. enemies:
+        export.enemiesOff = enemiesOff;
+        //18+30. difficulty:
+        export.difficulty = (int)difficulty;
+        return export;
+    }
+    public void ImportConfig(Game_Config import)  //will be used to load the game
+    {
+        //22. bedtime:
+        bedtimeSet = import.bedtimeSet;
+        bedtime = import.bedtime;
+        //23. play time limit:
+        timeLimitSet = import.timeLimitSet;
+        timeLimit = import.timeLimit;
+        //26. game statistics:
+        totalGameTime = import.TotalGameTime;
+        //27. font:
+        fontSize = (fontList)import.fontSize;
+        //28. hints:
+        hintsOn = import.hintsOn;
+        //29. game speed:
+        gameSpeed = (speedList)import.gameSpeed;
+        //15+24. enemies:
+        enemiesOff = import.enemiesOff;
+        //18+30. difficulty:
+        difficulty = (difficultyList)import.difficulty;
+    }
+}
+public class Game_Config
+{
+    //22. bedtime:
+    public bool bedtimeSet;
+    public float bedtime;
+    //23. play time limit:
+    public bool timeLimitSet;
+    public float timeLimit;
+    //26. game statistics:
+    public float TotalGameTime;
+    //27. font:
+    public int fontSize;    //0=Normal, 1=Big
+    //28. hints:
+    public bool hintsOn;
+    //29. game speed:
+    public int gameSpeed;   //0=Normal, 1=Slow
+    //15+24. enemies:
+    public bool enemiesOff;
+    //18+30. difficulty:
+    public int difficulty;  //0=Normal, 1=Easy, 2=Hardcore
 }
