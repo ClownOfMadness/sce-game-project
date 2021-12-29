@@ -101,7 +101,7 @@ public class Map_SpawnControl : MonoBehaviour
                     PosDic.Remove(randPos);
 
                 float currentHeight = Map.TileArray[x, y].GetComponent<Data_Tile>().height; //get the height from the old tile
-                GameObject fog = Map.TileArray[x, y].transform.GetChild(4).gameObject; //get the fog from the old tile
+                GameObject fog = Map.TileArray[x, y].transform.Find("Fog").gameObject; //get the fog from the old tile
 
                 GameObject.Destroy(Map.TileArray[x, y]); //destroy the old tile
                 Map.TileArray[x, y] = Map.InstantiateTile(resources[index].prefab, new Vector3(x * 10, 1, y * 10), Map, currentHeight);

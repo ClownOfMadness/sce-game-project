@@ -32,7 +32,7 @@ public class Map_Display : MonoBehaviour
     {
         //save_manager = FindObjectOfType<Save_Manager>();
         //save_manager.SceneLoaded();
-        
+
         if (!(unitlist = GameObject.Find("Units").GetComponent<Unit_List>()))
         {
             Debug.LogError("Units gameobject or Unit_List is not found for Map_Display");
@@ -52,9 +52,9 @@ public class Map_Display : MonoBehaviour
 
         //if (saved_data == null)
         //{
-            TownHall = Map.generateMap();
-            MainCamera.transform.position = TownHall.transform.position + new Vector3(0, 150, 0);
-            unitlist.townhall = TownHall;
+        TownHall = Map.generateMap();
+        MainCamera.transform.position = TownHall.transform.position + new Vector3(0, 150, 0);
+        unitlist.townhall = TownHall;
         //}
         //else Load_Data(saved_data);
         path.Scan();
@@ -63,7 +63,7 @@ public class Map_Display : MonoBehaviour
         //Debug.Log(Save_Manager.currSlot);
     }
 
-     void Update()
+    void Update()
     {
         if (size != 0)
         {
@@ -73,10 +73,16 @@ public class Map_Display : MonoBehaviour
         }
     }
 
+    //-----------------Load-----------------//
+
+    //Load player data.
     public void Load_Data(Data_Player data)
     {
         Screen_Cards.Cards_Info cards_info = new Screen_Cards.Cards_Info();
 
+        LoadMap(data.TileMap, data.mapSize);
+        //LoadUnitList();
+        //LoadEnemyList();
 
         cards_info.Hand = data.Hand;
         cards_info.Storage = data.Storage;
@@ -85,14 +91,190 @@ public class Map_Display : MonoBehaviour
         cards_info.DisStatus = data.DisStatus;
         screen_cards.ImportCards(cards_info);
     }
+    //Laod the tile map.
+    public void LoadMap(Save_Tile[,] tileMap, int size)
+    {
+        Map.TileArray = new GameObject[size, size];
+        Map.DataTileArray = new Data_Tile[size, size];
 
+        for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+                LoadTile(tileMap[x, y], x, y);
+    }
+    public void LoadTile(Save_Tile tile, int x, int y)
+    { 
+        Vector3 pos = new Vector3(x * 10, 0, y * 10);
+        Map.TileArray[x, y] = Map.InstantiateTile(convertTypeToTile(tile.tileType), pos, Map, tile.save_tileData.height);
+        if (Map.FogMap)//Create fog if it enabled.
+        {
+            GameObject thisFog = Instantiate(Map.fog, new Vector3(0, 1, 0), Quaternion.Euler(0, 0, 0), Map.TileArray[x, y].transform);
+            thisFog.transform.localPosition = new Vector3(0, 1, 0);
+        }
+        Map.TileArray[x, y].AddComponent<Data_Tile>().LoadData(LoadTileData(tile.save_tileData));
+        if (tile.building.buildingType != -1)
+        {
+            LoadBuilding(tile.building, Map.TileArray[x, y]);
+        }
+    }
+    public Data_Tile.Tile_Info LoadTileData(Save_TileData data)
+    {
+        Data_Tile.Tile_Info info = new Data_Tile.Tile_Info();
+
+        info.height = data.height;
+        info.gizmoUse = data.gizmoUse;
+        info.canRecharge = data.canRecharge;
+        info.canRandom = data.canRandom;
+        //info.theExtra = data.theExtra; //GO
+        //info.parentExtra = data.parentExtra; //GO
+        info.extra = data.extra;
+        info.check = data.check;
+        info.revealed = data.revealed;
+        //info,unit = data.unit; //GO
+        info.building = convertTypeToBuilding(data.building);
+        //info.dataBuilding = data.dataBuilding; //Class
+        //info.builders = data.builders; //list<Class>
+        info.hasTownHall = data.hasTownHall;
+        info.hasBuilding = data.hasBuilding;
+        info.buildingComplete = data.buildingComplete;
+        info.hasResources = data.hasResources;
+        info.progress = data.progress;
+        info.buildDone = data.buildDone;
+        info.nextProgress = data.nextProgress;
+        //info.cards = data.cards; //List<Class>
+        //info.enemies = data.enemies; //List<Class>
+        info.abyssSetup = data.abyssSetup;
+        info.canSpawn = data.canSpawn;
+        info.hasAbyss = data.hasAbyss;
+
+        return info;
+    }
+    public void LoadBuilding(Save_Building building, GameObject tile)
+    {
+        Data_Building.Building_Info info = new Data_Building.Building_Info();
+
+        GameObject newBuilding = convertTypeToBuilding(building.buildingType);
+        if (newBuilding != null)
+        {
+            SpawnBuilding.Spawn(newBuilding, tile);
+
+            info.transparency = building.transparency;
+            info.originalColor = building.originalColor;
+            info.night = building.night;
+            info.inProgress = building.inProgress;
+            info.health = building.health;
+
+            newBuilding.AddComponent<Data_Building>().LoadData(info);
+        }
+    }
+
+    //public void LoadUnitList(List<Save_Unit> units)
+    //{
+    //    Unit_List.Units unitTypes = new Unit_List.Units();
+    //    foreach (Save_Unit unit in units)
+    //    {
+    //        LoadUnit(unit, unitTypes);
+    //    }
+    //}
+
+    public void LoadEnemyList(List<Save_Enemy> enemies)
+    {
+        //Unit_List.Units unitTypes = new Unit_List.Units();
+        foreach (Save_Enemy enemy in enemies)
+        {
+            //LoadUnit(unit, unitTypes);
+        }
+    }
+
+    //public void LoadUnit(Save_Unit unit)
+    //{
+    //    Data_Unit.Unit_Info info = new Data_Unit.Unit_Info();
+        
+    //    if (unit.unitType != -1)
+    //    {
+    //        unit_list.SummonUnit(unit.unitType, TileArray[x, y], null, true);
+
+    //        info.nextWander = unit.nextWander;
+    //        info.impassable = unit.impassable; ;
+    //        //info.currentTileOn = SaveTile(info.currentTileOn.GetComponent<Data_Tile>(), info.currentTileOn);//null?
+    //        info.reachedTownHall = unit.reachedTownHall; ;
+    //        //info.detectedImpassable = SaveTile(info.detectedImpassable.GetComponent<Data_Tile>(), info.detectedImpassable);//null?;
+    //        //info.townHall = SaveBuilding(info.townHall);
+    //        info.card = screen_cards.Pool.GetCard(unit.card);
+    //        info.busy = unit.busy; ;
+    //        info.toTownHall = unit.toTownHall;
+    //        info.cardToDeliver = unit.cardToDeliver;
+    //        info.buildingInteraction = unit.buildingInteraction;
+    //        info.hurt = unit.hurt;
+    //        info.durability = unit.durability;
+    //        info.health = unit.health;
+    //        info.regenCD = unit.regenCD;
+    //        info.nextRegen = unit.nextRegen;
+    //        //info.workCard;
+    //        //info.workPlace = SaveTile(info.workPlace.GetComponent<Data_Tile>(), info.workPlace);//null?
+    //        info.working = unit.working;
+    //        info.workBegun = unit.workBegun;
+    //        info.workIndex = unit.workIndex;
+    //        info.workTime = unit.workTime;
+    //        info.workDone = unit.workDone;
+    //        info.workExtra = unit.workExtra;
+    //        //info.buildPlace = SaveTile(info.buildPlace.GetComponent<Data_Tile>(), info.buildPlace);//null?
+    //        info.building = unit.building;
+    //        info.buildBegun = unit.buildBegun;
+    //        info.patroling = unit.patroling;
+    //        //info.patrolPlace = SaveTile(info.patrolPlace.GetComponent<Data_Tile>(), info.patrolPlace);//null?;
+    //        //info.target = SaveTile(info.target.GetComponent<Data_Tile>(), info.target);//null?;;
+    //        //public Save_Tile spottedAbyss; // Not finalized
+    //        //info.spottedEnemy = Save_Enemy();
+    //        info.nextAttack = unit.nextAttack;
+    //        info.workInMemory = unit.workInMemory;
+    //        //info.rmbTileData = SaveTileData(info.rmbTileData.SaveData());
+    //        //public Data_Card rmbWorkCard; // Need to serialize
+    //        //info.rmbWorkPlace = SaveTile(info.rmbWorkPlace.GetComponent<Data_Tile>(), info.rmbWorkPlace);//null?;;;
+    //        info.rmbWorkIndex = unit.rmbWorkIndex;
+    //        info.rmbWorkTime = unit.rmbWorkTime;
+    //        info.rmbWorkExtra = unit.rmbWorkExtra;
+    //        //info.tileData = SaveTileData(info.tileData.SaveData());
+    //    }
+    //}
+
+    //public void LoadEnemy(Save_Enemy enemy)
+    //{
+    //    Data_Enemy.Enemy_Info info = new Data_Enemy.Enemy_Info();
+
+    //    if (enemy.enemyType != -1)
+    //    {
+    //        info.nextWander = enemy.nextWander;
+    //        info.impassable = enemy.impassable;
+    //        //info.currentTileOn = SaveTile(info.currentTileOn.GetComponent<Data_Tile>(), info.currentTileOn);//null?
+    //        //info.previousTile = SaveTile(info.previousTile.GetComponent<Data_Tile>(), info.previousTile);//null?;
+    //        //info.dataTile = SaveTileData(info.dataTile.SaveData());
+    //        info.reachedTown = enemy.reachedTown;
+    //        info.reachedAbyss = enemy.reachedAbyss;
+    //        //info.target = SaveUnit(info.target.GetComponent<Data_Unit>(), info.target);//null?
+    //        //info.spottedUnit = SaveUnit(info.spottedUnit.GetComponent<Data_Unit>(), info.spottedUnit);//null?
+    //        //info.spottedBuilding = SaveBuilding(info.spottedBuilding);
+    //        //info.spottedTownHall = SaveBuilding(info.spottedTownHall);
+    //        //public Save_Player spottedPlayer; // Need to serialize
+    //        info.nextAttack = enemy.nextAttack;
+    //        //info.abyss = SaveTile(info.abyss.GetComponent<Data_Tile>(), info.abyss);//null?
+    //        //info.abyssData = SaveTileData(info.abyssData.SaveData());
+    //        //public Data_Card card; // Need to serialize
+    //        info.busy = enemy.busy;
+    //        info.health = enemy.health;
+    //        return info;
+    //    }
+    //}
+    //--------------------------------------//
+
+    //-----------------Save-----------------//
+    //Save player data.
     public Data_Player Save_Data()
     {
         Data_Player data = new Data_Player();
         Screen_Cards.Cards_Info cards_info;
 
         //data.TileMap = SaveMap();
-        //data.units = SaveUnits();
+        //data.units = SaveUnitList();
         //data.enemies = SaveEnemies();
 
         cards_info = screen_cards.ExportCards();
@@ -106,16 +288,16 @@ public class Map_Display : MonoBehaviour
     }
 
     //Create serializable tile map.
-    //public Save_Tile[,] SaveMap()
-    //{
-    //    Save_Tile[,] save_map = new Save_Tile[size, size];
+    public Save_Tile[,] SaveMap()
+    {
+        Save_Tile[,] save_map = new Save_Tile[size, size];
 
-    //    for (int y = 0; y < size; y++)
-    //        for (int x = 0; x < size; x++)
-    //            SaveTile(Map.DataTileArray[x, y], Map.TileArray[x, y]);
+        for (int y = 0; y < size; y++)
+            for (int x = 0; x < size; x++)
+                SaveTile(Map.DataTileArray[x, y], Map.TileArray[x, y]);
 
-    //    return save_map;
-    //}
+        return save_map;
+    }
 
     //Create serializable building.
     public Save_Building SaveBuilding(GameObject building)
@@ -124,15 +306,15 @@ public class Map_Display : MonoBehaviour
         Data_Building.Building_Info info = new Data_Building.Building_Info();
 
         save_building.buildingType = convertBuildingToType(building);
-        //save_building.parentPosX = ;
-        //save_building.parentPosY = ;
 
-        save_building.transparency = info.transparency;
-        save_building.originalColor = info.originalColor;
-        save_building.night = info.night;
-        save_building.inProgress = info.inProgress;
-        save_building.health = info.health;
-
+        if (save_building.buildingType != -1)
+        {
+            save_building.transparency = info.transparency;
+            save_building.originalColor = info.originalColor;
+            save_building.night = info.night;
+            save_building.inProgress = info.inProgress;
+            save_building.health = info.health;
+        }
         return save_building;
     }
 
@@ -147,6 +329,10 @@ public class Map_Display : MonoBehaviour
         save_tile.tileType = convertTileToType(data_tile);
 
         save_tile.save_tileData = SaveTileData(info);
+        if(info.hasBuilding || info.hasTownHall)
+        {
+            save_tile.building = SaveBuilding(tile.transform.GetChild(tile.transform.childCount - 1).gameObject);
+        }
 
         return save_tile;
     }
@@ -184,24 +370,24 @@ public class Map_Display : MonoBehaviour
         return save_tileData;
     }
 
-    public List<Save_Unit> CreateUnitList()
+    public List<Save_Unit> SaveUnitList()
     {
         List<Save_Unit> list = new List<Save_Unit>();
-        
+
         foreach (Transform child in Units.transform)
         {
-            list.Add(CreateUnit(child.gameObject.GetComponent<Data_Unit>(), child.gameObject));
+            list.Add(SaveUnit(child.gameObject.GetComponent<Data_Unit>(), child.gameObject));
         }
 
         return list;
     }
 
-    public Save_Unit CreateUnit(Data_Unit data_unit, GameObject unitPrefab)
+    public Save_Unit SaveUnit(Data_Unit data_unit, GameObject unitPrefab)
     {
         Save_Unit unit = new Save_Unit();
         Data_Unit.Unit_Info info = data_unit.SaveData();
 
-        if(unitPrefab != null)
+        if (unitPrefab != null)
         {
             unit.unitType = convertUnitToType(unitPrefab.gameObject);
 
@@ -211,7 +397,8 @@ public class Map_Display : MonoBehaviour
             unit.reachedTownHall = info.reachedTownHall; ;
             unit.detectedImpassable = SaveTile(info.detectedImpassable.GetComponent<Data_Tile>(), info.detectedImpassable);//null?;
             unit.townHall = SaveBuilding(info.townHall);
-            //public Data_Card card; // Need to serialize
+            if (info.workCard != null) unit.card = info.card.code;
+            else unit.card = -1;
             unit.busy = info.busy; ;
             unit.toTownHall = info.toTownHall;
             unit.cardToDeliver = info.cardToDeliver;
@@ -221,7 +408,8 @@ public class Map_Display : MonoBehaviour
             unit.health = info.health;
             unit.regenCD = info.regenCD;
             unit.nextRegen = info.nextRegen;
-            //unit.workCard;
+            if (info.workCard != null) unit.workCard = info.workCard.code;
+            else unit.workCard = -1;
             unit.workPlace = SaveTile(info.workPlace.GetComponent<Data_Tile>(), info.workPlace);//null?
             unit.working = info.working;
             unit.workBegun = info.workBegun;
@@ -240,7 +428,8 @@ public class Map_Display : MonoBehaviour
             unit.nextAttack = info.nextAttack;
             unit.workInMemory = info.workInMemory;
             unit.rmbTileData = SaveTileData(info.rmbTileData.SaveData());
-            //public Data_Card rmbWorkCard; // Need to serialize
+            if (info.rmbWorkCard != null) unit.rmbWorkCard = info.rmbWorkCard.code;
+            else unit.rmbWorkCard = -1;
             unit.rmbWorkPlace = SaveTile(info.rmbWorkPlace.GetComponent<Data_Tile>(), info.rmbWorkPlace);//null?;;;
             unit.rmbWorkIndex = info.rmbWorkIndex;
             unit.rmbWorkTime = info.rmbWorkTime;
@@ -249,7 +438,51 @@ public class Map_Display : MonoBehaviour
         }
         return unit;
     }
-    
+
+    public List<Save_Enemy> SaveEnemyList()
+    {
+        List<Save_Enemy> list = new List<Save_Enemy>();
+
+        foreach (Transform child in Enemies.transform)
+        {
+            list.Add(SaveEnemy(child.gameObject.GetComponent<Data_Enemy>(), child.gameObject));
+        }
+
+        return list;
+    }
+
+    public Save_Enemy SaveEnemy(Data_Enemy data_enemy, GameObject enemyPrefab)
+    {
+        Save_Enemy enemy = new Save_Enemy();
+        Data_Enemy.Enemy_Info info = data_enemy.SaveData();
+
+        enemy.enemyType = convertEnemyToType(enemyPrefab); //Type identifier
+
+        enemy.nextWander = info.nextWander;
+        enemy.impassable = info.impassable;
+        enemy.currentTileOn = SaveTile(info.currentTileOn.GetComponent<Data_Tile>(), info.currentTileOn);//null?
+        enemy.previousTile = SaveTile(info.previousTile.GetComponent<Data_Tile>(), info.previousTile);//null?;
+        enemy.dataTile = SaveTileData(info.dataTile.SaveData());
+        enemy.reachedTown = info.reachedTown;
+        enemy.reachedAbyss = info.reachedAbyss;
+        enemy.target = SaveUnit(info.target.GetComponent<Data_Unit>(), info.target);//null?
+        enemy.spottedUnit = SaveUnit(info.spottedUnit.GetComponent<Data_Unit>(), info.spottedUnit);//null?
+        enemy.spottedBuilding = SaveBuilding(info.spottedBuilding);
+        enemy.spottedTownHall = SaveBuilding(info.spottedTownHall);
+        //public Save_Player spottedPlayer; // Need to serialize
+        enemy.nextAttack = info.nextAttack;
+        enemy.abyss = SaveTile(info.abyss.GetComponent<Data_Tile>(), info.abyss);//null?
+        enemy.abyssData = SaveTileData(info.abyssData.SaveData());
+        if (info.card != null) enemy.card = info.card.code;
+        else enemy.card = -1;
+        enemy.busy = info.busy;
+        enemy.health = info.health;
+        return enemy;
+    }
+    //-------------------------------------------//
+
+    //-------------------------------------------//
+
     //Convertion Enemy >>> EnemyType
     public int convertEnemyToType(GameObject enemyPrefab)
     {
@@ -362,14 +595,14 @@ public class Map_Display : MonoBehaviour
         public bool hasResources;
 
         // [Tile Build] //
-        //public List<Save_Unit> builders;
+        public List<Save_Unit> builders;
         public int progress;
         public bool buildDone;
         public bool canProgress;
         public float nextProgress;
 
         // [Abyss]
-        //public List<Data_Card> cards; //List<Data_Card> cards???
+        public List<int> cards; // data_card
         public List<Save_Enemy> enemies;
         public bool abyssSetup;
         public bool canSpawn;
@@ -381,13 +614,10 @@ public class Map_Display : MonoBehaviour
         public int typeExtra;
     }
 
-
     public class Save_Building
     {
         public int buildingType;
-        public int parentPosX;
-        public int parentPosY;
-
+     
         public Color transparency;
         public Color originalColor;
         public bool night;
@@ -416,7 +646,7 @@ public class Map_Display : MonoBehaviour
 
         // [Unit Control]
         public Save_Building townHall;
-        //public Data_Card card; // Need to serialize
+        public int card; // data_card
         public bool busy;
         public bool toTownHall;
         public bool cardToDeliver;
@@ -430,7 +660,7 @@ public class Map_Display : MonoBehaviour
         public float nextRegen;
 
         // [Work Routine]
-        //public Data_Card workCard; // Need to serialize
+        public int workCard; // card_data
         public Save_Tile workPlace;
         public bool working;
         public bool workBegun;
@@ -455,7 +685,7 @@ public class Map_Display : MonoBehaviour
         // [Work in memory]
         public bool workInMemory;
         public Save_TileData rmbTileData;
-        //public Data_Card rmbWorkCard; // Need to serialize
+        public int rmbWorkCard; // data_card
         public Save_Tile rmbWorkPlace;
         public int rmbWorkIndex;
         public float rmbWorkTime;
@@ -488,7 +718,7 @@ public class Map_Display : MonoBehaviour
         // [Enemy Control]
         public Save_Tile abyss;
         public Save_TileData abyssData;
-        //public Data_Card card; // Need to serialize
+        public int card; // data_card
         public bool busy;
 
         // [Enemy Health]
