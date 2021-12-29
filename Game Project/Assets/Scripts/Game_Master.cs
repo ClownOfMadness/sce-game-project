@@ -25,19 +25,62 @@ public class Game_Master : MonoBehaviour
 
     [HideInInspector] public bool gameLost;
 
-    //parent:
-    [HideInInspector] public bool hintsOn;
-    [HideInInspector] public bool timeLimitSet;
-    [HideInInspector] public float timeLimit;
-    private float timeLeft;
+    public enum fontList        //used by fontSize
+    {
+        Normal,
+        Big,
+    }
+    public enum speedList       //used by gameSpeed
+    {
+        Normal,
+        Slow,
+    }
+    public enum charList        //used by character appearance (remove if not needed)
+    {
+       //fill if needed
+    }
+    public enum windowList      //used by window appearance (remove if not needed)
+    {
+        //fill if needed
+    }
+    public enum difficultyList  //used by difficulty, both by parent and premium
+    {
+        Normal,
+        Easy,       //for parent
+        Hardcore    //for premium, make sure that it doesn't clash with Easy
+    }
+
+    //[Premium]
+    [HideInInspector] public bool premiumUser;
+    //12. main character appearance:
+    [HideInInspector] public windowList windowLook;
+    //14. fog:
+    [HideInInspector] public bool fogOff;
+    //17. main character appearance:
+    [HideInInspector] public charList charLook;
+
+    //[Parent]
+    //22. bedtime:
     [HideInInspector] public bool bedTimeSet;
     [HideInInspector] public float bedTime;
     private float realTime;
+    //23. play time limit:
+    [HideInInspector] public bool timeLimitSet;
+    [HideInInspector] public float timeLimit;
+    private float timeLeft;
+    //27. font:
+    [HideInInspector] public fontList fontSize;
+    //28. hints:
+    [HideInInspector] public bool hintsOn;
+    //29. game speed:
+    [HideInInspector] public speedList gameSpeed;
 
-    //premium:
-    [HideInInspector] public bool premiumUser;
-
-    //key mapping:
+    //[Premium+Parent]
+    //15+24. enemies:
+    [HideInInspector] public bool enemiesOff;
+    //18+30. difficulty:
+    [HideInInspector] public difficultyList difficulty;
+    //20. key mapping:
     [HideInInspector] public static KeyCode creativeK;
     [HideInInspector] public static KeyCode storageK;
     [HideInInspector] public static KeyCode Hintsk;
@@ -61,6 +104,11 @@ public class Game_Master : MonoBehaviour
         //if save file wasnt picked, run new game
         NewGame();
 
+        //[testing bedtime functionality]
+        //bedTime = TimeToFloat("22:17");
+        //bedTimeSet = true;
+        //[testing bedtime functionality]
+
         //[testing time limit functionality]
         //timeLimit = TimeToFloat("00:01:10");
         //Debug.Log(FloatToTime(timeLimit));   
@@ -75,7 +123,7 @@ public class Game_Master : MonoBehaviour
         {
             //this is where a lose screen will be called
         }
-        //keymapping
+        //keylisteners
         if (Input.GetKeyDown(creativeK) && (!Menu_Pause.IsPaused)) //to close and open "Creative" with keyboard as well
         {
             Cards.SwitchCreative();
@@ -88,14 +136,28 @@ public class Game_Master : MonoBehaviour
         {
             Cards.SwitchHints();
         }
-        if (Input.GetKeyDown(Jobsk) && (!Menu_Pause.IsPaused)) //close and open job menu
+        else if (Input.GetKeyDown(Jobsk) && (!Menu_Pause.IsPaused)) //close and open job menu
         {
             Jobs.SwitchJob();
         }
         //move other key listeners here
 
+
+        //[Premium]
+        //
+
         //[Parent]
-        //time limit
+        //22. bedtime:
+        if (bedTimeSet)
+        {
+            realTime = (TimeToFloat(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second));
+            if (realTime > bedTime)
+            {
+                Debug.Log("Reached bedtime");
+                //save game and exit
+            }
+        }
+        //23. time limit:
         if (timeLimitSet && timeLeft > 0)
         {
             timeLeft -= Time.deltaTime;
@@ -105,17 +167,6 @@ public class Game_Master : MonoBehaviour
             Debug.Log(string.Format("{0} ran out", FloatToTime(timeLimit)));
             //save game and exit
         }
-        //bedtime
-        if (bedTimeSet) 
-        {
-            realTime = (float)DateTime.Now.Hour + ((float)DateTime.Now.Minute * 0.01f);
-            if (realTime > bedTime)
-            {
-                //save game and exit
-            }
-        }
-
-        //[Premium]
     }
     public void NewGame()   //run when new game is started
     {
@@ -132,20 +183,27 @@ public class Game_Master : MonoBehaviour
         bedTimeSet = false;
         bedTime = 0;
     }
-    public float TimeToFloat(string time)   //converts time in mm:ss format into float
+    public float TimeToFloat(string time)   //converts time in hh:mm:ss or hh:mm format into float
     {
         string[] times = time.Split(':');
-
         float hours = float.Parse(times[0]);
         float minutes = float.Parse(times[1]);
-        float seconds = float.Parse(times[2]);
+        float seconds = 0;
+        if (times.Length > 2) 
+        {
+            seconds = float.Parse(times[2]);
+        }
+        return (hours * 60 + minutes) * 60 + seconds;
+    }
+    public float TimeToFloat(int hours, int minutes, int seconds)   //converts time in hh:mm:ss format into float
+    {
         return (hours * 60 + minutes) * 60 + seconds;
     }
     public string FloatToTime(float time)   //converts time floats into a string
     {
         double hours = Math.Floor(time / (60 * 60));
-        double minutes = Math.Floor((time - hours * 60) / 60);
-        double seconds = time - minutes * 60;
+        double minutes = Math.Floor((time - hours * 60 * 60) / 60);
+        double seconds = time - hours * 60 * 60 - minutes * 60;
         return string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
     }
     public Game_Info ExportGame()             //will be used to save the game
