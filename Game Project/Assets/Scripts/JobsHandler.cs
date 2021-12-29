@@ -13,7 +13,7 @@ public class JobsHandler : MonoBehaviour
     public Image unit; //for changing the button to the image of the chosen unit
     public Image bg; //for changing the button to the image of the chosen unit's background
 
-    public void CheckUnitList()
+    public void CheckUnitList() //makes sure to only show the available units in the jobs menu
     {
         for (int i = 0; i < Jobs.Length; i++)
         {
@@ -28,7 +28,8 @@ public class JobsHandler : MonoBehaviour
         }
     }
 
-    public void SelectUnit(GameObject clicked)
+    public void SelectUnit(GameObject clicked) //updates the player_jobs of the chosen unit 
+                                                //and changes the button's visual to show the chosen unit
     {
         if (clicked != null)
         {

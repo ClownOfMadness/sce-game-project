@@ -21,6 +21,8 @@ MonoBehaviour:
     card2: {fileID: 11400000, guid: abbbb57a9afb2904b8ca7dfcaeed5568, type: 2}
   gatheredBy: []
   complexity: 2
-  description: txt
+  description: Its nice, but pretty useless without arrows
   artwork: {fileID: 21300000, guid: 050a933ad597a5e4597a2a8a39b85249, type: 3}
   buildingPrefab: {fileID: 0}
+  unitIndex: 
+  neverDiscovered: 0

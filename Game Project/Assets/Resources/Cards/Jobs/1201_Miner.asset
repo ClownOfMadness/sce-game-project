@@ -21,8 +21,8 @@ MonoBehaviour:
     card2: {fileID: 11400000, guid: 8ba0a4631ab52624598e1454895af57b, type: 2}
   gatheredBy: []
   complexity: 5
-  description: 
-  artwork: {fileID: 21300000, guid: 64b325d68ca2a8c49bb5657f458c1ca7, type: 3}
+  description: He dreams of gold, but usually it's just more coal
+  artwork: {fileID: 21300000, guid: 7e6462c510121a74893b79dc031a589d, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1

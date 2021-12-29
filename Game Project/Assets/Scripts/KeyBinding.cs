@@ -8,7 +8,7 @@ public class KeyBinding : MonoBehaviour
 {
     private Dictionary<string, KeyCode> Keys = new Dictionary<string, KeyCode>(); //setting up a keys dictionary
     public Text Creative,Storage,Hints,Jobs,MoveUp,MoveDown,MoveRight,MoveLeft,Sprint;
-    [HideInInspector] public GameObject CurrentKey;
+    [HideInInspector] public GameObject CurrentKey; //
     Event e; //holds the key (e.keycode)
     private Color32 normal = new Color32(255, 255, 255, 255); //white
     private Color32 selected = new Color32(39, 171, 249, 255); //blue to highlight a selected button

@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Player_Jobs : MonoBehaviour
 {
-    public GameObject Job; //
-    public GameObject JobButton; //
-    private JobsHandler zJob; //
-    [HideInInspector] public bool JobUp;
-    [HideInInspector] public JobsHandler jobsHandler;
+    public GameObject Job; //the game object to setActive if the corresponding button should appear or not
+    public GameObject JobButton; //the reference to the button
+    [HideInInspector] public bool JobUp; //updating if the the unit with the specific job exists on the map
+    public JobsHandler jobsHandler; //reference to the jobs handler object (held by "Job")
 
     //external access:
-    public Screen_Cards screen;
+    public Screen_Cards screen; //to check if the map is visible for the switch job function
 
 
     private void Awake()
@@ -23,7 +22,7 @@ public class Player_Jobs : MonoBehaviour
     {
         //keydown part is handled by Game_Master.Update()
     }
-    public void SwitchJob() //
+    public void SwitchJob() //responsible for opening or closing the jobs menu
     {
         if (screen.visibleMap)
         {
@@ -34,7 +33,7 @@ public class Player_Jobs : MonoBehaviour
             CloseJob();
         }
     }
-    private void OpenJob() //
+    private void OpenJob() //opening the jobs menu
     {
         screen.visibleMap = false;
         Job.SetActive(true);
@@ -42,7 +41,7 @@ public class Player_Jobs : MonoBehaviour
         jobsHandler.CheckUnitList();
         Time.timeScale = 0f;
     }
-    public void CloseJob() //
+    public void CloseJob() //closing the jobs menu
     {
         screen.visibleMap = true;
         Job.SetActive(false);

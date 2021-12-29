@@ -20,9 +20,8 @@ MonoBehaviour:
   - card1: {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
     card2: {fileID: 11400000, guid: 571c3cf5474309345b700b75462426ff, type: 2}
   gatheredBy: []
-  tier: 
   complexity: 9
-  description: txt
+  description: The who weaves string, as if playing on a harp
   artwork: {fileID: 21300000, guid: 5100aaf53beceef4688ad836b035b897, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 

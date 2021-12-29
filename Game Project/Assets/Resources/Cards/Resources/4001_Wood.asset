@@ -20,7 +20,7 @@ MonoBehaviour:
   gatheredBy:
   - {fileID: 11400000, guid: bb12c696065f8a848a4560f7a4120245, type: 2}
   complexity: 3
-  description: 
+  description: Just a piece of wood,nothing more - nothing less
   artwork: {fileID: 21300000, guid: b2245773f2508ef4c9cf267ca42eab71, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 

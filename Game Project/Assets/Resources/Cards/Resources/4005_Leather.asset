@@ -19,9 +19,8 @@ MonoBehaviour:
   combinationOf: []
   gatheredBy:
   - {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
-  tier: 
   complexity: 3
-  description: txt
+  description: Practical and most importantly - stylish
   artwork: {fileID: 21300000, guid: e655cb79435e42542be37a6436831ac4, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 

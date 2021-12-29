@@ -20,9 +20,8 @@ MonoBehaviour:
   - card1: {fileID: 11400000, guid: c6ebb2dab03cfb347b08872e42059186, type: 2}
     card2: {fileID: 11400000, guid: 00718c5d0fa32874384680f7a831b156, type: 2}
   gatheredBy: []
-  tier: 
   complexity: 2
-  description: not as effective without a bow
+  description: They're sharp, but you have to use a bow to make use of them
   artwork: {fileID: 21300000, guid: e2a9d59325045174582070d455f26b23, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
