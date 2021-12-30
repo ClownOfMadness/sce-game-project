@@ -12,23 +12,24 @@ public class KeyBinding : MonoBehaviour
     Event e; //holds the key (e.keycode)
     private Color32 normal = new Color32(255, 255, 255, 255); //white
     private Color32 selected = new Color32(39, 171, 249, 255); //blue to highlight a selected button
+    public GameObject ErrorMessage; //to display that the key is taken
 
     public Player_Control playerControl;
 
     private void Start()
     {
+        //just a heads up: (KeyCode)System.Enum.Parse(typeof(KeyCode) is the code to convert a string to keycode
         //The Dictionary Default settings
         //The dictionary values
-        Keys.Add("Creative", KeyCode.C);
-        Keys.Add("Storage", KeyCode.I);
-        //Keys.Add("Hints", KeyCode.H);
-        Keys.Add("Hints", (KeyCode)System.Enum.Parse(typeof(KeyCode), "H"));
-        Keys.Add("Jobs", KeyCode.J);
-        Keys.Add("MoveUp", KeyCode.W);
-        Keys.Add("MoveDown", KeyCode.S);
-        Keys.Add("MoveRight", KeyCode.D);
-        Keys.Add("MoveLeft", KeyCode.A);
-        Keys.Add("Sprint", KeyCode.LeftShift);
+        Keys.Add("Creative", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Creative", "C")));
+        Keys.Add("Storage", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Storage", "I")));
+        Keys.Add("Hints", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Hints","H")));
+        Keys.Add("Jobs", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Jobs", "J")));
+        Keys.Add("MoveUp", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MoveUp", "W")));
+        Keys.Add("MoveDown", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MoveDown", "S")));
+        Keys.Add("MoveRight", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MoveRight", "D")));
+        Keys.Add("MoveLeft", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MoveLeft", "A")));
+        Keys.Add("Sprint", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Sprint", "LeftShift")));
 
         //Attaching the correct text to display on the buttons
         Creative.text = Keys["Creative"].ToString();
@@ -40,6 +41,8 @@ public class KeyBinding : MonoBehaviour
         MoveRight.text = Keys["MoveRight"].ToString();
         MoveLeft.text = Keys["MoveLeft"].ToString();
         Sprint.text = Keys["Sprint"].ToString();
+
+        ErrorMessage.SetActive(false);
     }
 
     private void OnGUI() //changes the keys, (only OnGui works fast enough for this)
@@ -51,9 +54,10 @@ public class KeyBinding : MonoBehaviour
             {
                 if (IsKeyFree(e.keyCode))
                 {
+                    ErrorMessage.SetActive(false);
                     Keys[CurrentKey.name] = e.keyCode;
                     CurrentKey.transform.GetChild(0).GetComponent<Text>().text = e.keyCode.ToString();
-                SetKey(e.keyCode); //the part that actually changes the key's functionality to match the new one
+                    SetKey(e.keyCode); //the part that actually changes the key's functionality to match the new one
                 }
                 CurrentKey.GetComponent<Image>().color = normal;
                 CurrentKey = null;
@@ -111,11 +115,43 @@ public class KeyBinding : MonoBehaviour
     }
     public string GetKey(string k)
     {
-        if (k == "Hints")
+        if (k == "Creative")
+        {
+            return Keys["Creative"].ToString();
+        }
+        else if (k == "Storage")
+        {
+            return Keys["Storage"].ToString();
+        }
+        else if (k == "Hints")
         {
             return Keys["Hints"].ToString();
         }
-        else return "B";
+        else if (k == "Jobs")
+        {
+            return Keys["Jobs"].ToString();
+        }
+        else if (k == "MoveUp")
+        {
+            return Keys["MoveUp"].ToString();
+        }
+        else if (k == "MoveDown")
+        {
+            return Keys["MoveDown"].ToString();
+        }
+        else if (k == "MoveRight")
+        {
+            return Keys["MoveRight"].ToString();
+        }
+        else if (k == "MoveLeft")
+        {
+            return Keys["MoveLeft"].ToString();
+        }
+        else if (k == "Sprint")
+        {
+            return Keys["Sprint"].ToString();
+        }
+        else return "B"; //just for failsafe
         //return "H";
     }
 
@@ -165,7 +201,8 @@ public class KeyBinding : MonoBehaviour
         {
             if (tk == ne)
             {
-                Debug.Log("key is already taken!");
+                ErrorMessage.SetActive(true);
+                //Debug.Log("That key is already taken!");
                 return false;
             }
         }

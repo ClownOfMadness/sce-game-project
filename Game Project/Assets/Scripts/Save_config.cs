@@ -5,12 +5,16 @@ public class Save_config : MonoBehaviour
     const string volume = "volume";
     const string graphics = "graphics";
     const string resolution = "resolution";
+    //const int FontSize = 0;
+    //Game_Master GM;
     Menu_Options options;
+    KeyBinding keyBinding;
 
     // The same old Awakening
     void Awake()
     {
-        options = this.GetComponent<Menu_Options>();
+        //options = this.GetComponent<Menu_Options>();
+        keyBinding = this.GetComponent<KeyBinding>();
     }
     // Start is called before the first frame update
     void Start()
@@ -20,16 +24,30 @@ public class Save_config : MonoBehaviour
 
     public void SavePrefs()
     {
-        PlayerPrefs.SetFloat(volume, options.GetVolume());
+        /*PlayerPrefs.SetFloat(volume, options.GetVolume());
         PlayerPrefs.SetInt(graphics, options.GetGraphics());
-        PlayerPrefs.SetInt(resolution, options.GetResolution());
+        PlayerPrefs.SetInt(resolution, options.GetResolution());*/
+        //-------------key bindings-----------------
+        PlayerPrefs.SetString("Creative",keyBinding.GetKey("Creative"));
+        PlayerPrefs.SetString("Storage", keyBinding.GetKey("Storage"));
+        PlayerPrefs.SetString("Hints", keyBinding.GetKey("Hints"));
+        PlayerPrefs.SetString("Jobs", keyBinding.GetKey("Jobs"));
+        PlayerPrefs.SetString("MoveUp", keyBinding.GetKey("MoveUp"));
+        PlayerPrefs.SetString("MoveDown", keyBinding.GetKey("MoveDown"));
+        PlayerPrefs.SetString("MoveRight", keyBinding.GetKey("MoveRight"));
+        PlayerPrefs.SetString("MoveLeft", keyBinding.GetKey("MoveLeft"));
+        PlayerPrefs.SetString("Sprint", keyBinding.GetKey("Sprint"));
+        //Debug.Log(PlayerPrefs.GetString("Hints","H"));
+        //-------------------------------------
         PlayerPrefs.Save();
     }
 
     public void LoadPrefs()
     {
-        options.SetVolume(PlayerPrefs.GetFloat(volume, 0));
+        /*options.SetVolume(PlayerPrefs.GetFloat(volume, 0));
         options.SetQuality(PlayerPrefs.GetInt(graphics, 5));
-        options.SetResolution(PlayerPrefs.GetInt(resolution, options.resolutions.Length - 1));
+        options.SetResolution(PlayerPrefs.GetInt(resolution, options.resolutions.Length - 1));*/
+        //keyBinding.SetKey((KeyCode)System.Enum.Parse(typeof(KeyCode) ,PlayerPrefs.GetString("Hints","H")));
+
     }
 }

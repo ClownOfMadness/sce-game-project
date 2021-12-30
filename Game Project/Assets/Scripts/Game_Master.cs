@@ -65,6 +65,7 @@ public class Game_Master : MonoBehaviour
     public Text ALeftKeyT; //keybinding -> A text
     public Text LShiftKeyT; //keybinding -> LeftShift text
     public TMPro.TextMeshProUGUI back3; //keybinding -> back
+    public Text ErrorMessage; //keybindings ErrorMessage
     //------------ End of Text Objects---------------
 
 
@@ -214,12 +215,11 @@ public class Game_Master : MonoBehaviour
     }
     public void NewGame()   //run when new game is started
     {
-        // the default keycodes -> will later be implemented in saves
-        storageK = KeyCode.I;
-        creativeK = KeyCode.C;
-        Hintsk = (KeyCode)System.Enum.Parse(typeof(KeyCode), "H");
-        //Hintsk = KeyCode.H;
-        Jobsk = KeyCode.J;
+        // Keycodes:each one draws a value from playerprefs and has a default value for backup
+        creativeK = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Creative", "C"));
+        storageK = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Storage", "I"));
+        Hintsk = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Hints", "H"));
+        Jobsk = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Jobs", "J"));
 
         //defaults for a new game:
         //[General]//
@@ -300,6 +300,7 @@ public class Game_Master : MonoBehaviour
         ALeftKeyT.fontSize = 18;
         LShiftKeyT.fontSize = 18;
         back3.fontSize = 60;
+        ErrorMessage.fontSize = 40;
 
     }
 
@@ -346,6 +347,7 @@ public class Game_Master : MonoBehaviour
         ALeftKeyT.fontSize = 25;
         LShiftKeyT.fontSize = 25;
         back3.fontSize = 80;
+        ErrorMessage.fontSize = 55;
     }
 
     public float TimeToFloat(string time)   //converts time in hh:mm:ss or hh:mm format into float

@@ -8,7 +8,6 @@ public class Menu_Pause : MonoBehaviour
     public static bool IsPaused = false;//Pause state
     public GameObject pauseMenuUI;//Pause Menu
     public GameObject optionsMenuUI;//Options Menu
-    public GameObject LoginUI;//Login Menu
     public GameObject KeyBindingUI;//Key Binding Menu
     public GameObject gamePlayUI;//Game play menue
 
@@ -29,8 +28,6 @@ public class Menu_Pause : MonoBehaviour
         //Deactivate all panels when key pressed.
         if(optionsMenuUI.activeSelf)
             optionsMenuUI.SetActive(false);
-        if (LoginUI.activeSelf)
-            LoginUI.SetActive(false); 
         if (KeyBindingUI.activeSelf)
             KeyBindingUI.SetActive(false);
 

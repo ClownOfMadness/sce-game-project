@@ -26,12 +26,12 @@ public class Player_Control : MonoBehaviour
     private Data_Tile selectedData_Tile; // Current selected tile data
 
     // Key Binding
-    [HideInInspector] public KeyCode panScreen = KeyCode.Space;
-    [HideInInspector] public KeyCode sprint = KeyCode.LeftShift;
-    [HideInInspector] public KeyCode up = KeyCode.W;
-    [HideInInspector] public KeyCode down = KeyCode.S;
-    [HideInInspector] public KeyCode right = KeyCode.D;
-    [HideInInspector] public KeyCode left = KeyCode.A;
+    [HideInInspector] public KeyCode panScreen = KeyCode.Space; //yields nothing atm
+    [HideInInspector] public KeyCode sprint; 
+    [HideInInspector] public KeyCode up;
+    [HideInInspector] public KeyCode down;
+    [HideInInspector] public KeyCode right;
+    [HideInInspector] public KeyCode left;
 
     // Screen Panning
     public Vector3 startPosition;
@@ -93,6 +93,12 @@ public class Player_Control : MonoBehaviour
         {
             Debug.LogError("Map_Gen script is missing in Player_Control");
         }
+        //Keycodes: In order to update the keycodes they have to be called in awake
+        sprint = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Sprint", "LeftShift"));
+        up = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MoveUp", "W"));
+        down = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MoveDown", "S"));
+        right = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MoveRight", "D"));
+        left = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("MoveLeft", "A"));
     }
     private void Start()
     {
