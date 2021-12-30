@@ -75,18 +75,18 @@ public class Map_Display : MonoBehaviour
     //Load player data.
     public void Load_Data(Data_Player data)
     {
-        Screen_Cards.Cards_Info cards_info = new Screen_Cards.Cards_Info();
+        //Screen_Cards.Cards_Info cards_info = new Screen_Cards.Cards_Info();
 
-        LoadMap(data.TileMap, data.mapSize);
+        //LoadMap(data.TileMap, data.mapSize);
         //LoadUnitList();
         //LoadEnemyList();
 
-        cards_info.Hand = data.Hand;
-        cards_info.Storage = data.Storage;
-        cards_info.Discovered = data.Discovered;
-        cards_info.Combos = data.Combos;
-        cards_info.DisStatus = data.DisStatus;
-        screen_cards.ImportCards(cards_info);
+        //cards_info.Hand = data.Hand;
+        //cards_info.Storage = data.Storage;
+        //cards_info.Discovered = data.Discovered;
+        //cards_info.Combos = data.Combos;
+        //cards_info.DisStatus = data.DisStatus;
+        //screen_cards.ImportCards(cards_info);
     }
     //Laod the tile map.
     public void LoadMap(Save_Tile[,] tileMap, int size)

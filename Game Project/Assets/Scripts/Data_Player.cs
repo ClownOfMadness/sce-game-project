@@ -42,11 +42,11 @@ public class Data_Player
     //------------------------------------[Game Data]------------------------------------
 
     public int mapSize; //The size of the map
-    public Map_Display.Save_Tile[,] TileMap; //The map of tiles
+    //public Map_Display.Save_Tile[,] TileMap; //The map of tiles
     public Vector3 townHallPos; //Town Hall position on the map
 
-    public List<Map_Display.Save_Unit> units; //List of the units
-    public List<Map_Display.Save_Enemy> enemies; //List of the enemies
+    //public List<Map_Display.Save_Unit> units; //List of the units
+    //public List<Map_Display.Save_Enemy> enemies; //List of the enemies
     //public Save_Player player; //The data on the player character
 
     //[Cards Data]//
