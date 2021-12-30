@@ -10,6 +10,7 @@ public class Menu_Pause : MonoBehaviour
     public GameObject optionsMenuUI;//Options Menu
     public GameObject LoginUI;//Login Menu
     public GameObject KeyBindingUI;//Key Binding Menu
+    public GameObject gamePlayUI;//Game play menue
 
     void Update()
     {
@@ -39,7 +40,7 @@ public class Menu_Pause : MonoBehaviour
     }
 
     //Pause the game.
-    void Pause()
+    public void Pause()
     {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;

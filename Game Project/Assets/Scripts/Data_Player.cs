@@ -6,12 +6,25 @@ using UnityEngine;
 [System.Serializable]
 public class Data_Player
 {
+    private static Data_Player _current;
+    public static Data_Player current
+    {
+        get
+        {
+            if(_current == null)
+            {
+                _current = new Data_Player();
+            }
+            return _current;
+        }
+    }
     //--------------------------------[Configuration]------------------------------------
 
-    public bool SetTimeLimit;
-    public float TimeLimit;
-    public bool SetBedTime;
-    public float BedTime;
+    //public bool SetTimeLimit;
+    //public float TimeLimit;
+    //public bool SetBedTime;
+    //public float BedTime;
+    public Map_Display.Save_Building building;
 
     //public enum difficultiesList    //enum for difficulty
     //{
@@ -44,19 +57,5 @@ public class Data_Player
     public List<bool> DisStatus;
 
     //-----------------------------------------------------------------------------------
-
-
-
-
-    //public Data_Player(Data_Player data)
-    //{
-    //    TotalGameTime = data.TotalGameTime;
-    //    PlayTimeLimit = data.PlayTimeLimit;
-    //    Bedtime = data.Bedtime;
-    //    Difficulty = data.Difficulty;
-    //    CardsCombined = data.CardsCombined;
-    //    AllowedHints = data.AllowedHints;
-    //    IsPremium = data.IsPremium;
-    //}
 }
 

@@ -77,8 +77,9 @@ public class Save_Manager : MonoBehaviour
             }
         }
         else if (SceneManager.GetActiveScene().name == "Game")
-        {
-
+        { 
+            menu_pause.gamePlayUI.SetActive(true);
+            menu_pause.pauseMenuUI.SetActive(false);
         }
     }
 
@@ -110,8 +111,8 @@ public class Save_Manager : MonoBehaviour
             }
             else
             {
-                //menu_pause.GameMenu.SetActive(false);
-                //menu_pause.MenuMain.SetActive(true);
+                menu_pause.gamePlayUI.SetActive(false);
+                menu_pause.pauseMenuUI.SetActive(true);
             }
         }
     }
@@ -122,7 +123,7 @@ public class Save_Manager : MonoBehaviour
         //Set the path of the save slot.
         path = Application.persistentDataPath + "/saves/" + currSlot + ".save";
 
-        //IO_Files.WriteData(path, map_display.Save_Data());
+        IO_Files.WriteData(path, map_display.Save_Data());
         SavedSlots(); 
     }
 
@@ -147,12 +148,14 @@ public class Save_Manager : MonoBehaviour
             SceneManager.LoadScene("Game");
     }
 
-    public void SceneLoaded()
+    public Data_Player SceneLoaded()
     {
+        Data_Player data_player = new Data_Player();
         //Set the path of the save slot.
         path = Application.persistentDataPath + "/saves/" + currSlot + ".save";
 
-        map_display.saved_data = IO_Files.ReadData(path);
+        data_player = (Data_Player)IO_Files.ReadData(path);
+        return data_player;
     }
 
     public void SavedSlots()
