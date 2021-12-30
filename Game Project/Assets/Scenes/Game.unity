@@ -826,7 +826,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1350261990}
+      - m_Target: {fileID: 165519933}
         m_TargetAssemblyTypeName: KeyBinding, Map_Scripts
         m_MethodName: ChangeKey
         m_Mode: 2
@@ -1418,11 +1418,11 @@ RectTransform:
   m_Children:
   - {fileID: 1904452039}
   m_Father: {fileID: 1350261987}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -186.2}
+  m_AnchoredPosition: {x: 0, y: -199}
   m_SizeDelta: {x: 100, y: 47.911407}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &160169845
@@ -1482,6 +1482,18 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1350261986}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1103540489}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1652,7 +1664,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 1373418264}
   optionsMenuUI: {fileID: 380643708}
-  LoginUI: {fileID: 0}
   KeyBindingUI: {fileID: 1350261986}
   gamePlayUI: {fileID: 1702719684}
 --- !u!114 &165519931
@@ -1705,6 +1716,7 @@ MonoBehaviour:
   MoveLeft: {fileID: 648594743}
   Sprint: {fileID: 2002935544}
   CurrentKey: {fileID: 0}
+  ErrorMessage: {fileID: 1103540489}
   playerControl: {fileID: 2032034141}
 --- !u!1 &168534526
 GameObject:
@@ -4678,7 +4690,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1350261990}
+      - m_Target: {fileID: 165519933}
         m_TargetAssemblyTypeName: KeyBinding, Map_Scripts
         m_MethodName: ChangeKey
         m_Mode: 2
@@ -4811,7 +4823,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1350261990}
+      - m_Target: {fileID: 165519933}
         m_TargetAssemblyTypeName: KeyBinding, Map_Scripts
         m_MethodName: ChangeKey
         m_Mode: 2
@@ -5205,7 +5217,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1350261990}
+      - m_Target: {fileID: 165519933}
         m_TargetAssemblyTypeName: KeyBinding, Map_Scripts
         m_MethodName: ChangeKey
         m_Mode: 2
@@ -6194,7 +6206,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1350261990}
+      - m_Target: {fileID: 165519933}
         m_TargetAssemblyTypeName: KeyBinding, Map_Scripts
         m_MethodName: ChangeKey
         m_Mode: 2
@@ -6759,6 +6771,7 @@ MonoBehaviour:
   ALeftKeyT: {fileID: 648594743}
   LShiftKeyT: {fileID: 2002935544}
   back3: {fileID: 1904452040}
+  ErrorMessage: {fileID: 1103540490}
   totalGameTime: 0
   gameLost: 0
   premiumUser: 0
@@ -7154,7 +7167,7 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1350261987}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7341,7 +7354,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1350261990}
+      - m_Target: {fileID: 165519933}
         m_TargetAssemblyTypeName: KeyBinding, Map_Scripts
         m_MethodName: ChangeKey
         m_Mode: 2
@@ -8801,6 +8814,101 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075466179}
   m_CullTransparentMesh: 1
+--- !u!1 &1103540489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1103540492}
+  - component: {fileID: 1103540491}
+  - component: {fileID: 1103540490}
+  - component: {fileID: 1103540493}
+  m_Layer: 5
+  m_Name: ErrorMessage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1103540490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103540489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 80
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: That key is already taken!
+--- !u!222 &1103540491
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103540489}
+  m_CullTransparentMesh: 1
+--- !u!224 &1103540492
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103540489}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1350261987}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -421.23}
+  m_SizeDelta: {x: 1440, y: 108.8436}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1103540493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103540489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1.5, y: -1.5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1132628802
 GameObject:
   m_ObjectHideFlags: 0
@@ -9435,7 +9543,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1350261990}
+      - m_Target: {fileID: 165519933}
         m_TargetAssemblyTypeName: KeyBinding, Map_Scripts
         m_MethodName: ChangeKey
         m_Mode: 2
@@ -9525,7 +9633,7 @@ RectTransform:
   - {fileID: 1238371169}
   - {fileID: 1142020581}
   m_Father: {fileID: 1350261987}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9702,7 +9810,6 @@ GameObject:
   - component: {fileID: 1350261987}
   - component: {fileID: 1350261989}
   - component: {fileID: 1350261988}
-  - component: {fileID: 1350261990}
   m_Layer: 5
   m_Name: KeyBinding Menu
   m_TagString: Untagged
@@ -9721,6 +9828,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1103540492}
   - {fileID: 887505147}
   - {fileID: 1227956037}
   - {fileID: 1368016583}
@@ -9771,29 +9879,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1350261986}
   m_CullTransparentMesh: 1
---- !u!114 &1350261990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1350261986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a670491e043638f4eacc8458b5355c23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Creative: {fileID: 527716513}
-  Storage: {fileID: 2036935174}
-  Hints: {fileID: 295455949}
-  Jobs: {fileID: 1491912028}
-  MoveUp: {fileID: 1618488409}
-  MoveDown: {fileID: 668375420}
-  MoveRight: {fileID: 548806011}
-  MoveLeft: {fileID: 648594743}
-  Sprint: {fileID: 2002935544}
-  CurrentKey: {fileID: 0}
-  playerControl: {fileID: 2032034141}
 --- !u!1 &1368016582
 GameObject:
   m_ObjectHideFlags: 0
@@ -9834,7 +9919,7 @@ RectTransform:
   - {fileID: 723604177}
   - {fileID: 569223334}
   m_Father: {fileID: 1350261987}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -12618,7 +12703,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1350261990}
+      - m_Target: {fileID: 165519933}
         m_TargetAssemblyTypeName: KeyBinding, Map_Scripts
         m_MethodName: ChangeKey
         m_Mode: 2
@@ -15361,7 +15446,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1350261990}
+      - m_Target: {fileID: 165519933}
         m_TargetAssemblyTypeName: KeyBinding, Map_Scripts
         m_MethodName: ChangeKey
         m_Mode: 2
