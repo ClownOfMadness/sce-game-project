@@ -145,9 +145,17 @@ public class Game_Master : MonoBehaviour
         //Units.Game = this;
         //Enemies.Game = this;
 
-        //when save file is picked, everything should be loaded from save file
-        //if save file wasnt picked, run new game
+        //set default
         NewGame();
+
+        //when save file is picked, everything should be loaded from save file
+        //[Premium]//
+        if (PlayerPrefs.GetInt("premium", 0) == 1)
+            premiumUser = true;
+        else
+            premiumUser = false;
+
+        Debug.Log(premiumUser);
 
         //[testing bedtime functionality]//
         //bedtime = TimeToFloat("22:17");
@@ -156,8 +164,12 @@ public class Game_Master : MonoBehaviour
 
         //[testing time limit functionality]//
         //timeLimit = TimeToFloat("00:01:10");
-        //Debug.Log(FloatToTime(timeLimit));   
-        //timeLeft = timeLimit;
+        //Debug.Log(FloatToTime(timeLimit));
+        if (timeLimitSet)
+        {
+            //if (dateOfLastSave!=currentDate)
+            timeLeft = timeLimit;
+        }
         //timeLimitSet = true;
         //[testing time limit functionality]
     }
@@ -256,7 +268,6 @@ public class Game_Master : MonoBehaviour
             LoadBigFont();
         }
     }
-
     public void LoadDefaultFont() //sets all text objects to their default size
     {
         TopMessage.fontSize = 40;
@@ -303,7 +314,6 @@ public class Game_Master : MonoBehaviour
         ErrorMessage.fontSize = 40;
 
     }
-
     public void LoadBigFont() //sets all text objects to their big size
     {
         TopMessage.fontSize = 53;
@@ -349,7 +359,6 @@ public class Game_Master : MonoBehaviour
         back3.fontSize = 80;
         ErrorMessage.fontSize = 55;
     }
-
     public float TimeToFloat(string time)   //converts time in hh:mm:ss or hh:mm format into float
     {
         string[] times = time.Split(':');
@@ -373,23 +382,9 @@ public class Game_Master : MonoBehaviour
         double seconds = time - hours * 60 * 60 - minutes * 60;
         return string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
     }
-    public Game_Info ExportGame()             //will be used to save the game
-    {
-        Game_Info export = new Game_Info();
-        //fill class
-        return export;
-    }
-    public void ImportGame(Game_Info import)  //will be used to load the game
-    {
-        //fill script fields
-    }
-    public class Game_Info //used for saves
-    {
 
-    }
-
-    //[Parent]//
-    public Game_Parent ExportConfig()             //will be used to save the game
+    //[General+Parent]//
+    public Game_Parent ExportGame()             //will be used to save the game
     {
         Game_Parent export = new Game_Parent();
         //22. bedtime:
@@ -414,7 +409,7 @@ public class Game_Master : MonoBehaviour
         export.difficulty = (int)difficulty;
         return export;
     }
-    public void ImportConfig(Game_Parent import)  //will be used to load the game
+    public void ImportGame(Game_Parent import)  //will be used to load the game
     {
         //22. bedtime:
         bedtimeSet = import.bedtimeSet;

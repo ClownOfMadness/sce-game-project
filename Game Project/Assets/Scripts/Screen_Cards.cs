@@ -562,14 +562,13 @@ public class Screen_Cards : MonoBehaviour
     {
         return zHand.DamageDeck();
     }
+
     //[General]//
     public Cards_Info ExportCards()             //will be used to save the game[need to change after parent stats get separated from the rest]
     {
         Cards_Info export = new Cards_Info();
         export.Hand = zHand.ExportDeck();
         export.Storage = zStorage.ExportDeck();
-        export.Discovered = CardsDiscovered;
-        export.Combos = CardsCombined;
         List<bool> status = new List<bool>(0);
         for (int i = 0; i < Pool.count; i++)                   //returning all fields in cards back to default 
             status.Add(Pool.cards[i].neverDiscovered);         //done here instead of Card_Pool to ensure that it only happens once
@@ -580,18 +579,14 @@ public class Screen_Cards : MonoBehaviour
     {
         zHand.ImportDeck(import.Hand);
         zStorage.ImportDeck(import.Storage);
-        CardsDiscovered = import.Discovered;
-        CardsCombined = import.Combos;
         List<bool> status = new List<bool>(0);
         for (int i = 0; i < Pool.count; i++)
             Pool.cards[i].neverDiscovered = import.DisStatus[i];
     }
-    public class Cards_Info //used for saves [need to change after parent stats get separated from the rest]
-    {
-        public List<int> Hand;
-        public List<int> Storage;
-        public int Discovered;
-        public int Combos;
-        public List<bool> DisStatus;
-    }
+}
+public class Cards_Info //used for saves [need to change after parent stats get separated from the rest]
+{
+    public List<int> Hand;
+    public List<int> Storage;
+    public List<bool> DisStatus;
 }
