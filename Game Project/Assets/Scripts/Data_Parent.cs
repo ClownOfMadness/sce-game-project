@@ -14,6 +14,7 @@ public class Data_Parent
     //23. play time limit:
     public bool timeLimitSet;
     public float timeLimit;
+    public float timeLeft;
     //27. font:
     public int fontSize;    //0=Normal, 1=Big
     //28. hints:
@@ -40,6 +41,7 @@ public class Data_Parent
         //23. play time limit:
         timeLimitSet = data.timeLimitSet;
         timeLimit = data.timeLimit;
+        timeLeft = data.timeLeft;
         //26. game statistics:
         TotalGameTime = data.TotalGameTime;
         CardsCombined = data.CardsCombined;

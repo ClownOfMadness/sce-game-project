@@ -68,7 +68,6 @@ public class Game_Master : MonoBehaviour
     public Text ErrorMessage; //keybindings ErrorMessage
     //------------ End of Text Objects---------------
 
-
     [HideInInspector] public float totalGameTime;
     [HideInInspector] public bool gameLost;
 
@@ -108,12 +107,12 @@ public class Game_Master : MonoBehaviour
 
     //[Parent]//
     //22. bedtime:
-    [HideInInspector] public bool bedtimeSet;
-    [HideInInspector] public float bedtime;
+    private bool bedtimeSet;
+    private float bedtime;
     private float realTime;
     //23. play time limit:
-    [HideInInspector] public bool timeLimitSet;
-    [HideInInspector] public float timeLimit;
+    private bool timeLimitSet;
+    private float timeLimit;
     private float timeLeft;
     //27. font:
     [HideInInspector] public fontList fontSize;
@@ -128,10 +127,10 @@ public class Game_Master : MonoBehaviour
     //18+30. difficulty:
     [HideInInspector] public difficultyList difficulty;
     //20. key mapping:
-    [HideInInspector] public static KeyCode creativeK;
-    [HideInInspector] public static KeyCode storageK;
-    [HideInInspector] public static KeyCode Hintsk;
-    [HideInInspector] public static KeyCode Jobsk;
+    private static KeyCode creativeK;
+    private static KeyCode storageK;
+    private static KeyCode Hintsk;
+    private static KeyCode Jobsk;
 
     void Awake()
     {
@@ -155,8 +154,6 @@ public class Game_Master : MonoBehaviour
         else
             premiumUser = false;
 
-        Debug.Log(premiumUser);
-
         //[testing bedtime functionality]//
         //bedtime = TimeToFloat("22:17");
         //bedtimeSet = true;
@@ -165,19 +162,21 @@ public class Game_Master : MonoBehaviour
         //[testing time limit functionality]//
         //timeLimit = TimeToFloat("00:01:10");
         //Debug.Log(FloatToTime(timeLimit));
-        if (timeLimitSet)
-        {
-            //if (dateOfLastSave!=currentDate)
-            timeLeft = timeLimit;
-        }
         //timeLimitSet = true;
         //[testing time limit functionality]
+
+        if (timeLimitSet)
+        {
+            //string currentDate = DateTime.Today.Date.ToString("d");
+            //if ([dateOfLastSave]!=currentDate)
+                //timeLeft = timeLimit;
+        }
         SetFontSize(PlayerPrefs.GetInt("ChangeFont")); //sets the correct font size
     }
     void Update() //main Update, handles constant checking of parameters for the rest of the game
     {
         //[General]//
-        if(gameLost)
+        if (gameLost)
         {
             //this is where a lose screen will be called
         }
@@ -216,14 +215,17 @@ public class Game_Master : MonoBehaviour
             }
         }
         //23. time limit:
-        if (timeLimitSet && timeLeft > 0)
+        if (timeLimitSet)
         {
-            timeLeft -= Time.deltaTime;
-        }
-        if (timeLimitSet && timeLeft <= 0)
-        {
-            Debug.Log(string.Format("{0} ran out", FloatToTime(timeLimit)));
-            //save game and exit
+            if (timeLeft > 0)
+            {
+                timeLeft -= Time.deltaTime;
+            }
+            if (timeLeft <= 0)
+            {
+                Debug.Log(string.Format("{0} ran out", FloatToTime(timeLimit)));
+                //save game and exit
+            }
         }
     }
     public void NewGame()   //run when new game is started
@@ -394,6 +396,7 @@ public class Game_Master : MonoBehaviour
         //23. play time limit:
         export.timeLimitSet = timeLimitSet;
         export.timeLimit = timeLimit;
+        export.timeLeft = timeLeft;
         //26. game statistics:
         export.TotalGameTime = totalGameTime;
         export.CardsCombined = Cards.CardsCombined;
@@ -418,6 +421,7 @@ public class Game_Master : MonoBehaviour
         //23. play time limit:
         timeLimitSet = import.timeLimitSet;
         timeLimit = import.timeLimit;
+        timeLeft = import.timeLeft;
         //26. game statistics:
         totalGameTime = import.TotalGameTime;
         Cards.CardsCombined = import.CardsCombined;
@@ -442,6 +446,7 @@ public class Game_Parent
     //23. play time limit:
     public bool timeLimitSet;
     public float timeLimit;
+    public float timeLeft;
     //26. game statistics:
     public float TotalGameTime;
     public int CardsCombined;
