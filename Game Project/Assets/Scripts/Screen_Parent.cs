@@ -20,6 +20,7 @@ public class Screen_Parent : MonoBehaviour
     public GameObject PlayerStats;
     public GameObject ComboGuide;
     public Text combosText;
+    public Dropdown Drop;
 
     public void Awake()
     {
@@ -34,6 +35,7 @@ public class Screen_Parent : MonoBehaviour
             firstLogin = true;
             Debug.Log("First Login");
         }
+        Drop = GetComponent<Dropdown>(); //for font size
     }
     public void TryLogin()  //try to login
     {
@@ -124,8 +126,15 @@ public class Screen_Parent : MonoBehaviour
     }
     public void SetFontSize()    //enable&set/disable time limit per save
     {
-        Debug.Log("Screen_Parent.SetFontSize: this function currently does nothing.");
-        //difficulty=dropdown; & update file
+        if (PlayerPrefs.GetInt("ChangeFont") == 0)
+        {
+            PlayerPrefs.SetInt("ChangeFont", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("ChangeFont", 0);
+        }
+        //Debug.Log("Screen_Parent.SetFontSize: this function currently does nothing.");
     }
     public void ReadSave(int index)    //load Save's stats to display
     {

@@ -172,6 +172,7 @@ public class Game_Master : MonoBehaviour
         }
         //timeLimitSet = true;
         //[testing time limit functionality]
+        SetFontSize(PlayerPrefs.GetInt("ChangeFont")); //sets the correct font size
     }
     void Update() //main Update, handles constant checking of parameters for the rest of the game
     {
@@ -316,28 +317,28 @@ public class Game_Master : MonoBehaviour
     }
     public void LoadBigFont() //sets all text objects to their big size
     {
-        TopMessage.fontSize = 53;
+        TopMessage.fontSize = 50;
         PeasantT.fontSize = 25;
         WoodcutterT.fontSize = 21;
         SpearmanT.fontSize = 22;
         Desc.fontSize = 23;
-        resume.fontSize = 100;
-        save.fontSize = 100;
-        load.fontSize = 100;
-        optionsP.fontSize = 100;
-        exit.fontSize = 100;
-        back1.fontSize = 80;
+        resume.fontSize = 90;
+        save.fontSize = 90;
+        load.fontSize = 90;
+        optionsP.fontSize = 90;
+        exit.fontSize = 90;
+        back1.fontSize = 70;
         play.fontSize = 30;
         nameInputT.fontSize = 20;
         nameInputP.fontSize = 20;
         delete.fontSize = 30;
-        optionsM.fontSize = 100;
+        optionsM.fontSize = 90;
         volume.fontSize = 80;
-        resolution.fontSize = 80;
+        resolution.fontSize = 70;
         resolutionL.fontSize = 45;
         keybinding.fontSize = 80;
         back2.fontSize = 80;
-        KeybindingMenu.fontSize = 100;
+        KeybindingMenu.fontSize = 90;
         CreativeKeyT.fontSize = 28;
         StorageKeyT.fontSize = 28;
         HintsKeyT.fontSize = 28;
@@ -356,7 +357,7 @@ public class Game_Master : MonoBehaviour
         DRightKeyT.fontSize = 25;
         ALeftKeyT.fontSize = 25;
         LShiftKeyT.fontSize = 25;
-        back3.fontSize = 80;
+        back3.fontSize = 70;
         ErrorMessage.fontSize = 55;
     }
     public float TimeToFloat(string time)   //converts time in hh:mm:ss or hh:mm format into float
