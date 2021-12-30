@@ -127,10 +127,10 @@ public class Game_Master : MonoBehaviour
     //18+30. difficulty:
     [HideInInspector] public difficultyList difficulty;
     //20. key mapping:
-    private static KeyCode creativeK;
-    private static KeyCode storageK;
-    private static KeyCode Hintsk;
-    private static KeyCode Jobsk;
+    [HideInInspector] public static KeyCode creativeK;
+    [HideInInspector] public static KeyCode storageK;
+    [HideInInspector] public static KeyCode Hintsk;
+    [HideInInspector] public static KeyCode Jobsk;
 
     void Awake()
     {
