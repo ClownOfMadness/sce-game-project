@@ -21,7 +21,8 @@ public class KeyBinding : MonoBehaviour
         //The dictionary values
         Keys.Add("Creative", KeyCode.C);
         Keys.Add("Storage", KeyCode.I);
-        Keys.Add("Hints", KeyCode.H);
+        //Keys.Add("Hints", KeyCode.H);
+        Keys.Add("Hints", (KeyCode)System.Enum.Parse(typeof(KeyCode), "H"));
         Keys.Add("Jobs", KeyCode.J);
         Keys.Add("MoveUp", KeyCode.W);
         Keys.Add("MoveDown", KeyCode.S);
@@ -70,7 +71,7 @@ public class KeyBinding : MonoBehaviour
         CurrentKey.GetComponent<Image>().color = selected;
     }
 
-    private void SetKey(KeyCode ne) //temp atm -> should be changed to switch case when I get it to work
+    public void SetKey(KeyCode ne) //temp atm -> should be changed to switch case when I get it to work
     {
         if (ne == Keys["Creative"])
         {
@@ -108,6 +109,55 @@ public class KeyBinding : MonoBehaviour
             playerControl.sprint = ne;
         }
     }
+    public string GetKey(string k)
+    {
+        if (k == "Hints")
+        {
+            return Keys["Hints"].ToString();
+        }
+        else return "B";
+        //return "H";
+    }
+
+   /* public string GetKey(string k) //temp atm -> should be changed to switch case when I get it to work
+    {
+        if (ne == Keys["Creative"])
+        {
+            Game_Master.creativeK = ne;
+        }
+        else if (ne == Keys["Storage"])
+        {
+            Game_Master.storageK = ne;
+        }
+        else if (ne == Keys["Hints"])
+        {
+            Game_Master.Hintsk = ne;
+        }
+        else if (ne == Keys["Jobs"])
+        {
+            Game_Master.Jobsk = ne;
+        }
+        else if (ne == Keys["MoveUp"])
+        {
+            playerControl.up = ne;
+        }
+        else if (ne == Keys["MoveDown"])
+        {
+            playerControl.down = ne;
+        }
+        else if (ne == Keys["MoveRight"])
+        {
+            playerControl.right = ne;
+        }
+        else if (ne == Keys["MoveLeft"])
+        {
+            playerControl.left = ne;
+        }
+        else if (ne == Keys["Sprint"])
+        {
+            playerControl.sprint = ne;
+        }
+    }*/
 
     private bool IsKeyFree(KeyCode ne)
     {

@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 //responsible for game states and monitoring the entire game
 public class Game_Master : MonoBehaviour
@@ -22,6 +21,52 @@ public class Game_Master : MonoBehaviour
     [Header("---[Objects]---")]
     public Unit_List Units;
     public Enemy_List Enemies;
+
+    [Header("---[Text Objects]---")]
+    public Text TopMessage; //message text
+    public Text PeasantT; //jobs peasant 
+    public Text WoodcutterT; //jobs woodcutter
+    public Text SpearmanT; //jobs spearman
+    //Later add here all the other jobs text objects
+    public Text Desc; //cards' descriptions
+    public TMPro.TextMeshProUGUI resume; //options menu -> resume
+    public TMPro.TextMeshProUGUI save; //pause menu -> save
+    public TMPro.TextMeshProUGUI load; //pause menu -> load
+    public TMPro.TextMeshProUGUI optionsP; //pause menu -> options
+    public TMPro.TextMeshProUGUI exit; //pause menu -> exit to menu
+    public TMPro.TextMeshProUGUI back1; //pause menu -> back
+    public TMPro.TextMeshProUGUI play; //game menu -> play
+    public TMPro.TextMeshProUGUI nameInputP; //game menu -> nameInput Placeholder
+    public TMPro.TextMeshProUGUI nameInputT; //game menu -> nameInput Text
+    public TMPro.TextMeshProUGUI delete; //game menu -> delete
+    public TMPro.TextMeshProUGUI optionsM; //options menu -> options
+    public TMPro.TextMeshProUGUI volume; //options menu -> volume
+    public TMPro.TextMeshProUGUI resolution; //options menu -> resolution
+    public Text resolutionL; //options menu -> resolution label
+    public TMPro.TextMeshProUGUI keybinding; //options menu -> keybinding
+    public TMPro.TextMeshProUGUI back2; //options menu -> back
+    public TMPro.TextMeshProUGUI KeybindingMenu; //keybinding menu
+    public Text CreativeKeyT; //keybinding -> creative
+    public Text StorageKeyT; //keybinding -> storage
+    public Text HintsKeyT; //keybinding -> Hints
+    public Text JobsKeyT; //keybinding -> jobs
+    public Text MoveUpKeyT; //keybinding -> moveUp
+    public Text MoveDownKeyT; //keybinding -> moveDown
+    public Text MoveRightKeyT; //keybinding -> moveRight
+    public Text MoveLeftKeyT; //keybinding -> moveLeft
+    public Text SprintKeyT; //keybinding -> sprint
+    public Text CKeyT; //keybinding -> C text
+    public Text IKeyT; //keybinding -> S text
+    public Text HKeyT; //keybinding -> H text
+    public Text JKeyT; //keybinding -> J text
+    public Text WUpKeyT; //keybinding -> W text
+    public Text SDownKeyT; //keybinding -> S text
+    public Text DRightKeyT; //keybinding -> D text
+    public Text ALeftKeyT; //keybinding -> A text
+    public Text LShiftKeyT; //keybinding -> LeftShift text
+    public TMPro.TextMeshProUGUI back3; //keybinding -> back
+    //------------ End of Text Objects---------------
+
 
     [HideInInspector] public float totalGameTime;
     [HideInInspector] public bool gameLost;
@@ -172,7 +217,8 @@ public class Game_Master : MonoBehaviour
         // the default keycodes -> will later be implemented in saves
         storageK = KeyCode.I;
         creativeK = KeyCode.C;
-        Hintsk = KeyCode.H;
+        Hintsk = (KeyCode)System.Enum.Parse(typeof(KeyCode), "H");
+        //Hintsk = KeyCode.H;
         Jobsk = KeyCode.J;
 
         //defaults for a new game:
@@ -199,6 +245,109 @@ public class Game_Master : MonoBehaviour
         enemiesOff = false;
         difficulty = difficultyList.Normal;
     }
+    public void SetFontSize(int c) //recieves the 0 or 1 from the save and loads the corresponding font
+    {
+        if (c == 0) //0 for default
+        {
+            LoadDefaultFont();
+        }
+        else //1 for big
+        {
+            LoadBigFont();
+        }
+    }
+
+    public void LoadDefaultFont() //sets all text objects to their default size
+    {
+        TopMessage.fontSize = 40;
+        PeasantT.fontSize = 20;
+        WoodcutterT.fontSize = 18;
+        SpearmanT.fontSize = 19;
+        Desc.fontSize = 18;
+        resume.fontSize = 80;
+        save.fontSize = 80;
+        load.fontSize = 80;
+        optionsP.fontSize = 80;
+        exit.fontSize = 80;
+        back1.fontSize = 60;
+        play.fontSize = 20;
+        nameInputT.fontSize = 14;
+        nameInputP.fontSize = 14;
+        delete.fontSize = 20;
+        optionsM.fontSize = 80;
+        volume.fontSize = 60;
+        resolution.fontSize = 60;
+        resolutionL.fontSize = 32;
+        keybinding.fontSize = 60;
+        back2.fontSize = 60;
+        KeybindingMenu.fontSize = 80;
+        CreativeKeyT.fontSize = 25;
+        StorageKeyT.fontSize = 25;
+        HintsKeyT.fontSize = 25;
+        JobsKeyT.fontSize = 25;
+        MoveUpKeyT.fontSize = 25;
+        MoveDownKeyT.fontSize = 25;
+        MoveRightKeyT.fontSize = 25;
+        MoveLeftKeyT.fontSize = 25;
+        SprintKeyT.fontSize = 25;
+        CKeyT.fontSize = 18;
+        IKeyT.fontSize = 18;
+        HKeyT.fontSize = 18;
+        JKeyT.fontSize = 18;
+        WUpKeyT.fontSize = 18;
+        SDownKeyT.fontSize = 18;
+        DRightKeyT.fontSize = 18;
+        ALeftKeyT.fontSize = 18;
+        LShiftKeyT.fontSize = 18;
+        back3.fontSize = 60;
+
+    }
+
+    public void LoadBigFont() //sets all text objects to their big size
+    {
+        TopMessage.fontSize = 53;
+        PeasantT.fontSize = 25;
+        WoodcutterT.fontSize = 21;
+        SpearmanT.fontSize = 22;
+        Desc.fontSize = 23;
+        resume.fontSize = 100;
+        save.fontSize = 100;
+        load.fontSize = 100;
+        optionsP.fontSize = 100;
+        exit.fontSize = 100;
+        back1.fontSize = 80;
+        play.fontSize = 30;
+        nameInputT.fontSize = 20;
+        nameInputP.fontSize = 20;
+        delete.fontSize = 30;
+        optionsM.fontSize = 100;
+        volume.fontSize = 80;
+        resolution.fontSize = 80;
+        resolutionL.fontSize = 45;
+        keybinding.fontSize = 80;
+        back2.fontSize = 80;
+        KeybindingMenu.fontSize = 100;
+        CreativeKeyT.fontSize = 28;
+        StorageKeyT.fontSize = 28;
+        HintsKeyT.fontSize = 28;
+        JobsKeyT.fontSize = 28;
+        MoveUpKeyT.fontSize = 28;
+        MoveDownKeyT.fontSize = 28;
+        MoveRightKeyT.fontSize = 28;
+        MoveLeftKeyT.fontSize = 28;
+        SprintKeyT.fontSize = 28;
+        CKeyT.fontSize = 25;
+        IKeyT.fontSize = 25;
+        HKeyT.fontSize = 25;
+        JKeyT.fontSize = 25;
+        WUpKeyT.fontSize = 25;
+        SDownKeyT.fontSize = 25;
+        DRightKeyT.fontSize = 25;
+        ALeftKeyT.fontSize = 25;
+        LShiftKeyT.fontSize = 25;
+        back3.fontSize = 80;
+    }
+
     public float TimeToFloat(string time)   //converts time in hh:mm:ss or hh:mm format into float
     {
         string[] times = time.Split(':');

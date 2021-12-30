@@ -80,4 +80,9 @@ public class Menu_Options : MonoBehaviour
                return i;
         return 0;
     }
+
+    public void SetKey(string K)
+    {
+
+    }
 }
