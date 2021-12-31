@@ -13,9 +13,6 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
     [HideInInspector] public Screen_Cards screen;
     private Card_Pool Pool; //open Card_Pool connection to use its functions
 
-    //ohHover:
-    [HideInInspector] public float handShift;     //changes to indicate current position
-
     //for development testing:
     [Header("- Fill Hand:")]
     public bool Fill = false;   //refill hand according to preset
@@ -85,7 +82,6 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
             }
             screen.CreateObject(this.transform, deck[i]);
         }
-        handShift = Mathf.Abs(this.gameObject.transform.position.y);
     }
     public override void EventDrop(Card_Drag cardObject)    //card was dropped into Zone
     {
@@ -130,6 +126,7 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
             NotEmpty();
         }
     }
+
     //public void RefreshCards()
     //{
     //    Card_Drag[] cardObjects = this.GetComponentsInChildren<Card_Drag>();

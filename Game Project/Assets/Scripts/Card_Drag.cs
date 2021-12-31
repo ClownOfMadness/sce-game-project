@@ -53,17 +53,21 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
     {
         screen.CardClick(this);         //needs to happen here to get the "this" of the object
     }
+    public float HandShift()    //used to shift cards onHover
+    {
+        return Mathf.Abs(Screen.height / 20);
+    }
     public void OnPointerEnter(PointerEventData eventData)   //onHover set
     {
-        if (!dragged && !screen.draggingCard && transform.parent == hand) 
+        if (!dragged && !screen.draggingCard && transform.parent == hand)
         {
             positionReturnTo = new Vector3(transform.position.x, transform.position.y, 0);  //original position
             screen.overlapingCard = false;
-            transform.position = new Vector3(transform.position.x, positionReturnTo.y + zHand.handShift, 0);
+            transform.position = new Vector3(transform.position.x, positionReturnTo.y + HandShift(), 0);
 
             Desc_Text.text = card.description;
             Desc.gameObject.SetActive(true);
-            Desc.transform.position = new Vector3(transform.position.x, positionReturnTo.y + rectT.rect.height+20, 0);
+            Desc.transform.position = new Vector3(transform.position.x, Desc.transform.position.y, 0);
         }
     }
     public void OnPointerExit(PointerEventData eventData)   //onHover reset
@@ -81,7 +85,7 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
             if (automatic)  //handles automatic addition of cards from failed Craft
                 automatic = false;
         }
-        else if (transform.parent == hand && !screen.overlapingCard) 
+        else if (transform.parent == hand && !screen.overlapingCard)
         {
             transform.position = positionReturnTo;
         }
@@ -153,7 +157,7 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
         //needed to allow building placement only outside of UI, don't change
         bool validPlacement = this.transform.parent != hand && this.transform.parent != destroy && this.transform.parent != storagept2;
         bool snap = true;
-        if (validPlacement && screen.visibleMap) 
+        if (validPlacement && screen.visibleMap)
         {
             if (placeholderParent == hand)
                 if (card.buildingPrefab)    //if building, try to place

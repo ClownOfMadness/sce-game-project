@@ -78,7 +78,7 @@ public class Zone_Behaviour : MonoBehaviour, IDropHandler, IPointerEnterHandler,
                 }
                 if (this.transform == d.hand)
                 {
-                    d.transform.position = new Vector3(d.placeholder.transform.position.x, d.placeholder.transform.position.y - d.zHand.handShift, 0);  //original position
+                    d.transform.position = new Vector3(d.placeholder.transform.position.x, d.placeholder.transform.position.y - d.HandShift(), 0);  //original position
                 }
                 //move card
                 d.parentReturnTo = this.transform;
