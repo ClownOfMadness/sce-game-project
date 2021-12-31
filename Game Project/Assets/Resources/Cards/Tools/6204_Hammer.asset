@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 4
   description: Also fun for whack-a-mole
-  artwork: {fileID: 21300000, guid: 143ab4a7e9d637247aba35344f9a1e90, type: 3}
+  artwork: {fileID: 21300000, guid: 24c2691f2578ca443b0a30b8f2a9fef2, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1

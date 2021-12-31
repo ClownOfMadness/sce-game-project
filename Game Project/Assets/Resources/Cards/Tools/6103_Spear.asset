@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 1
   description: How to use:"Point the sharp end at the opponent"
-  artwork: {fileID: 21300000, guid: b964776524d6c98499728e09ad33315f, type: 3}
+  artwork: {fileID: 21300000, guid: 1b9e272313e5b544092e2d0f2b79649e, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1

@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 8
   description: The perfect weapon to poke your enemy to death
-  artwork: {fileID: 21300000, guid: b964776524d6c98499728e09ad33315f, type: 3}
+  artwork: {fileID: 21300000, guid: d9200dc27190c4d4fb91d7eaa406db31, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1

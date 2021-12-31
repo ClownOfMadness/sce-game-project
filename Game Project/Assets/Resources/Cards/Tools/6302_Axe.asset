@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 8
   description: While very sharp,its better used against trees
-  artwork: {fileID: 21300000, guid: ff0a9af511c1f71449387cdde96272eb, type: 3}
+  artwork: {fileID: 21300000, guid: b4fc7357920f99840ad131afe342fb46, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1

@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 8
   description: Even a simple peasant can be powerful with the right sword
-  artwork: {fileID: 21300000, guid: 82d12da025939a140b00d7ea51fc7302, type: 3}
+  artwork: {fileID: 21300000, guid: af5a8c4d321eaff44bd8fa36c7984edc, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1

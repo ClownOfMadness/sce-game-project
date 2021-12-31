@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 8
   description: Quality pickaxe which will not break easily
-  artwork: {fileID: 21300000, guid: c7fb3e74f532bd04e98baf632d895ea6, type: 3}
+  artwork: {fileID: 21300000, guid: 0e7dd984f79ca9d44805437f30791944, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
-  neverDiscovered: 0
+  neverDiscovered: 1

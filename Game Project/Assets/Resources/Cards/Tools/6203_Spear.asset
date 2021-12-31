@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 4
   description: More effective at pointing that sharp end at the enemy
-  artwork: {fileID: 21300000, guid: 732b0e803fbec1b45a1c890dd0f4e21d, type: 3}
+  artwork: {fileID: 21300000, guid: cd57e7007434926458c26d7d027be16d, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1
