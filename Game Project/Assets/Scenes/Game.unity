@@ -10720,29 +10720,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameMap: {fileID: 1505982681}
-  Units: {fileID: 0}
-  Enemies: {fileID: 0}
+  Units: {fileID: 11710808}
+  Enemies: {fileID: 717966957}
   MainCamera: {fileID: 963194227}
   path: {fileID: 549329537}
   TownHall: {fileID: 0}
   unitlist: {fileID: 0}
   saved_data:
-    building:
-      buildingType: 0
-      data:
-        isNull: 0
-        transparency: {r: 0, g: 0, b: 0, a: 0}
-        originalColor: {r: 0, g: 0, b: 0, a: 0}
-        night: 0
-        inProgress: 0
-        health: 0
     mapSize: 0
-    townHallPos: {x: 0, y: 0, z: 0}
-    Hand: 
-    Storage: 
-    Discovered: 0
-    Combos: 0
-    DisStatus: 
+    townHallTile: 
 --- !u!114 &1505982683
 MonoBehaviour:
   m_ObjectHideFlags: 0

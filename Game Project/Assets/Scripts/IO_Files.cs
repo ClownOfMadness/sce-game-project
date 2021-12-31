@@ -56,7 +56,6 @@ public static class IO_Files
 
     public static void DeleteData(string path)  //delete the file
     {
-        Debug.Log("Attempting to delete");
         File.Delete(path);
         Debug.Log("File deleted");
     }

@@ -11,7 +11,7 @@ public class System_DayNight : MonoBehaviour
     private int midNight;
     private int noon;
     private int nightStartJump;
-    private int currentTime;
+    public int currentTime;
     public float cycleSpeed = 1f; // [[Add this option to parental control]]
     [HideInInspector] public bool isDay;
     private PostProcessVolume volume;

@@ -708,7 +708,7 @@ public class Data_Tile : MonoBehaviour
         gizmoUse = data.gizmoUse;
         canRecharge = data.canRecharge;
         canRandom = data.canRandom;
-        theExtra = data.theExtra;
+        //theExtra = data.theExtra;
         //parentExtra = data.parentExtra;
         extra = data.extra;
         check = data.check;
@@ -740,7 +740,7 @@ public class Data_Tile : MonoBehaviour
         tile_info.gizmoUse = gizmoUse;
         tile_info.canRecharge = canRecharge;
         tile_info.canRandom = canRandom;
-        tile_info.theExtra = theExtra;
+        //tile_info.theExtra = theExtra;
         //tile_info.parentExtra = parentExtra;
         tile_info.extra = extra;
         tile_info.check = check;
@@ -771,8 +771,8 @@ public class Data_Tile : MonoBehaviour
         public bool gizmoUse;
         public bool canRecharge;
         public bool canRandom;
-        public GameObject theExtra;
-        public GameObject parentExtra;
+        //public GameObject theExtra;
+        //public GameObject parentExtra;
         public bool extra;
         public bool check;
         public bool revealed;

@@ -71,6 +71,8 @@ public class Player_Control : MonoBehaviour
     private Vector3 mousePosition = Vector3.zero;
     public bool gameLost = false;
     private Data_CommonDataHolder commonData;
+    public GameObject detector;
+    public GameObject currentTileOn;
 
     // Card
     public Screen_Cards screenCards;
@@ -113,6 +115,8 @@ public class Player_Control : MonoBehaviour
         Animator();
         PlayerController();
         Tired();
+        if (player) GroundCheck(); 
+
     }
 
     private void FixedUpdate()
@@ -155,6 +159,17 @@ public class Player_Control : MonoBehaviour
             }
         }
     }
+
+    private void GroundCheck()
+    {
+        RaycastHit hit;
+        Debug.DrawRay(detector.transform.position, Vector3.down, Color.yellow);
+        if (Physics.Raycast(detector.transform.position, Vector3.down, out hit, 1.1f))
+        {
+            currentTileOn = hit.transform.gameObject;
+        }
+    }
+
     private void UnitCommand()
     {
         // Raycast from camera to the mouse position on the game field
@@ -381,6 +396,7 @@ public class Player_Control : MonoBehaviour
                 animator = player.GetComponentInChildren<Animator>();
                 rb = player.GetComponent<Rigidbody>();
                 cameraObject.GetComponent<Camera>().orthographicSize = 40f;
+                detector = player.transform.GetChild(1).gameObject;
                 return true;
             }
         }

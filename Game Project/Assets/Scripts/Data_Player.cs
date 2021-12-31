@@ -18,13 +18,13 @@ public class Data_Player
             return _current;
         }
     }
+
     //--------------------------------[Configuration]------------------------------------
 
     //public bool SetTimeLimit;
     //public float TimeLimit;
     //public bool SetBedTime;
     //public float BedTime;
-    public Map_Display.Save_Building building;
 
     //public enum difficultiesList    //enum for difficulty
     //{
@@ -42,19 +42,28 @@ public class Data_Player
     //------------------------------------[Game Data]------------------------------------
 
     public int mapSize; //The size of the map
-    //public Map_Display.Save_Tile[,] TileMap; //The map of tiles
-    public Vector3 townHallPos; //Town Hall position on the map
+    public Map_Display.Save_Tile[,] TileMap; //The map of tiles
+    public string townHallTile; //Town Hall tile
 
-    //public List<Map_Display.Save_Unit> units; //List of the units
-    //public List<Map_Display.Save_Enemy> enemies; //List of the enemies
-    //public Save_Player player; //The data on the player character
+    public List<List<Map_Display.Save_Unit>> units; //List of the units
+    public List<List<Map_Display.Save_Enemy>> enemies; //List of the enemies
+                                                       //public Save_Player player; //The data on the player character
+
+    //[Player Control]//
+    public string currentTileOn;
+
+    //[Day/Night System]//
+    public int currentTime;
+    public float cycleSpeed;
+
+
 
     //[Cards Data]//
-    public List<int> Hand; //Cards in hand
-    public List<int> Storage; //Cards in storage
-    public int Discovered;
-    public int Combos;
-    public List<bool> DisStatus;
+    //public List<int> Hand; //Cards in hand
+    //public List<int> Storage; //Cards in storage
+    //public int Discovered;
+    //public int Combos;
+    //public List<bool> DisStatus;
 
     //-----------------------------------------------------------------------------------
 }
