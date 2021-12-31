@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 11
   description: To make something sturdy you have to use a sturdy wall
-  artwork: {fileID: 21300000, guid: 33da4f6c004f0494a8ac687db6ae028f, type: 3}
+  artwork: {fileID: 21300000, guid: 104a54efbaae599499b8c2f6dc444b3c, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 0

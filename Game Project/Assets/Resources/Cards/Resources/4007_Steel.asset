@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 7
   description: The strongest material for any tool
-  artwork: {fileID: 21300000, guid: 83945e7770befaf429038333a797f7df, type: 3}
+  artwork: {fileID: 21300000, guid: c8dea8e2e59077441b833618c6efd14c, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 0
