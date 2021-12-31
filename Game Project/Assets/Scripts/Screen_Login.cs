@@ -16,7 +16,7 @@ public class Screen_Login : MonoBehaviour
     //public Menu_Pause menu_Pause;
     public void Update() //
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return)||(Input.GetKey("enter")))
         {
             submitButton.onClick.Invoke();
             Debug.Log("login button clicked");

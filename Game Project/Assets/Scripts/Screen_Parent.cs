@@ -20,7 +20,9 @@ public class Screen_Parent : MonoBehaviour
     public GameObject PlayerStats;
     public GameObject ComboGuide;
     public Text combosText;
-    public Dropdown Drop;
+    public Dropdown Drop; //for the fontsize dropdown event
+    public Button submitButton; //for the login button
+    public Button Confirm; //for the password change
 
     public void Awake()
     {
@@ -36,6 +38,15 @@ public class Screen_Parent : MonoBehaviour
             Debug.Log("First Login");
         }
         Drop = GetComponent<Dropdown>(); //for font size
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) || (Input.GetKey("enter")))
+        {
+            submitButton.onClick.Invoke();
+            Confirm.onClick.Invoke();
+        }
     }
     public void TryLogin()  //try to login
     {

@@ -10485,7 +10485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &831458381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21852,7 +21852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1568908307
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29303,7 +29303,7 @@ MonoBehaviour:
   LoadPanel: {fileID: 1322606321}
   MenuMain: {fileID: 762214638}
   GameMenu: {fileID: 361339070}
-  tutorial: {fileID: 0}
+  tutorial: {fileID: 1663842618}
   Logo: {fileID: 831458381}
 --- !u!114 &2100703381
 MonoBehaviour:
@@ -29941,6 +29941,8 @@ MonoBehaviour:
   ComboGuide: {fileID: 1455758927}
   combosText: {fileID: 1948936001}
   Drop: {fileID: 209970662}
+  submitButton: {fileID: 428646605}
+  Confirm: {fileID: 1440220987}
 --- !u!114 &2140612384
 MonoBehaviour:
   m_ObjectHideFlags: 0
