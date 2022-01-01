@@ -44,15 +44,17 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (Fill)
         {
-            Debug.Log("Fill functionallity of Hand has been disabled");
+            Debug.Log("Fill bool currently simulates importing a deck with: Fisherman, wooden bridge");
+            List<int> deck = new List<int> { 1001, 5000 };
+            ImportDeck(deck);
             /*
             foreach (Transform cardObject in this.transform)
             {
                 GameObject.Destroy(cardObject.gameObject);
             }
             InstantiateZone();   //add objects to hand up to 8 in runtime
-            Fill = false;
             */
+            Fill = false;
         }
         if (Damage)
         {
@@ -66,17 +68,14 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
 
         Pool = screen.Pool;
         Creation = screen.Creation;
-        if (importedDeck.Count > 0)
-            AddCards(importedDeck);
-        else
-            switch (Preset)
-            {
-                case decksList.EmptyHand: AddCards(emptyHand); break;
-                case decksList.CraftMenuPrompt: AddCards(craftMenuPrompt); break;
-                case decksList.Units: AddCards(units); break;
-                case decksList.Buildings: AddCards(buildings); break;
-                default: break;
-            }
+        switch (Preset)
+        {
+            case decksList.EmptyHand: AddCards(emptyHand); break;
+            case decksList.CraftMenuPrompt: AddCards(craftMenuPrompt); break;
+            case decksList.Units: AddCards(units); break;
+            case decksList.Buildings: AddCards(buildings); break;
+            default: break;
+        }
     }
     private void AddCards(List<string> deck)
     {
@@ -181,7 +180,16 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
     }
     public void ImportDeck(List<int> import)//will be used to load the game
     {
-        for (int i = 0; i < this.Size; i++)
+        List<string> importedDeck = new List<string>();
+        for (int i = 0; i < import.Count && i < this.Size; i++) 
             importedDeck.Add(Pool.CodeToName(import[i]));
+        if (importedDeck.Count > 0)
+        {
+            foreach (Transform cardObject in this.transform)    //clear whatever accidentally loaded by default into Hand
+            {
+                GameObject.Destroy(cardObject.gameObject);
+            }
+            AddCards(importedDeck);
+        }
     }
 }
