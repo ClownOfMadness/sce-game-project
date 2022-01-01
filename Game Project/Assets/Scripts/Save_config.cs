@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Save_config : MonoBehaviour
 {
@@ -13,8 +14,10 @@ public class Save_config : MonoBehaviour
     // The same old Awakening
     void Awake()
     {
-        //options = this.GetComponent<Menu_Options>();
-        keyBinding = this.GetComponent<KeyBinding>();
+        if (SceneManager.GetActiveScene().name == "Menu")
+            options = this.GetComponent<Menu_Options>();
+        else if(SceneManager.GetActiveScene().name == "Game")
+            keyBinding = this.GetComponent<KeyBinding>();
     }
     // Start is called before the first frame update
     void Start()
@@ -24,31 +27,39 @@ public class Save_config : MonoBehaviour
 
     public void SavePrefs()
     {
-        /*PlayerPrefs.SetFloat(volume, options.GetVolume());
-        PlayerPrefs.SetInt(graphics, options.GetGraphics());
-        PlayerPrefs.SetInt(resolution, options.GetResolution());*/
-        //-------------key bindings-----------------
-        PlayerPrefs.SetString("Creative",keyBinding.GetKey("Creative"));
-        PlayerPrefs.SetString("Storage", keyBinding.GetKey("Storage"));
-        PlayerPrefs.SetString("Hints", keyBinding.GetKey("Hints"));
-        PlayerPrefs.SetString("Jobs", keyBinding.GetKey("Jobs"));
-        PlayerPrefs.SetString("MoveUp", keyBinding.GetKey("MoveUp"));
-        PlayerPrefs.SetString("MoveDown", keyBinding.GetKey("MoveDown"));
-        PlayerPrefs.SetString("MoveRight", keyBinding.GetKey("MoveRight"));
-        PlayerPrefs.SetString("MoveLeft", keyBinding.GetKey("MoveLeft"));
-        PlayerPrefs.SetString("Sprint", keyBinding.GetKey("Sprint"));
-        //Debug.Log(PlayerPrefs.GetString("Hints","H"));
-        //-------------------------------------
-        PlayerPrefs.SetInt("ChangeFont", 0);
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            PlayerPrefs.SetFloat(volume, options.GetVolume());
+            PlayerPrefs.SetInt(graphics, options.GetGraphics());
+            PlayerPrefs.SetInt(resolution, options.GetResolution());
+        }
+        else if (SceneManager.GetActiveScene().name == "Game")
+        {
+            //-------------key bindings-----------------
+            PlayerPrefs.SetString("Creative", keyBinding.GetKey("Creative"));
+            PlayerPrefs.SetString("Storage", keyBinding.GetKey("Storage"));
+            PlayerPrefs.SetString("Hints", keyBinding.GetKey("Hints"));
+            PlayerPrefs.SetString("Jobs", keyBinding.GetKey("Jobs"));
+            PlayerPrefs.SetString("MoveUp", keyBinding.GetKey("MoveUp"));
+            PlayerPrefs.SetString("MoveDown", keyBinding.GetKey("MoveDown"));
+            PlayerPrefs.SetString("MoveRight", keyBinding.GetKey("MoveRight"));
+            PlayerPrefs.SetString("MoveLeft", keyBinding.GetKey("MoveLeft"));
+            PlayerPrefs.SetString("Sprint", keyBinding.GetKey("Sprint"));
+            //Debug.Log(PlayerPrefs.GetString("Hints","H"));
+            //-------------------------------------
+            PlayerPrefs.SetInt("ChangeFont", 0);
+        }
         PlayerPrefs.Save();
     }
 
     public void LoadPrefs()
     {
-        /*options.SetVolume(PlayerPrefs.GetFloat(volume, 0));
-        options.SetQuality(PlayerPrefs.GetInt(graphics, 5));
-        options.SetResolution(PlayerPrefs.GetInt(resolution, options.resolutions.Length - 1));*/
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            options.SetVolume(PlayerPrefs.GetFloat(volume, 0));
+            options.SetQuality(PlayerPrefs.GetInt(graphics, 5));
+            options.SetResolution(PlayerPrefs.GetInt(resolution, options.resolutions.Length - 1));
+        }
         //keyBinding.SetKey((KeyCode)System.Enum.Parse(typeof(KeyCode) ,PlayerPrefs.GetString("Hints","H")));
-
     }
 }

@@ -71,27 +71,32 @@ public class Game_Master : MonoBehaviour
     [HideInInspector] public float totalGameTime;
     [HideInInspector] public bool gameLost;
 
+    [System.Serializable]
     public enum fontList        //used by fontSize
     {
-        Normal,
+        Normal, //default
         Big,
     }
+    [System.Serializable]
     public enum speedList       //used by gameSpeed
     {
-        Normal,
+        Normal, //default
         Slow,
     }
+    [System.Serializable]
     public enum charList        //used by character appearance (remove if not needed)
     {
        //fill if needed
     }
+    [System.Serializable]
     public enum windowList      //used by window appearance (remove if not needed)
     {
         //fill if needed
     }
+    [System.Serializable]
     public enum difficultyList  //used by difficulty, both by parent and premium
     {
-        Normal,
+        Normal,     //default
         Easy,       //for parent
         Hardcore    //for premium, make sure that it doesn't clash with Easy
     }

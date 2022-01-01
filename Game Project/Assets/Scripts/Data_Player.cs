@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//stores data on a save, currently only used by parent
 [System.Serializable]
 public class Data_Player
 {
@@ -19,27 +18,7 @@ public class Data_Player
         }
     }
 
-    //--------------------------------[Configuration]------------------------------------
-
-    //public bool SetTimeLimit;
-    //public float TimeLimit;
-    //public bool SetBedTime;
-    //public float BedTime;
-
-    //public enum difficultiesList    //enum for difficulty
-    //{
-    //    Normal,
-    //    Easy,
-    //    Hardcore,
-    //}
-    //public difficultiesList Difficulty;
-    //public int CardsCombined;
-    //public bool AllowedHints;
-    //public bool IsPremium;
-
-    //-----------------------------------------------------------------------------------
-
-    //------------------------------------[Game Data]------------------------------------
+    //------------------------------------[Game Data]------------------------------------//
 
     //[Map Data]//
     public int mapSize; //The size of the map
@@ -63,6 +42,6 @@ public class Data_Player
     public List<int> Storage; //Cards in storage
     public List<bool> DisStatus;
 
-    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------//
 }
 

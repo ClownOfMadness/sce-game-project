@@ -9,6 +9,7 @@ using TMPro;
 
 public class Save_Manager : MonoBehaviour
 {
+    public GameObject GameMaster;
     public TMP_InputField saveName; //Name Input field
     public GameObject SaveSlots; //Panel SaveSlots
     public GameObject startGame; //Panel StartGame 
@@ -53,6 +54,9 @@ public class Save_Manager : MonoBehaviour
         //Create saves directory if not created yet.
         if (!Directory.Exists(Application.persistentDataPath + "/saves"))
             Directory.CreateDirectory(Application.persistentDataPath + "/saves");
+        //Create temp directory if not created yet.
+        if (!Directory.Exists(Application.persistentDataPath + "/temp"))
+            Directory.CreateDirectory(Application.persistentDataPath + "/temp");
         LoadedSlots();
     }
 
@@ -83,6 +87,7 @@ public class Save_Manager : MonoBehaviour
         }
     }
 
+    //The multi scene back button function.
     void BackSelect()
     {
         if (SceneManager.GetActiveScene().name == "Menu")
@@ -127,7 +132,7 @@ public class Save_Manager : MonoBehaviour
         SavedSlots(); 
     }
 
-    //Delete the current save slot.
+    //Delete the current save slot data.
     public void Delete()
     {
         //Set the path of the save slot.
@@ -137,25 +142,47 @@ public class Save_Manager : MonoBehaviour
         DeleteSlot();
     }
 
+    //The multi scene play button.
     public void Play()
     {
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             slotName = saveName.text;
+
+            //Set the path of the temporary data.
+            path = Application.persistentDataPath + "/temp/config.temp";
+            //Delete the old temporary data.
+            if (File.Exists(path))
+                IO_Files.DeleteData(path);
+
             menu_main.NewGame();
         }
         else if (SceneManager.GetActiveScene().name == "Game")
+        {
             SceneManager.LoadScene("Game");
+        }
     }
 
     public Data_Player SceneLoaded()
     {
         Data_Player data_player = new Data_Player();
+
         //Set the path of the save slot.
         path = Application.persistentDataPath + "/saves/" + currSlot + ".save";
 
         data_player = (Data_Player)IO_Files.ReadData(path);
         return data_player;
+    }
+
+    //Save the player's configuration on the current save (or as temporary file).
+    public void SavePlayerConfig(string path)
+    {
+        Data_PlayerConfig data_player = new Data_PlayerConfig();
+
+        if(SceneManager.GetActiveScene().name == "Menu") //Create temporary file
+        {
+
+        }
     }
 
     public void SavedSlots()
@@ -179,5 +206,31 @@ public class Save_Manager : MonoBehaviour
         LoadedSlots();
         saveName.text = "";
         delete.SetActive(false);
+    }
+
+    public void UpdateSettings(Game_Master data)
+    {
+        string path = Application.persistentDataPath + "/saves/Settings.save";
+        Save_Settings current = IO_Files.ReadDataSetting(path);
+
+        //premiumUser = data.premiumUser;
+        //parentPassword = data.parentPassword;
+
+        //isVeteran = data.isVeteran;
+        //if (current.maxGameDays < data.gameDays)
+        //    current.maxGameDays = data.gameDays;
+        //else maxGameDays = current.maxGameDays;
+
+        //isBuilder = data.isBuilder;
+        //if (current.maxBuildings < data.buildings)
+        //    current.maxBuildings = data.buildings;
+        //else maxBuildings = current.maxBuildings;
+
+        //isCrafty = data.isExplorer;
+        //if (current.maxBuildings. < data.buildings)
+        //    current.maxCardsFound = data.cardsFound;
+        //else maxCardsFound = current.maxCardsFound;
+
+        IO_Files.WriteDataSetting(path, current);
     }
 }
