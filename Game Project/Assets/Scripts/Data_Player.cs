@@ -41,29 +41,27 @@ public class Data_Player
 
     //------------------------------------[Game Data]------------------------------------
 
+    //[Map Data]//
     public int mapSize; //The size of the map
     public Map_Display.Save_Tile[,] TileMap; //The map of tiles
     public string townHallTile; //Town Hall tile
 
+    //[Characters data]//
     public List<List<Map_Display.Save_Unit>> units; //List of the units
     public List<List<Map_Display.Save_Enemy>> enemies; //List of the enemies
-                                                       //public Save_Player player; //The data on the player character
 
     //[Player Control]//
     public string currentTileOn;
+    //public Save_Player player; //The player character
 
     //[Day/Night System]//
     public int currentTime;
     public float cycleSpeed;
 
-
-
     //[Cards Data]//
-    //public List<int> Hand; //Cards in hand
-    //public List<int> Storage; //Cards in storage
-    //public int Discovered;
-    //public int Combos;
-    //public List<bool> DisStatus;
+    public List<int> Hand; //Cards in hand
+    public List<int> Storage; //Cards in storage
+    public List<bool> DisStatus;
 
     //-----------------------------------------------------------------------------------
 }

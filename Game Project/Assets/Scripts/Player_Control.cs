@@ -216,6 +216,7 @@ public class Player_Control : MonoBehaviour
                             // Cancels units current job
                             selectedObject = raycastHit.transform.gameObject;
                             selectedData_Tile = selectedObject.GetComponent<Data_Tile>();
+                            
                             if (selectedData_Tile.GetData() || selectedData_Tile.GetBuildData())
                             {
                                 GameObject theUnit = selectedData_Tile.GetObject();
