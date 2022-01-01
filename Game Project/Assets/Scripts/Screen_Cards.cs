@@ -504,7 +504,6 @@ public class Screen_Cards : MonoBehaviour
                 CardsDiscovered++;
             }
             CreateObject(Hand.transform, pickedCard);
-            automaticCard = false;
             zHand.RefreshZone();
             return true;
         }

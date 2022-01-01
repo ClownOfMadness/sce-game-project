@@ -77,13 +77,12 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
         {
             screen.overlapingCard = true;
         }
-        if (clicked || automatic || screen.automaticCard)  //handles cards being added from Craft&Unit
+        if (clicked || automatic || screen.automaticCard)  //handles cards being added from other zones
         {
             positionReturnTo = transform.position;  //save position (used by cards that never entered the OnPointerEnter function)
-            if (clicked)    //handles cards being added by click from Craft&Unit
-                clicked = false;
-            if (automatic)  //handles automatic addition of cards from failed Craft
-                automatic = false;
+            clicked = false;                //handles cards being added by click from Craft&Unit
+            automatic = false;              //handles automatic addition of cards from failed Craft
+            screen.automaticCard = false;   //handles automatic addition of cards from Units
         }
         else if (transform.parent == hand && !screen.overlapingCard)
         {
