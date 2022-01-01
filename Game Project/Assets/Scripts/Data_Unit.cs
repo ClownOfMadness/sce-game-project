@@ -303,7 +303,6 @@ public class Data_Unit : MonoBehaviour
     public void UpdateTargetLocation(GameObject tile) // Method to set target location and info for the unit
     {
         // Unit Rule: the unit will never listen to player if it is busy or has a card (unless player order to move to the townhall)
-        
         // Called from PlayerControl
         if (!busy && !card)
         {
@@ -654,9 +653,10 @@ public class Data_Unit : MonoBehaviour
                 hurt = false;
                 unitCard = commonData.peasantCard;
                 screenCards.AddGathered(this, false);
-
+                
                 tileData.DetachWork();
                 DestroyUnit();
+                toTownHall = false;
             }
         }
         else if (time.isDay && workInMemory)
@@ -952,7 +952,6 @@ public class Data_Unit : MonoBehaviour
     public Unit_Info SaveData()
     {
         Unit_Info unit_info = new Unit_Info();
-
         unit_info.nextWander = nextWander;
         unit_info.impassable = impassable;
         unit_info.currentTileOn = currentTileOn;

@@ -13,6 +13,7 @@ public class Screen_Cards : MonoBehaviour
     public GameObject Craft;
     public GameObject Unit;
     public GameObject Storage;
+    public GameObject StoragePt2;
     public GameObject Book;
     public GameObject Desc;
     public Text Desc_Text;
@@ -87,7 +88,6 @@ public class Screen_Cards : MonoBehaviour
     void Awake()    //initilizing the entire cards' canvas
     {
         SetZones();
-
         if (TestHintsOn || Game.hintsOn)  //change when testing phase ends
         {
             hintsButton.SetActive(true);
@@ -104,10 +104,13 @@ public class Screen_Cards : MonoBehaviour
         {
             creativeButton.SetActive(false);
         }
+        destroyButton.SetActive(true);
         storageButton.SetActive(true);
-
+        StoragePt2.SetActive(true);
         Message.gameObject.SetActive(false);
         Desc.SetActive(false);
+        Book.SetActive(false);
+        Storage.SetActive(false);
 
         MenuUp = false;
         CraftUp = false;
@@ -142,27 +145,27 @@ public class Screen_Cards : MonoBehaviour
         zCraft = Craft.transform.GetComponent<Zone_Craft>();
         zUnit = Unit.transform.GetComponent<Zone_Unit>();
         zStorage = Storage.transform.GetComponent<Zone_Storage>();
+        zStoragePt2 = StoragePt2.transform.GetComponent<Zone_StoragePt2>();
         zBook = Book.transform.GetComponent<Zone_Book>();
         zDestroy = destroyButton.transform.GetComponent<Zone_Destroy>();
-        zStoragePt2 = storageButton.transform.GetComponent<Zone_StoragePt2>();
 
         //giving Screen_Cards to the Zones so they can access stuff
         zHand.screen = this;
         zCraft.screen = this;
         zUnit.screen = this;
         zStorage.screen = this;
+        zStoragePt2.screen = this;
         zBook.screen = this;
         zDestroy.screen = this;
-        zStoragePt2.screen = this;
 
         //running Zones so they're ready to recieve input
         zHand.InstantiateZone();
         zCraft.InstantiateZone();
         zUnit.InstantiateZone();
         zStorage.InstantiateZone();
+        zStoragePt2.InstantiateZone();
         zBook.InstantiateZone();
         zDestroy.InstantiateZone();
-        zStoragePt2.InstantiateZone();
     }
     public void TopMessage(string text)
     {
@@ -202,7 +205,6 @@ public class Screen_Cards : MonoBehaviour
         }
         else
             visibleMap = true;
-        destroyButton.SetActive(true);
         UIDown = false;
     }
     private void CloseUI()
@@ -484,7 +486,7 @@ public class Screen_Cards : MonoBehaviour
         card.craft = Craft.transform;
         card.unit = Unit.transform;
         card.storage = Storage.transform;
-        card.storagept2 = storageButton.transform;
+        card.storagept2 = StoragePt2.transform;
         card.destroy = destroyButton.transform;
 
         card.zHand = zHand;
@@ -539,22 +541,28 @@ public class Screen_Cards : MonoBehaviour
             pickedCard = unit.unitCard;
             waitingUnit = null;
         }
+        Debug.Log("add");
         if (visibleMap) //nothing is open
         {
             if (CreateInHand(pickedCard))
             {
+                //Debug.Log("created");
                 return true;    //unit doesn't need to wait
             }
             else    //no space in Hand
             {
+                //Debug.Log("no space");
                 zUnit.CardAdded(pickedCard, waitingUnit);
                 CheckUnit();
                 OpenUI();
                 return false; //unit needs to wait
             }
         }
-        else //something is open on screen
+        else
+        { //something is open on screen
+            //Debug.Log("waiting");
             zUnit.CardAdded(pickedCard, waitingUnit);
+        }
         return false;
     }
     public Data_Card DamageMaster() //open Unit Zone if it has cards
