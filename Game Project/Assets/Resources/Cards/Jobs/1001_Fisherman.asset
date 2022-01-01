@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1001_Fisherman
   m_EditorClassIdentifier: 
   name: Fisherman
-  code: 1002
+  code: 1001
   type: 0
   source: 01000000
   combinationOf:
@@ -25,4 +25,4 @@ MonoBehaviour:
   artwork: {fileID: 21300000, guid: 704225cd74a89e74a917c5efec9da0fa, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
-  neverDiscovered: 1
+  neverDiscovered: 0
