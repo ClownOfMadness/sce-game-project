@@ -29,7 +29,7 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
     public decksList Preset;    //enables picking a deck preset via the inspector
 
     //internal fields:
-    private List<string> deck = new List<string>(); //The cards that are in hand in the beginning
+    //private List<string> deck = new List<string>(); //The cards that are in hand in the beginning
     private List<string> craftMenuPrompt = new List<string> //craft menu preset
     { "Flint","Stick","Flint","Stick","Iron","Stick","Steel","Stick" };
     private List<string> units = new List<string>           //unit placement preset
@@ -38,17 +38,21 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
     { "Town Hall","Town Hall","House","Hut","Cabin","Bakery","Wood","Stick" };
     private List<string> emptyHand = new List<string>       //empty Hand preset
     {"Creation"};
+    private List<string> importedDeck = new List<string>(); //The cards that the player had in the loaded save
 
     void Update()
     {
         if (Fill)
         {
+            Debug.Log("Fill functionallity of Hand has been disabled");
+            /*
             foreach (Transform cardObject in this.transform)
             {
                 GameObject.Destroy(cardObject.gameObject);
             }
             InstantiateZone();   //add objects to hand up to 8 in runtime
             Fill = false;
+            */
         }
         if (Damage)
         {
@@ -62,16 +66,20 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
 
         Pool = screen.Pool;
         Creation = screen.Creation;
-
-        deck = Preset switch
-        {
-            decksList.EmptyHand => emptyHand,
-            decksList.CraftMenuPrompt => craftMenuPrompt,
-            decksList.Units => units,
-            decksList.Buildings => buildings,
-            _ => emptyHand,
-        };
-
+        if (importedDeck.Count > 0)
+            AddCards(importedDeck);
+        else
+            switch (Preset)
+            {
+                case decksList.EmptyHand: AddCards(emptyHand); break;
+                case decksList.CraftMenuPrompt: AddCards(craftMenuPrompt); break;
+                case decksList.Units: AddCards(units); break;
+                case decksList.Buildings: AddCards(buildings); break;
+                default: break;
+            }
+    }
+    private void AddCards(List<string> deck)
+    {
         for (int i = 0; i < this.Size && i < deck.Count; i++)
         {
             if (Pool.cards[Pool.FindCard(deck[i])].neverDiscovered)
@@ -174,6 +182,6 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
     public void ImportDeck(List<int> import)//will be used to load the game
     {
         for (int i = 0; i < this.Size; i++)
-            deck.Add(Pool.CodeToName(import[i]));
+            importedDeck.Add(Pool.CodeToName(import[i]));
     }
 }
