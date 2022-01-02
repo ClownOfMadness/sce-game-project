@@ -65,8 +65,9 @@ public class Map_Display : MonoBehaviour
         {
             TownHall = Map.generateMap();
         }
-        else {
-            LoadData(saved_data); 
+        else
+        {
+            LoadData(saved_data);
         }
         MainCamera.transform.position = TownHall.transform.position + new Vector3(0, 150, 0);
         unitlist.townhall = TownHall;

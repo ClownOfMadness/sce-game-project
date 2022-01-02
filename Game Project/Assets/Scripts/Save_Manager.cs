@@ -129,6 +129,10 @@ public class Save_Manager : MonoBehaviour
         path = Application.persistentDataPath + "/saves/" + currSlot + ".save";
 
         IO_Files.WriteData(path, map_display.Save_Data());
+
+        string path2 = Application.persistentDataPath + "/saves/Settings.save";
+        Save_Settings current = new Save_Settings();
+        IO_Files.WriteDataSetting(path2, current);
         SavedSlots(); 
     }
 
@@ -211,7 +215,7 @@ public class Save_Manager : MonoBehaviour
     public void UpdateSettings(Game_Master data)
     {
         string path = Application.persistentDataPath + "/saves/Settings.save";
-        Save_Settings current = IO_Files.ReadDataSetting(path);
+        //Save_Settings current = IO_Files.ReadDataSetting(path);
 
         //premiumUser = data.premiumUser;
         //parentPassword = data.parentPassword;
@@ -231,6 +235,6 @@ public class Save_Manager : MonoBehaviour
         //    current.maxCardsFound = data.cardsFound;
         //else maxCardsFound = current.maxCardsFound;
 
-        IO_Files.WriteDataSetting(path, current);
+        //IO_Files.WriteDataSetting(path, current);
     }
 }

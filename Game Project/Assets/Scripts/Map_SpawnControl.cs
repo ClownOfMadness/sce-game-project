@@ -10,6 +10,7 @@ public class Map_SpawnControl : MonoBehaviour
     Map_Gen Map;
     Map_Display display;
 
+    public Game_Master GameMaster;
     GameObject GameMap; //The map of the game
     Vector3 TownPos; //The position of the town hall
     private bool prevState = false; //previous day state
@@ -23,6 +24,7 @@ public class Map_SpawnControl : MonoBehaviour
     public bool EnemySpawn; //spawning activation
     private int reAbyss = 7; //the power of repetition, determining the recurrence of the spawn
     private int numAbyss = 1; //abyss's per spawn 
+    private int firstSpawn; //
 
    
     [System.Serializable]
@@ -65,10 +67,13 @@ public class Map_SpawnControl : MonoBehaviour
             {
                 Debug.Log(string.Format("Night {0}", DayCount));
                 if (EnemySpawn) 
-                { 
-                    if (DayCount == 2) 
-                        SpawnResources(0, 3); //spawn 3 Abysses at random places on the map
-                    else if(DayCount > 2 && (DayCount + reAbyss - 2) % reAbyss == 0)
+                {
+                    if (DayCount == 2)
+                    {
+                        firstSpawn = GameMaster.difficulty * 2 + 1;
+                        SpawnResources(0, firstSpawn); //spawn firstSpawn Abysses at random places on the map
+                    }
+                    else if (DayCount > 2 && (DayCount + reAbyss - 2) % reAbyss == 0)
                         SpawnResources(0, numAbyss); //spawn Abyss at random place on the map
                 }
                 DayCount++;

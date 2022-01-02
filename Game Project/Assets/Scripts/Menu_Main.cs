@@ -15,11 +15,11 @@ public class Menu_Main : MonoBehaviour
     public TextMeshProUGUI Logo;
     TextMeshProUGUI loadText;
 
+    public int charLook;
 
     private void Awake()
     {
         loadText = LoadPanel.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        
     }
 
     public void NewGame()

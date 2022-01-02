@@ -6763,6 +6763,7 @@ MonoBehaviour:
   ErrorMessage: {fileID: 1103540490}
   totalGameTime: 0
   gameLost: 0
+  isFirst: 0
   premiumUser: 0
   windowLook: 0
   fogOff: 0
@@ -10976,6 +10977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76386c4b700692c409f99bb4616f9591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameMaster: {fileID: 796799537}
   DayCount: 0
   UnitTotal: 3
   BuildingCapacity: 0

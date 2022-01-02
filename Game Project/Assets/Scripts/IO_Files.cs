@@ -38,29 +38,40 @@ public static class IO_Files
         return data;
     }
 
-    //Load Data_PlayerConfig from file.
-    public static Data_PlayerConfig ReadDataConfig(string path)  
-    {
-        Data_PlayerConfig data = null;
-        if (File.Exists(path))
-        {
-            BinaryFormatter formatter = GetBinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-            data = formatter.Deserialize(stream) as Data_PlayerConfig;
-            stream.Close();     //opened files must be closed when done with
-        }
-        return data;
-    }
+    ////Load Data_PlayerConfig from file.
+    //public static Data_PlayerConfig ReadDataConfig(string path)  
+    //{
+    //    Data_PlayerConfig data = null;
+    //    if (File.Exists(path))
+    //    {
+    //        BinaryFormatter formatter = GetBinaryFormatter();
+    //        FileStream stream = new FileStream(path, FileMode.Open);
+    //        data = formatter.Deserialize(stream) as Data_PlayerConfig;
+    //        stream.Close();     //opened files must be closed when done with
+    //    }
+    //    return data;
+    //}
     //Load Save_Settings from file.
-    public static Save_Settings ReadDataSetting(string path)
+    public static Save_Settings ReadDataSetting(string path_settings, string path_playerConfig)
     {
         Save_Settings data = null;
-        if (File.Exists(path))
+
+        if (File.Exists(path_settings))
         {
+            Data_PlayerConfig data_playerConfig = null;
             BinaryFormatter formatter = GetBinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
-            data = formatter.Deserialize(stream) as Save_Settings;
-            stream.Close();     //opened files must be closed when done with
+
+            if (File.Exists(path_playerConfig))
+            {
+                FileStream streamCofig = new FileStream(path_playerConfig, FileMode.Open);
+                data_playerConfig = formatter.Deserialize(streamCofig) as Data_PlayerConfig;
+                streamCofig.Close();
+            }
+
+            FileStream streamSettings = new FileStream(path_settings, FileMode.Open);
+            data = formatter.Deserialize(streamSettings) as Save_Settings;
+            streamSettings.Close();
+            data.data_playerConfig = data_playerConfig;
         }
         return data;
     }
@@ -90,6 +101,8 @@ public static class IO_Files
     //Save the player's configuration data to file.
     public static void WriteDataConfig(string path, Data_PlayerConfig data)  
     {
+        if (File.Exists(path))
+            DeleteData(path);
         BinaryFormatter formatter = GetBinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
         formatter.Serialize(stream, data);
@@ -99,6 +112,8 @@ public static class IO_Files
     //Save the global data to file.
     public static void WriteDataSetting(string path, Save_Settings data)
     {
+        if (File.Exists(path))
+            DeleteData(path);
         BinaryFormatter formatter = GetBinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
         formatter.Serialize(stream, data);
@@ -110,7 +125,7 @@ public static class IO_Files
     public static void DeleteData(string path) 
     {
         File.Delete(path);
-        Debug.Log("File deleted");
+        Debug.Log("File deleted" + path);
     }
 
     //Create binary formatter with serialization surrogates.

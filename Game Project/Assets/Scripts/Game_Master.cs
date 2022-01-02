@@ -70,6 +70,7 @@ public class Game_Master : MonoBehaviour
 
     [HideInInspector] public float totalGameTime;
     [HideInInspector] public bool gameLost;
+    [HideInInspector] public bool isFirst;
 
     [System.Serializable]
     public enum fontList        //used by fontSize
@@ -82,24 +83,14 @@ public class Game_Master : MonoBehaviour
     {
         Normal, //default
         Slow,
-    }
-    [System.Serializable]
-    public enum charList        //used by character appearance (remove if not needed)
-    {
-       //fill if needed
-    }
+    }     
+    
     [System.Serializable]
     public enum windowList      //used by window appearance (remove if not needed)
     {
         //fill if needed
     }
-    [System.Serializable]
-    public enum difficultyList  //used by difficulty, both by parent and premium
-    {
-        Normal,     //default
-        Easy,       //for parent
-        Hardcore    //for premium, make sure that it doesn't clash with Easy
-    }
+    
 
     //[Premium]//
     [HideInInspector] public bool premiumUser;
@@ -108,7 +99,7 @@ public class Game_Master : MonoBehaviour
     //14. fog:
     [HideInInspector] public bool fogOff;
     //17. main character appearance:
-    [HideInInspector] public charList charLook;
+    [HideInInspector] public int charLook;
 
     //[Parent]//
     //22. bedtime:
@@ -130,7 +121,7 @@ public class Game_Master : MonoBehaviour
     //15+24. enemies:
     [HideInInspector] public bool enemiesOff;
     //18+30. difficulty:
-    [HideInInspector] public difficultyList difficulty;
+    [HideInInspector] public int difficulty = 0;
     //20. key mapping:
     [HideInInspector] public static KeyCode creativeK;
     [HideInInspector] public static KeyCode storageK;
@@ -250,7 +241,7 @@ public class Game_Master : MonoBehaviour
         premiumUser = false;
         windowLook = (windowList)1;
         fogOff = false;
-        charLook = (charList)1;
+        //charLook = (charList)1;
 
         //[Parent]//
         bedtimeSet = false;
@@ -263,7 +254,7 @@ public class Game_Master : MonoBehaviour
 
         //[Premium+Parent]//
         enemiesOff = false;
-        difficulty = difficultyList.Normal;
+        //difficulty = difficultyList.Normal;
     }
     public void SetFontSize(int c) //recieves the 0 or 1 from the save and loads the corresponding font
     {
@@ -440,7 +431,7 @@ public class Game_Master : MonoBehaviour
         //15+24. enemies:
         enemiesOff = import.enemiesOff;
         //18+30. difficulty:
-        difficulty = (difficultyList)import.difficulty;
+        //difficulty = (difficultyList)import.difficulty;
     }
 }
 public class Game_Parent

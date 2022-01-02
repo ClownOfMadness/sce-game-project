@@ -37,7 +37,7 @@ public class Data_PlayerConfig
     //15+24. enemies:
     public bool enemiesOff = false;
     //18+30. difficulty:
-    public Game_Master.difficultyList difficulty = Game_Master.difficultyList.Normal;
+    //public int difficulty = Game_Master.difficultyList.Normal;
     //20. key mapping:
     //public static KeyCode creativeK;
     //public static KeyCode storageK;

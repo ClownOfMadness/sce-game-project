@@ -18,10 +18,12 @@ public class Save_Settings
     public int maxCardsFound;
     //...
 
+    public Data_PlayerConfig data_playerConfig;
+
     public Save_Settings()
     {
-        premiumUser = false;
-        parentPassword = "0000";
+        //premiumUser = false;
+        //parentPassword = "0000";
 
         isVeteran = false;
         maxGameDays = 0;
@@ -29,5 +31,7 @@ public class Save_Settings
         maxBuildings = 0;
         isCrafty = false;
         maxCardsFound = 0;
+
+        data_playerConfig = null;
     }
 }
