@@ -111,13 +111,15 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
 
             Debug.Log("Cardmaster took damage! Card " + lostCard.name + " was lost.");
             Destroy(cardObjects[random].gameObject);
-            if (lostCard == Creation)
-            {
-                screen.Game.gameLost = true;
-                Debug.Log("Game lost.");
-            }
-            else if (count <= 1)
-                EmptyHand();    //spawn Creation if took too much damage
+            //if (lostCard == Creation)
+            //{
+            //    screen.Game.GameLost();
+            //    Debug.Log("Game lost.");
+            //}
+            //else if (count <= 1)
+            //    EmptyHand();    //spawn Creation if took too much damage
+            if (lostCard != Creation && count <= 1)
+                EmptyHand();
         }
         return lostCard;
     }

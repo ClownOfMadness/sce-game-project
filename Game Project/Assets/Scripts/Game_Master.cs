@@ -17,6 +17,7 @@ public class Game_Master : MonoBehaviour
     public Data_CommonDataHolder MapDataHolder;
     public Player_Control Control;
     public Menu_Pause Pause;
+    public GameObject gameOver;
 
     [Header("---[Objects]---")]
     public Unit_List Units;
@@ -69,7 +70,6 @@ public class Game_Master : MonoBehaviour
     //------------ End of Text Objects---------------
 
     [HideInInspector] public float totalGameTime;
-    [HideInInspector] public bool gameLost;
     [HideInInspector] public bool isFirst;
 
     [System.Serializable]
@@ -121,7 +121,7 @@ public class Game_Master : MonoBehaviour
     //15+24. enemies:
     [HideInInspector] public bool enemiesOff;
     //18+30. difficulty:
-    [HideInInspector] public int difficulty = 0;
+    [HideInInspector] public int difficulty = 1;
     //20. key mapping:
     [HideInInspector] public static KeyCode creativeK;
     [HideInInspector] public static KeyCode storageK;
@@ -135,7 +135,7 @@ public class Game_Master : MonoBehaviour
         Cards.Game = this;
         //Cycle.Game = this;
         //MapGen.Game = this;
-        //Control.Game = this;
+        Control.game = this;
         //Pause.Game = this;
         //Units.Game = this;
         //Enemies.Game = this;
@@ -171,11 +171,6 @@ public class Game_Master : MonoBehaviour
     }
     void Update() //main Update, handles constant checking of parameters for the rest of the game
     {
-        //[General]//
-        if (gameLost)
-        {
-            //this is where a lose screen will be called
-        }
         //keylisteners
         if (Input.GetKeyDown(creativeK) && (!Menu_Pause.IsPaused)) //to close and open "Creative" with keyboard as well
         {
@@ -235,7 +230,6 @@ public class Game_Master : MonoBehaviour
         //defaults for a new game:
         //[General]//
         totalGameTime = 0;
-        gameLost = false;
 
         //[Premium]//
         premiumUser = false;
@@ -256,6 +250,13 @@ public class Game_Master : MonoBehaviour
         enemiesOff = false;
         //difficulty = difficultyList.Normal;
     }
+
+    public void GameLost()
+    {
+        Debug.Log("you're dead");
+        gameOver.SetActive(true);
+    }
+
     public void SetFontSize(int c) //recieves the 0 or 1 from the save and loads the corresponding font
     {
         if (c == 0) //0 for default

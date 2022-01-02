@@ -40,7 +40,7 @@ public class JobsHandler : MonoBehaviour
                     Debug.Log("Selected a unit num " + i);
                     PControl.selectedJob = i;
                     unit.sprite = Jobs[i].transform.GetChild(1).GetComponent<Image>().sprite;
-                    bg.color = Jobs[i].GetComponent<Image>().color;
+                    //bg.color = Jobs[i].GetComponent<Image>().color;
                     player_Jobs.CloseJob();
                 }
             }

@@ -8,6 +8,7 @@ public class Player_Jobs : MonoBehaviour
     public GameObject JobButton; //the reference to the button
     [HideInInspector] public bool JobUp; //updating if the the unit with the specific job exists on the map
     public JobsHandler jobsHandler; //reference to the jobs handler object (held by "Job")
+    bool OpenJ=false; //if the jobs menu is open
 
     //external access:
     public Screen_Cards screen; //to check if the map is visible for the switch job function
@@ -15,6 +16,7 @@ public class Player_Jobs : MonoBehaviour
 
     private void Awake()
     {
+       
         //keydown part is handled by Game_Master.NewGame()
     }
 
@@ -24,11 +26,12 @@ public class Player_Jobs : MonoBehaviour
     }
     public void SwitchJob() //responsible for opening or closing the jobs menu
     {
-        if (screen.visibleMap)
+        if (screen.visibleMap && !OpenJ)
         {
             OpenJob();
         }
-        else
+    else
+        if(OpenJ)
         {
             CloseJob();
         }
@@ -38,6 +41,7 @@ public class Player_Jobs : MonoBehaviour
         screen.visibleMap = false;
         Job.SetActive(true);
         JobUp = true;
+        OpenJ = true;
         jobsHandler.CheckUnitList();
         Time.timeScale = 0f;
     }
@@ -46,6 +50,7 @@ public class Player_Jobs : MonoBehaviour
         screen.visibleMap = true;
         Job.SetActive(false);
         JobUp = false;
+        OpenJ = false;
         Time.timeScale = 1f;    //unpause game
     }
 }

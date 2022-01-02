@@ -98,6 +98,7 @@ public class Data_Tile : MonoBehaviour
     private Data_CommonDataHolder commonData;
     private Screen_Cards screenCards;
     private Enemy_List enemyList;
+    private Game_Master game;
     private int loadCount = 0; // Amount of times to search before declaring a fail
 
     private void Awake()
@@ -244,6 +245,14 @@ public class Data_Tile : MonoBehaviour
                     loadCount++;
                 }
             }
+
+            if (!game)
+            {
+                if (!(game = GameObject.Find("GameMaster").GetComponent<Game_Master>()))
+                {
+                    loadCount++;
+                }
+            }
         }
     }
 
@@ -385,6 +394,10 @@ public class Data_Tile : MonoBehaviour
         StartCoroutine(RemoveBuilding());
         AstarPath.active.UpdateGraphs(GetComponent<BoxCollider>().bounds);
         hasAbyss = false;
+        if (hasTownHall)
+        {
+            game.GameLost();
+        }
         hasTownHall = false;
         hasBuilding = false;
         canBuild = true;

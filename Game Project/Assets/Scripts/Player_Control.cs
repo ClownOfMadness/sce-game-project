@@ -73,6 +73,7 @@ public class Player_Control : MonoBehaviour
     private Data_CommonDataHolder commonData;
     public GameObject detector;
     public GameObject currentTileOn;
+    public Game_Master game;
 
     // Card
     public Screen_Cards screenCards;
@@ -180,7 +181,7 @@ public class Player_Control : MonoBehaviour
             {
                 mousePosition = raycastHit.point;
                 // Functions for when the mouse hovers over an interactable layer
-                if (EventSystem.current.currentSelectedGameObject == null)
+                if (!EventSystem.current.IsPointerOverGameObject()) //EventSystem.current.currentSelectedGameObject == null
                 {
                     // Checks if raycast doesnt hit ui
                     if (raycastHit.transform.gameObject.layer == 6 || raycastHit.transform.gameObject.layer == 7)
@@ -538,7 +539,8 @@ public class Player_Control : MonoBehaviour
             Data_Card tmp = screenCards.DamageMaster();
             enemy.card = tmp;
             tmp = null;
-            gameLost = true;
+            game.GameLost();
+            //gameLost = true;
             player.gameObject.layer = 0;
             animator.SetBool("die", true);
         }

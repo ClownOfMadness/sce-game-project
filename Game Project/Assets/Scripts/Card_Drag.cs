@@ -59,6 +59,11 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
     }
     public void OnPointerEnter(PointerEventData eventData)   //onHover set
     {
+        if (screen.automaticCard)
+        {
+            screen.automaticCard = false;   //handles automatic addition of cards from Units
+        }
+
         if (!dragged && !screen.draggingCard && transform.parent == hand)
         {
             positionReturnTo = new Vector3(transform.position.x, transform.position.y, 0);  //original position
@@ -82,7 +87,6 @@ public class Card_Drag : Card_Display, IPointerEnterHandler, IPointerExitHandler
             positionReturnTo = transform.position;  //save position (used by cards that never entered the OnPointerEnter function)
             clicked = false;                //handles cards being added by click from Craft&Unit
             automatic = false;              //handles automatic addition of cards from failed Craft
-            screen.automaticCard = false;   //handles automatic addition of cards from Units
         }
         else if (transform.parent == hand && !screen.overlapingCard)
         {

@@ -541,17 +541,14 @@ public class Screen_Cards : MonoBehaviour
             pickedCard = unit.unitCard;
             waitingUnit = null;
         }
-        Debug.Log("add");
         if (visibleMap) //nothing is open
         {
             if (CreateInHand(pickedCard))
             {
-                //Debug.Log("created");
                 return true;    //unit doesn't need to wait
             }
             else    //no space in Hand
             {
-                //Debug.Log("no space");
                 zUnit.CardAdded(pickedCard, waitingUnit);
                 CheckUnit();
                 OpenUI();
@@ -560,7 +557,6 @@ public class Screen_Cards : MonoBehaviour
         }
         else
         { //something is open on screen
-            //Debug.Log("waiting");
             zUnit.CardAdded(pickedCard, waitingUnit);
         }
         return false;
