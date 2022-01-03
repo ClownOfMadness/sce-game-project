@@ -244,7 +244,9 @@ public class Game_Master : MonoBehaviour
         timeLimit = 0;
         fontSize = fontList.Normal;
         hintsOn = false;
-        gameSpeed = speedList.Normal;
+        SetGameSpeed(PlayerPrefs.GetInt("GameSpeed")); //Change this to just take the value from the 
+                                                       //SetGameSpeed() in Screen_Parent
+        //gameSpeed = speedList.Normal;
 
         //[Premium+Parent]//
         enemiesOff = false;
@@ -259,13 +261,27 @@ public class Game_Master : MonoBehaviour
 
     public void SetFontSize(int c) //recieves the 0 or 1 from the save and loads the corresponding font
     {
-        if (c == 0) //0 for default
+        if (c == 1)  //1 for big
         {
-            LoadDefaultFont();
+            LoadBigFont(); 
         }
-        else //1 for big
+        else
+            if(c==0)//0 for default
+            {
+                LoadDefaultFont();
+            }
+    }
+
+    public void SetGameSpeed(int c) //in construction atm
+    {
+        if (c == 0)  //0 for default
         {
-            LoadBigFont();
+            Cycle.cycleSpeed = 1f;
+        }
+        else
+            if (c == 1) //1 for slow
+        {
+            Cycle.cycleSpeed = 0.5f;
         }
     }
     public void LoadDefaultFont() //sets all text objects to their default size

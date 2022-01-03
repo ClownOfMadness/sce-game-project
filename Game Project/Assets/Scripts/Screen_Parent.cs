@@ -44,8 +44,8 @@ public class Screen_Parent : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return) || (Input.GetKey("enter")))
         {
-            submitButton.onClick.Invoke();
-            Confirm.onClick.Invoke();
+            submitButton.onClick.Invoke(); //the login button
+            Confirm.onClick.Invoke(); //the change password button
         }
     }
     public void TryLogin()  //try to login
@@ -135,7 +135,8 @@ public class Screen_Parent : MonoBehaviour
         OptionsMenu.SetActive(true);
         firstLogin = true;
     }
-    public void SetFontSize()    //enable&set/disable time limit per save
+    
+    public void SetFontSize()    //set font size (0 - default, 1 - big)
     {
         if (PlayerPrefs.GetInt("ChangeFont") == 0)
         {
@@ -185,9 +186,17 @@ public class Screen_Parent : MonoBehaviour
         Debug.Log("Screen_Parent.SetDifficulty: this function currently does nothing.");
         //difficulty=dropdown; & update file
     }
-    public void SetGameSpeed()    //set game speed per save
+    public void SetGameSpeed()    //set game speed per save (0 - default, 1 - slow)
     {
-        Debug.Log("Screen_Parent.SetGameSpeed: this function currently does nothing.");
+        if (PlayerPrefs.GetInt("GameSpeed") == 0)
+        {
+            PlayerPrefs.SetInt("GameSpeed", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("GameSpeed", 0);
+        }
+        //Debug.Log("Screen_Parent.SetGameSpeed: this function currently does nothing.");
         //gameSpeed=dropdown; & update file
     }
 

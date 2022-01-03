@@ -20,6 +20,8 @@ public class Menu_Main : MonoBehaviour
     private void Awake()
     {
         loadText = LoadPanel.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        PlayerPrefs.SetInt("ChangeFont", 0); //*for testing font size*
+        PlayerPrefs.SetInt("GameSpeed", 0); //*for testing game speed*
     }
 
     public void NewGame()
