@@ -18,6 +18,7 @@ public class Game_Master : MonoBehaviour
     public Player_Control Control;
     public Menu_Pause Pause;
     public GameObject gameOver;
+    public GameObject Tutorial;
 
     [Header("---[Objects]---")]
     public Unit_List Units;
@@ -150,6 +151,11 @@ public class Game_Master : MonoBehaviour
         else
             premiumUser = false;
 
+        if (!isFirst)
+        {
+            Tutorial.SetActive(true);
+        }
+
         //[testing bedtime functionality]//
         //bedtime = TimeToFloat("22:17");
         //bedtimeSet = true;
@@ -161,6 +167,7 @@ public class Game_Master : MonoBehaviour
         //timeLimitSet = true;
         //[testing time limit functionality]
 
+        
         if (timeLimitSet)
         {
             //string currentDate = DateTime.Today.Date.ToString("d");
@@ -244,13 +251,11 @@ public class Game_Master : MonoBehaviour
         timeLimit = 0;
         fontSize = fontList.Normal;
         hintsOn = false;
-        SetGameSpeed(PlayerPrefs.GetInt("GameSpeed")); //Change this to just take the value from the 
-                                                       //SetGameSpeed() in Screen_Parent
-        //gameSpeed = speedList.Normal;
+        SetGameSpeed();
 
         //[Premium+Parent]//
-        enemiesOff = false;
-        //difficulty = difficultyList.Normal;
+        SetEnemiesStatus();
+
     }
 
     public void GameLost()
@@ -266,24 +271,46 @@ public class Game_Master : MonoBehaviour
             LoadBigFont(); 
         }
         else
-            if(c==0)//0 for default
             {
                 LoadDefaultFont();
             }
     }
 
-    public void SetGameSpeed(int c) //in construction atm
+    public void SetGameSpeed() //in construction atm
     {
-        if (c == 0)  //0 for default
-        {
-            Cycle.cycleSpeed = 1f;
-        }
-        else
-            if (c == 1) //1 for slow
+        if (gameSpeed == speedList.Slow)  //0 for default
         {
             Cycle.cycleSpeed = 0.5f;
         }
+        else
+            Cycle.cycleSpeed = 1f;
+        
     }
+
+    /*public void ParentSetDifficulty() //parent's setDifficulty
+    {
+        if (difficulty == 0)
+        {
+            difficulty = 0;
+        }
+        else
+        {
+            difficulty = 1;
+        }
+    }*/
+
+    public void SetEnemiesStatus() //parent's set enemies status
+    {
+        if (enemiesOff)
+        {
+            MapSpawn.EnemySpawn = false;
+        }
+        else
+        {
+            MapSpawn.EnemySpawn = true;
+        }
+    }
+
     public void LoadDefaultFont() //sets all text objects to their default size
     {
         TopMessage.fontSize = 40;

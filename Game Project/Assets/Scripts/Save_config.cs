@@ -48,7 +48,7 @@ public class Save_config : MonoBehaviour
             //Debug.Log(PlayerPrefs.GetString("Hints","H"));
             //-------------------------------------
             PlayerPrefs.SetInt("ChangeFont", 0);
-            PlayerPrefs.SetInt("GameSpeed", 0); //*for testing game speed*
+            //PlayerPrefs.SetInt("GameSpeed", 0); //*for testing game speed*
         }
         PlayerPrefs.Save();
     }

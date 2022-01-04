@@ -9,7 +9,21 @@ public class Menu_Pause : MonoBehaviour
     public GameObject pauseMenuUI;//Pause Menu
     public GameObject optionsMenuUI;//Options Menu
     public GameObject KeyBindingUI;//Key Binding Menu
+    public GameObject keyBindingOption; //KB menu
     public GameObject gamePlayUI;//Game play menue
+    public Game_Master game_Master;
+
+    public void Start()
+    {
+       /* if (!game_Master.premiumUser)
+        {
+            keyBindingOption.SetActive(false);
+        }
+        else
+        {
+            keyBindingOption.SetActive(true);
+        }*/
+    }
 
     void Update()
     {

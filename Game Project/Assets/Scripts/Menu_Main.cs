@@ -31,7 +31,7 @@ public class Menu_Main : MonoBehaviour
     public bool hintsOn;
     public int gameSpeed;   //0=Normal, 1=Slow
     public bool enemiesOff;
-    public int difficulty;  //0=Normal, 1=Easy, 2=Hardcore
+    public int difficulty;  //0=Easy, 1=Normal, 2=Hardcore
     public float TotalGameTime;
     public int CardsCombined;
     public int CardsDiscovered;
@@ -53,8 +53,8 @@ public class Menu_Main : MonoBehaviour
     private void Awake()
     {
         loadText = LoadPanel.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        PlayerPrefs.SetInt("ChangeFont", 0); //*for testing font size*
-        PlayerPrefs.SetInt("GameSpeed", 0); //*for testing game speed*
+        //PlayerPrefs.SetInt("ChangeFont", 0); //*for testing font size*
+        //PlayerPrefs.SetInt("GameSpeed", 0); //*for testing game speed*
     }
 
     public void NewGame()

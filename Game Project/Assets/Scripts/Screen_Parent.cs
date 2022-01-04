@@ -20,12 +20,13 @@ public class Screen_Parent : MonoBehaviour
     public GameObject PlayerStats;
     public GameObject ComboGuide;
     public Text combosText;
-    public Dropdown Drop; //for the fontsize dropdown event
+    public Dropdown DropF; //for the fontsize dropdown event
     public Button submitButton; //for the login button
     public Button Confirm; //for the password change
 
     public void Awake()
     {
+        DropF.value = PlayerPrefs.GetInt("ChangeFont");
         path = Application.persistentDataPath + "/config.parent";
         savedPass = IO_Files.ReadString(path);
         if (savedPass!=null)
@@ -37,7 +38,7 @@ public class Screen_Parent : MonoBehaviour
             firstLogin = true;
             Debug.Log("First Login");
         }
-        Drop = GetComponent<Dropdown>(); //for font size
+       // DropF = GetComponent<Dropdown>(); //for font size
     }
 
     public void Update()
@@ -138,15 +139,15 @@ public class Screen_Parent : MonoBehaviour
     
     public void SetFontSize()    //set font size (0 - default, 1 - big)
     {
-        if (PlayerPrefs.GetInt("ChangeFont") == 0)
+            if (DropF.value == 1)
         {
             PlayerPrefs.SetInt("ChangeFont", 1);
         }
-        else
+        
+            if(DropF.value == 0)
         {
             PlayerPrefs.SetInt("ChangeFont", 0);
         }
-        //Debug.Log("Screen_Parent.SetFontSize: this function currently does nothing.");
     }
     public void ReadSave(int index)    //load Save's stats to display
     {
@@ -185,19 +186,6 @@ public class Screen_Parent : MonoBehaviour
     {
         Debug.Log("Screen_Parent.SetDifficulty: this function currently does nothing.");
         //difficulty=dropdown; & update file
-    }
-    public void SetGameSpeed()    //set game speed per save (0 - default, 1 - slow)
-    {
-        if (PlayerPrefs.GetInt("GameSpeed") == 0)
-        {
-            PlayerPrefs.SetInt("GameSpeed", 1);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("GameSpeed", 0);
-        }
-        //Debug.Log("Screen_Parent.SetGameSpeed: this function currently does nothing.");
-        //gameSpeed=dropdown; & update file
     }
 
     public void SetHints()       //enable/disable hints per save
