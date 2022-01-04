@@ -1879,7 +1879,6 @@ MonoBehaviour:
   pauseMenuUI: {fileID: 1373418264}
   optionsMenuUI: {fileID: 380643708}
   KeyBindingUI: {fileID: 1350261986}
-  keyBindingOption: {fileID: 183942129}
   gamePlayUI: {fileID: 1702719684}
   game_Master: {fileID: 796799537}
   UIDesignDrop: {fileID: 819102589}
@@ -9081,6 +9080,9 @@ MonoBehaviour:
   Pause: {fileID: 165519930}
   gameOver: {fileID: 1157138805}
   Tutorial: {fileID: 230214241}
+  keyBindingOption: {fileID: 183942129}
+  UIDesignOption: {fileID: 819102587}
+  UIDesignText: {fileID: 595154700}
   Units: {fileID: 11710810}
   Enemies: {fileID: 717966958}
   TopMessage: {fileID: 2020261449}
