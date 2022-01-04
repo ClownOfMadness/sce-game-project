@@ -30,7 +30,6 @@ public class Save_Manager : MonoBehaviour
     private GameObject delete; //Delete button
     private List<TMP_Text> slots; //List of all the available slots's text values
 
-
     void Start()
     {
         if (SceneManager.GetActiveScene().name == "Menu")
@@ -179,9 +178,9 @@ public class Save_Manager : MonoBehaviour
     }
 
     //Save the player's configuration on the current save (or as temporary file).
-    public void SavePlayerConfig(string path)
+    public void SavePerSlot(string path)
     {
-        Data_PlayerConfig data_player = new Data_PlayerConfig();
+        Data_PerSaveSlot data_player = new Data_PerSaveSlot();
 
         if(SceneManager.GetActiveScene().name == "Menu") //Create temporary file
         {

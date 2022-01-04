@@ -15,7 +15,37 @@ public class Menu_Main : MonoBehaviour
     public TextMeshProUGUI Logo;
     TextMeshProUGUI loadText;
 
+    //----------------------------Save System----------------------------//
+
+    //[Per Save]//   
     public int charLook;
+    public bool bedtimeSet;
+    public float bedtime;
+    public bool timeLimitSet;
+    public float timeLimit;
+    public float timeLeft;
+    public int fontSize;    //0=Normal, 1=Big
+    public bool hintsOn;
+    public int gameSpeed;   //0=Normal, 1=Slow
+    public bool enemiesOff;
+    public int difficulty;  //0=Normal, 1=Easy, 2=Hardcore
+    public float TotalGameTime;
+    public int CardsCombined;
+    public int CardsDiscovered;
+    public float gameDays;
+    public int buildings;
+    //[Per Save]// 
+
+    //[Global save]//
+    public bool isVeteran;
+    public float maxGameDays;
+    public bool isBuilder;
+    public int maxBuildings;
+    public bool isCrafty;
+    public int maxCardsFound;
+    //[Global save]//
+
+    //----------------------------Save System----------------------------//
 
     private void Awake()
     {

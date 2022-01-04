@@ -52,26 +52,26 @@ public static class IO_Files
     //    return data;
     //}
     //Load Save_Settings from file.
-    public static Save_Settings ReadDataSetting(string path_settings, string path_playerConfig)
+    public static Save_Settings ReadDataSetting(string path_settings, string path_perSave)
     {
         Save_Settings data = null;
 
         if (File.Exists(path_settings))
         {
-            Data_PlayerConfig data_playerConfig = null;
+            Data_PerSaveSlot data_perSaveSlot = null;
             BinaryFormatter formatter = GetBinaryFormatter();
 
-            if (File.Exists(path_playerConfig))
+            if (File.Exists(path_perSave))
             {
-                FileStream streamCofig = new FileStream(path_playerConfig, FileMode.Open);
-                data_playerConfig = formatter.Deserialize(streamCofig) as Data_PlayerConfig;
+                FileStream streamCofig = new FileStream(path_perSave, FileMode.Open);
+                data_perSaveSlot = formatter.Deserialize(streamCofig) as Data_PerSaveSlot;
                 streamCofig.Close();
             }
 
             FileStream streamSettings = new FileStream(path_settings, FileMode.Open);
             data = formatter.Deserialize(streamSettings) as Save_Settings;
             streamSettings.Close();
-            data.data_playerConfig = data_playerConfig;
+            data.data_perSaveSlot = data_perSaveSlot;
         }
         return data;
     }
@@ -99,7 +99,7 @@ public static class IO_Files
         stream.Close();         //opened files must be closed when done with
     }
     //Save the player's configuration data to file.
-    public static void WriteDataConfig(string path, Data_PlayerConfig data)  
+    public static void WriteDataPerSave(string path, Data_PerSaveSlot data)  
     {
         if (File.Exists(path))
             DeleteData(path);

@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Object of all the global data that saved.
 [System.Serializable]
 public class Save_Settings
 {
-    public bool premiumUser;
-    public string parentPassword;
-
     //[Achievements]//
     //...
     public bool isVeteran;
@@ -18,7 +16,7 @@ public class Save_Settings
     public int maxCardsFound;
     //...
 
-    public Data_PlayerConfig data_playerConfig;
+    public Data_PerSaveSlot data_perSaveSlot;
 
     public Save_Settings()
     {
@@ -32,6 +30,6 @@ public class Save_Settings
         isCrafty = false;
         maxCardsFound = 0;
 
-        data_playerConfig = null;
+        data_perSaveSlot = null;
     }
 }
