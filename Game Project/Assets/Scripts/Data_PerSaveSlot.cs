@@ -5,118 +5,79 @@ using UnityEngine;
 [System.Serializable]
 public class Data_PerSaveSlot
 {
-    //--------------------------------[Configuration]------------------------------------
+    //--------------------------------[configuration]-------------------------------------//
 
     public int charLook;
-    Game_Master.windowList windowLook;
-    public bool fogOff;
-    //Game_Master.fontList fontSize;
-
-    //22. bedtime:
     public bool bedtimeSet;
     public float bedtime;
-    //23. play time limit:
     public bool timeLimitSet;
     public float timeLimit;
     public float timeLeft;
-    //27. font:
-    //public int fontSize;    //0=Normal, 1=Big
-    //28. hints:
+    public int fontSize;
     public bool hintsOn;
-    //29. game speed:
-    public int gameSpeed;   //0=Normal, 1=Slow
-    //15+24. enemies:
+    public int gameSpeed;
     public bool enemiesOff;
-    //18+30. difficulty:
-    public int difficulty;  //0=Normal, 1=Easy, 2=Hardcore
+    public int difficulty;
+    public bool fogOff;
 
-    //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------//
 
 
-    //-----------------------------------[Statistics]------------------------------------
+    //-----------------------------------[Statistics]------------------------------------//
 
     public bool isFirstGame; //First game on this save
 
-    //26. game statistics:
     public float TotalGameTime;
     public int CardsCombined;
     public int CardsDiscovered;
     //Achievements
     public float gameDays;
-    public int buildings;
+    public int buildingsCount;
 
     //-----------------------------------------------------------------------------------
 
     public Data_PerSaveSlot()
-    {
-        //isFirstGame = true;
-        //TotalGameTime = 0;
-        //windowLook = (Game_Master.windowList)1;
-        //fogOff = false;
-        //charLook = 0;
-        //bedtimeSet = false;
-        //bedtime = 0;
-        //timeLimitSet = false;
-        //timeLimit = 0;
-        //fontSize = Game_Master.fontList.Normal;
-        //hintsOn = false;
-        //SetGameSpeed(PlayerPrefs.GetInt("GameSpeed")); //Change this to just take the value from the 
-                                                       //SetGameSpeed() in Screen_Parent
-                                                       //gameSpeed = speedList.Normal;
-
-        //[Premium+Parent]//
+    { 
+        charLook = 0;
+        bedtimeSet = false;
+        bedtime = 0;
+        timeLimitSet = false;
+        timeLimit = 0;
+        timeLeft = 0;
+        fontSize = 0;
+        hintsOn = false;
+        gameSpeed = 0;
         enemiesOff = false;
-        //difficulty = difficultyList.Normal;
-    }
+        difficulty = 0;
+        fogOff = false;
 
-    //Game update
-    public Data_PerSaveSlot(Game_Parent data)
-    {
-        ////22. bedtime:
-        //bedtimeSet = data.bedtimeSet;
-        //bedtime = data.bedtime;
-        ////23. play time limit:
-        //timeLimitSet = data.timeLimitSet;
-        //timeLimit = data.timeLimit;
-        //timeLeft = data.timeLeft;
-        ////26. game statistics:
-        //TotalGameTime = data.TotalGameTime;
-        //CardsCombined = data.CardsCombined;
-        //CardsDiscovered = data.CardsDiscovered;
-        ////27. font:
-        //fontSize = data.fontSize;
-        ////28. hints:
-        //hintsOn = data.hintsOn;
-        ////29. game speed:
-        //gameSpeed = data.gameSpeed;
-        ////15+24. enemies:
-        //enemiesOff = data.enemiesOff;
-        ////18+30. difficulty:
-        //difficulty = data.difficulty;
+        isFirstGame = true;
+        TotalGameTime = 0;
+        CardsCombined = 0;
+        CardsDiscovered = 0;
+        gameDays = 0;
+        buildingsCount = 0;
     }
-    //Menu update
-    public Data_PerSaveSlot(Menu_Main data)
+    public Data_PerSaveSlot(Data_PerSaveSlot old)
     {
-        ////22. bedtime:
-        //bedtimeSet = data.bedtimeSet;
-        //bedtime = data.bedtime;
-        ////23. play time limit:
-        //timeLimitSet = data.timeLimitSet;
-        //timeLimit = data.timeLimit;
-        //timeLeft = data.timeLeft;
-        ////26. game statistics:
-        //TotalGameTime = data.TotalGameTime;
-        //CardsCombined = data.CardsCombined;
-        //CardsDiscovered = data.CardsDiscovered;
-        ////27. font:
-        //fontSize = data.fontSize;
-        ////28. hints:
-        //hintsOn = data.hintsOn;
-        ////29. game speed:
-        //gameSpeed = data.gameSpeed;
-        ////15+24. enemies:
-        //enemiesOff = data.enemiesOff;
-        ////18+30. difficulty:
-        //difficulty = data.difficulty;
+        charLook = 0;
+        bedtimeSet = false;
+        bedtime = 0;
+        timeLimitSet = false;
+        timeLimit = 0;
+        timeLeft = 0;
+        fontSize = 0;
+        hintsOn = false;
+        gameSpeed = 0;
+        enemiesOff = false;
+        difficulty = 0;
+        fogOff = false;
+
+        isFirstGame = true;
+        TotalGameTime = 0;
+        CardsCombined = 0;
+        CardsDiscovered = 0;
+        gameDays = 0;
+        buildingsCount = 0;
     }
 }

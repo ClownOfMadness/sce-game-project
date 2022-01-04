@@ -31,21 +31,20 @@ public class Menu_Main : MonoBehaviour
     public bool hintsOn;
     public int gameSpeed;   //0=Normal, 1=Slow
     public bool enemiesOff;
-    public int difficulty;  //0=Easy, 1=Normal, 2=Hardcore
+    public int difficulty;  //0=Normal, 1=Easy, 2=Hardcore
+    public bool fogOff;
     public float TotalGameTime;
     public int CardsCombined;
     public int CardsDiscovered;
     public float gameDays;
-    public int buildings;
+    public int buildingsCount;
     //[Per Save]// 
 
     //[Global save]//
+    public int windowLook;
     public bool isVeteran;
-    public float maxGameDays;
     public bool isBuilder;
-    public int maxBuildings;
     public bool isCrafty;
-    public int maxCardsFound;
     //[Global save]//
 
     //----------------------------Save System----------------------------//

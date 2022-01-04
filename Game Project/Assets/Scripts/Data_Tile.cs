@@ -80,9 +80,9 @@ public class Data_Tile : MonoBehaviour
 
     // [Tile Build]
     private List<GameObject> builders = new List<GameObject>();
-    private int progress = 0;
-    private bool buildDone = false;
-    private float nextProgress = 0f;
+    public int progress = 0;
+    public bool buildDone = false;
+    public float nextProgress = 0f;
     [HideInInspector] public AstarPath path;
 
     // [Abyss]
@@ -769,7 +769,7 @@ public class Data_Tile : MonoBehaviour
         tile_info.builders = builders;
         tile_info.progress =progress;
         tile_info.buildDone = buildDone;
-        tile_info.nextProgress = nextProgress;
+        tile_info.nextProgress = 0;
         tile_info.cards = cards;
         tile_info. enemies = enemies;
         tile_info.abyssSetup = abyssSetup;

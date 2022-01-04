@@ -35,8 +35,6 @@ public class Map_Display : MonoBehaviour
     private void Awake()
     {
         instances = new Dictionary<int, GameObject>();
-        instancesDT = new Dictionary<int, Data_Tile>();
-        instancesDB = new Dictionary<int, Data_Building>();
 
         save_manager = FindObjectOfType<Save_Manager>();
         saved_data = save_manager.SceneLoaded();
@@ -169,8 +167,11 @@ public class Map_Display : MonoBehaviour
                 info.spottedEnemy = FindReference(data.units[i][j].spottedEnemy);
                 info.nextAttack = data.units[i][j].nextAttack;
                 info.workInMemory = data.units[i][j].workInMemory;
-                info.rmbTileData = FindReferenceDT(data.units[i][j].rmbTileData);
-               
+
+                if (FindReference(data.units[i][j].rmbTileData) != null)
+                    info.rmbTileData = (FindReference(data.units[i][j].rmbTileData)).GetComponent<Data_Tile>();
+                else info.rmbTileData = null;
+
                 if (data.units[i][j].rmbWorkCard != -1)
                     info.rmbWorkCard = screen_cards.Pool.GetCard(data.units[i][j].rmbWorkCard);
                 else info.rmbWorkCard = null;
@@ -179,7 +180,11 @@ public class Map_Display : MonoBehaviour
                 info.rmbWorkIndex = data.units[i][j].rmbWorkIndex;
                 info.rmbWorkTime = data.units[i][j].rmbWorkTime;
                 info.rmbWorkExtra = data.units[i][j].rmbWorkExtra;
-                info.tileData = FindReferenceDT(data.units[i][j].tileData);
+
+                if (FindReference(data.units[i][j].tileData) != null)
+                    info.tileData = (FindReference(data.units[i][j].tileData)).GetComponent<Data_Tile>();
+                else info.tileData = null;
+
                 unit.GetComponent<Data_Unit>().LoadData(info);
             }
         }
@@ -196,7 +201,7 @@ public class Map_Display : MonoBehaviour
                 info.impassable = data.enemies[i][j].impassable;
                 info.currentTileOn = FindReference(data.enemies[i][j].currentTileOn);
                 info.previousTile = FindReference(data.enemies[i][j].previousTile);
-                info.dataTile = FindReferenceDT(data.enemies[i][j].dataTile);
+                info.dataTile = (FindReference(data.enemies[i][j].dataTile)).GetComponent<Data_Tile>();
                 info.reachedTown = data.enemies[i][j].reachedTown;
                 info.reachedAbyss = data.enemies[i][j].reachedAbyss;
                 info.target = FindReference(data.enemies[i][j].target);
@@ -206,7 +211,7 @@ public class Map_Display : MonoBehaviour
                 //public Save_Player spottedPlayer; // Need to serialize
                 info.nextAttack = data.enemies[i][j].nextAttack;
                 info.abyss = FindReference(data.enemies[i][j].abyss);
-                info.abyssData = FindReferenceDT(data.enemies[i][j].abyssData);
+                info.abyssData = (FindReference(data.enemies[i][j].abyssData)).GetComponent<Data_Tile>();
                 
                 if (data.enemies[i][j].card != -1)
                     info.card = screen_cards.Pool.GetCard(data.enemies[i][j].card);
@@ -252,7 +257,7 @@ public class Map_Display : MonoBehaviour
             }
 
             if (tile.save_tileData.hasBuilding || tile.save_tileData.hasTownHall)
-                LoadBuilding(tile.building, Map.TileArray[x, y], saved_data.TileMap[x,y].save_tileData);
+                LoadBuilding(tile.building, Map.TileArray[x, y], saved_data.TileMap[x, y].save_tileData);
         }
     }
     //Load data tile.
@@ -273,7 +278,10 @@ public class Map_Display : MonoBehaviour
             info.revealed = data.revealed;
             info.unit = FindReference(data.unit);
             info.building = FindReference(data.building);
-            info.dataBuilding = FindReferenceDB(data.dataBuilding);
+
+            if (FindReference(data.dataBuilding) != null)
+                info.dataBuilding = (FindReference(data.dataBuilding)).GetComponent<Data_Building>();
+            else info.dataBuilding = null;
 
             info.builders = new List<GameObject>();
             if (data.builders.Count > 0)
@@ -317,7 +325,6 @@ public class Map_Display : MonoBehaviour
         Data_Building.Building_Info info = new Data_Building.Building_Info();
 
         Data_Tile.Tile_Info tile_data = new Data_Tile.Tile_Info();
-        //tile.GetComponent<Data_Tile>().canBuild = true;
         tile.GetComponent<Data_Tile>().revealed = true;
         tile.GetComponent<Data_Tile>().UpdateMe();
 
@@ -331,7 +338,6 @@ public class Map_Display : MonoBehaviour
             info.health = building.data.health;
             Data_Building data_newBuild = newBuilding.GetComponent<Data_Building>();
             data_newBuild.LoadData(info);
-            instancesDB[building.data.instanceID] = data_newBuild;
 
             SpawnBuilding.Spawn(newBuilding, tile);
             instances[building.instanceID] = tile.transform.GetChild(tile.transform.childCount - 1).gameObject;
@@ -449,7 +455,6 @@ public class Map_Display : MonoBehaviour
         {
             Data_Tile.Tile_Info info = data_tile.SaveData();
             save_tileData.isNull = false;
-            save_tileData.instanceID = data_tile.GetInstanceID();
 
             save_tileData.height = info.height;
             save_tileData.gizmoUse = info.gizmoUse;
@@ -462,7 +467,11 @@ public class Map_Display : MonoBehaviour
             save_tileData.revealed = info.revealed;
             save_tileData.unit = CreateReferenceGO(info.unit);
             save_tileData.building = CreateReferenceGO(info.building);
-            save_tileData.dataBuilding = CreateReferenceDB(info.dataBuilding);
+
+            if (info.dataBuilding != null)
+                save_tileData.dataBuilding = CreateReferenceGO(info.dataBuilding.gameObject);
+            else
+                save_tileData.dataBuilding = "null";
 
             save_tileData.builders = new List<string>();
             if (info.builders.Count > 0)
@@ -526,7 +535,6 @@ public class Map_Display : MonoBehaviour
         if (data_building == null)
         {
             data.isNull = true;
-            data.instanceID = -1;
             data.transparency = Color.white;
             data.originalColor = Color.white;
             data.night = false;
@@ -537,7 +545,6 @@ public class Map_Display : MonoBehaviour
         {
             Data_Building.Building_Info info = data_building.SaveData();
             data.isNull = false;
-            data.instanceID = data_building.GetInstanceID();
 
             data.transparency = info.transparency;
             data.originalColor = info.originalColor;
@@ -618,7 +625,11 @@ public class Map_Display : MonoBehaviour
             unit.spottedEnemy = CreateReferenceGO(info.spottedEnemy);
             unit.nextAttack = info.nextAttack;
             unit.workInMemory = info.workInMemory;
-            unit.rmbTileData = CreateReferenceDT(info.rmbTileData);
+
+            if (info.rmbTileData != null)
+                unit.rmbTileData = CreateReferenceGO(info.rmbTileData.gameObject);
+            else
+                unit.rmbTileData = "null";
 
             if (info.rmbWorkCard != null) unit.rmbWorkCard = info.rmbWorkCard.code;
             else unit.rmbWorkCard = -1;
@@ -627,7 +638,11 @@ public class Map_Display : MonoBehaviour
             unit.rmbWorkIndex = info.rmbWorkIndex;
             unit.rmbWorkTime = info.rmbWorkTime;
             unit.rmbWorkExtra = info.rmbWorkExtra;
-            unit.tileData = CreateReferenceDT(info.tileData);
+
+            if (info.tileData != null)
+                unit.tileData = CreateReferenceGO(info.tileData.gameObject);
+            else
+                unit.tileData = "null";
         }
         return unit;
     }
@@ -661,7 +676,12 @@ public class Map_Display : MonoBehaviour
             enemy.impassable = info.impassable;
             enemy.currentTileOn = CreateReferenceGO(info.currentTileOn);
             enemy.previousTile = CreateReferenceGO(info.previousTile);
-            enemy.dataTile = CreateReferenceDT(info.dataTile);
+
+            if (enemy.dataTile != null)
+                enemy.dataTile = CreateReferenceGO(info.dataTile.gameObject);
+            else
+                enemy.dataTile = "null";
+
             enemy.reachedTown = info.reachedTown;
             enemy.reachedAbyss = info.reachedAbyss;
             enemy.target = CreateReferenceGO(info.target);
@@ -671,7 +691,11 @@ public class Map_Display : MonoBehaviour
             //public Save_Player spottedPlayer; // Need to serialize
             enemy.nextAttack = info.nextAttack;
             enemy.abyss = CreateReferenceGO(info.abyss);
-            enemy.abyssData = CreateReferenceDT(info.abyssData);
+
+            if (enemy.abyssData != null)
+                enemy.abyssData = CreateReferenceGO(info.abyssData.gameObject);
+            else
+                enemy.abyssData = "null";
 
             if (info.card != null) enemy.card = info.card.code;
             else enemy.card = -1;
@@ -693,35 +717,11 @@ public class Map_Display : MonoBehaviour
             return obj.GetInstanceID().ToString();
         return "null";
     }
-    public string CreateReferenceDT(Data_Tile obj)
-    {
-        if (obj != null)
-            return obj.GetInstanceID().ToString();
-        return "null";
-    }
-    public string CreateReferenceDB(Data_Building obj)
-    {
-        if (obj != null)
-            return obj.GetInstanceID().ToString();
-        return "null";
-    }
     //Find reference.
     public GameObject FindReference(string reference)
     {
         if (reference != "null")
             return instances[int.Parse(reference)];
-        return null;
-    }
-    public Data_Tile FindReferenceDT(string reference)
-    {
-        if (reference != "null")
-            return instancesDT[int.Parse(reference)];
-        return null;
-    }
-    public Data_Building FindReferenceDB(string reference)
-    {
-        if (reference != "null")
-            return instancesDB[int.Parse(reference)];
         return null;
     }
     //Convertion Enemy >>> EnemyType
@@ -800,7 +800,6 @@ public class Map_Display : MonoBehaviour
     public class Save_TileData //Tile data
     {
         public bool isNull; //null identifier
-        public int instanceID;
 
         // [Tile Information] //
         public float height;
@@ -861,7 +860,6 @@ public class Map_Display : MonoBehaviour
     public class Save_BuildingData //Building data
     {
         public bool isNull; //null identifier
-        public int instanceID;
 
         public Color transparency;
         public Color originalColor;
