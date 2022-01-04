@@ -21,7 +21,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
   complexity: 0
   description: Not all quality materials have to be man-made
-  artwork: {fileID: 21300000, guid: c08df4313ffafe14ab9817145ff78d28, type: 3}
+  artwork: {fileID: 21300000, guid: 58ceb3ad4503e0e40928546c025acee2, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1

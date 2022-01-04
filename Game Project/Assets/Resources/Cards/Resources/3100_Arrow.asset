@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 2
   description: They're sharp, but you have to use a bow to make use of them
-  artwork: {fileID: 21300000, guid: e2a9d59325045174582070d455f26b23, type: 3}
+  artwork: {fileID: 21300000, guid: 1347e9cf007f08247a7ca97b7411d8eb, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 0

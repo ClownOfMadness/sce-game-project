@@ -20,10 +20,9 @@ MonoBehaviour:
   - card1: {fileID: 11400000, guid: bd7b3bf588b713441b1254dada7b0123, type: 2}
     card2: {fileID: 11400000, guid: 9dc53f43321834244a0789f0648d0c45, type: 2}
   gatheredBy: []
-  tier: 
   complexity: 7
   description: Also works as a faraday cage
-  artwork: {fileID: 21300000, guid: 570b78be112150546b7240e6b7007501, type: 3}
+  artwork: {fileID: 21300000, guid: 38b536e2aa24b08418afa1d0f30341ea, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 0

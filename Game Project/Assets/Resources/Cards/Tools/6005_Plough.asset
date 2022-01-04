@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 10
   description: For harvesting the land
-  artwork: {fileID: 21300000, guid: e27fe8980b4b2bb4e9a8921e1d87415c, type: 3}
+  artwork: {fileID: 21300000, guid: 46b7a1c9f76224b4ca0eb38eec5928f5, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1

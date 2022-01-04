@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 2
   description: Emits a bad smell but makes some nice stuff
-  artwork: {fileID: 21300000, guid: 1a5a95384c71bff4bb73e56d5bf12231, type: 3}
+  artwork: {fileID: 21300000, guid: 5ac55d685e82eaa40bd2d8724b90ea1c, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 0

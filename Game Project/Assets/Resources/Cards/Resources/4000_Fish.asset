@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 80254fc122ba7b14c8d68fd8203605e8, type: 2}
   complexity: 3
   description: Just make sure it doesn't stink up the place
-  artwork: {fileID: 21300000, guid: 93c1c30681e31de4a906ab7a9c4141b2, type: 3}
+  artwork: {fileID: 21300000, guid: 110d6a8277268134d9dcf10ca7c032e6, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 0

@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 1
   description: 'The simple and perfect way to tie things together '
-  artwork: {fileID: 21300000, guid: 99a0ab25e6f5e804f925e8731ecb1969, type: 3}
+  artwork: {fileID: 21300000, guid: ec1444904a99bee42b24414c0444b1b4, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 0

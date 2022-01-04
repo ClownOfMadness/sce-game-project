@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 32
   description: String isn't going to make itself
-  artwork: {fileID: 21300000, guid: f7c835af66e437549aa49b6dacd4cab3, type: 3}
+  artwork: {fileID: 21300000, guid: cc71b3cd183164b4aa6cbec5d6541908, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 0

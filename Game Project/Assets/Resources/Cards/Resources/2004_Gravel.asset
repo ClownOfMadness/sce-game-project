@@ -19,10 +19,9 @@ MonoBehaviour:
   combinationOf: []
   gatheredBy:
   - {fileID: 11400000, guid: 8f6b1ef987e0eef4ebaaf0817bdf231a, type: 2}
-  tier: 
   complexity: 0
   description: Rocks shattered into small pieces
-  artwork: {fileID: 21300000, guid: f435d7e91b2e00c45be8b9b6d3c308f7, type: 3}
+  artwork: {fileID: 21300000, guid: 2fc77d5d73d118b469979e018946c75b, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 0

@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 7
   description: Just don't lean on it too hard
-  artwork: {fileID: 21300000, guid: 51d726f5d7aace54bb45c6e2f79b8ddf, type: 3}
+  artwork: {fileID: 21300000, guid: dc5f6c50741eec143b0a843b5cf37fc0, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1
