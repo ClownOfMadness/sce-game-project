@@ -1882,11 +1882,15 @@ MonoBehaviour:
   keyBindingOption: {fileID: 183942129}
   gamePlayUI: {fileID: 1702719684}
   game_Master: {fileID: 796799537}
-  UIDesignDrop: {fileID: 0}
+  UIDesignDrop: {fileID: 819102589}
   Hints: {fileID: 1018080586}
   Book: {fileID: 328613849}
   Storage: {fileID: 1119741844}
   StoragePt2: {fileID: 710504988}
+  StorageWindow: {fileID: 806583745}
+  Hand: {fileID: 1934554962}
+  Job: {fileID: 910217393}
+  Delete: {fileID: 1997176669}
   Hint1: {fileID: 21300000, guid: 0b883d177843315428d7c52e4c58d1f8, type: 3}
   Hint1Hover: {fileID: 21300000, guid: e729848766586e1488803d823b956633, type: 3}
   Hint1Selected: {fileID: 21300000, guid: 263bc77f9517ddf429a190e3a4c2e02e, type: 3}
@@ -1898,6 +1902,12 @@ MonoBehaviour:
   Storage1Selected: {fileID: 21300000, guid: cf5f5f3c51e9bb24a9c013a5e591d4b5, type: 3}
   StorageB1: {fileID: 21300000, guid: cd35eef2ec654434e8a9ba170044ca97, type: 3}
   StorageB1Selected: {fileID: 21300000, guid: 98cc35a45bd2fe842845c234e815c3d2, type: 3}
+  DSWindow: {fileID: 21300000, guid: 8586d0b544881df4c8c3fe1c51678687, type: 3}
+  DHand: {fileID: 21300000, guid: 935372d2b7f7ca7429de2e7442f178ca, type: 3}
+  Job1: {fileID: 21300000, guid: 1167e0180db0fa749b4c602cabdeb063, type: 3}
+  Job1Hover: {fileID: 21300000, guid: d1e1f7fd4c2ac7848a0209300999ee2e, type: 3}
+  Delete1: {fileID: 21300000, guid: f559425478a33ab408d0648a8fbc2be3, type: 3}
+  Delete1Hover: {fileID: 21300000, guid: 3a0ee8eed09d3d944910dc950dbda78a, type: 3}
   Hint2: {fileID: 21300000, guid: b81cbce3c555d7640905917629940f21, type: 3}
   Hint2Hover: {fileID: 21300000, guid: 25a3ed066d461234cb1ce3336d2f3413, type: 3}
   Hint2Selected: {fileID: 21300000, guid: 8d2d5741848913e49a8ed26f800f6dfc, type: 3}
@@ -1909,6 +1919,12 @@ MonoBehaviour:
   Storage2Selected: {fileID: 21300000, guid: 1dce61281258fb54da53fc945b57a728, type: 3}
   StorageB2: {fileID: 21300000, guid: 010dd695c7448ad4e84ddd2f7e597331, type: 3}
   StorageB2Selected: {fileID: 21300000, guid: 5ca95253556a4f94986cfcdd4fbeedba, type: 3}
+  GSWindow: {fileID: 21300000, guid: 636201a161b186540a8149ff52979883, type: 3}
+  GHand: {fileID: 21300000, guid: acc8e76b3219642439307f8024cb9e03, type: 3}
+  Job2: {fileID: 21300000, guid: a9a29589ad1cc65428effc87062b1d68, type: 3}
+  Job2Hover: {fileID: 21300000, guid: 6787ec228a7651142a76eee4903d9614, type: 3}
+  Delete2: {fileID: 21300000, guid: 5356c81cc4f013c4e9c36d352d36b19d, type: 3}
+  Delete2Hover: {fileID: 21300000, guid: bba30d7ef8eee064d9c213e3d043e7b3, type: 3}
 --- !u!114 &165519931
 MonoBehaviour:
   m_ObjectHideFlags: 0

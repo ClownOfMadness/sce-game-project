@@ -19,6 +19,9 @@ public class Game_Master : MonoBehaviour
     public Menu_Pause Pause;
     public GameObject gameOver;
     public GameObject Tutorial;
+    public GameObject keyBindingOption; //KB menu
+    public GameObject UIDesignOption; //UI sprite swap menu//
+    public GameObject UIDesignText;
 
     [Header("---[Objects]---")]
     public Unit_List Units;
@@ -156,6 +159,20 @@ public class Game_Master : MonoBehaviour
             Tutorial.SetActive(true);
         }
 
+        Debug.Log("If the user has premium:" + premiumUser); //*for testing purposes*
+        if (premiumUser == false)
+        {
+            keyBindingOption.SetActive(false);
+            UIDesignOption.SetActive(false);
+            UIDesignText.SetActive(false);
+        }
+        else
+        {
+            keyBindingOption.SetActive(true);
+            UIDesignOption.SetActive(true);
+            UIDesignText.SetActive(true);
+        }
+
         //[testing bedtime functionality]//
         //bedtime = TimeToFloat("22:17");
         //bedtimeSet = true;
@@ -167,7 +184,7 @@ public class Game_Master : MonoBehaviour
         //timeLimitSet = true;
         //[testing time limit functionality]
 
-        
+
         if (timeLimitSet)
         {
             //string currentDate = DateTime.Today.Date.ToString("d");

@@ -10,7 +10,6 @@ public class Menu_Pause : MonoBehaviour
     public GameObject pauseMenuUI;//Pause Menu
     public GameObject optionsMenuUI;//Options Menu
     public GameObject KeyBindingUI;//Key Binding Menu
-    public GameObject keyBindingOption; //KB menu
     public GameObject gamePlayUI;//Game play menue
     public Game_Master game_Master;
     public Dropdown UIDesignDrop; //dropdown for UI design changing
@@ -20,6 +19,10 @@ public class Menu_Pause : MonoBehaviour
     public Button Book;
     public Button Storage;
     public Button StoragePt2;
+    public Image StorageWindow;
+    public Image Hand;
+    public Button Job;
+    public Button Delete;
 
     [Header("---[Default Sprites]---")]
     //Hints
@@ -37,6 +40,16 @@ public class Menu_Pause : MonoBehaviour
     //StoragePart2
     public Sprite StorageB1;
     public Sprite StorageB1Selected;
+    //Storage Window
+    public Sprite DSWindow;
+    //Hand
+    public Sprite DHand;
+    //Job
+    public Sprite Job1;
+    public Sprite Job1Hover;
+    //Delete
+    public Sprite Delete1;
+    public Sprite Delete1Hover;
 
 
     [Header("---[Golden Sprites]---")]
@@ -55,36 +68,33 @@ public class Menu_Pause : MonoBehaviour
     //StoragePart2
     public Sprite StorageB2;
     public Sprite StorageB2Selected;
+    //Storage Sprite
+    public Sprite GSWindow;
+    //Hand
+    public Sprite GHand;
+    //Job
+    public Sprite Job2;
+    public Sprite Job2Hover;
+    //Delete
+    public Sprite Delete2;
+    public Sprite Delete2Hover;
 
 
-    public void Start()
+    /*public void Start()
     {
-        //UIDesignDrop.value
-        /* if (!game_Master.premiumUser)
+        Debug.Log("If the user has premium:"+game_Master.premiumUser); //*for testing purposes*
+         if (game_Master.premiumUser==false)
          {
              keyBindingOption.SetActive(false);
          }
          else
          {
              keyBindingOption.SetActive(true);
-         }*/
-        //Hints.spriteState.
-        //Testing
-    }
+         }
+    }*/
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-
-            SetDefaultDesign();
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-
-            SetGoldenDesign();
-        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -131,10 +141,12 @@ public class Menu_Pause : MonoBehaviour
         if (UIDesignDrop.value == 1)
         {
             SetGoldenDesign();
+            UIDesignDrop.value = 1;
         }
         else
         {
             SetDefaultDesign();
+            UIDesignDrop.value = 0;
         }
     }
 
@@ -143,24 +155,21 @@ public class Menu_Pause : MonoBehaviour
         //-------------------Hints-------------------
         tempState = Hints.spriteState;
         tempState.highlightedSprite = Hint1Hover;
-        tempState.selectedSprite = Hint1Selected;
-        tempState.pressedSprite = Hint1;
+        tempState.pressedSprite = Hint1Selected;
         Hints.spriteState = tempState;
         Hints.GetComponent<Image>().sprite = Hint1;
 
         //-------------------Book-------------------
         tempState = Book.spriteState;
         tempState.highlightedSprite = Book1Hover;
-        tempState.selectedSprite = Book1Selected;
-        tempState.pressedSprite = Book1;
+        tempState.pressedSprite = Book1Selected;
         Book.spriteState = tempState;
         Book.GetComponent<Image>().sprite = Book1;
 
         //-------------------Storage-------------------
         tempState = Storage.spriteState;
         tempState.highlightedSprite = Storage1Hover;
-        tempState.selectedSprite = Storage1Selected;
-        tempState.pressedSprite = Storage1;
+        tempState.pressedSprite = Storage1Selected;
         Storage.spriteState = tempState;
         Storage.GetComponent<Image>().sprite = Storage1;
 
@@ -170,6 +179,25 @@ public class Menu_Pause : MonoBehaviour
         tempState.pressedSprite = StorageB1;
         StoragePt2.spriteState = tempState;
         StoragePt2.GetComponent<Image>().sprite = StorageB1;
+
+        //-------------------Storage Window-------------------
+        StorageWindow.sprite = DSWindow;
+
+        //-------------------Hand-------------------
+        Hand.sprite = DHand;
+
+        //-------------------Job-------------------
+        tempState = Job.spriteState;
+        tempState.highlightedSprite = Job1Hover;
+        Job.spriteState = tempState;
+        Job.GetComponent<Image>().sprite = Job1;
+
+        //-------------------Delete-------------------
+        tempState = Delete.spriteState;
+        tempState.highlightedSprite = Delete1Hover;
+        Delete.spriteState = tempState;
+        Delete.GetComponent<Image>().sprite = Delete1;
+
     }
 
     private void SetGoldenDesign()
@@ -177,24 +205,21 @@ public class Menu_Pause : MonoBehaviour
         //-------------------Hints-------------------
         tempState = Hints.spriteState;
         tempState.highlightedSprite = Hint2Hover;
-        tempState.selectedSprite = Hint2Selected;
-        tempState.pressedSprite = Hint2;
+        tempState.pressedSprite = Hint2Selected;
         Hints.spriteState = tempState;
         Hints.GetComponent<Image>().sprite = Hint2;
 
         //-------------------Book-------------------
         tempState = Book.spriteState;
         tempState.highlightedSprite = Book2Hover;
-        tempState.selectedSprite = Book2Selected;
-        tempState.pressedSprite = Book2;
+        tempState.pressedSprite = Book2Selected;
         Book.spriteState = tempState;
         Book.GetComponent<Image>().sprite = Book2;
 
         //-------------------Storage-------------------
         tempState = Storage.spriteState;
         tempState.highlightedSprite = Storage2Hover;
-        tempState.selectedSprite = Storage2Selected;
-        tempState.pressedSprite = Storage2;
+        tempState.pressedSprite = Storage2Selected;
         Storage.spriteState = tempState;
         Storage.GetComponent<Image>().sprite = Storage2;
 
@@ -204,5 +229,23 @@ public class Menu_Pause : MonoBehaviour
         tempState.pressedSprite = StorageB2;
         StoragePt2.spriteState = tempState;
         StoragePt2.GetComponent<Image>().sprite = StorageB2;
+
+        //-------------------Storage Window-------------------
+        StorageWindow.sprite = GSWindow;
+
+        //-------------------Hand-------------------
+        Hand.sprite = GHand;
+
+        //-------------------Job-------------------
+        tempState = Job.spriteState;
+        tempState.highlightedSprite = Job2Hover;
+        Job.spriteState = tempState;
+        Job.GetComponent<Image>().sprite = Job2;
+
+        //-------------------Delete-------------------
+        tempState = Delete.spriteState;
+        tempState.highlightedSprite = Delete2Hover;
+        Delete.spriteState = tempState;
+        Delete.GetComponent<Image>().sprite = Delete2;
     }
 }
