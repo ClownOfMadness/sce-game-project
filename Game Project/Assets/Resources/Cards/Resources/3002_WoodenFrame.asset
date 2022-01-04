@@ -25,4 +25,4 @@ MonoBehaviour:
   artwork: {fileID: 21300000, guid: 7039e66d4a0a89a449bad5554c93e7b6, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
-  neverDiscovered: 0
+  neverDiscovered: 1
