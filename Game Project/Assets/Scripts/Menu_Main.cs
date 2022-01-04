@@ -13,6 +13,9 @@ public class Menu_Main : MonoBehaviour
     public GameObject tutorial;
 
     public TextMeshProUGUI Logo;
+    public GameObject blackScreen;
+    public RawImage backGround;
+    public float bGSpeed;
     TextMeshProUGUI loadText;
 
     //----------------------------Save System----------------------------//
@@ -69,6 +72,7 @@ public class Menu_Main : MonoBehaviour
 
     IEnumerator LoadAsynchronic()
     {
+        blackScreen.SetActive(true);
         AsyncOperation asy = SceneManager.LoadSceneAsync("Game");
         GameObject loadScreen = LoadPanel.transform.GetChild(1).gameObject;
         Image img = loadScreen.GetComponent<Image>();
@@ -96,6 +100,8 @@ public class Menu_Main : MonoBehaviour
 
     private void Update()
     {
+        backGround.uvRect = new Rect(Time.time * bGSpeed, 0, 0.8f, 0.8f);
+        
         if (LoadPanel.activeSelf)
         {
             if (loadText.alpha > 0.5f)
