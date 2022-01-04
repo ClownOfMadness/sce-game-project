@@ -7,8 +7,8 @@ public class Zone_Book : MonoBehaviour
 {
     //attached via Inspector:
     public GameObject PagePrefab;   //type of prefab for Page
-    public Text backButton;
-    public Text nextButton;
+    public Image backButton;
+    public Image nextButton;
 
     //public fields:
     [HideInInspector] public int pageSize;  //amount of cards allowed per page

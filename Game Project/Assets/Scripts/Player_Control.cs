@@ -54,8 +54,8 @@ public class Player_Control : MonoBehaviour
     private Rigidbody rb = null;
     private SpriteRenderer sprite = null;
     private Animator animator = null;
-    private float zMov = 0f;
-    private float xMov = 0f;
+    public float zMov = 0f;
+    public float xMov = 0f;
     private Vector3 rawDirection = Vector3.zero;
     private Vector3 normDirection = Vector3.zero;
     private float normMagnitude = 0f;
@@ -74,6 +74,9 @@ public class Player_Control : MonoBehaviour
     public GameObject detector;
     public GameObject currentTileOn;
     public Game_Master game;
+    public int skin = 0;
+    public RuntimeAnimatorController defaultSkin;
+    public RuntimeAnimatorController redSkin;
 
     // Card
     public Screen_Cards screenCards;
@@ -112,12 +115,20 @@ public class Player_Control : MonoBehaviour
     {
         UnitCommand(); // Unit pathfinding control;
         FindOnce();
-        PlayerInput();
         Animator();
         PlayerController();
         Tired();
+        InputControl();
         if (player) GroundCheck(); 
 
+    }
+
+    private void InputControl()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            selectedJob = 3;
+        }
     }
 
     private void FixedUpdate()
@@ -263,21 +274,7 @@ public class Player_Control : MonoBehaviour
             }
         }
     }
-    private void PlayerInput()
-    {
-        if (Input.GetKey("1"))
-        {
-            selectedJob = 0;
-        }
-        if (Input.GetKey("2"))
-        {
-            selectedJob = 1;
-        }
-        if (Input.GetKey("3"))
-        {
-            selectedJob = 2;
-        }
-    }
+
     private GameObject UnitSelection(int _selectedJob, GameObject target, bool townhall) // Searches for a free unit in a job category
     {
         float distance = 0f;
@@ -399,6 +396,10 @@ public class Player_Control : MonoBehaviour
                 rb = player.GetComponent<Rigidbody>();
                 cameraObject.GetComponent<Camera>().orthographicSize = 40f;
                 detector = player.transform.GetChild(1).gameObject;
+                if (skin == 1)
+                    animator.runtimeAnimatorController = redSkin;
+                else
+                    animator.runtimeAnimatorController = defaultSkin;
                 return true;
             }
         }

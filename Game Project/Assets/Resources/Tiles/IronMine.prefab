@@ -415,6 +415,11 @@ MonoBehaviour:
     workTime: 10
     extra: 0
     random: 0
+  - job: {fileID: 8058738131440369222, guid: 6024a1d80573bf249908dc902d4e1039, type: 3}
+    card: {fileID: 11400000, guid: d7a171c14aac58b43aadc541818a9769, type: 2}
+    workTime: 20
+    extra: 0
+    random: 0
   maxDurability: 10
   durability: 10
   recharge: 2

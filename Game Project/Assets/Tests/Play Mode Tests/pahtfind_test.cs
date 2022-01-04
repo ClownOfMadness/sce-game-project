@@ -3,209 +3,239 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.SceneManagement;
 
-public class pahtfind_test
+public class pahtfind_test : MonoBehaviour
 {
-    [UnityTest]
-    public IEnumerator CameraMovementUpTest()
+    [OneTimeSetUp]
+    public void LoadGame()
     {
-        // The test checks if the camera moves up if keyboard input is recieved
-
-        // Creates the camera object
-        GameObject camera = new GameObject();
-        camera.AddComponent<Camera>();
-        Vector3 originalPosition = camera.transform.position;
-        camera.transform.tag = "test";
-
-        // Creates the player controller
-        GameObject player = new GameObject();
-        Player_Control control = player.AddComponent<Player_Control>();
-        control.pos.z++;
-        player.transform.tag = "test";
-
-        // Wait for process to be made in-game
+        SceneManager.LoadScene("Game", LoadSceneMode.Single);
+    }
+    
+    [UnityTest]
+    public IEnumerator player_CreateCheck()
+    {
         yield return new WaitForSeconds(1);
-
-        // Checks if the camera moved up
-        Assert.AreEqual(new Vector3(originalPosition.x, originalPosition.y, originalPosition.z + 1), camera.transform.position);
-
-        // Cleans up the scene
-        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
-        {
-            Object.Destroy(temp);
-        }
-
+        GameObject player;
+        player = GameObject.Find("Player(Clone)");
+        Assert.IsNotNull(player);
         yield return null;
     }
 
     [UnityTest]
-    public IEnumerator CameraMovementDownTest()
+    public IEnumerator player_ControlCheck()
     {
-        // The test checks if the camera moves down if keyboard input is recieved
-
-        // Creates the camera object
-        GameObject camera = new GameObject();
-        camera.AddComponent<Camera>();
-        Vector3 originalPosition = camera.transform.position;
-        camera.transform.tag = "test";
-
-        // Creates the player controller
-        GameObject player = new GameObject();
-        Player_Control control = player.AddComponent<Player_Control>();
-        control.pos.z--;
-        player.transform.tag = "test";
-
-        // Wait for process to be made in-game
         yield return new WaitForSeconds(1);
-
-        // Checks if the camera moved down
-        Assert.AreEqual(new Vector3(originalPosition.x, originalPosition.y, originalPosition.z - 1), camera.transform.position);
-
-        // Cleans up the scene
-        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
-        {
-            Object.Destroy(temp);
-        }
-
+        GameObject player;
+        player = GameObject.Find("Player(Clone)");
+        Assert.IsNotNull(player);
+        Player_Control control = GameObject.Find("PlayerControl").GetComponent<Player_Control>();
+        Assert.IsNotNull(control);
+        float zmov = control.zMov;
         yield return null;
     }
 
-    [UnityTest]
-    public IEnumerator CameraMovementLeftTest()
-    {
-        // The test checks if the camera moves left if keyboard input is recieved
+    //[UnityTest]
+    //public IEnumerator CameraMovementUpTest()
+    //{
+    //    // The test checks if the camera moves up if keyboard input is recieved
 
-        // Creates the camera object
-        GameObject camera = new GameObject();
-        camera.AddComponent<Camera>();
-        Vector3 originalPosition = camera.transform.position;
-        camera.transform.tag = "test";
+    //    // Creates the camera object
+    //    GameObject camera = new GameObject();
+    //    camera.AddComponent<Camera>();
+    //    Vector3 originalPosition = camera.transform.position;
+    //    camera.transform.tag = "test";
 
-        // Creates the player controller
-        GameObject player = new GameObject();
-        Player_Control control = player.AddComponent<Player_Control>();
-        control.pos.x--;
-        player.transform.tag = "test";
+    //    // Creates the player controller
+    //    GameObject player = new GameObject();
+    //    Player_Control control = player.AddComponent<Player_Control>();
+    //    control.pos.z++;
+    //    player.transform.tag = "test";
 
-        // Wait for process to be made in-game
-        yield return new WaitForSeconds(1);
+    //    // Wait for process to be made in-game
+    //    yield return new WaitForSeconds(1);
 
-        // Checks if the camera moved left
-        Assert.AreEqual(new Vector3(originalPosition.x - 1, originalPosition.y, originalPosition.z), camera.transform.position);
+    //    // Checks if the camera moved up
+    //    Assert.AreEqual(new Vector3(originalPosition.x, originalPosition.y, originalPosition.z + 1), camera.transform.position);
 
-        // Cleans up the scene
-        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
-        {
-            Object.Destroy(temp);
-        }
+    //    // Cleans up the scene
+    //    foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
+    //    {
+    //        Object.Destroy(temp);
+    //    }
 
-        yield return null;
-    }
+    //    yield return null;
+    //}
 
-    [UnityTest]
-    public IEnumerator CameraMovementRightTest()
-    {
-        // The test checks if the camera moves right if keyboard input is recieved
+    //[UnityTest]
+    //public IEnumerator CameraMovementDownTest()
+    //{
+    //    // The test checks if the camera moves down if keyboard input is recieved
 
-        // Creates the camera object
-        GameObject camera = new GameObject();
-        camera.AddComponent<Camera>();
-        Vector3 originalPosition = camera.transform.position;
-        camera.transform.tag = "test";
+    //    // Creates the camera object
+    //    GameObject camera = new GameObject();
+    //    camera.AddComponent<Camera>();
+    //    Vector3 originalPosition = camera.transform.position;
+    //    camera.transform.tag = "test";
 
-        // Creates the player controller
-        GameObject player = new GameObject();
-        Player_Control control = player.AddComponent<Player_Control>();
-        control.pos.x++;
-        player.transform.tag = "test";
+    //    // Creates the player controller
+    //    GameObject player = new GameObject();
+    //    Player_Control control = player.AddComponent<Player_Control>();
+    //    control.pos.z--;
+    //    player.transform.tag = "test";
 
-        // Wait for process to be made in-game
-        yield return new WaitForSeconds(1);
+    //    // Wait for process to be made in-game
+    //    yield return new WaitForSeconds(1);
 
-        // Checks if the camera moved right
-        Assert.AreEqual(new Vector3(originalPosition.x + 1, originalPosition.y, originalPosition.z), camera.transform.position);
+    //    // Checks if the camera moved down
+    //    Assert.AreEqual(new Vector3(originalPosition.x, originalPosition.y, originalPosition.z - 1), camera.transform.position);
 
-        // Cleans up the scene
-        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
-        {
-            Object.Destroy(temp);
-        }
+    //    // Cleans up the scene
+    //    foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
+    //    {
+    //        Object.Destroy(temp);
+    //    }
 
-        yield return null;
-    }
+    //    yield return null;
+    //}
 
-    [UnityTest]
-    public IEnumerator ScrollTest()
-    {
-        // The test checks if the camera orthographic size changes when the mouse wheel change is recieved
+    //[UnityTest]
+    //public IEnumerator CameraMovementLeftTest()
+    //{
+    //    // The test checks if the camera moves left if keyboard input is recieved
 
-        // Creates the camera object
-        GameObject camera = new GameObject();
-        Camera theCamera = camera.AddComponent<Camera>();
-        float originalSize = theCamera.orthographicSize;
-        camera.transform.tag = "test";
+    //    // Creates the camera object
+    //    GameObject camera = new GameObject();
+    //    camera.AddComponent<Camera>();
+    //    Vector3 originalPosition = camera.transform.position;
+    //    camera.transform.tag = "test";
 
-        // Creates the player controller
-        GameObject player = new GameObject();
-        Player_Control control = player.AddComponent<Player_Control>();
-        player.transform.tag = "test";
-        control.scroll -= 10f;
+    //    // Creates the player controller
+    //    GameObject player = new GameObject();
+    //    Player_Control control = player.AddComponent<Player_Control>();
+    //    control.pos.x--;
+    //    player.transform.tag = "test";
 
-        // Wait for process to be made in-game
-        yield return new WaitForSeconds(1);
+    //    // Wait for process to be made in-game
+    //    yield return new WaitForSeconds(1);
 
-        // Checks if the orthographic size of the camera has been changed from the original
-        Assert.AreNotEqual(originalSize, theCamera.orthographicSize);
+    //    // Checks if the camera moved left
+    //    Assert.AreEqual(new Vector3(originalPosition.x - 1, originalPosition.y, originalPosition.z), camera.transform.position);
 
-        // Cleans up the scene
-        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
-        {
-            Object.Destroy(temp);
-        }
+    //    // Cleans up the scene
+    //    foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
+    //    {
+    //        Object.Destroy(temp);
+    //    }
 
-        yield return null;
-    }
+    //    yield return null;
+    //}
 
-    [UnityTest]
-    public IEnumerator FogRemoveTest()
-    {
-        // This test checks if in collision the fog is removed
+    //[UnityTest]
+    //public IEnumerator CameraMovementRightTest()
+    //{
+    //    // The test checks if the camera moves right if keyboard input is recieved
+
+    //    // Creates the camera object
+    //    GameObject camera = new GameObject();
+    //    camera.AddComponent<Camera>();
+    //    Vector3 originalPosition = camera.transform.position;
+    //    camera.transform.tag = "test";
+
+    //    // Creates the player controller
+    //    GameObject player = new GameObject();
+    //    Player_Control control = player.AddComponent<Player_Control>();
+    //    control.pos.x++;
+    //    player.transform.tag = "test";
+
+    //    // Wait for process to be made in-game
+    //    yield return new WaitForSeconds(1);
+
+    //    // Checks if the camera moved right
+    //    Assert.AreEqual(new Vector3(originalPosition.x + 1, originalPosition.y, originalPosition.z), camera.transform.position);
+
+    //    // Cleans up the scene
+    //    foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
+    //    {
+    //        Object.Destroy(temp);
+    //    }
+
+    //    yield return null;
+    //}
+
+    //[UnityTest]
+    //public IEnumerator ScrollTest()
+    //{
+    //    // The test checks if the camera orthographic size changes when the mouse wheel change is recieved
+
+    //    // Creates the camera object
+    //    GameObject camera = new GameObject();
+    //    Camera theCamera = camera.AddComponent<Camera>();
+    //    float originalSize = theCamera.orthographicSize;
+    //    camera.transform.tag = "test";
+
+    //    // Creates the player controller
+    //    GameObject player = new GameObject();
+    //    Player_Control control = player.AddComponent<Player_Control>();
+    //    player.transform.tag = "test";
+    //    control.scroll -= 10f;
+
+    //    // Wait for process to be made in-game
+    //    yield return new WaitForSeconds(1);
+
+    //    // Checks if the orthographic size of the camera has been changed from the original
+    //    Assert.AreNotEqual(originalSize, theCamera.orthographicSize);
+
+    //    // Cleans up the scene
+    //    foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
+    //    {
+    //        Object.Destroy(temp);
+    //    }
+
+    //    yield return null;
+    //}
+
+    //[UnityTest]
+    //public IEnumerator FogRemoveTest()
+    //{
+    //    // This test checks if in collision the fog is removed
         
-        // Creates the unit prototype
-        GameObject player = new GameObject();
-        player.AddComponent<Rigidbody>();
-        SphereCollider collider = player.AddComponent<SphereCollider>();
-        Vector3 thePosition = player.transform.position;
-        collider.isTrigger = true;
-        player.transform.tag = "test";
+    //    // Creates the unit prototype
+    //    GameObject player = new GameObject();
+    //    player.AddComponent<Rigidbody>();
+    //    SphereCollider collider = player.AddComponent<SphereCollider>();
+    //    Vector3 thePosition = player.transform.position;
+    //    collider.isTrigger = true;
+    //    player.transform.tag = "test";
 
-        // Creates the fog prototype gameobject
-        GameObject fog = new GameObject();
-        GameObject sprite = new GameObject();
-        sprite.transform.parent = fog.transform;
-        SpriteRenderer render = sprite.AddComponent<SpriteRenderer>();
-        Data_Fog data = fog.AddComponent<Data_Fog>();
-        fog.AddComponent<BoxCollider>();
-        fog.transform.tag = "test";
-        data.halfFog = null;
-        data.fullFog = null;
-        data.sprite = render;
-        fog.transform.position = thePosition;
+    //    // Creates the fog prototype gameobject
+    //    GameObject fog = new GameObject();
+    //    GameObject sprite = new GameObject();
+    //    sprite.transform.parent = fog.transform;
+    //    SpriteRenderer render = sprite.AddComponent<SpriteRenderer>();
+    //    Data_Fog data = fog.AddComponent<Data_Fog>();
+    //    fog.AddComponent<BoxCollider>();
+    //    fog.transform.tag = "test";
+    //    data.halfFog = null;
+    //    data.fullFog = null;
+    //    data.sprite = render;
+    //    fog.transform.position = thePosition;
 
-        // Wait for process to be made in-game
-        yield return new WaitForSeconds(1);
+    //    // Wait for process to be made in-game
+    //    yield return new WaitForSeconds(1);
 
-        // Checks if the fog sprite rendere is disabled on collision
-        Assert.IsFalse(render.enabled);
+    //    // Checks if the fog sprite rendere is disabled on collision
+    //    Assert.IsFalse(render.enabled);
 
-        // Cleans up the scene
-        foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
-        {
-            Object.Destroy(temp);
-        }
+    //    // Cleans up the scene
+    //    foreach (GameObject temp in GameObject.FindGameObjectsWithTag("test"))
+    //    {
+    //        Object.Destroy(temp);
+    //    }
 
-        yield return null;
-    }
+    //    yield return null;
+    //}
 
     //[UnityTest]
     //public IEnumerator FogMapCreateTest()
