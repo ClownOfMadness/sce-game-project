@@ -21,7 +21,8 @@ public class Game_Master : MonoBehaviour
     public GameObject Tutorial;
     public GameObject keyBindingOption; //KB menu
     public GameObject UIDesignOption; //UI sprite swap menu//
-    public GameObject UIDesignText;
+    public GameObject UIDesignText; //the sprite swap(UI Design) text
+    public GameObject CreativeUID; //to turn on/off the book for premium access purposes
 
     [Header("---[Objects]---")]
     public Unit_List Units;
@@ -163,17 +164,14 @@ public class Game_Master : MonoBehaviour
         }
 
         Debug.Log("If the user has premium:" + premiumUser); //*for testing purposes*
-        if (premiumUser == false)
+
+        if (premiumUser == false) //turns on/pff the functions related to premium access
         {
-            keyBindingOption.SetActive(false);
-            UIDesignOption.SetActive(false);
-            UIDesignText.SetActive(false);
+            TurnOffPremiumFunctions();
         }
         else
         {
-            keyBindingOption.SetActive(true);
-            UIDesignOption.SetActive(true);
-            UIDesignText.SetActive(true);
+            TurnOnPremiumFunctions();
         }
 
         //[testing bedtime functionality]//
@@ -199,7 +197,7 @@ public class Game_Master : MonoBehaviour
     void Update() //main Update, handles constant checking of parameters for the rest of the game
     {
         //keylisteners
-        if (Input.GetKeyDown(creativeK) && (!Menu_Pause.IsPaused)) //to close and open "Creative" with keyboard as well
+        if (Input.GetKeyDown(creativeK) && (!Menu_Pause.IsPaused) && premiumUser) //to close and open "Creative" with keyboard as well
         {
             Cards.SwitchCreative();
         }
@@ -282,6 +280,22 @@ public class Game_Master : MonoBehaviour
     {
         Debug.Log("you're dead");
         gameOver.SetActive(true);
+    }
+
+    private void TurnOffPremiumFunctions()
+    {
+        keyBindingOption.SetActive(false);
+        UIDesignOption.SetActive(false);
+        UIDesignText.SetActive(false);
+        //CreativeUID.SetActive(false);
+    }
+
+    private void TurnOnPremiumFunctions()
+    {
+        keyBindingOption.SetActive(true);
+        UIDesignOption.SetActive(true);
+        UIDesignText.SetActive(true);
+        //CreativeUID.SetActive(true);
     }
 
     public void SetFontSize(int c) //recieves the 0 or 1 from the save and loads the corresponding font
