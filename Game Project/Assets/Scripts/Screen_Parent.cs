@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using TMPro;
+using System;
 
 //responsible for Parent user GUI
 public class Screen_Parent : MonoBehaviour
@@ -12,6 +14,7 @@ public class Screen_Parent : MonoBehaviour
     private static string savedPass;
     private static string path;
     public GameObject OptionsMenu;
+    public GameObject EditPlayer;
     public GameObject ParentLogin;
     public InputField InputPass;
     public GameObject PasswordPrompt;
@@ -19,13 +22,31 @@ public class Screen_Parent : MonoBehaviour
     public GameObject ParentOptions;
     public GameObject PlayerStats;
     public GameObject ComboGuide;
+    public GameObject PickSave;
     public Text combosText;
     public Dropdown DropF; //for the fontsize dropdown event
     public Button submitButton; //for the login button
     public Button Confirm; //for the password change
 
+    public InputField limit;
+    public InputField bedTime;
+    public TMP_Text isHintText;
+    public Button isHint;
+
+    public TMP_Text Total;
+    public TMP_Text PlayTime;
+    public TMP_Text BedTimeLimit;
+    public TMP_Text Difficulty;
+    public TMP_Text Combos;
+    public TMP_Text AllowHints;
+    string pathSettings;
+    string SavePath;
+    Data_PerSaveSlot SaveData;
+    private bool hintBool;
+
     public void Awake()
     {
+        pathSettings = Application.persistentDataPath + "/saves/Settings.save"; //Global data
         DropF.value = PlayerPrefs.GetInt("ChangeFont",0);
         path = Application.persistentDataPath + "/config.parent";
         savedPass = IO_Files.ReadString(path);
@@ -149,60 +170,114 @@ public class Screen_Parent : MonoBehaviour
             PlayerPrefs.SetInt("ChangeFont", 0);
         }
     }
-    public void ReadSave(int index)    //load Save's stats to display
+    public void ReadSave(string slot)    //load Save's stats to display
     {
-        //string SavePath = Application.persistentDataPath + "/save/Slot " + index.ToString() + ".conf"; //adjust when saves exist
-        //Data_Player SaveData = IO_Files.ReadDataSetting(SavePath);
-        //if (SaveData != null)
-        //{
-        //    //fill objects in Player stats with fields from save file
-        //}
-        //else
-        //{
-        //    //loading save failed
-        //}
-    }
-    public void SetTimeLimit()    //enable&set/disable time limit per save
-    {
-        Debug.Log("Screen_Parent.SetTimeLimit: this function currently does nothing.");
-        //if InputField="";
-            //timeLimitSet=false; & update file
-        //else
-            //timeLimitSet=true; & update file
-            //timeLimit=convert InputField string to float & update file
+        SavePath = Application.persistentDataPath + "/saves/" + slot + ".conf"; //adjust when saves exist
+
+        SaveData = IO_Files.ReadDataSetting(pathSettings, SavePath).data_perSaveSlot;
+        if (File.Exists(SavePath))
+        {
+            PlayerStats.SetActive(true);
+            Total.text = "Total Game Time: " + FloatToTime(SaveData.TotalGameTime);
+            if(SaveData.timeLimitSet)
+                PlayTime.text = "Play Time Limit Set: " + FloatToTime(SaveData.timeLimit);
+            else
+                PlayTime.text = "Play Time Limit Set: NONE";
+
+            if (SaveData.bedtimeSet)
+                BedTimeLimit.text = "Bedtime Set: " + FloatToTime(SaveData.bedtime);
+            else
+                BedTimeLimit.text = "Bedtime Set: NONE";
+
+            Difficulty.text = "Difficulty: " + SaveData.difficulty.ToString();
+            Combos.text = "Cards Combined: " + SaveData.CardsCombined.ToString();
+
+            if (SaveData.hintsOn)
+                AllowHints.text = "Allowed Hints: ON";
+            else
+                AllowHints.text = "Allowed Hints: OFF";
+            PickSave.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("No save in the slot.");
+        }
     }
 
-    public void SetBedtime()    //enable&set/disable bedtime per save
+    public void SetStats()    //enable&set/disable time limit per save
     {
-        Debug.Log("Screen_Parent.SetBedtime: this function currently does nothing.");
-        //if InputField="";
-            //bedtimeSet=false; & update file
-        //else
-            //bedtimeSet=true; & update file
-            //bedtime=convert InputField string to float & update file
+        SaveData = IO_Files.ReadDataSetting(pathSettings, SavePath).data_perSaveSlot;
+
+        if (limit.text == "")
+        {
+            SaveData.timeLimitSet = false; //update file
+            SaveData.timeLimit = 0f;
+        }
+        else
+        {
+            SaveData.timeLimitSet = true; //update file
+            SaveData.timeLimit = TimeToFloat(limit.text); //update file
+        }
+
+        if (bedTime.text == "")
+        {
+            SaveData.bedtimeSet = false;
+            SaveData.bedtime = 0f;
+        }
+        else
+        {
+            SaveData.bedtimeSet = true;
+            SaveData.bedtime = TimeToFloat(bedTime.text);
+        }
+        SaveData.hintsOn = hintBool;
+
+        IO_Files.WriteDataPerSave(SavePath, SaveData);
     }
 
-    public void SetDificulty()    //set difficulty per save
+    public void loadButtonText()
     {
-        Debug.Log("Screen_Parent.SetDifficulty: this function currently does nothing.");
-        //difficulty=dropdown; & update file
+        if(SaveData.hintsOn)
+            isHintText.text = "Allow hints: ON";
+        else
+            isHintText.text = "Allow hints: OFF";
     }
 
     public void SetHints()       //enable/disable hints per save
     {
         Debug.Log("Screen_Parent.SetHints: this function currently does nothing.");
-        //if HintsOn==true in save file
-            //HintsOn=false; & update file
-        //else
-            //HintsOn=true; & update file
+        if (SaveData.hintsOn)
+        {
+            isHintText.text = "Allow hints: OFF";
+            hintBool = false;
+        }
+        else
+        {
+            isHintText.text = "Allow hints: ON";
+            hintBool = true;
+        }
     }
 
-    public void SetEnemies()       //enable/disable enemies per save
+    public float TimeToFloat(string time)   //converts time in hh:mm:ss or hh:mm format into float
     {
-        Debug.Log("Screen_Parent.SetEnemies: this function currently does nothing.");
-        //if EnemiesOff==true in save file
-            //EnemiesOff=false; & update file
-        //else
-            //EnemiesOff=true; & update file
+        string[] times = time.Split(':');
+        float hours = float.Parse(times[0]);
+        float minutes = float.Parse(times[1]);
+        float seconds = 0;
+        if (times.Length > 2)
+        {
+            seconds = float.Parse(times[2]);
+        }
+        return (hours * 60 + minutes) * 60 + seconds;
+    }
+    public float TimeToFloat(int hours, int minutes, int seconds)   //converts time in hh:mm:ss format into float
+    {
+        return (hours * 60 + minutes) * 60 + seconds;
+    }
+    public string FloatToTime(float time)   //converts time floats into a string
+    {
+        double hours = Math.Floor(time / (60 * 60));
+        double minutes = Math.Floor((time - hours * 60 * 60) / 60);
+        double seconds = time - hours * 60 * 60 - minutes * 60;
+        return string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
     }
 }

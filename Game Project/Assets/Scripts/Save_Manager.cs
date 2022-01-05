@@ -74,7 +74,6 @@ public class Save_Manager : MonoBehaviour
     void Start()
     {
         delete = startGame.transform.GetChild(2).gameObject;
-
         Back.GetComponent<Button>().onClick.AddListener(BackSelect);
     }
 
@@ -255,11 +254,11 @@ public class Save_Manager : MonoBehaviour
     {
         string path = Application.persistentDataPath + "/config.parent";
 
-        if (File.Exists(path))
+        if (File.Exists(path) && !File.Exists(pathPerSave))
         {
             menu_main.customParent.SetActive(true);
         }
-        else if (PlayerPrefs.GetInt("premium", 0) == 1)
+        else if (PlayerPrefs.GetInt("premium", 0) == 1 && !File.Exists(pathPerSave))
         {
             menu_main.customPremium.SetActive(true);
         }
