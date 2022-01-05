@@ -139,19 +139,19 @@ public class Screen_Parent : MonoBehaviour
     
     public void SetFontSize()    //set font size (0 - default, 1 - big)
     {
-            if (DropF.value == 1)
+        if (DropF.value == 1)
         {
             PlayerPrefs.SetInt("ChangeFont", 1);
         }
         
-            if(DropF.value == 0)
+        if(DropF.value == 0)
         {
             PlayerPrefs.SetInt("ChangeFont", 0);
         }
     }
     public void ReadSave(int index)    //load Save's stats to display
     {
-        string SavePath = Application.persistentDataPath + "/config" + index + ".player"; //adjust when saves exist
+        string SavePath = Application.persistentDataPath + "/save/Slot " + index.ToString() + ".conf"; //adjust when saves exist
         Data_Player SaveData = IO_Files.ReadData(SavePath);
         if (SaveData != null)
         {

@@ -33,8 +33,20 @@ public class Save_Manager : MonoBehaviour
     private GameObject delete; //Delete button
     private List<TMP_Text> slots; //List of all the available slots's text values
 
-    void Start()
+    private void Awake()
     {
+        //Create saves directory if not created yet.
+        if (!Directory.Exists(Application.persistentDataPath + "/saves"))
+            Directory.CreateDirectory(Application.persistentDataPath + "/saves");
+        //Create temp directory if not created yet.
+        if (!Directory.Exists(Application.persistentDataPath + "/temp"))
+            Directory.CreateDirectory(Application.persistentDataPath + "/temp");
+
+        slots = new List<TMP_Text>();
+        for (int i = 0; i < slotsNum; i++)
+            slots.Add(SaveSlots.transform.GetChild(i).GetComponentInChildren<TMP_Text>());
+        LoadedSlots();
+
         pathGameData = Application.persistentDataPath + "/saves/" + currSlot + ".save"; //Game data
         pathSettings = Application.persistentDataPath + "/saves/Settings.save"; //Global data
         pathPerSave = Application.persistentDataPath + "/saves/" + currSlot + ".conf"; //Slot configuration
@@ -43,30 +55,27 @@ public class Save_Manager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             if (menu_main == null) menu_main = FindObjectOfType<Menu_Main>();
-            //UpdateMenu();
+            UpdateMenu();
         }
         else if (SceneManager.GetActiveScene().name == "Game")
         {
             if (GameMaster == null) GameMaster = FindObjectOfType<Game_Master>();
             if (menu_pause == null) menu_pause = FindObjectOfType<Menu_Pause>();
             if (map_display == null) map_display = FindObjectOfType<Map_Display>();
-        }
 
+            if (File.Exists(pathPerSave))
+                SettingsLoaded(pathPerSave);
+            else if (File.Exists(pathTemporary))
+                SettingsLoaded(pathTemporary);
+            else Debug.LogError("Configuration file not found.");
+        }
+    }
+
+    void Start()
+    {
         delete = startGame.transform.GetChild(2).gameObject;
 
         Back.GetComponent<Button>().onClick.AddListener(BackSelect);
-
-        slots = new List<TMP_Text>();
-        for (int i = 0; i < slotsNum; i++)
-            slots.Add(SaveSlots.transform.GetChild(i).GetComponentInChildren<TMP_Text>());
-
-        //Create saves directory if not created yet.
-        if (!Directory.Exists(Application.persistentDataPath + "/saves"))
-            Directory.CreateDirectory(Application.persistentDataPath + "/saves");
-        //Create temp directory if not created yet.
-        if (!Directory.Exists(Application.persistentDataPath + "/temp"))
-            Directory.CreateDirectory(Application.persistentDataPath + "/temp");
-        LoadedSlots();
     }
 
     //Open the save slots.
@@ -137,9 +146,9 @@ public class Save_Manager : MonoBehaviour
         //Saving the game data from Map_Display.
         IO_Files.WriteData(pathGameData, map_display.Save_Data());
         //Saving the game data from Game_master.
-        //SavePerSlot(pathPerSave);
+        SavePerSlot(pathPerSave);
         //Saving the global settings.
-        //SaveSettings();
+        SaveSettings();
         SavedSlots(); 
     }
 
@@ -234,9 +243,12 @@ public class Save_Manager : MonoBehaviour
     //Delete the current save slot data.
     public void Delete()
     {
-        IO_Files.DeleteData(pathGameData);
-        IO_Files.DeleteData(pathPerSave);
-        DeleteSlot();
+        pathGameData = Application.persistentDataPath + "/saves/" + currSlot + ".save"; //Game data
+        pathPerSave = Application.persistentDataPath + "/saves/" + currSlot + ".conf"; //Slot configuration
+
+        if (IO_Files.DeleteData(pathGameData))
+            if(IO_Files.DeleteData(pathPerSave))
+                DeleteSlot();
     }
 
     //The multi scene play button.
@@ -250,8 +262,8 @@ public class Save_Manager : MonoBehaviour
             if (File.Exists(pathTemporary))
                 IO_Files.DeleteData(pathTemporary);
 
-            //SavePerSlot(pathTemporary);
-            //SaveSettings();
+            SavePerSlot(pathTemporary);
+            SaveSettings();
 
             menu_main.NewGame();
         }
@@ -268,18 +280,12 @@ public class Save_Manager : MonoBehaviour
         pathPerSave = Application.persistentDataPath + "/saves/" + currSlot + ".conf"; //Slot configuration
         pathTemporary = Application.persistentDataPath + "/temp/config.temp"; //Temporary data
 
-        //if (File.Exists(pathPerSave))
-        //    SettingsLoaded(pathPerSave);
-        //else if (File.Exists(pathTemporary))
-        //    SettingsLoaded(pathTemporary);
-        //else Debug.LogError("Configuration file not found.");
-
         return data_player;
     }
 
     public void SettingsLoaded(string path)
     {
-        Save_Settings save_settings = IO_Files.ReadDataSetting(pathSettings, path);
+        Save_Settings save_settings = (Save_Settings)IO_Files.ReadDataSetting(pathSettings, path);
 
         GameMaster.charLook = save_settings.data_perSaveSlot.charLook;
         GameMaster.bedtimeSet = save_settings.data_perSaveSlot.bedtimeSet;

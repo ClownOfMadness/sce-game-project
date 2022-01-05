@@ -82,7 +82,7 @@ public static class IO_Files
         BinaryFormatter formatter = GetBinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
         formatter.Serialize(stream, data);
-        Debug.Log("File created at: " + path);
+        //Debug.Log("File created at: " + path);
         stream.Close();         //opened files must be closed when done with
     }
     //Save the player's configuration data to file.
@@ -93,7 +93,7 @@ public static class IO_Files
         BinaryFormatter formatter = GetBinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
         formatter.Serialize(stream, data);
-        Debug.Log("File created at: " + path);
+        //Debug.Log("File created at: " + path);
         stream.Close();         //opened files must be closed when done with
     }
     //Save the global data to file.
@@ -104,20 +104,22 @@ public static class IO_Files
         BinaryFormatter formatter = GetBinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
         formatter.Serialize(stream, data);
-        Debug.Log("File created at: " + path);
+        //Debug.Log("File created at: " + path);
         stream.Close();         //opened files must be closed when done with
     }
 
     //Dalete the file.
-    public static void DeleteData(string path) 
+    public static bool DeleteData(string path) 
     {
         if (File.Exists(path))
         {
             File.Delete(path);
-            Debug.Log("File deleted: " + path);
+            //Debug.Log("File deleted: " + path);
+            return true;
         }
         else
             Debug.LogWarning("File not found.");
+        return false;
     }
 
     //Create binary formatter with serialization surrogates.

@@ -10,7 +10,6 @@ public class Menu_Main : MonoBehaviour
     public GameObject LoadPanel;
     public GameObject MenuMain;
     public GameObject GameMenu;
-    public GameObject tutorial;
 
     public TextMeshProUGUI Logo;
     public GameObject blackScreen;

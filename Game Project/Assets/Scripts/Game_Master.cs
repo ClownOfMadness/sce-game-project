@@ -158,7 +158,7 @@ public class Game_Master : MonoBehaviour
         else
             premiumUser = false;
 
-        if (!isFirst)
+        if (isFirst)
         {
             Tutorial.SetActive(true);
         }
@@ -460,80 +460,3 @@ public class Game_Master : MonoBehaviour
         return string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
     }
 }
-
-//    //[General+Parent]//
-//    public Game_Parent ExportGame()             //will be used to save the game
-//    {
-//        Game_Parent export = new Game_Parent();
-//        //22. bedtime:
-//        export.bedtimeSet = bedtimeSet;
-//        export.bedtime = bedtime;
-//        //23. play time limit:
-//        export.timeLimitSet = timeLimitSet;
-//        export.timeLimit = timeLimit;
-//        export.timeLeft = timeLeft;
-//        //26. game statistics:
-//        export.TotalGameTime = totalGameTime;
-//        export.CardsCombined = Cards.CardsCombined;
-//        export.CardsDiscovered = Cards.CardsDiscovered;
-//        //27. font:
-//        export.fontSize = (int)fontSize;
-//        //28. hints:
-//        export.hintsOn=hintsOn;
-//        //29. game speed:
-//        export.gameSpeed = (int)gameSpeed;
-//        //15+24. enemies:
-//        export.enemiesOff = enemiesOff;
-//        //18+30. difficulty:
-//        export.difficulty = (int)difficulty;
-//        return export;
-//    }
-//    public void ImportGame(Game_Parent import)  //will be used to load the game
-//    {
-//        //22. bedtime:
-//        bedtimeSet = import.bedtimeSet;
-//        bedtime = import.bedtime;
-//        //23. play time limit:
-//        timeLimitSet = import.timeLimitSet;
-//        timeLimit = import.timeLimit;
-//        timeLeft = import.timeLeft;
-//        //26. game statistics:
-//        totalGameTime = import.TotalGameTime;
-//        Cards.CardsCombined = import.CardsCombined;
-//        Cards.CardsDiscovered = import.CardsDiscovered;
-//        //27. font:
-//        fontSize = (fontList)import.fontSize;
-//        //28. hints:
-//        hintsOn = import.hintsOn;
-//        //29. game speed:
-//        gameSpeed = (speedList)import.gameSpeed;
-//        //15+24. enemies:
-//        enemiesOff = import.enemiesOff;
-//        //18+30. difficulty:
-//        //difficulty = (difficultyList)import.difficulty;
-//    }
-//}
-//public class Game_Parent
-//{
-//    //22. bedtime:
-//    public bool bedtimeSet;
-//    public float bedtime;
-//    //23. play time limit:
-//    public bool timeLimitSet;
-//    public float timeLimit;
-//    public float timeLeft;
-//    //26. game statistics:
-//    public float TotalGameTime;
-//    public int CardsCombined;
-//    public int CardsDiscovered;
-//    //27. font:
-//    public int fontSize;    //0=Normal, 1=Big
-//    //28. hints:
-//    public bool hintsOn;
-//    //29. game speed:
-//    public int gameSpeed;   //0=Normal, 1=Slow
-//    //15+24. enemies:
-//    public bool enemiesOff;
-//    //18+30. difficulty:
-//    public int difficulty;  //0=Normal, 1=Easy, 2=Hardcore
-
