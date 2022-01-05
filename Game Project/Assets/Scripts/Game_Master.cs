@@ -138,6 +138,7 @@ public class Game_Master : MonoBehaviour
 
     void Awake()
     {
+        Debug.Log(isCrafty);
         //giving access to other scripts: (enable whaterver is relevant)
         //Jobs.Game = this;
         Cards.Game = this;

@@ -12,6 +12,7 @@ public class Menu_Pause : MonoBehaviour
     public GameObject KeyBindingUI;//Key Binding Menu
     public GameObject gamePlayUI;//Game play menue
     public Game_Master game_Master;
+    public Save_Manager save_Manager;
     public Dropdown UIDesignDrop; //dropdown for UI design changing
     SpriteState tempState; //for swapping sprites
     [Header("---[UI]---")]
@@ -79,23 +80,14 @@ public class Menu_Pause : MonoBehaviour
     public Sprite Delete2;
     public Sprite Delete2Hover;
 
-
-    /*public void Start()
+    private void Start()
     {
-        Debug.Log("If the user has premium:"+game_Master.premiumUser); //*for testing purposes*
-         if (game_Master.premiumUser==false)
-         {
-             keyBindingOption.SetActive(false);
-         }
-         else
-         {
-             keyBindingOption.SetActive(true);
-         }
-    }*/
+        UIDesignDrop.value = game_Master.windowLook;
+        ChangeDesign();
+    }
 
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(IsPaused)
@@ -132,8 +124,8 @@ public class Menu_Pause : MonoBehaviour
     {
         IsPaused = false;
         Time.timeScale = 1f;
+        save_Manager.Save();
         SceneManager.LoadScene("Menu");
-        Debug.Log("Loading menu...please wait");
     }
 
     public void ChangeDesign()
@@ -148,6 +140,7 @@ public class Menu_Pause : MonoBehaviour
             SetDefaultDesign();
             UIDesignDrop.value = 0;
         }
+        game_Master.windowLook = UIDesignDrop.value;
     }
 
     private void SetDefaultDesign()

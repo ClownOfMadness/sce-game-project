@@ -19,6 +19,9 @@ public class Menu_Main : MonoBehaviour
     public RawImage backGround;
     public float bGSpeed;
     TextMeshProUGUI loadText;
+    public TextMeshProUGUI veteran;
+    public TextMeshProUGUI builder;
+    public TextMeshProUGUI craftsman;
 
     //----------------------------Save System----------------------------//
 
@@ -63,6 +66,13 @@ public class Menu_Main : MonoBehaviour
         //PlayerPrefs.SetInt("GameSpeed", 0); //*for testing game speed*
     }
 
+    public void Start()
+    {
+        if (isVeteran) veteran.color = Color.white;
+        if (isBuilder) builder.color = Color.white;
+        if (isCrafty) craftsman.color = Color.white;
+    }
+    
     public void NewGame()
     {
         LoadPanel.SetActive(true);

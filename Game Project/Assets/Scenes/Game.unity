@@ -1915,6 +1915,7 @@ MonoBehaviour:
   KeyBindingUI: {fileID: 1350261986}
   gamePlayUI: {fileID: 1702719684}
   game_Master: {fileID: 796799537}
+  save_Manager: {fileID: 165519931}
   UIDesignDrop: {fileID: 819102589}
   Hints: {fileID: 1018080586}
   Book: {fileID: 328613849}
@@ -2612,6 +2613,7 @@ MonoBehaviour:
   - {fileID: 178846024}
   - {fileID: 1432955951}
   - {fileID: 1853056873}
+  index: 0
 --- !u!114 &230214243
 MonoBehaviour:
   m_ObjectHideFlags: 0

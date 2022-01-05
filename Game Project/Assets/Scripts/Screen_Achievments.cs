@@ -10,9 +10,6 @@ public class Screen_Achievments : MonoBehaviour
     private int buildingsForBuilder = 2;
     private int cardsForCrafty = 1;
 
-    private bool isVeteran = false;
-    private bool isBuilder = false;
-    private bool isCrafty = false;
     public Game_Master GameMaster;
     public GameObject popUp;
     public TMP_Text popUptext;
@@ -21,26 +18,20 @@ public class Screen_Achievments : MonoBehaviour
 
     private void Update()
     {
-        if (!isVeteran && GameMaster.MapSpawn.DayCount >= daysForVeteran)
-        //if (!GameMaster.isVeteran && GameMaster.MapSpawn.DayCount >= daysForVeteran)
+        if (!GameMaster.isVeteran && GameMaster.MapSpawn.DayCount >= daysForVeteran)
         {
             PopMessage("Acheivment unlocked: Veteran");
-            //GameMaster.isVeteran = true;
-            isVeteran = true;
+            GameMaster.isVeteran = true;
         }
-        if (!isBuilder && GameMaster.buildingsCount >= buildingsForBuilder)
-        //if (!GameMaster.isBuilder && GameMaster.buildingsCount >= buildingsForBuilder)
+        if (!GameMaster.isBuilder && GameMaster.buildingsCount >= buildingsForBuilder)
         {
             PopMessage("Acheivment unlocked: Builder");
-            //GameMaster.isBuilder = true;
-            isBuilder = true;
+            GameMaster.isBuilder = true;
         }
-        if (!isCrafty && GameMaster.CardsCombined >= cardsForCrafty)
-        //if (!GameMaster.isCrafty && GameMaster.CardsCombined >= cardsForCrafty)
+        if (!GameMaster.isCrafty && GameMaster.CardsCombined >= cardsForCrafty)
         {
             PopMessage("Acheivment unlocked: Craftsman");
-            //GameMaster.isCrafty = true;
-            isCrafty = true;
+            GameMaster.isCrafty = true;
         }
     }
 
