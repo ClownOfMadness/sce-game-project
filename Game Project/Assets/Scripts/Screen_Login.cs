@@ -10,12 +10,14 @@ public class Screen_Login : MonoBehaviour
     [HideInInspector] public string [] Pcode = new string[] { "Premium", "premium", "Premium1", "premium1","Premium2","premium2" };
     [HideInInspector] public string Pcancel = "cancel";
     public InputField code;
-    public Button submitButton; //
+    public Button submitButton; //to be able to invoke it with the "Return" key
     public GameObject Menu;
     public GameObject LoginPremium;
     public GameObject Canvas;
+    public GameObject ErrorMessage;
     //public Menu_Pause menu_Pause;
-    public void Update() //
+
+    public void Update() 
     {
         if (Input.GetKeyDown(KeyCode.Return)||(Input.GetKey("enter")))
         {
@@ -26,6 +28,7 @@ public class Screen_Login : MonoBehaviour
     }
     public void TryLogin()  //try to login
     {
+        ClearInputField(); //to clear the input field
         int i;
         Debug.Log(Pcode.Length);
         for (i = 0; i < Pcode.Length; i++)
@@ -33,6 +36,7 @@ public class Screen_Login : MonoBehaviour
             if (code.text == Pcode[i])
             {
                 Debug.Log("Log in succefull");
+                ErrorMessage.SetActive(false);
                 //IsLogin = true;
                 PlayerPrefs.SetInt("premium", 1);   //save premium=true;
                 LoginPremium.SetActive(false);
@@ -49,7 +53,15 @@ public class Screen_Login : MonoBehaviour
         }
         if (Pcode.Length == i)
         {
+            ErrorMessage.SetActive(true);
             Debug.Log("Incorrect Code");
         }
+    }
+
+    public void ClearInputField()
+    {
+         //to clear the input field
+        code.Select();
+        code.text = "";
     }
 }

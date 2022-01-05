@@ -27,6 +27,7 @@ public class Screen_Parent : MonoBehaviour
     public Dropdown DropF; //for the fontsize dropdown event
     public Button submitButton; //for the login button
     public Button Confirm; //for the password change
+    public GameObject ErrorMessage;
 
     public InputField limit;
     public InputField bedTime;
@@ -46,6 +47,7 @@ public class Screen_Parent : MonoBehaviour
 
     public void Awake()
     {
+        ErrorMessage.SetActive(false);
         pathSettings = Application.persistentDataPath + "/saves/Settings.save"; //Global data
         DropF.value = PlayerPrefs.GetInt("ChangeFont",0);
         path = Application.persistentDataPath + "/config.parent";
@@ -72,13 +74,14 @@ public class Screen_Parent : MonoBehaviour
     }
     public void TryLogin()  //try to login
     {
-        
+        ClearInputField();
         Debug.Log(path);
         if (firstLogin)
         {
             if (InputPass.text == defaultPass)
             {
                 Debug.Log("Log in succefull");
+                ErrorMessage.SetActive(false);
                 //use an ingame message later on
                 IsParent = true;
                 ParentLogin.SetActive(false);
@@ -86,6 +89,7 @@ public class Screen_Parent : MonoBehaviour
             }
             else
             {
+                ErrorMessage.SetActive(true);
                 Debug.Log("Incorrect Code");
                 //use an ingame message later on
             }
@@ -135,6 +139,8 @@ public class Screen_Parent : MonoBehaviour
             PasswordPrompt.SetActive(false);
             ParentOptions.SetActive(true);
         }
+        ErrorMessage.SetActive(false); //reseting the error message
+        ClearPassInputField(); //clear the pass input field
 
     }
     public void CombosScreen()
@@ -279,5 +285,19 @@ public class Screen_Parent : MonoBehaviour
         double minutes = Math.Floor((time - hours * 60 * 60) / 60);
         double seconds = time - hours * 60 * 60 - minutes * 60;
         return string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
+    }
+
+    public void ClearInputField()
+    {
+        //to clear the input field
+        InputPass.Select();
+        InputPass.text = "";
+    }
+
+    public void ClearPassInputField()
+    {
+        //to clear the change password input field
+        InputNewPass.Select();
+        InputNewPass.text = "";
     }
 }
