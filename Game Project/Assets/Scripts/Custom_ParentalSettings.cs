@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CustomSettings : MonoBehaviour
+public class Custom_ParentalSettings : MonoBehaviour
 {
     public Menu_Main menu;
+    //public Game_Master master;
     public Dropdown DropGS; //for the gameSpeed dropdown
     public Dropdown DropD; //difficulty dropdown
     public Dropdown EnemiesDrop; //enemies on off drop
@@ -23,13 +24,13 @@ public class CustomSettings : MonoBehaviour
             EnemiesDrop.value = 0;
         }
 
-        if (menu.difficulty==0)
+        if (menu.difficulty==0 || menu.difficulty == 2)
         {
-            DropD.value = 1;
+            DropD.value = 0;
         }
         else
         {
-            DropD.value = 0;
+            DropD.value = 1;
         }
        
     }
@@ -41,7 +42,7 @@ public class CustomSettings : MonoBehaviour
         {
             menu.gameSpeed = 1;
         }
-        else 
+        else
         {
             menu.gameSpeed = 0;
         }
@@ -49,13 +50,13 @@ public class CustomSettings : MonoBehaviour
 
     public void ParentSetDifficulty()
     {
-        if (DropD.value == 1) //easy
+        if (DropD.value == 1)
         {
-            menu.difficulty = 0;
+            menu.difficulty = 1;
         }
         else
         {
-            menu.difficulty = 1; //normal
+            menu.difficulty = 0;
         }
 
     }
