@@ -15,6 +15,7 @@ public class Map_Display : MonoBehaviour
     public Unit_List unitlist;
 
     //Classes used.
+    public Game_Master GameMaster;
     private Map_Gen Map;
     private Player_SpawnBuilding SpawnBuilding;
     private Map_SpawnControl SpawnControl;
@@ -54,6 +55,7 @@ public class Map_Display : MonoBehaviour
         enemy_list = FindObjectOfType<Enemy_List>();
         player_control = FindObjectOfType<Player_Control>();
         system_dayNight = FindObjectOfType<System_DayNight>();
+        GameMaster = FindObjectOfType<Game_Master>();
         size = Map.mapSize;
 
 
@@ -78,6 +80,10 @@ public class Map_Display : MonoBehaviour
                 for (int x = 0; x < size; x++)
                     Map.DataTileArray[x, y].UpdateMe();
         }
+        if (GameMaster.CardsCombined < screen_cards.CardsCombined)
+            GameMaster.CardsCombined = screen_cards.CardsCombined;
+        if (GameMaster.CardsDiscovered < screen_cards.CardsDiscovered)
+            GameMaster.CardsDiscovered = screen_cards.CardsDiscovered;
     }
 
     //---------------------------------------------------Load---------------------------------------------------//

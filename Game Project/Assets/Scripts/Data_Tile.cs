@@ -474,6 +474,8 @@ public class Data_Tile : MonoBehaviour
             else if (buildDone)
             {
                 buildingComplete = true;
+                game.buildingsCount++;
+                
                 foreach (GameObject _unit in builders)
                 {
                     DetachBuild(_unit);

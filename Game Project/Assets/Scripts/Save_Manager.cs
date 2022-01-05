@@ -211,8 +211,8 @@ public class Save_Manager : MonoBehaviour
         {
             data_perSlot.isFirstGame = false;
             data_perSlot.TotalGameTime = GameMaster.totalGameTime;
-            data_perSlot.CardsCombined = GameMaster.CardsCombined;
-            data_perSlot.CardsDiscovered = GameMaster.CardsDiscovered;
+            data_perSlot.CardsCombined = GameMaster.Cards.CardsCombined;
+            data_perSlot.CardsDiscovered = GameMaster.Cards.CardsDiscovered;
             data_perSlot.gameDays = GameMaster.gameDays;
             data_perSlot.buildingsCount = GameMaster.buildingsCount;
             data_perSlot.charLook = GameMaster.charLook;

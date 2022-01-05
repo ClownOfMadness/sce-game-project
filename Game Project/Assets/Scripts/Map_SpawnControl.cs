@@ -16,7 +16,7 @@ public class Map_SpawnControl : MonoBehaviour
     private bool prevState = false; //previous day state
     private bool curState = false; //current day state
     [HideInInspector] public int DayCount; //still counting the days
-    [HideInInspector] public int UnitTotal = 3; //the current amount of units - (need to be changed by unit list)
+    [HideInInspector] public int UnitTotal = 3; //the current amount of units
     [HideInInspector] public int BuildingCapacity; //the capacity of all the buildings on the map
     public int MaxPeasentSpawn; //the maximum spawning of peasents in one day
 
@@ -62,6 +62,7 @@ public class Map_SpawnControl : MonoBehaviour
             {
                 Debug.Log(string.Format("Day {0}", DayCount));
                 if (DayCount != 1) SpawnNewPeasents(); //spawn new villagers
+                GameMaster.gameDays = DayCount;
             }
             else//Night time
             {
