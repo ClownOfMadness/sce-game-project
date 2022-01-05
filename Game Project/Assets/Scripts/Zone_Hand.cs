@@ -20,6 +20,7 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
     public bool Damage = false; //simulate attacking the Cardmaster
     public enum decksList       //enum for preset menu
     {
+        Presentation,
         CraftMenuPrompt,
         Units,
         Buildings,
@@ -29,7 +30,8 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
     public decksList Preset;    //enables picking a deck preset via the inspector
 
     //internal fields:
-    //private List<string> deck = new List<string>(); //The cards that are in hand in the beginning
+    private List<string> presenation = new List<string> //craft menu preset
+    { "Flint","Stick","Flint","Clay","Mud","Wood","Stone","Stick" };
     private List<string> craftMenuPrompt = new List<string> //craft menu preset
     { "Flint","Stick","Flint","Stick","Iron","Stick","Steel","Stick" };
     private List<string> units = new List<string>           //unit placement preset
@@ -38,38 +40,16 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
     { "Town Hall","Town Hall","House","Hut","Cabin","Bakery","Wood","Stick" };
     private List<string> emptyHand = new List<string>       //empty Hand preset
     {"Creation"};
-    private List<string> importedDeck = new List<string>(); //The cards that the player had in the loaded save
 
-    void Update()
-    {
-        if (Fill)
-        {
-            Debug.Log("Fill bool currently simulates importing a deck with: Fisherman, wooden bridge");
-            List<int> deck = new List<int> { 1001, 5000 };
-            ImportDeck(deck);
-            /*
-            foreach (Transform cardObject in this.transform)
-            {
-                GameObject.Destroy(cardObject.gameObject);
-            }
-            InstantiateZone();   //add objects to hand up to 8 in runtime
-            */
-            Fill = false;
-        }
-        if (Damage)
-        {
-            DamageDeck();       //simulates the cardmaster being hit
-            Damage = false;
-        }
-    }
     public void InstantiateZone()
     {
         Size = 8;               //max Zone size
 
         Pool = screen.Pool;
         Creation = screen.Creation;
-        switch (Preset)
+        switch (Preset) //fill hand according to preset
         {
+            case decksList.Presentation: AddCards(presenation); break;
             case decksList.EmptyHand: AddCards(emptyHand); break;
             case decksList.CraftMenuPrompt: AddCards(craftMenuPrompt); break;
             case decksList.Units: AddCards(units); break;
@@ -111,13 +91,6 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
 
             Debug.Log("Cardmaster took damage! Card " + lostCard.name + " was lost.");
             Destroy(cardObjects[random].gameObject);
-            //if (lostCard == Creation)
-            //{
-            //    screen.Game.GameLost();
-            //    Debug.Log("Game lost.");
-            //}
-            //else if (count <= 1)
-            //    EmptyHand();    //spawn Creation if took too much damage
             if (lostCard != Creation && count <= 1)
                 EmptyHand();
         }
@@ -135,15 +108,6 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
             NotEmpty();
         }
     }
-
-    //public void RefreshCards()
-    //{
-    //    Card_Drag[] cardObjects = this.GetComponentsInChildren<Card_Drag>();
-    //    for (int i = 0; i < cardObjects.Length; i++)      //loops to move the placeholder to the left
-    //    {
-    //        cardObjects[i].positionReturnTo = new Vector3(cardObjects[i].transform.position.x, cardObjects[i].transform.position.y, 0);  //original position
-    //    }
-    //}
     public void EmptyHand()     //add Creation to hand
     {
         GameObject newCard = screen.CreateObject(this.transform, Creation); //create and instantiate object in zone
@@ -172,7 +136,7 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
             }
         }
     }
-    public List<int> ExportDeck()           //will be used to save the game
+    public List<int> ExportDeck()           //used to save the game
     {
         List<int> export = new List<int>();
         Card_Drag[] cardObjects = this.GetComponentsInChildren<Card_Drag>();
@@ -180,7 +144,7 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
             export.Add(cardObjects[i].card.code);
         return export;
     }
-    public void ImportDeck(List<int> import)//will be used to load the game
+    public void ImportDeck(List<int> import)//used to load the game
     {
         List<string> importedDeck = new List<string>();
         for (int i = 0; i < import.Count && i < this.Size; i++) 
