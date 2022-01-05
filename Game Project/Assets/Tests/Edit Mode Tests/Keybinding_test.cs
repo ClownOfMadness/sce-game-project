@@ -32,7 +32,7 @@ public class Keybinding_test
 
     [Test]
     public void KeybindingGetKeyTest()
-    {
+    { 
         KeyBinding keyBinding = new KeyBinding();
         string k=keyBinding.GetKey("Jobs");
         Assert.AreEqual(expected: "J", actual: k);

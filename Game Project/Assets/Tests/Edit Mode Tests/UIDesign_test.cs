@@ -51,7 +51,7 @@ public class UIDesign_test
     {
         Menu_Pause menu_Pause = new Menu_Pause();
         Assert.IsNotNull(menu_Pause.Hint1);
-
+       
     }
 
     [Test]
@@ -62,8 +62,6 @@ public class UIDesign_test
 
     }
 
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
     /*[UnityTest]
     public IEnumerator UIDesign_testWithEnumeratorPasses()
     {

@@ -18,6 +18,7 @@ public class Tutorial_test
     {
         /*Game_Master game_Master = new Game_Master();
         game_Master.Tutorial.SetActive(true);*/
+
         Tutorial tutorial = new Tutorial();
         tutorial.OpenTutorial();
         Assert.AreEqual(expected: 0f, actual: Time.timeScale);
@@ -28,11 +29,30 @@ public class Tutorial_test
     {
         /*Game_Master game_Master = new Game_Master();
         game_Master.Tutorial.SetActive(false);*/
+
         Tutorial tutorial = new Tutorial();
         tutorial.OpenTutorial();
         Assert.AreEqual(expected: 1f, actual: Time.timeScale);
     }
 
+    [Test]
+    public void TutorialNextPage()
+    {
+        Tutorial tutorial = new Tutorial();
+        tutorial.OpenTutorial();
+        tutorial.Next();
+        Assert.AreEqual(expected: 1, actual: tutorial.index);
+    }
+
+    [Test]
+    public void TutorialPreviousPage()
+    {
+        Tutorial tutorial = new Tutorial();
+        tutorial.OpenTutorial();
+        tutorial.index = 5;
+        tutorial.Previous();
+        Assert.AreEqual(expected: 4, actual: tutorial.index);
+    }
 
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
     // `yield return null;` to skip a frame.

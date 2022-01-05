@@ -208,15 +208,15 @@ public class Game_Master : MonoBehaviour
 
         //keylisteners
         if (Input.GetKeyDown(creativeK) && (!Menu_Pause.IsPaused) && premiumUser) //to close and open "Creative" with keyboard as well
-        {
+        {                                                           //also checks if creative is enabled
             Cards.SwitchCreative();
         }
         else if (Input.GetKeyDown(storageK) && (!Menu_Pause.IsPaused)) //to close and open "Storage" with keyboard as well
         {
             Cards.SwitchStorage();
         }
-        else if (Input.GetKeyDown(Hintsk) && (!Menu_Pause.IsPaused)) //to display hints 
-        {
+        else if (Input.GetKeyDown(Hintsk) && (!Menu_Pause.IsPaused)&& hintsOn) //to display hints 
+        {                                                           //also checks if hints are enabled
             Cards.SwitchHints();
         }
         else if (Input.GetKeyDown(Jobsk) && (!Menu_Pause.IsPaused)) //close and open job menu
