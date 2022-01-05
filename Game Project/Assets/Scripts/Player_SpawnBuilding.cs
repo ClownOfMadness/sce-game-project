@@ -63,6 +63,40 @@ public class Player_SpawnBuilding : MonoBehaviour
         return false;
     }
 
+    public bool SpawnReady(GameObject building, GameObject Tile)
+    {
+        Data_Building dataBuilding = building.GetComponent<Data_Building>();
+        Data_Tile dataTile = Tile.GetComponent<Data_Tile>();
+
+        if (dataTile.hasTownHall)
+        {
+            return false;
+        }
+        if ((dataTile.revealed && dataTile.canBuild) || dataBuilding.buildingName == "TownHall")
+        {
+            if (dataTile.hasBuilding)
+            {
+                Destroy(dataTile.building);
+            }
+            GameObject NewBuilding = Instantiate(building, Tile.transform.position + buildingPosition, Quaternion.Euler(0, 0, 0));
+            NewBuilding.name = building.transform.name;
+            NewBuilding.transform.parent = Tile.transform;
+            UpdateCapacity(NewBuilding.name);//add to the buildings total capacity
+
+            if (dataBuilding.buildingName == "TownHall")
+            {
+                dataTile.PlaceTownHall(NewBuilding);
+            }
+            else
+            {
+                dataTile.PlaceReadyBuilding(NewBuilding);
+            }
+            path.Scan();
+            return true;
+        }
+        return false;
+    }
+
     //Create a list of all the prefabs in the buildings folder.
     public List<GameObject> CreateBuildingsList()
     {
