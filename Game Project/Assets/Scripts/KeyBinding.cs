@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class KeyBinding : MonoBehaviour
 {
-    private Dictionary<string, KeyCode> Keys = new Dictionary<string, KeyCode>(); //setting up a keys dictionary
+    public Dictionary<string, KeyCode> Keys = new Dictionary<string, KeyCode>(); //setting up a keys dictionary
     public Text Creative,Storage,Hints,Jobs,MoveUp,MoveDown,MoveRight,MoveLeft,Sprint;
     [HideInInspector] public GameObject CurrentKey; //
     Event e; //holds the key (e.keycode)

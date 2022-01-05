@@ -6,13 +6,14 @@ using UnityEngine.TestTools;
 
 public class UIDesign_test
 {
-    // A Test behaves as an ordinary method
+
     [Test]
     public void IsPremium()
     {
         Game_Master game_Master = new Game_Master();
         Assert.IsTrue(!game_Master.premiumUser);
     }
+
     [Test]
     public void UIDesignCount()
     {

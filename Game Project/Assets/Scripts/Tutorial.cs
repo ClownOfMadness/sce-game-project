@@ -7,7 +7,7 @@ public class Tutorial : MonoBehaviour
 {
     public Menu_Main mainMenu;
     public GameObject[] background;
-    int index;
+    public int index;
 
     void Start()
     {
