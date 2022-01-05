@@ -114,6 +114,8 @@ public class Game_Master : MonoBehaviour
     public bool bedtimeSet;
     public float bedtime;
     public float realTime;
+    public DateTime LastPlayed;
+    private Save_Manager save_Manager;
     //23. play time limit:
     public bool timeLimitSet;
     public float timeLimit;
@@ -140,17 +142,13 @@ public class Game_Master : MonoBehaviour
     {
         Debug.Log(isCrafty);
         //giving access to other scripts: (enable whaterver is relevant)
-        //Jobs.Game = this;
         Cards.Game = this;
-        //Cycle.Game = this;
-        //MapGen.Game = this;
         Control.game = this;
-        //Pause.Game = this;
-        //Units.Game = this;
-        //Enemies.Game = this;
+
+        save_Manager= FindObjectOfType<Save_Manager>();
 
         //set default
-        NewGame();
+        StartGame();
 
         //Determine the fog dissapearence.
         if(fogOff)
@@ -194,17 +192,20 @@ public class Game_Master : MonoBehaviour
         //timeLimitSet = true;
         //[testing time limit functionality]
 
-
-        if (timeLimitSet)
+        if (timeLimitSet)   //if new day, allow the player to play again
         {
-            //string currentDate = DateTime.Today.Date.ToString("d");
-            //if ([dateOfLastSave]!=currentDate)
-            //timeLeft = timeLimit;
+            string currentDate = DateTime.Today.Date.ToString("d");
+            string lastDate = LastPlayed.Date.ToString("d");
+            if ( currentDate!= lastDate)
+                timeLeft = timeLimit;
         }
+
         SetFontSize(PlayerPrefs.GetInt("ChangeFont")); //sets the correct font size
     }
     void Update() //main Update, handles constant checking of parameters for the rest of the game
     {
+        totalGameTime -= Time.deltaTime;
+
         //keylisteners
         if (Input.GetKeyDown(creativeK) && (!Menu_Pause.IsPaused) && premiumUser) //to close and open "Creative" with keyboard as well
         {
@@ -222,11 +223,6 @@ public class Game_Master : MonoBehaviour
         {
             Jobs.SwitchJob();
         }
-        //move other key listeners here
-
-
-        //[Premium]//
-        //
 
         //[Parent]//
         //22. bedtime:
@@ -237,6 +233,15 @@ public class Game_Master : MonoBehaviour
             {
                 Debug.Log("Reached bedtime");
                 //save game and exit
+                save_Manager.Save();
+#if UNITY_EDITOR
+                // Application.Quit() does not work in the editor so
+                // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
+               
             }
         }
         //23. time limit:
@@ -250,10 +255,18 @@ public class Game_Master : MonoBehaviour
             {
                 Debug.Log(string.Format("{0} ran out", FloatToTime(timeLimit)));
                 //save game and exit
+                save_Manager.Save();
+#if UNITY_EDITOR
+                // Application.Quit() does not work in the editor so
+                // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
             }
         }
     }
-    public void NewGame()   //run when new game is started
+    public void StartGame()   //run when game is started
     {
         // Keycodes:each one draws a value from playerprefs and has a default value for backup
         creativeK = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Creative", "C"));
@@ -261,31 +274,11 @@ public class Game_Master : MonoBehaviour
         Hintsk = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Hints", "H"));
         Jobsk = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Jobs", "J"));
 
-        //defaults for a new game:
-        //[General]//
-        //totalGameTime = 0;
-
-        //[Premium]//
-        //premiumUser = false;
-        //windowLook = 0;
-        //fogOff = false;
-        //charLook = (charList)1;
-
-        //[Parent]//
-        //bedtimeSet = false;
-        //bedtime = 0;
-        //timeLimitSet = false;
-        //timeLimit = 0;
-        //fontSize = fontList.Normal;
-        //hintsOn = false;
+        //defaults for game:
         SetGameSpeed();
-
-        //[Premium+Parent]//
         SetEnemiesStatus();
 
     }
-
-    
 
     public void GameLost()
     {
