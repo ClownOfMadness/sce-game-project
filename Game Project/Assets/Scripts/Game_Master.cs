@@ -101,13 +101,13 @@ public class Game_Master : MonoBehaviour
     }
 
     //[Premium]//
-    [HideInInspector] public bool premiumUser;
+    public bool premiumUser;
     //12. main character appearance:
     public int windowLook; //used by window appearance
     //14. fog:
-    [HideInInspector] public bool fogOff;
+    public bool fogOff;
     //17. main character appearance:
-    [HideInInspector] public int charLook;
+    public int charLook;
 
     //[Parent]//
     //22. bedtime:
@@ -121,15 +121,15 @@ public class Game_Master : MonoBehaviour
     //27. font:
     [HideInInspector] public fontList fontSize;
     //28. hints:
-    [HideInInspector] public bool hintsOn;
+    public bool hintsOn;
     //29. game speed:
-    [HideInInspector] public speedList gameSpeed;
+    public speedList gameSpeed;
 
     //[Premium+Parent]//
     //15+24. enemies:
-    [HideInInspector] public bool enemiesOff;
+    public bool enemiesOff;
     //18+30. difficulty:
-    [HideInInspector] public int difficulty = 1;
+    public int difficulty = 1;
     //20. key mapping:
     [HideInInspector] public static KeyCode creativeK;
     [HideInInspector] public static KeyCode storageK;
@@ -152,7 +152,12 @@ public class Game_Master : MonoBehaviour
         NewGame();
 
         //Determine the fog dissapearence.
-        MapGen.FogMap = !fogOff;
+        if(fogOff)
+            MapGen.FogMap = false;
+        else
+            MapGen.FogMap = true;
+
+        Control.skin = charLook;
 
         //when save file is picked, everything should be loaded from save file
         //[Premium]//
@@ -257,27 +262,29 @@ public class Game_Master : MonoBehaviour
 
         //defaults for a new game:
         //[General]//
-        totalGameTime = 0;
+        //totalGameTime = 0;
 
         //[Premium]//
-        premiumUser = false;
-        windowLook = 0;
-        fogOff = false;
+        //premiumUser = false;
+        //windowLook = 0;
+        //fogOff = false;
         //charLook = (charList)1;
 
         //[Parent]//
-        bedtimeSet = false;
-        bedtime = 0;
-        timeLimitSet = false;
-        timeLimit = 0;
-        fontSize = fontList.Normal;
-        hintsOn = false;
+        //bedtimeSet = false;
+        //bedtime = 0;
+        //timeLimitSet = false;
+        //timeLimit = 0;
+        //fontSize = fontList.Normal;
+        //hintsOn = false;
         SetGameSpeed();
 
         //[Premium+Parent]//
         SetEnemiesStatus();
 
     }
+
+    
 
     public void GameLost()
     {

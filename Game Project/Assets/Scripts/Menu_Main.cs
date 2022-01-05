@@ -7,9 +7,12 @@ using TMPro;
 
 public class Menu_Main : MonoBehaviour
 {
+    public GameObject customPremium;
+    public GameObject customParent;
     public GameObject LoadPanel;
     public GameObject MenuMain;
     public GameObject GameMenu;
+    public GameObject Achievments;
 
     public TextMeshProUGUI Logo;
     public GameObject blackScreen;
@@ -18,6 +21,8 @@ public class Menu_Main : MonoBehaviour
     TextMeshProUGUI loadText;
 
     //----------------------------Save System----------------------------//
+
+    //private int isPrimium = PlayerPrefs.GetInt("premium", 0);
 
     //[Per Save]//   
     public int charLook = 0;
@@ -50,6 +55,9 @@ public class Menu_Main : MonoBehaviour
 
     private void Awake()
     {
+        if (PlayerPrefs.GetInt("premium", 0) == 1)
+            Achievments.SetActive(true);
+
         loadText = LoadPanel.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         //PlayerPrefs.SetInt("ChangeFont", 0); //*for testing font size*
         //PlayerPrefs.SetInt("GameSpeed", 0); //*for testing game speed*

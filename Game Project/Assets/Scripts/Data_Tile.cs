@@ -542,6 +542,25 @@ public class Data_Tile : MonoBehaviour
             NoExtra();
     }
 
+    public void PlaceReadyBuilding(GameObject _building)
+    {
+        hasTownHall = false;
+        hasBuilding = true;
+        canBuild = true;
+        building = _building;
+        dataBuilding = _building.GetComponent<Data_Building>();
+        buildingComplete = true;
+        works = null;
+        maxDurability = 0;
+        durability = 0;
+        recharge = 0;
+        hasResources = false;
+        spriteRenderer.sprite = buildSprite;
+        if (theExtra)
+            NoExtra();
+        dataBuilding.Complete();
+    }
+
     public int CanWork(Data_Unit _unit) // Sends what work can unit work in, otherwise sends that it cannot
     {
         if (hasResources)
