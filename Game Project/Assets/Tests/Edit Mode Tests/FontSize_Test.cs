@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class FontSize_Test
 {
-    
-
     [Test]
     public void IsParent()
     {

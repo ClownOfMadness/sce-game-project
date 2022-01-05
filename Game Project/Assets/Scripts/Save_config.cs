@@ -47,7 +47,7 @@ public class Save_config : MonoBehaviour
             PlayerPrefs.SetString("Sprint", keyBinding.GetKey("Sprint"));
             //Debug.Log(PlayerPrefs.GetString("Hints","H"));
             //-------------------------------------
-            PlayerPrefs.SetInt("ChangeFont", 0);
+            //PlayerPrefs.SetInt("ChangeFont", 0);
             //PlayerPrefs.SetInt("GameSpeed", 0); //*for testing game speed*
         }
         PlayerPrefs.Save();

@@ -26,7 +26,7 @@ public class Screen_Parent : MonoBehaviour
 
     public void Awake()
     {
-        DropF.value = PlayerPrefs.GetInt("ChangeFont");
+        DropF.value = PlayerPrefs.GetInt("ChangeFont",0);
         path = Application.persistentDataPath + "/config.parent";
         savedPass = IO_Files.ReadString(path);
         if (savedPass!=null)
@@ -38,7 +38,7 @@ public class Screen_Parent : MonoBehaviour
             firstLogin = true;
             Debug.Log("First Login");
         }
-        DropF = GetComponent<Dropdown>(); //for font size
+        //DropF = GetComponent<Dropdown>(); //for font size
     }
 
     public void Update()
