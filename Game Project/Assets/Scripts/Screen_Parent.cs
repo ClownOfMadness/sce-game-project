@@ -38,7 +38,7 @@ public class Screen_Parent : MonoBehaviour
             firstLogin = true;
             Debug.Log("First Login");
         }
-       // DropF = GetComponent<Dropdown>(); //for font size
+        DropF = GetComponent<Dropdown>(); //for font size
     }
 
     public void Update()
@@ -151,16 +151,16 @@ public class Screen_Parent : MonoBehaviour
     }
     public void ReadSave(int index)    //load Save's stats to display
     {
-        string SavePath = Application.persistentDataPath + "/save/Slot " + index.ToString() + ".conf"; //adjust when saves exist
-        Data_Player SaveData = IO_Files.ReadData(SavePath);
-        if (SaveData != null)
-        {
-            //fill objects in Player stats with fields from save file
-        }
-        else
-        {
-            //loading save failed
-        }
+        //string SavePath = Application.persistentDataPath + "/save/Slot " + index.ToString() + ".conf"; //adjust when saves exist
+        //Data_Player SaveData = IO_Files.ReadDataSetting(SavePath);
+        //if (SaveData != null)
+        //{
+        //    //fill objects in Player stats with fields from save file
+        //}
+        //else
+        //{
+        //    //loading save failed
+        //}
     }
     public void SetTimeLimit()    //enable&set/disable time limit per save
     {

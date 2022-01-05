@@ -15,29 +15,11 @@ public class Screen_Achievments : MonoBehaviour
     private bool isCrafty = false;
     public Game_Master GameMaster;
     public GameObject popUp;
-    //public Animator animator;
     public TMP_Text popUptext;
-    private float setTime = 500f;
-    private float timeLeft;
+    private int setTime = 5;
 
-    private float waitTime = 2.0f;
-    private float timer = 0.0f;
-    private float visualTime = 0.0f;
-    private void SetTimer()
-    {
-        timer += Time.deltaTime;
 
-        // Check if we have reached beyond 2 seconds.
-        // Subtracting two is more accurate over time than resetting to zero.
-        if (timer > waitTime)
-        {
-            visualTime = timer;
-
-            // Remove the recorded 2 seconds.
-            timer = timer - waitTime;
-        }
-    }
-private void Update()
+    private void Update()
     {
         if (!isVeteran && GameMaster.MapSpawn.DayCount >= daysForVeteran)
         //if (!GameMaster.isVeteran && GameMaster.MapSpawn.DayCount >= daysForVeteran)
@@ -56,7 +38,7 @@ private void Update()
         if (!isCrafty && GameMaster.CardsCombined >= cardsForCrafty)
         //if (!GameMaster.isCrafty && GameMaster.CardsCombined >= cardsForCrafty)
         {
-            PopMessage("Acheivment unlocked: Crafty");
+            PopMessage("Acheivment unlocked: Craftsman");
             //GameMaster.isCrafty = true;
             isCrafty = true;
         }
@@ -65,18 +47,16 @@ private void Update()
     public void PopMessage(string message)
     {
         Debug.Log(message);
-    //    float alpha = 1;
-    //    popUp.SetActive(true);
-    //    Color color = popUp.GetComponent<Image>().color;
-    //    popUptext.text = message;
-    //    timeLeft = setTime;
+        popUptext.text = message;
+        Color color = popUp.GetComponent<Image>().color;
+        popUp.SetActive(true);
+        StartCoroutine(Pop());
+    }
 
-    //    while (timeLeft >= 0)
-    //    {
-    //        color = new Color(176, 109, 109, alpha);
-    //        alpha -= Time.deltaTime;
-    //        timeLeft -= Time.deltaTime;
-    //    }
-    //    popUp.SetActive(false);
+    private IEnumerator Pop()
+    {
+        yield return new WaitForSeconds(setTime);
+        popUp.SetActive(false);
+        yield return null;
     }
 }

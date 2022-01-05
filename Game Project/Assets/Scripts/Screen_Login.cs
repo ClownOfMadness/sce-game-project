@@ -13,6 +13,7 @@ public class Screen_Login : MonoBehaviour
     public Button submitButton; //
     public GameObject Menu;
     public GameObject LoginPremium;
+    public GameObject Canvas;
     //public Menu_Pause menu_Pause;
     public void Update() //
     {
@@ -36,6 +37,7 @@ public class Screen_Login : MonoBehaviour
                 PlayerPrefs.SetInt("premium", 1);   //save premium=true;
                 LoginPremium.SetActive(false);
                 Menu.SetActive(true);
+                Canvas.GetComponent<Menu_Main>().Achievments.SetActive(true);
                 //menu_Pause.Resume();
                 //replace with premium windows in future
                 break;

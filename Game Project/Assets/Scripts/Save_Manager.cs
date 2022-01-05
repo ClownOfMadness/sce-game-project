@@ -251,13 +251,34 @@ public class Save_Manager : MonoBehaviour
                 DeleteSlot();
     }
 
+    public void LoadCustum()
+    {
+        string path = Application.persistentDataPath + "/config.parent";
+
+        if (File.Exists(path))
+        {
+            menu_main.customParent.SetActive(true);
+        }
+        else if (PlayerPrefs.GetInt("premium", 0) == 1)
+        {
+            menu_main.customPremium.SetActive(true);
+        }
+        else
+            Play();
+    }
+
     //The multi scene play button.
     public void Play()
     {
+        if (menu_main.customPremium.activeSelf)
+            menu_main.customPremium.SetActive(false);
+        if (menu_main.customParent.activeSelf)
+            menu_main.customParent.SetActive(false);
+
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             slotName = saveName.text;
-            
+
             //Delete the old temporary data.
             if (File.Exists(pathTemporary))
                 IO_Files.DeleteData(pathTemporary);
