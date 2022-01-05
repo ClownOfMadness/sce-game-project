@@ -21,23 +21,23 @@ public class Menu_Main : MonoBehaviour
     //----------------------------Save System----------------------------//
 
     //[Per Save]//   
-    public int charLook;
-    public bool bedtimeSet;
-    public float bedtime;
-    public bool timeLimitSet;
-    public float timeLimit;
-    public float timeLeft;
-    public int fontSize;    //0=Normal, 1=Big
-    public bool hintsOn;
-    public int gameSpeed;   //0=Normal, 1=Slow
-    public bool enemiesOff;
-    public int difficulty;  //0=Normal, 1=Easy, 2=Hardcore
-    public bool fogOff;
-    public float TotalGameTime;
-    public int CardsCombined;
-    public int CardsDiscovered;
-    public float gameDays;
-    public int buildingsCount;
+    public int charLook = 0;
+    public bool bedtimeSet = false;
+    public float bedtime = 0;
+    public bool timeLimitSet = false;
+    public float timeLimit = 0;
+    public float timeLeft = 0;
+    public int fontSize = 0;    //0=Normal, 1=Big
+    public bool hintsOn = false;
+    public int gameSpeed = 0;   //0=Normal, 1=Slow
+    public bool enemiesOff = false;
+    public int difficulty = 1;  //0=Easy, 1=Normal, 2=Hardcore
+    public bool fogOff = false;
+    public float TotalGameTime = 0;
+    public int CardsCombined = 0;
+    public int CardsDiscovered = 0;
+    public int gameDays = 0;
+    public int buildingsCount = 0;
     //[Per Save]// 
 
     //[Global save]//
@@ -60,7 +60,6 @@ public class Menu_Main : MonoBehaviour
     {
         LoadPanel.SetActive(true);
         GameMenu.SetActive(false);
-        //tutorial.SetActive(true);
         StartGame();
     }
 

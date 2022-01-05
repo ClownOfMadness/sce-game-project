@@ -29,8 +29,6 @@ public class Map_Display : MonoBehaviour
 
     private Data_Player saved_data;
     public Dictionary<int, GameObject> instances;
-    public Dictionary<int, Data_Tile> instancesDT;
-    public Dictionary<int, Data_Building> instancesDB;
 
     private void Awake()
     {

@@ -38,27 +38,13 @@ public static class IO_Files
         return data;
     }
 
-    ////Load Data_PlayerConfig from file.
-    //public static Data_PlayerConfig ReadDataConfig(string path)  
-    //{
-    //    Data_PlayerConfig data = null;
-    //    if (File.Exists(path))
-    //    {
-    //        BinaryFormatter formatter = GetBinaryFormatter();
-    //        FileStream stream = new FileStream(path, FileMode.Open);
-    //        data = formatter.Deserialize(stream) as Data_PlayerConfig;
-    //        stream.Close();     //opened files must be closed when done with
-    //    }
-    //    return data;
-    //}
-    //Load Save_Settings from file.
     public static Save_Settings ReadDataSetting(string path_settings, string path_perSave)
     {
         Save_Settings data = null;
+        Data_PerSaveSlot data_perSaveSlot = null;
 
         if (File.Exists(path_settings))
         {
-            Data_PerSaveSlot data_perSaveSlot = null;
             BinaryFormatter formatter = GetBinaryFormatter();
 
             if (File.Exists(path_perSave))
@@ -67,6 +53,7 @@ public static class IO_Files
                 data_perSaveSlot = formatter.Deserialize(streamCofig) as Data_PerSaveSlot;
                 streamCofig.Close();
             }
+            else data_perSaveSlot = new Data_PerSaveSlot();
 
             FileStream streamSettings = new FileStream(path_settings, FileMode.Open);
             data = formatter.Deserialize(streamSettings) as Save_Settings;
@@ -124,8 +111,13 @@ public static class IO_Files
     //Dalete the file.
     public static void DeleteData(string path) 
     {
-        File.Delete(path);
-        Debug.Log("File deleted" + path);
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+            Debug.Log("File deleted: " + path);
+        }
+        else
+            Debug.LogWarning("File not found.");
     }
 
     //Create binary formatter with serialization surrogates.

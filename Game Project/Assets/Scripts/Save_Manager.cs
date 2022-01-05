@@ -9,7 +9,7 @@ using TMPro;
 
 public class Save_Manager : MonoBehaviour
 {
-    public GameObject GameMaster;
+    private Game_Master GameMaster;
     public TMP_InputField saveName; //Name Input field
     public GameObject SaveSlots; //Panel SaveSlots
     public GameObject startGame; //Panel StartGame 
@@ -33,22 +33,21 @@ public class Save_Manager : MonoBehaviour
     private GameObject delete; //Delete button
     private List<TMP_Text> slots; //List of all the available slots's text values
 
-    private void Awake()
-    {
-        
-    }
     void Start()
     {
         pathGameData = Application.persistentDataPath + "/saves/" + currSlot + ".save"; //Game data
         pathSettings = Application.persistentDataPath + "/saves/Settings.save"; //Global data
         pathPerSave = Application.persistentDataPath + "/saves/" + currSlot + ".conf"; //Slot configuration
         pathTemporary = Application.persistentDataPath + "/temp/config.temp"; //Temporary data
+
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             if (menu_main == null) menu_main = FindObjectOfType<Menu_Main>();
+            //UpdateMenu();
         }
         else if (SceneManager.GetActiveScene().name == "Game")
         {
+            if (GameMaster == null) GameMaster = FindObjectOfType<Game_Master>();
             if (menu_pause == null) menu_pause = FindObjectOfType<Menu_Pause>();
             if (map_display == null) map_display = FindObjectOfType<Map_Display>();
         }
@@ -138,11 +137,32 @@ public class Save_Manager : MonoBehaviour
         //Saving the game data from Map_Display.
         IO_Files.WriteData(pathGameData, map_display.Save_Data());
         //Saving the game data from Game_master.
-        //IO_Files.WriteDataPerSave(pathPerSave, GameMaster.DAtamashehu);
-
+        //SavePerSlot(pathPerSave);
         //Saving the global settings.
-        //IO_Files.WriteDataSetting(pathSettings, GameMaster.DAtamashehu);
+        //SaveSettings();
         SavedSlots(); 
+    }
+
+    public void SaveSettings()
+    {
+        Save_Settings save_settings = new Save_Settings();
+
+        if (SceneManager.GetActiveScene().name == "Game")
+        {
+            save_settings.isVeteran = GameMaster.isVeteran;
+            save_settings.isBuilder = GameMaster.isBuilder;
+            save_settings.isCrafty = GameMaster.isCrafty;
+            save_settings.windowLook = GameMaster.windowLook;
+        }
+        else if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            save_settings.isVeteran = menu_main.isVeteran;
+            save_settings.isBuilder = menu_main.isBuilder;
+            save_settings.isCrafty = menu_main.isCrafty;
+            save_settings.windowLook = menu_main.windowLook;
+        }
+
+        IO_Files.WriteDataSetting(pathSettings, save_settings);
     }
 
     //Save the player's configuration on the current save (or as temporary file).
@@ -180,10 +200,29 @@ public class Save_Manager : MonoBehaviour
         }
         else if(SceneManager.GetActiveScene().name == "Game")
         {
-
+            data_perSlot.isFirstGame = false;
+            data_perSlot.TotalGameTime = GameMaster.totalGameTime;
+            data_perSlot.CardsCombined = GameMaster.CardsCombined;
+            data_perSlot.CardsDiscovered = GameMaster.CardsDiscovered;
+            data_perSlot.gameDays = GameMaster.gameDays;
+            data_perSlot.buildingsCount = GameMaster.buildingsCount;
+            data_perSlot.charLook = GameMaster.charLook;
+            data_perSlot.bedtimeSet = GameMaster.bedtimeSet;
+            data_perSlot.bedtime = GameMaster.bedtime;
+            data_perSlot.timeLimitSet = GameMaster.timeLimitSet;
+            data_perSlot.timeLimit = GameMaster.timeLimit;
+            data_perSlot.timeLeft = GameMaster.timeLeft;
+            data_perSlot.fontSize = (int)GameMaster.fontSize;
+            data_perSlot.hintsOn = GameMaster.hintsOn;
+            data_perSlot.gameSpeed = (int)GameMaster.gameSpeed;
+            data_perSlot.enemiesOff = GameMaster.enemiesOff;
+            data_perSlot.difficulty = GameMaster.difficulty;
+            data_perSlot.fogOff = GameMaster.fogOff;
         }
+        IO_Files.WriteDataPerSave(path, data_perSlot);
     }
 
+    //Save the current name of the current slot.
     public void SavedSlots()
     {
         PlayerPrefs.SetString(currSlot, slotName);
@@ -196,7 +235,7 @@ public class Save_Manager : MonoBehaviour
     public void Delete()
     {
         IO_Files.DeleteData(pathGameData);
-        //IO_Files.DeleteData(pathPerSave);
+        IO_Files.DeleteData(pathPerSave);
         DeleteSlot();
     }
 
@@ -206,12 +245,13 @@ public class Save_Manager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             slotName = saveName.text;
-
-            //Set the path of the temporary data.
             
             //Delete the old temporary data.
-            //if (File.Exists(path))
-                //IO_Files.DeleteData(path);
+            if (File.Exists(pathTemporary))
+                IO_Files.DeleteData(pathTemporary);
+
+            //SavePerSlot(pathTemporary);
+            //SaveSettings();
 
             menu_main.NewGame();
         }
@@ -223,12 +263,47 @@ public class Save_Manager : MonoBehaviour
 
     public Data_Player SceneLoaded()
     {
-        Data_Player data_player = new Data_Player();
+        Data_Player data_player = (Data_Player)IO_Files.ReadData(pathGameData);
 
-       
+        pathPerSave = Application.persistentDataPath + "/saves/" + currSlot + ".conf"; //Slot configuration
+        pathTemporary = Application.persistentDataPath + "/temp/config.temp"; //Temporary data
 
-        data_player = (Data_Player)IO_Files.ReadData(pathGameData);
+        //if (File.Exists(pathPerSave))
+        //    SettingsLoaded(pathPerSave);
+        //else if (File.Exists(pathTemporary))
+        //    SettingsLoaded(pathTemporary);
+        //else Debug.LogError("Configuration file not found.");
+
         return data_player;
+    }
+
+    public void SettingsLoaded(string path)
+    {
+        Save_Settings save_settings = IO_Files.ReadDataSetting(pathSettings, path);
+
+        GameMaster.charLook = save_settings.data_perSaveSlot.charLook;
+        GameMaster.bedtimeSet = save_settings.data_perSaveSlot.bedtimeSet;
+        GameMaster.bedtime = save_settings.data_perSaveSlot.bedtime;
+        GameMaster.timeLimitSet = save_settings.data_perSaveSlot.timeLimitSet;
+        GameMaster.timeLimit = save_settings.data_perSaveSlot.timeLimit;
+        GameMaster.timeLeft = save_settings.data_perSaveSlot.timeLeft;
+        GameMaster.fontSize = (Game_Master.fontList)save_settings.data_perSaveSlot.fontSize;
+        GameMaster.hintsOn = save_settings.data_perSaveSlot.hintsOn;
+        GameMaster.gameSpeed = (Game_Master.speedList)save_settings.data_perSaveSlot.gameSpeed;
+        GameMaster.enemiesOff = save_settings.data_perSaveSlot.enemiesOff;
+        GameMaster.difficulty = save_settings.data_perSaveSlot.difficulty;
+        GameMaster.fogOff = save_settings.data_perSaveSlot.fogOff;
+        GameMaster.isFirst = save_settings.data_perSaveSlot.isFirstGame;
+        GameMaster.totalGameTime = save_settings.data_perSaveSlot.TotalGameTime;
+        GameMaster.CardsCombined = save_settings.data_perSaveSlot.CardsCombined;
+        GameMaster.CardsDiscovered = save_settings.data_perSaveSlot.CardsDiscovered;
+        GameMaster.gameDays = save_settings.data_perSaveSlot.gameDays;
+        GameMaster.buildingsCount = save_settings.data_perSaveSlot.buildingsCount;
+
+        GameMaster.isVeteran = save_settings.isVeteran;
+        GameMaster.isBuilder = save_settings.isBuilder;
+        GameMaster.isCrafty = save_settings.isCrafty;
+        GameMaster.windowLook = save_settings.windowLook;
     }
 
     public void LoadedSlots()
@@ -237,6 +312,7 @@ public class Save_Manager : MonoBehaviour
             slots[i].text = PlayerPrefs.GetString(string.Format("Slot {0}", i + 1), emptySlot);
     }
 
+    //Delete the current slot.
     public void DeleteSlot()
     {
         PlayerPrefs.SetString(currSlot, emptySlot);
@@ -246,29 +322,18 @@ public class Save_Manager : MonoBehaviour
         delete.SetActive(false);
     }
 
-    public void UpdateSettings(Game_Master data)
+    //Update the data in the menu.
+    public void UpdateMenu()
     {
-        
-        //Save_Settings current = IO_Files.ReadDataSetting(path);
+        Save_Settings current;
 
-        //premiumUser = data.premiumUser;
-        //parentPassword = data.parentPassword;
+        if (File.Exists(pathSettings))
+            current = IO_Files.ReadDataSetting(pathSettings, null);
+        else current = new Save_Settings();
 
-        //isVeteran = data.isVeteran;
-        //if (current.maxGameDays < data.gameDays)
-        //    current.maxGameDays = data.gameDays;
-        //else maxGameDays = current.maxGameDays;
-
-        //isBuilder = data.isBuilder;
-        //if (current.maxBuildings < data.buildings)
-        //    current.maxBuildings = data.buildings;
-        //else maxBuildings = current.maxBuildings;
-
-        //isCrafty = data.isExplorer;
-        //if (current.maxBuildings. < data.buildings)
-        //    current.maxCardsFound = data.cardsFound;
-        //else maxCardsFound = current.maxCardsFound;
-
-        //IO_Files.WriteDataSetting(path, current);
+        menu_main.isVeteran = current.isVeteran;
+        menu_main.isBuilder = current.isBuilder;
+        menu_main.isCrafty = current.isCrafty;
+        menu_main.windowLook = current.windowLook;
     }
 }

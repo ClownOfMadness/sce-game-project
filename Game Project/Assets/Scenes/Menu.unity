@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2230,7 +2230,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 361339073}
+      - m_Target: {fileID: 2100703383}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
         m_MethodName: ActivateSlot
         m_Mode: 1
@@ -2240,7 +2240,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &115817898
 MonoBehaviour:
@@ -3671,7 +3671,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 361339073}
+      - m_Target: {fileID: 2100703383}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
         m_MethodName: ActivateSlot
         m_Mode: 1
@@ -3681,7 +3681,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &229326988
 MonoBehaviour:
@@ -5809,7 +5809,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 361339072}
-  - component: {fileID: 361339073}
   - component: {fileID: 361339074}
   - component: {fileID: 361339071}
   m_Layer: 5
@@ -5871,23 +5870,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -74}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &361339073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 361339070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d97d391b0a52b74194f2e2d6b45b87a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameMaster: {fileID: 0}
-  saveName: {fileID: 1090209267}
-  SaveSlots: {fileID: 1717050718}
-  startGame: {fileID: 1600761393}
-  Back: {fileID: 943213592}
 --- !u!222 &361339074
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6785,7 +6767,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 361339073}
+      - m_Target: {fileID: 2100703383}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
         m_MethodName: ActivateSlot
         m_Mode: 1
@@ -6795,7 +6777,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &386598143
 MonoBehaviour:
@@ -9309,7 +9291,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 361339073}
+      - m_Target: {fileID: 2100703383}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
         m_MethodName: ActivateSlot
         m_Mode: 1
@@ -9319,7 +9301,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &656035022
 MonoBehaviour:
@@ -10595,7 +10577,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 361339073}
+      - m_Target: {fileID: 2100703383}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
         m_MethodName: Play
         m_Mode: 1
@@ -11736,7 +11718,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 361339073}
+      - m_Target: {fileID: 2100703383}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
         m_MethodName: ActivateSlot
         m_Mode: 1
@@ -22513,7 +22495,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 361339073}
+      - m_Target: {fileID: 2100703383}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
         m_MethodName: ActivateSlot
         m_Mode: 1
@@ -22523,7 +22505,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1480255969
 MonoBehaviour:
@@ -24450,7 +24432,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 361339073}
+      - m_Target: {fileID: 2100703383}
         m_TargetAssemblyTypeName: Save_Manager, Map_Scripts
         m_MethodName: Delete
         m_Mode: 1
@@ -29703,10 +29685,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f231a8a8517f0d4bba36e398320f779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menu: {fileID: 2100703380}
-  DropGS: {fileID: 2133998009}
-  DropD: {fileID: 199288978}
-  EnemiesDrop: {fileID: 46727325}
+  menu: {fileID: 0}
+  DropGS: {fileID: 0}
+  DropD: {fileID: 0}
+  EnemiesDrop: {fileID: 0}
 --- !u!1 &1889658532
 GameObject:
   m_ObjectHideFlags: 0
@@ -33068,6 +33050,7 @@ GameObject:
   - component: {fileID: 2100703380}
   - component: {fileID: 2100703382}
   - component: {fileID: 2100703381}
+  - component: {fileID: 2100703383}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -33201,17 +33184,16 @@ MonoBehaviour:
   gameSpeed: 0
   enemiesOff: 0
   difficulty: 0
+  fogOff: 0
   TotalGameTime: 0
   CardsCombined: 0
   CardsDiscovered: 0
   gameDays: 0
-  buildings: 0
+  buildingsCount: 0
+  windowLook: 0
   isVeteran: 0
-  maxGameDays: 0
   isBuilder: 0
-  maxBuildings: 0
   isCrafty: 0
-  maxCardsFound: 0
 --- !u!114 &2100703381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33240,6 +33222,22 @@ MonoBehaviour:
   graphics: {fileID: 1385652511}
   mainMixer: {fileID: 24100000, guid: de2024748c1bbf440aad33a8047baad2, type: 2}
   resDrop: {fileID: 468141386}
+--- !u!114 &2100703383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100703375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d97d391b0a52b74194f2e2d6b45b87a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveName: {fileID: 1090209267}
+  SaveSlots: {fileID: 1717050718}
+  startGame: {fileID: 1600761393}
+  Back: {fileID: 943213592}
 --- !u!1 &2101853314
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,35 +31,13 @@ public class Data_PerSaveSlot
     public int CardsCombined;
     public int CardsDiscovered;
     //Achievements
-    public float gameDays;
+    public int gameDays;
     public int buildingsCount;
 
     //-----------------------------------------------------------------------------------
 
     public Data_PerSaveSlot()
     { 
-        charLook = 0;
-        bedtimeSet = false;
-        bedtime = 0;
-        timeLimitSet = false;
-        timeLimit = 0;
-        timeLeft = 0;
-        fontSize = 0;
-        hintsOn = false;
-        gameSpeed = 0;
-        enemiesOff = false;
-        difficulty = 0;
-        fogOff = false;
-
-        isFirstGame = true;
-        TotalGameTime = 0;
-        CardsCombined = 0;
-        CardsDiscovered = 0;
-        gameDays = 0;
-        buildingsCount = 0;
-    }
-    public Data_PerSaveSlot(Data_PerSaveSlot old)
-    {
         charLook = 0;
         bedtimeSet = false;
         bedtime = 0;

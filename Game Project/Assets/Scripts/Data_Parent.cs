@@ -33,29 +33,29 @@ public class Data_Parent
     public int CardsCombined;
     public int CardsDiscovered;
 
-    public Data_Parent(Game_Parent data)
-    {
-        //22. bedtime:
-        bedtimeSet = data.bedtimeSet;
-        bedtime = data.bedtime;
-        //23. play time limit:
-        timeLimitSet = data.timeLimitSet;
-        timeLimit = data.timeLimit;
-        timeLeft = data.timeLeft;
-        //26. game statistics:
-        TotalGameTime = data.TotalGameTime;
-        CardsCombined = data.CardsCombined;
-        CardsDiscovered = data.CardsDiscovered;
-        //27. font:
-        fontSize = data.fontSize;
-        //28. hints:
-        hintsOn = data.hintsOn;
-        //29. game speed:
-        gameSpeed = data.gameSpeed;
-        //15+24. enemies:
-        enemiesOff = data.enemiesOff;
-        //18+30. difficulty:
-        difficulty = data.difficulty;
-    }
+    //public Data_Parent(Game_Parent data)
+    //{
+    //    //22. bedtime:
+    //    bedtimeSet = data.bedtimeSet;
+    //    bedtime = data.bedtime;
+    //    //23. play time limit:
+    //    timeLimitSet = data.timeLimitSet;
+    //    timeLimit = data.timeLimit;
+    //    timeLeft = data.timeLeft;
+    //    //26. game statistics:
+    //    TotalGameTime = data.TotalGameTime;
+    //    CardsCombined = data.CardsCombined;
+    //    CardsDiscovered = data.CardsDiscovered;
+    //    //27. font:
+    //    fontSize = data.fontSize;
+    //    //28. hints:
+    //    hintsOn = data.hintsOn;
+    //    //29. game speed:
+    //    gameSpeed = data.gameSpeed;
+    //    //15+24. enemies:
+    //    enemiesOff = data.enemiesOff;
+    //    //18+30. difficulty:
+    //    difficulty = data.difficulty;
+    //}
 }
 

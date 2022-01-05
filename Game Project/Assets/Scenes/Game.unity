@@ -1970,7 +1970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d97d391b0a52b74194f2e2d6b45b87a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameMaster: {fileID: 0}
+  GameMaster: {fileID: 796799537}
   saveName: {fileID: 1847364240}
   SaveSlots: {fileID: 68846094}
   startGame: {fileID: 1561635915}
@@ -9159,10 +9159,23 @@ MonoBehaviour:
   ErrorMessage: {fileID: 1103540490}
   totalGameTime: 0
   isFirst: 0
+  CardsCombined: 0
+  CardsDiscovered: 0
+  gameDays: 0
+  buildingsCount: 0
+  isVeteran: 0
+  isBuilder: 0
+  isCrafty: 0
   premiumUser: 0
   windowLook: 0
   fogOff: 0
   charLook: 0
+  bedtimeSet: 0
+  bedtime: 0
+  realTime: 0
+  timeLimitSet: 0
+  timeLimit: 0
+  timeLeft: 0
   fontSize: 0
   hintsOn: 0
   gameSpeed: 0
