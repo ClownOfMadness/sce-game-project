@@ -30,7 +30,7 @@ public class Menu_Main : MonoBehaviour
     public bool hintsOn = false;
     public int gameSpeed = 0;   //0=Normal, 1=Slow
     public bool enemiesOff = false;
-    public int difficulty = 1;  //0=Easy, 1=Normal, 2=Hardcore
+    public int difficulty = 1;  //1=Easy, 0=Normal, 2=Hardcore
     public bool fogOff = false;
     public float TotalGameTime = 0;
     public int CardsCombined = 0;
