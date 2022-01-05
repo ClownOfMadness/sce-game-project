@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 //responsible for game states and monitoring the entire game
 public class Game_Master : MonoBehaviour
@@ -278,8 +281,16 @@ public class Game_Master : MonoBehaviour
 
     public void GameLost()
     {
-        Debug.Log("you're dead");
+        StartCoroutine(Lost());
+    }
+
+    private IEnumerator Lost()
+    {
         gameOver.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Menu");
+        yield return null;
     }
 
     private void TurnOffPremiumFunctions()
