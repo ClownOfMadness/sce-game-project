@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 5
   description: He's great but he doesn't take special requests
-  artwork: {fileID: 21300000, guid: c969a9bce653bfd449d5b5c5197216f2, type: 3}
+  artwork: {fileID: 21300000, guid: 6c471d14e0a45ba49babce2f3cca11b1, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1

@@ -23,7 +23,7 @@ MonoBehaviour:
   complexity: 12
   description: He will provide bread anytime, but unfortunately can't make you a
     cup of coffee with that
-  artwork: {fileID: 21300000, guid: 8ae7e6f9e8a668e4c9e61bf74de484e3, type: 3}
+  artwork: {fileID: 21300000, guid: c88b8438005732343a7935eeec45f36f, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
-  neverDiscovered: 0
+  neverDiscovered: 1

@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 6
   description: Anyone can swing a sword, only experts can accurately shoot arrows
-  artwork: {fileID: 21300000, guid: e36d30add7c39464c830eb3508d591d2, type: 3}
+  artwork: {fileID: 21300000, guid: 8ab99010e9e94914eb7431d6b245ade3, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1

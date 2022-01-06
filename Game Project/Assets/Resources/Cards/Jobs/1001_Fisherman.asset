@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 2
   description: Needs no special buidling or something, just the pleasant sea breeze
-  artwork: {fileID: 21300000, guid: 704225cd74a89e74a917c5efec9da0fa, type: 3}
+  artwork: {fileID: 21300000, guid: da85e83429f6a2c45bfe127e513686f0, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
-  neverDiscovered: 0
+  neverDiscovered: 1

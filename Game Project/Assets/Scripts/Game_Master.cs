@@ -87,6 +87,8 @@ public class Game_Master : MonoBehaviour
     [HideInInspector] public bool isBuilder;
     [HideInInspector] public bool isCrafty;
 
+    private AudioSource music;
+
     [System.Serializable]
     public enum fontList        //used by fontSize
     {
@@ -200,6 +202,8 @@ public class Game_Master : MonoBehaviour
         }
 
         SetFontSize(PlayerPrefs.GetInt("ChangeFont")); //sets the correct font size
+        music = GetComponent<AudioSource>();
+        music.Play();
     }
     void Update() //main Update, handles constant checking of parameters for the rest of the game
     {

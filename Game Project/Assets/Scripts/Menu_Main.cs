@@ -23,6 +23,8 @@ public class Menu_Main : MonoBehaviour
     public TextMeshProUGUI builder;
     public TextMeshProUGUI craftsman;
 
+    private AudioSource music;
+
     //----------------------------Save System----------------------------//
 
     //private int isPrimium = PlayerPrefs.GetInt("premium", 0);
@@ -64,10 +66,12 @@ public class Menu_Main : MonoBehaviour
         loadText = LoadPanel.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         //PlayerPrefs.SetInt("ChangeFont", 0); //*for testing font size*
         //PlayerPrefs.SetInt("GameSpeed", 0); //*for testing game speed*
+        music = GetComponent<AudioSource>();
     }
 
     public void Start()
     {
+        music.Play();
         if (isVeteran) veteran.color = Color.white;
         if (isBuilder) builder.color = Color.white;
         if (isCrafty) craftsman.color = Color.white;

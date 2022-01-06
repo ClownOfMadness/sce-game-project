@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 2
   description: Likes to venture into mines and break pickaxes
-  artwork: {fileID: -2204549174731875747, guid: b64e9fdea072f5e4083ffe28d267bfbd, type: 3}
+  artwork: {fileID: 21300000, guid: 861a0cf77b1da104cb5ce4736882faef, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 3
   neverDiscovered: 0

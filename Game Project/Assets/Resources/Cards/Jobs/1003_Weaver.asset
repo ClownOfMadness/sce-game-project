@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 9
   description: The who weaves string, as if playing on a harp
-  artwork: {fileID: 21300000, guid: 5100aaf53beceef4688ad836b035b897, type: 3}
+  artwork: {fileID: 21300000, guid: 36398b1a6dd911f44a967d2077771888, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1
