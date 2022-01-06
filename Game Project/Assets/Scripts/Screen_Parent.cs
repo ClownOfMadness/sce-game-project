@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Collections.Generic;
 using TMPro;
 using System;
 
@@ -22,6 +23,7 @@ public class Screen_Parent : MonoBehaviour
     public GameObject PlayerStats;
     public GameObject ComboGuide;
     public GameObject PickSave;
+    public GameObject SaveSlots;
     public Text combosText;
     public Dropdown DropF; //for the fontsize dropdown event
     public Button submitButton; //for the login button
@@ -241,17 +243,47 @@ public class Screen_Parent : MonoBehaviour
             isHintText.text = "Allow hints: OFF";
     }
 
+    public void reloadButtonText()
+    {
+        if (isHintText.text == "Allow hints: OFF")
+            isHintText.text = "Allow hints: ON";
+        else
+            isHintText.text = "Allow hints: OFF";
+    }
+
     public void SetHints()       //enable/disable hints per save
     {
         if (SaveData.hintsOn)
         {
-            isHintText.text = "Allow hints: OFF";
             hintBool = false;
         }
         else
         {
-            isHintText.text = "Allow hints: ON";
             hintBool = true;
+        }
+    }
+
+    public void updateSlotParent()
+    {
+        List<TMP_Text> slots = new List<TMP_Text>();
+        int slotsNum;
+
+        for (int i = 0; i < 24; i++)
+            slots.Add(SaveSlots.transform.GetChild(i).GetComponentInChildren<TMP_Text>());
+
+        if (PlayerPrefs.GetInt("premium", 0) == 1)
+            slotsNum = 24;
+        else slotsNum = 4;
+
+        for (int i = 0; i < 24; i++)
+        {
+            if (i < slotsNum)
+            {
+                slots[i].transform.parent.gameObject.SetActive(true);
+                slots[i].text = PlayerPrefs.GetString(string.Format("Slot {0}", i + 1), "Empty slot");
+            }
+            else
+                slots[i].transform.parent.gameObject.SetActive(false);
         }
     }
 

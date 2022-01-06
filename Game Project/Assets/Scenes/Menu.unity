@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15981,6 +15981,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1602192104}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &687893963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30942,6 +30954,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2140612383}
+        m_TargetAssemblyTypeName: Screen_Parent, Map_Scripts
+        m_MethodName: updateSlotParent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1280170157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40891,7 +40915,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2140612383}
         m_TargetAssemblyTypeName: Screen_Parent, Map_Scripts
-        m_MethodName: SetHints
+        m_MethodName: reloadButtonText
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -53238,6 +53262,7 @@ MonoBehaviour:
   PlayerStats: {fileID: 1537948465}
   ComboGuide: {fileID: 1455758927}
   PickSave: {fileID: 248203953}
+  SaveSlots: {fileID: 249149177}
   combosText: {fileID: 1948936001}
   DropF: {fileID: 209970662}
   submitButton: {fileID: 428646605}
