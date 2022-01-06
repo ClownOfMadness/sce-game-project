@@ -444,6 +444,7 @@ public class Data_Unit : MonoBehaviour
             if (durability <= 0)
             {
                 unitList.SummonUnit(0, currentTileOn, card, false);
+                durability = 1;
                 DestroyUnit();
             }
         }
