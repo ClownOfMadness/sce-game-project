@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 9
   description: Trees' biggest enemy.
-  artwork: {fileID: 21300000, guid: 3be0304c3d9c04f4787004ef74f28144, type: 3}
+  artwork: {fileID: 935810007467818391, guid: e0614d370193bf14fb0512490697eb01, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1

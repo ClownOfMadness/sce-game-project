@@ -22,7 +22,7 @@ MonoBehaviour:
   gatheredBy: []
   complexity: 5
   description: Attack unit, but stronger.
-  artwork: {fileID: 21300000, guid: 249cf5853063d1c45967faf756772814, type: 3}
+  artwork: {fileID: -2080820371376037591, guid: 36453c23614b1a541b48272edccb6d32, type: 3}
   buildingPrefab: {fileID: 0}
   unitIndex: 
   neverDiscovered: 1
