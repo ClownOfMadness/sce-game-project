@@ -89,7 +89,7 @@ public class Map_Display : MonoBehaviour
     //---------------------------------------------------Load---------------------------------------------------//
 
     //Load player data.
-    public void LoadData(Data_Player data)
+    public bool LoadData(Data_Player data)
     {
         Cards_Info cards_info = new Cards_Info();
 
@@ -109,9 +109,11 @@ public class Map_Display : MonoBehaviour
         cards_info.Storage = data.Storage;
         cards_info.DisStatus = data.DisStatus;
         screen_cards.ImportCards(cards_info);
+
+        return true;
     }
     //Load all the data.
-    public void LoadDataOfItems(Data_Player data)
+    public bool LoadDataOfItems(Data_Player data)
     {
         for (int y = 0; y < size; y++)
         {
@@ -226,9 +228,10 @@ public class Map_Display : MonoBehaviour
                 enemy.GetComponent<Data_Enemy>().LoadData(info);
             }
         }
+        return true;
     }
     //Load the tile map.
-    public void LoadMap(Save_Tile[,] tileMap, int size)
+    public bool LoadMap(Save_Tile[,] tileMap, int size)
     {
         Map.TileArray = new GameObject[size, size];
         Map.DataTileArray = new Data_Tile[size, size];
@@ -240,9 +243,10 @@ public class Map_Display : MonoBehaviour
                 LoadTile(tileMap[x, y], x, y);
             }
         }
+        return true;
     }
     //Load tile.
-    public void LoadTile(Save_Tile tile, int x, int y)
+    public bool LoadTile(Save_Tile tile, int x, int y)
     {
         if (tile.tileType != -1)
         {
@@ -263,9 +267,10 @@ public class Map_Display : MonoBehaviour
             if (tile.save_tileData.hasBuilding || tile.save_tileData.hasTownHall)
                 LoadBuilding(tile.building, Map.TileArray[x, y], saved_data.TileMap[x, y].save_tileData);
         }
+        return true;
     }
     //Load data tile.
-    public void LoadTileData(Save_TileData data, int x, int y)
+    public bool LoadTileData(Save_TileData data, int x, int y)
     {
         if (data.isNull != true)
         {
@@ -327,9 +332,10 @@ public class Map_Display : MonoBehaviour
 
             Map.DataTileArray[x, y].LoadData(info);
         }
+        return true;
     }
     //Load building.
-    public void LoadBuilding(Save_Building building, GameObject tile, Save_TileData data)
+    public bool LoadBuilding(Save_Building building, GameObject tile, Save_TileData data)
     {
         Data_Building.Building_Info info = new Data_Building.Building_Info();
 
@@ -355,9 +361,10 @@ public class Map_Display : MonoBehaviour
 
             instances[building.instanceID] = tile.transform.GetChild(tile.transform.childCount - 1).gameObject;
         }
+        return true;
     }
     //Load unit list.
-    public void LoadUnitList(List<List<Save_Unit>> units)
+    public bool LoadUnitList(List<List<Save_Unit>> units)
     {
         for (int i = 0; i < units.Count; i++)
         {
@@ -375,9 +382,10 @@ public class Map_Display : MonoBehaviour
                 }
             }
         }
+        return true;
     }
     //Load enemy list.
-    public void LoadEnemyList(List<List<Save_Enemy>> enemies)
+    public bool LoadEnemyList(List<List<Save_Enemy>> enemies)
     {
         foreach (List<Save_Enemy> group in enemies)
         {
@@ -389,6 +397,7 @@ public class Map_Display : MonoBehaviour
                 }
             }
         }
+        return true;
     }
 
     //----------------------------------------------------------------------------------------------------------//

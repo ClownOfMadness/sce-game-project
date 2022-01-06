@@ -8,7 +8,7 @@ public class Map_SpawnControl : MonoBehaviour
     //Used objects
     System_DayNight DayCicle;
     Map_Gen Map;
-    Map_Display display;
+    public Map_Display display;
 
     public Game_Master GameMaster;
     GameObject GameMap; //The map of the game
@@ -47,7 +47,6 @@ public class Map_SpawnControl : MonoBehaviour
         Map = FindObjectOfType<Map_Gen>();
         display = FindObjectOfType<Map_Display>();
     }
-
 
     // Update is called once per frame
     void Update()
@@ -88,7 +87,7 @@ public class Map_SpawnControl : MonoBehaviour
     }
 
     //Create n random tiles of the chosen resource
-    private void SpawnResources(int index, int n)
+    public bool SpawnResources(int index, int n)
     {
         Dictionary<int, Vector2Int> PosDic;
         float min = resources[index].minHeight, max = resources[index].maxHeight;
@@ -127,11 +126,12 @@ public class Map_SpawnControl : MonoBehaviour
                 break;
             }
         }
+        return true;
     }
 
 
     //Spawn new peasents around the town hall.
-    private void SpawnNewPeasents()
+    public void SpawnNewPeasents()
     {
         List<Vector3> PosList;
         int peasentsCount;
@@ -151,7 +151,7 @@ public class Map_SpawnControl : MonoBehaviour
     }
 
     //Calculate the number of new peasents that will be spawned.
-    private int CaluculateNewPeasents()
+    public int CaluculateNewPeasents()
     {
         int emptyPlaces = BuildingCapacity - UnitTotal;
 
@@ -161,7 +161,7 @@ public class Map_SpawnControl : MonoBehaviour
     }
 
     //Create list of all the positions surrounding the town hall.
-    private List<Vector3> PeasentPosList()
+    public List<Vector3> PeasentPosList()
     {
         List<Vector3> PosList = new List<Vector3>();
         Vector3 pos = display.TownHall.transform.position;

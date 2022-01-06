@@ -37,7 +37,7 @@ public static class IO_Files
         }
         return data;
     }
-
+    //Reading setting data from file.
     public static Save_Settings ReadDataSetting(string path_settings, string path_perSave)
     {
         Save_Settings data = null;

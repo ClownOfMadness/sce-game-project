@@ -17,7 +17,7 @@ public class Save_Settings
 
     public Data_PerSaveSlot data_perSaveSlot;
 
-    public Save_Settings()
+    public Save_Settings() //Builder for Save_Settings
     {
         isVeteran = false;
         isBuilder = false; 

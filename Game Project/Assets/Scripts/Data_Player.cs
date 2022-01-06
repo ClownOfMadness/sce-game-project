@@ -43,5 +43,20 @@ public class Data_Player
     public List<bool> DisStatus;
 
     //-----------------------------------------------------------------------------------//
+
+    public Data_Player()
+    {
+        mapSize = 0;
+        TileMap = null;
+        townHallTile = null;
+        units = null;
+        enemies = null;
+        currentTileOn = null;
+        currentTime = 0;
+        cycleSpeed = 0;
+        Hand = null;
+        Storage = null;
+        DisStatus = null;
+    }
 }
 
