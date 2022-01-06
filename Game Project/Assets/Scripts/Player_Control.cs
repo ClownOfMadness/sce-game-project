@@ -275,7 +275,7 @@ public class Player_Control : MonoBehaviour
         }
     }
 
-    private GameObject UnitSelection(int _selectedJob, GameObject target, bool townhall) // Searches for a free unit in a job category
+    public GameObject UnitSelection(int _selectedJob, GameObject target, bool townhall) // Searches for a free unit in a job category
     {
         float distance = 0f;
         float lowestDistance = 99999f;

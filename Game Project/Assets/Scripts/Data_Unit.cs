@@ -33,16 +33,17 @@ public class Data_Unit : MonoBehaviour
     //---------------------------------------[Automatic]-----------------------------------------------
 
     // [Navigator settings]
-    private AIPath path; // Pathfinding component
+    public AIPath path; // Pathfinding component
     private float wanderMaxRadius = 10f; // Max radius the unit will wander
     private float wanderMinRadius = 2f; // Min radius the unit will wander
     private float maxWaitToWander = 15f; // Max delay between each wander
     private float minWaitToWander = 5f; // Min delay between each wander
     private float nextWander = 0f; // Trigger for next wander
     private bool impassable = false;
-    private GameObject currentTileOn = null;
+    public GameObject currentTileOn = null;
     private bool reachedTownHall = false;
     private GameObject detectedImpassable = null;
+    public Vector3 destinationTile;
 
     // [Unit Control]
     private GameObject townHall; // TownHall object
@@ -55,15 +56,15 @@ public class Data_Unit : MonoBehaviour
     // [Unit Health]
     private bool hurt = false; // Becomes true if an enemy attacked the unit
     private Rigidbody unitRigidbody;
-    private int durability = 0;
-    private int health = 0;
+    public int durability = 0;
+    public int health = 0;
     private float regenCD = 5f;
     private float nextRegen = 0f;
     
     // [Work Routine]
     private Data_Card workCard; // Work card that the unit will recieve after finishin job
     private GameObject workPlace; // WorkPlace object
-    private bool working = false; // Shows if the unit is currently working
+    public bool working = false; // Shows if the unit is currently working
     private bool workBegun = false; // Shows if the work has begun
     private int workIndex = -1; // Work index to determine which work it does from the tile
     private float workTime = 0f; // Work time needed to get the card
@@ -313,6 +314,7 @@ public class Data_Unit : MonoBehaviour
             tileData = tile.GetComponent<Data_Tile>();
             //tileData.AttachWork(this.gameObject);
             path.destination = tile.transform.position;
+            destinationTile = path.destination;
             if (tileData.hasTownHall) // If townhall
             {
                 toTownHall = true;
