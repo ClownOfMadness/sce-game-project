@@ -31,7 +31,7 @@ public class Zone_Hand : Zone_Behaviour, IPointerEnterHandler, IPointerExitHandl
 
     //internal fields:
     private List<string> presenation = new List<string> //craft menu preset
-    { "Flint","Stick","Flint","Clay","Mud","Wood","Stone","Stick" };
+    { "Flint","Stick","Clay","Meat" };
     private List<string> craftMenuPrompt = new List<string> //craft menu preset
     { "Flint","Stick","Flint","Stick","Iron","Stick","Steel","Stick" };
     private List<string> units = new List<string>           //unit placement preset

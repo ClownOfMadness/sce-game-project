@@ -204,7 +204,7 @@ public class Game_Master : MonoBehaviour
     }
     void Update() //main Update, handles constant checking of parameters for the rest of the game
     {
-        totalGameTime -= Time.deltaTime;
+        totalGameTime += Time.deltaTime;
 
         //keylisteners
         if (Input.GetKeyDown(creativeK) && (!Menu_Pause.IsPaused) && premiumUser) //to close and open "Creative" with keyboard as well
