@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
@@ -81,7 +80,6 @@ public class Screen_Parent : MonoBehaviour
             {
                 Debug.Log("Log in succefull");
                 ErrorMessage.SetActive(false);
-                //use an ingame message later on
                 IsParent = true;
                 ParentLogin.SetActive(false);
                 PasswordPrompt.SetActive(true);
@@ -90,7 +88,6 @@ public class Screen_Parent : MonoBehaviour
             {
                 ErrorMessage.SetActive(true);
                 Debug.Log("Incorrect Code");
-                //use an ingame message later on
             }
         }
         else    //not a first login
@@ -100,7 +97,6 @@ public class Screen_Parent : MonoBehaviour
             if (InputPass.text == savedPass)
             {
                 Debug.Log("Log in succefull");
-                //use an ingame message later on
                 IsParent = true;
                 ParentLogin.SetActive(false);
                 ParentOptions.SetActive(true);
@@ -108,7 +104,6 @@ public class Screen_Parent : MonoBehaviour
             else
             {
                 Debug.Log("Incorrect Code");
-                //use an ingame message later on
             }
         }
         ClearInputField();
@@ -120,7 +115,6 @@ public class Screen_Parent : MonoBehaviour
         IO_Files.WriteFile(path,savedPass);
         InputNewPass.text="";
         Debug.Log("Log in succefull");
-        //use an ingame message later on
         firstLogin = false;
         PasswordPrompt.SetActive(false);
         ParentOptions.SetActive(true);
@@ -249,7 +243,6 @@ public class Screen_Parent : MonoBehaviour
 
     public void SetHints()       //enable/disable hints per save
     {
-        Debug.Log("Screen_Parent.SetHints: this function currently does nothing.");
         if (SaveData.hintsOn)
         {
             isHintText.text = "Allow hints: OFF";

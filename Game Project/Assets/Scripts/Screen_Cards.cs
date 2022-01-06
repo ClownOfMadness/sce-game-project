@@ -262,7 +262,7 @@ public class Screen_Cards : MonoBehaviour
             }
         if (combinations.Count > 0)
         {
-            int random = Random.Range(1, combinations.Count);
+            int random = Random.Range(0, combinations.Count);
             hint = combinations[random];
         }
         return hint;
