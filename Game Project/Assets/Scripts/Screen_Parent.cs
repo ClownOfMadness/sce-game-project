@@ -218,6 +218,7 @@ public class Screen_Parent : MonoBehaviour
         {
             SaveData.timeLimitSet = true; //update file
             SaveData.timeLimit = TimeToFloat(limit.text); //update file
+            SaveData.timeLeft = TimeToFloat(limit.text); //update file
         }
 
         if (bedTime.text == "")
@@ -246,20 +247,14 @@ public class Screen_Parent : MonoBehaviour
     public void reloadButtonText()
     {
         if (isHintText.text == "Allow hints: OFF")
-            isHintText.text = "Allow hints: ON";
-        else
-            isHintText.text = "Allow hints: OFF";
-    }
-
-    public void SetHints()       //enable/disable hints per save
-    {
-        if (SaveData.hintsOn)
         {
-            hintBool = false;
+            isHintText.text = "Allow hints: ON";
+            hintBool = true;
         }
         else
         {
-            hintBool = true;
+            isHintText.text = "Allow hints: OFF";
+            hintBool = false;
         }
     }
 
@@ -299,10 +294,12 @@ public class Screen_Parent : MonoBehaviour
         }
         return (hours * 60 + minutes) * 60 + seconds;
     }
+
     public float TimeToFloat(int hours, int minutes, int seconds)   //converts time in hh:mm:ss format into float
     {
         return (hours * 60 + minutes) * 60 + seconds;
     }
+
     public string FloatToTime(float time)   //converts time floats into a string
     {
         double hours = Math.Floor(time / (60 * 60));
