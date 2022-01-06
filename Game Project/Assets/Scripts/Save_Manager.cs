@@ -69,7 +69,7 @@ public class Save_Manager : MonoBehaviour
                 SettingsLoaded(pathPerSave);
             else if (File.Exists(pathTemporary))
                 SettingsLoaded(pathTemporary);
-            else Debug.LogError("Configuration file not found.");
+            else Debug.Log("Configuration file not found.");
         }
     }
 
