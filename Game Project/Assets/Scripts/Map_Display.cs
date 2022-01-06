@@ -279,7 +279,12 @@ public class Map_Display : MonoBehaviour
             //info.parentExtra = data.parentExtra; //GO
             info.extra = data.extra;
             info.check = data.check;
-            info.revealed = data.revealed;
+            
+            if(GameMaster.fogOff)
+                info.revealed = true;
+            else
+                info.revealed = data.revealed;
+
             info.unit = FindReference(data.unit);
             info.building = FindReference(data.building);
 
@@ -343,7 +348,11 @@ public class Map_Display : MonoBehaviour
             Data_Building data_newBuild = newBuilding.GetComponent<Data_Building>();
             data_newBuild.LoadData(info);
 
-            SpawnBuilding.Spawn(newBuilding, tile);
+            if (data.buildingComplete)
+                SpawnBuilding.SpawnReady(newBuilding, tile);
+            else 
+                SpawnBuilding.Spawn(newBuilding, tile);
+
             instances[building.instanceID] = tile.transform.GetChild(tile.transform.childCount - 1).gameObject;
         }
     }

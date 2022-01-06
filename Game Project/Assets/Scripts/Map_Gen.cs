@@ -204,6 +204,8 @@ public class Map_Gen : MonoBehaviour
         tile.transform.parent = parent.transform;
         tile.name = string.Format("tile_x{0}_y{1}", pos.x / 10, pos.z / 10);
         DataTileArray[(int)(pos.x / 10), (int)(pos.z / 10)] = tile.GetComponent<Data_Tile>();
+        if(!FogMap)
+            DataTileArray[(int)(pos.x / 10), (int)(pos.z / 10)].revealed = true;
         DataTileArray[(int)(pos.x / 10), (int)(pos.z / 10)].height = currentHeight;
         return tile;
     }
