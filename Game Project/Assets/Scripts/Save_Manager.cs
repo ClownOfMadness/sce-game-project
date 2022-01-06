@@ -245,8 +245,6 @@ public class Save_Manager : MonoBehaviour
     {
         PlayerPrefs.SetString(currSlot, slotName);
         PlayerPrefs.Save();
-
-        //LoadedSlots();
     }
 
     //Delete the current save slot data.
@@ -263,7 +261,8 @@ public class Save_Manager : MonoBehaviour
     public void LoadCustum()
     {
         string path = Application.persistentDataPath + "/config.parent";
-
+        pathPerSave = Application.persistentDataPath + "/saves/" + currSlot + ".conf"; //Slot configuration
+        
         if (File.Exists(path) && !File.Exists(pathPerSave))
         {
             menu_main.customParent.SetActive(true);

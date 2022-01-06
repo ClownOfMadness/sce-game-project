@@ -16,19 +16,20 @@ public class Screen_Achievments : MonoBehaviour
     private int setTime = 5;
 
 
+
     private void Update()
     {
-        if (!GameMaster.isVeteran && GameMaster.MapSpawn.DayCount >= daysForVeteran)
+        if (!GameMaster.isVeteran && GameMaster.MapSpawn.DayCount >= daysForVeteran && GameMaster.premiumUser)
         {
             PopMessage("Acheivment unlocked: Veteran");
             GameMaster.isVeteran = true;
         }
-        if (!GameMaster.isBuilder && GameMaster.buildingsCount >= buildingsForBuilder)
+        if (!GameMaster.isBuilder && GameMaster.buildingsCount >= buildingsForBuilder && GameMaster.premiumUser)
         {
             PopMessage("Acheivment unlocked: Builder");
             GameMaster.isBuilder = true;
         }
-        if (!GameMaster.isCrafty && GameMaster.CardsCombined >= cardsForCrafty)
+        if (!GameMaster.isCrafty && GameMaster.CardsCombined >= cardsForCrafty && GameMaster.premiumUser)
         {
             PopMessage("Acheivment unlocked: Craftsman");
             GameMaster.isCrafty = true;
