@@ -31,7 +31,7 @@ public class Save_Manager : MonoBehaviour
     private string pathPerSave;
     private string pathTemporary;
     private GameObject delete; //Delete button
-    private List<TMP_Text> slots; //List of all the available slots's text values
+    public List<TMP_Text> slots; //List of all the available slots's text values
 
     private void Awake()
     {
@@ -42,10 +42,12 @@ public class Save_Manager : MonoBehaviour
         if (!Directory.Exists(Application.persistentDataPath + "/temp"))
             Directory.CreateDirectory(Application.persistentDataPath + "/temp");
 
-        slots = new List<TMP_Text>();
-        for (int i = 0; i < slotsNum; i++)
-            slots.Add(SaveSlots.transform.GetChild(i).GetComponentInChildren<TMP_Text>());
-        LoadedSlots();
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            slots = new List<TMP_Text>();
+            for (int i = 0; i < 24; i++)
+                slots.Add(SaveSlots.transform.GetChild(i).GetComponentInChildren<TMP_Text>());
+        }
 
         pathGameData = Application.persistentDataPath + "/saves/" + currSlot + ".save"; //Game data
         pathSettings = Application.persistentDataPath + "/saves/Settings.save"; //Global data
@@ -104,6 +106,14 @@ public class Save_Manager : MonoBehaviour
         }
     }
 
+    public void updateSlotNum()
+    {
+        if (PlayerPrefs.GetInt("premium", 0) == 1)
+            slotsNum = 24;
+        else slotsNum = 4;
+
+        LoadedSlots();
+    }
     //The multi scene back button function.
     void BackSelect()
     {
@@ -236,7 +246,7 @@ public class Save_Manager : MonoBehaviour
         PlayerPrefs.SetString(currSlot, slotName);
         PlayerPrefs.Save();
 
-        LoadedSlots();
+        //LoadedSlots();
     }
 
     //Delete the current save slot data.
@@ -334,8 +344,16 @@ public class Save_Manager : MonoBehaviour
 
     public void LoadedSlots()
     {
-        for (int i = 0; i < slotsNum; i++)
-            slots[i].text = PlayerPrefs.GetString(string.Format("Slot {0}", i + 1), emptySlot);
+        for (int i = 0; i < 24; i++)
+        {
+            if (i < slotsNum)
+            {
+                slots[i].transform.parent.gameObject.SetActive(true);
+                slots[i].text = PlayerPrefs.GetString(string.Format("Slot {0}", i + 1), emptySlot);
+            }
+            else
+                slots[i].transform.parent.gameObject.SetActive(false);
+        }
     }
 
     //Delete the current slot.
