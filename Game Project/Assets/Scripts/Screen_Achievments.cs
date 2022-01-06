@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class Screen_Achievments : MonoBehaviour
 {
-    private int daysForVeteran = 2;
-    private int buildingsForBuilder = 2;
-    private int cardsForCrafty = 1;
+    private int daysForVeteran = 3;
+    private int buildingsForBuilder = 5;
+    private int cardsForCrafty = 3;
 
     public Game_Master GameMaster;
     public GameObject popUp;
