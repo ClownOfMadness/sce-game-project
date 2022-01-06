@@ -13,17 +13,6 @@ public class Player_Jobs : MonoBehaviour
     //external access:
     public Screen_Cards screen; //to check if the map is visible for the switch job function
 
-
-    private void Awake()
-    {
-       
-        //keydown part is handled by Game_Master.NewGame()
-    }
-
-    private void Update()
-    {
-        //keydown part is handled by Game_Master.Update()
-    }
     public void SwitchJob() //responsible for opening or closing the jobs menu
     {
         if (screen.visibleMap && !OpenJ)
@@ -43,7 +32,7 @@ public class Player_Jobs : MonoBehaviour
         JobUp = true;
         OpenJ = true;
         jobsHandler.CheckUnitList();
-        Time.timeScale = 0f;
+        Time.timeScale = 0f; //pause the game
     }
     public void CloseJob() //closing the jobs menu
     {

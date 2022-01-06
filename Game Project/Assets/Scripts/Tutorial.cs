@@ -9,7 +9,7 @@ public class Tutorial : MonoBehaviour
     public GameObject[] background;
     public int index;
 
-    void Start()
+    void Start() //The tutorial setup
     {
         index = 0;
         mainMenu = FindObjectOfType<Menu_Main>();
@@ -18,11 +18,11 @@ public class Tutorial : MonoBehaviour
 
     void Update()
     {
-
+        //making sure the index always stays within the index range
         if (index < 0)
             index = 0;
 
-        if (index == 0)
+        if (index == 0) 
         {
             Time.timeScale = 0f;
             background[0].gameObject.SetActive(true);
@@ -30,26 +30,25 @@ public class Tutorial : MonoBehaviour
 
     }
 
-    public void Next()
+    public void Next() //turning to the next page
     {
         if (index<11) {
             index += 1;
             background[index - 1].gameObject.SetActive(false);
             background[index].gameObject.SetActive(true);
         }
-        else 
+        else  //the last page and returning to the game 
         {
             this.gameObject.SetActive(false);
             background[index].gameObject.SetActive(false);
             background[0].gameObject.SetActive(true);
             index = 0;
             Time.timeScale = 1f;
-            //mainMenu.StartGame();
         }
        //Debug.Log(index);
     }
 
-    public void Previous()
+    public void Previous() //turning to the previous page
     {
         if (index > 0) { 
         index -= 1;
@@ -59,7 +58,7 @@ public class Tutorial : MonoBehaviour
         //Debug.Log(index);
     }
 
-    public void Skip()
+    public void Skip() //to skip the tutorial entirely
     {
             this.gameObject.SetActive(false);
             background[index].gameObject.SetActive(false);
@@ -69,7 +68,7 @@ public class Tutorial : MonoBehaviour
             //mainMenu.StartGame();
     }
 
-    public void OpenTutorial()
+    public void OpenTutorial() //the funcion to open the tutorial
     {
         this.gameObject.SetActive(true);
     }

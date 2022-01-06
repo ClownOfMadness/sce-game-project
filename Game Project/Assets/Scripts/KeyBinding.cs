@@ -49,17 +49,17 @@ public class KeyBinding : MonoBehaviour
     {
         if (CurrentKey != null)
         {
-            e = Event.current;
-            if (e.isKey)
+            e = Event.current; //recieves the button press event
+            if (e.isKey) 
             {
-                if (IsKeyFree(e.keyCode))
+                if (IsKeyFree(e.keyCode)) //checks if the button's keycode is free
                 {
                     ErrorMessage.SetActive(false);
                     Keys[CurrentKey.name] = e.keyCode;
                     CurrentKey.transform.GetChild(0).GetComponent<Text>().text = e.keyCode.ToString();
                     SetKey(e.keyCode); //the part that actually changes the key's functionality to match the new one
                 }
-                CurrentKey.GetComponent<Image>().color = normal;
+                CurrentKey.GetComponent<Image>().color = normal; //reverts the button key
                 CurrentKey = null;
             }
         } 
@@ -113,7 +113,7 @@ public class KeyBinding : MonoBehaviour
             playerControl.sprint = ne;
         }
     }
-    public string GetKey(string k)
+    public string GetKey(string k) //returns the key according to the string
     {
         if (k == "Creative")
         {
@@ -155,47 +155,8 @@ public class KeyBinding : MonoBehaviour
         //return "H";
     }
 
-   /* public string GetKey(string k) //temp atm -> should be changed to switch case when I get it to work
-    {
-        if (ne == Keys["Creative"])
-        {
-            Game_Master.creativeK = ne;
-        }
-        else if (ne == Keys["Storage"])
-        {
-            Game_Master.storageK = ne;
-        }
-        else if (ne == Keys["Hints"])
-        {
-            Game_Master.Hintsk = ne;
-        }
-        else if (ne == Keys["Jobs"])
-        {
-            Game_Master.Jobsk = ne;
-        }
-        else if (ne == Keys["MoveUp"])
-        {
-            playerControl.up = ne;
-        }
-        else if (ne == Keys["MoveDown"])
-        {
-            playerControl.down = ne;
-        }
-        else if (ne == Keys["MoveRight"])
-        {
-            playerControl.right = ne;
-        }
-        else if (ne == Keys["MoveLeft"])
-        {
-            playerControl.left = ne;
-        }
-        else if (ne == Keys["Sprint"])
-        {
-            playerControl.sprint = ne;
-        }
-    }*/
 
-    private bool IsKeyFree(KeyCode ne)
+    private bool IsKeyFree(KeyCode ne) //testing if the chosen key is free
     {
         foreach (KeyCode tk in Keys.Values)
         {
