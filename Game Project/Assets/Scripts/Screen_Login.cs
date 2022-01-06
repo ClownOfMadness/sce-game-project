@@ -53,8 +53,11 @@ public class Screen_Login : MonoBehaviour
         }
         if (Pcode.Length == i)
         {
-            ErrorMessage.SetActive(true);
-            Debug.Log("Incorrect Code");
+            if (code.text != "cancel")
+            {
+                ErrorMessage.SetActive(true);
+                Debug.Log("Incorrect Code");
+            }
         }
     }
 
