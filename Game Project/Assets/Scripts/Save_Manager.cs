@@ -339,6 +339,8 @@ public class Save_Manager : MonoBehaviour
         GameMaster.isBuilder = save_settings.isBuilder;
         GameMaster.isCrafty = save_settings.isCrafty;
         GameMaster.windowLook = save_settings.windowLook;
+
+        GameMaster.LastPlayed = File.GetLastWriteTime(@path);
     }
 
     public void LoadedSlots()
