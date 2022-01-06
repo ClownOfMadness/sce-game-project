@@ -71,9 +71,13 @@ public class Map_SpawnControl : MonoBehaviour
                 {
                     if (DayCount == 2)
                     {
-                        firstSpawn = GameMaster.difficulty * 2 + 1;
+                        if(GameMaster.difficulty == 0)
+                            firstSpawn = 3;
+                        else if(GameMaster.difficulty == 1)
+                            firstSpawn = 1;
+                        else
+                            firstSpawn = 5;
                         SpawnResources(0, firstSpawn); //spawn firstSpawn Abysses at random places on the map
-                        Debug.Log(firstSpawn);
                     }
                     else if (DayCount > 2 && (DayCount + reAbyss - 2) % reAbyss == 0)
                         SpawnResources(0, numAbyss); //spawn Abyss at random place on the map
@@ -94,6 +98,8 @@ public class Map_SpawnControl : MonoBehaviour
         {
             if (PosDic.Count != 0)
             {
+                GameObject fog = null;
+
                 int randPos = Random.Range(0, PosDic.Count); //get a random index of the dictionary
                 int x = PosDic[randPos].x; //get the x value in the index
                 int y = PosDic[randPos].y; //get the y value in the index
@@ -108,11 +114,11 @@ public class Map_SpawnControl : MonoBehaviour
                     PosDic.Remove(randPos);
 
                 float currentHeight = Map.TileArray[x, y].GetComponent<Data_Tile>().height; //get the height from the old tile
-                GameObject fog = Map.TileArray[x, y].transform.Find("Fog(Clone)").gameObject; //get the fog from the old tile
+                if(Map.FogMap) fog = Map.TileArray[x, y].transform.Find("Fog(Clone)").gameObject; //get the fog from the old tile
 
                 GameObject.Destroy(Map.TileArray[x, y]); //destroy the old tile
                 Map.TileArray[x, y] = Map.InstantiateTile(resources[index].prefab, new Vector3(x * 10, 1, y * 10), Map, currentHeight);
-                fog.transform.parent = Map.TileArray[x, y].transform;
+                if (fog != null) fog.transform.parent = Map.TileArray[x, y].transform;
                 Debug.Log("Spawned " + resources[index].name + " at: " + Map.TileArray[x, y]);
             }
             else
