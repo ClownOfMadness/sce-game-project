@@ -58,6 +58,7 @@ public class Screen_Login : MonoBehaviour
                 ErrorMessage.SetActive(true);
                 Debug.Log("Incorrect Code");
             }
+            ClearInputField();
         }
     }
 
