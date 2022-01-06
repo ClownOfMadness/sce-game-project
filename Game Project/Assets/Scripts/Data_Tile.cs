@@ -6,11 +6,6 @@ using Pathfinding;
 
 public class Data_Tile : MonoBehaviour
 {
-    //--------------------------------------[To-Do List]-----------------------------------------------
-
-    // To add:
-    // - display additional sprite if resources are about to end
-
     //-------------------------------------[Configuration]---------------------------------------------
 
     // [Tile Description]

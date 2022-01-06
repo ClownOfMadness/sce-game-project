@@ -5,12 +5,6 @@ using Pathfinding;
 
 public class Data_Unit : MonoBehaviour
 {
-    //--------------------------------------[To-Do List]-----------------------------------------------
-
-    // to add:
-    // - Add tile walking priority
-    // - (AP) Disable work on unrevealed tiles
-
     //-------------------------------------[Configuration]---------------------------------------------
 
     // [Input Data]

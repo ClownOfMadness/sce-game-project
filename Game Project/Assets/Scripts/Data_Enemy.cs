@@ -5,13 +5,6 @@ using Pathfinding;
 
 public class Data_Enemy : MonoBehaviour
 {
-    //--------------------------------------[To-Do List]-----------------------------------------------
-
-    // to add:
-    // - hurt system
-    // - Add tile walking priority
-    // - Add die animation
-
     //-------------------------------------[Configuration]---------------------------------------------
 
     // [Input Data]

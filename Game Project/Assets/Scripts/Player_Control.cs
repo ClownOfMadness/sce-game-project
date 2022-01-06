@@ -6,10 +6,6 @@ using UnityEngine.EventSystems;
 
 public class Player_Control : MonoBehaviour
 {
-    //--------------------------------------[To-Do List]-----------------------------------------------
-
-    // To add: (optional) add option to also move with keyboard
-
     // General
     private GameObject cameraObject; // Camera gameobject
 
@@ -304,9 +300,6 @@ public class Player_Control : MonoBehaviour
 
     private void OldCameraControl() // [[Can be removed]]
     {
-        // [[In future, create a script or scriptable object that will contain key settings
-        // and from there draw out the correct keys to be used in game]]
-        
         pos = cameraObject.transform.position; // Stores original camera position
         if (Input.GetKey("w")) // Up - old: Input.mousePosition.y >= Screen.height - panBorderTHICCNess
         {

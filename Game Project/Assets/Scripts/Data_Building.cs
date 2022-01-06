@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Data_Building : MonoBehaviour
 {
-    //--------------------------------------[To-Do List]-----------------------------------------------
-
-    // To add:
-    // - building effects
-
     //-------------------------------------[Configuration]---------------------------------------------
 
     // [Building Description]
