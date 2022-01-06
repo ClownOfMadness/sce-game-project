@@ -28,7 +28,6 @@ public class Screen_Login : MonoBehaviour
     }
     public void TryLogin()  //try to login
     {
-        ClearInputField(); //to clear the input field
         int i;
         Debug.Log(Pcode.Length);
         for (i = 0; i < Pcode.Length; i++)
@@ -44,6 +43,7 @@ public class Screen_Login : MonoBehaviour
                 Canvas.GetComponent<Menu_Main>().Achievments.SetActive(true);
                 //menu_Pause.Resume();
                 //replace with premium windows in future
+                ClearInputField(); //to clear the input field
                 break;
             }
         }

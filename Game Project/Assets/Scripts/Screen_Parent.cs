@@ -74,7 +74,6 @@ public class Screen_Parent : MonoBehaviour
     }
     public void TryLogin()  //try to login
     {
-        ClearInputField();
         Debug.Log(path);
         if (firstLogin)
         {
@@ -112,7 +111,7 @@ public class Screen_Parent : MonoBehaviour
                 //use an ingame message later on
             }
         }
-        InputPass.text = "";
+        ClearInputField();
     }
     public void ChangePass()  //save new password
     {
