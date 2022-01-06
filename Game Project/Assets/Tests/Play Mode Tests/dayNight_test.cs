@@ -16,6 +16,9 @@ public class dayNight_test : MonoBehaviour
     [UnityTest]
     public IEnumerator dayNight_Light()
     {
+        //This function makes sure that the lighting changes by its current time and also makes sure that when the time
+        // is over the night treshold then it will switch to night mode
+        
         yield return new WaitForSeconds(1);
         System_DayNight dayNight = GameObject.Find("Day/Night Cycle").GetComponent<System_DayNight>();
         dayNight.currentTime = 0;

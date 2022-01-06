@@ -16,6 +16,8 @@ public class pahtfind_test : MonoBehaviour
     [UnityTest]
     public IEnumerator unit_SummonUnit()
     {
+        // Checks if the amount of units is increased when forcefully spawning the unit
+        
         yield return new WaitForSeconds(1);
         Unit_List unitList = GameObject.Find("Units").GetComponent<Unit_List>();
         unitList.SummonUnit(1, unitList.townhall, null, false);
@@ -30,6 +32,8 @@ public class pahtfind_test : MonoBehaviour
     [UnityTest]
     public IEnumerator unit_HurtCheck()
     {
+        // Makes sure that the unit is destroyed by spawning the enemy hitting the unit
+        
         yield return new WaitForSeconds(1);
         Unit_List unitList = GameObject.Find("Units").GetComponent<Unit_List>();
         GameObject peasants = unitList.transform.GetChild(0).gameObject;
@@ -49,6 +53,8 @@ public class pahtfind_test : MonoBehaviour
     [UnityTest]
     public IEnumerator unit_TargetLocation()
     {
+        // Checks that the given destination is accuratly given to the unit and is updated on its pathfinding system
+        
         yield return new WaitForSeconds(1);
         Unit_List unitList = GameObject.Find("Units").GetComponent<Unit_List>();
         GameObject peasants = unitList.transform.GetChild(0).gameObject;
@@ -65,6 +71,8 @@ public class pahtfind_test : MonoBehaviour
     [UnityTest]
     public IEnumerator unit_TargetRemove()
     {
+        // Makes sure that target removal removes the location on its pathfinding system
+        
         yield return new WaitForSeconds(1);
         Unit_List unitList = GameObject.Find("Units").GetComponent<Unit_List>();
         GameObject peasants = unitList.transform.GetChild(0).gameObject;
@@ -83,6 +91,8 @@ public class pahtfind_test : MonoBehaviour
     [UnityTest]
     public IEnumerator unit_BusyCheck()
     {
+        // Checks if the unit is set to busy once it has a work location in the work routine
+        
         yield return new WaitForSeconds(1);
         Unit_List unitList = GameObject.Find("Units").GetComponent<Unit_List>();
         GameObject peasants = unitList.transform.GetChild(0).gameObject;
@@ -102,6 +112,8 @@ public class pahtfind_test : MonoBehaviour
     [UnityTest]
     public IEnumerator unit_JobDurability()
     {
+        // Checks if the job unit loses its job and spawns peasant once the durability is over
+        
         yield return new WaitForSeconds(1);
         Unit_List unitList = GameObject.Find("Units").GetComponent<Unit_List>();
         unitList.SummonUnit(1, unitList.townhall, null, false);
@@ -120,6 +132,8 @@ public class pahtfind_test : MonoBehaviour
     [UnityTest]
     public IEnumerator unit_RememberWork()
     {
+        // Gives a work place and makes sure that the unit remembers its job once the work has been canceled
+        
         yield return new WaitForSeconds(1);
         Unit_List unitList = GameObject.Find("Units").GetComponent<Unit_List>();
         GameObject peasants = unitList.transform.GetChild(0).gameObject;

@@ -16,6 +16,8 @@ public class enemy_test : MonoBehaviour
     [UnityTest]
     public IEnumerator enemy_CreateEnemy()
     {
+        // Makes sure that the Enemy_List spawns enemy in the exact given location and that the number of enemies is increased
+        
         yield return new WaitForSeconds(1);
         Enemy_List enemyList = GameObject.Find("Enemies").GetComponent<Enemy_List>();
         Player_Control control = GameObject.Find("PlayerControl").GetComponent<Player_Control>();
@@ -32,6 +34,8 @@ public class enemy_test : MonoBehaviour
     [UnityTest]
     public IEnumerator enemy_HurtCheck()
     {
+        // Checks that the enemy is hit by the spawned spearman making sure the amount is reduced as result
+        
         yield return new WaitForSeconds(1);
         Enemy_List enemyList = GameObject.Find("Enemies").GetComponent<Enemy_List>();
         GameObject enemies = enemyList.transform.GetChild(0).gameObject;

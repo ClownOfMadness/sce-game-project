@@ -16,6 +16,8 @@ public class player_test : MonoBehaviour
     [UnityTest]
     public IEnumerator player_CreateCheck()
     {
+        // Makes sure that the player exists when the scene is loaded
+        
         yield return new WaitForSeconds(1);
         GameObject player;
         player = GameObject.Find("Player(Clone)");
@@ -27,6 +29,8 @@ public class player_test : MonoBehaviour
     [UnityTest]
     public IEnumerator player_ControlCheck()
     {
+        // Checks if the player control works in the exact way the controller was set in
+        
         yield return new WaitForSeconds(1);
         GameObject player;
         player = GameObject.Find("Player(Clone)");
@@ -46,6 +50,8 @@ public class player_test : MonoBehaviour
     [UnityTest]
     public IEnumerator player_UnitSelection()
     {
+        // Makes sure that the unit selection returns an available unit from the unit_list
+        
         yield return new WaitForSeconds(1);
         Player_Control control = GameObject.Find("PlayerControl").GetComponent<Player_Control>();
         GameObject tile = control.currentTileOn;
@@ -56,6 +62,8 @@ public class player_test : MonoBehaviour
     [UnityTest]
     public IEnumerator player_HurtSystem()
     {
+        // Checks if the players health is reduced when being hit
+        
         yield return new WaitForSeconds(1);
         Player_Control control = GameObject.Find("PlayerControl").GetComponent<Player_Control>();
         Enemy_List enemyList = GameObject.Find("Enemies").GetComponent<Enemy_List>();
@@ -73,6 +81,8 @@ public class player_test : MonoBehaviour
     [UnityTest]
     public IEnumerator player_TiredSystem()
     {
+        // Checks if the stamina system turns on tired mode once the stamina is reduced and is filled back on
+        
         yield return new WaitForSeconds(1);
         Player_Control control = GameObject.Find("PlayerControl").GetComponent<Player_Control>();
         control.stamina = 0;
