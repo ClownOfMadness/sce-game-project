@@ -7,14 +7,14 @@ using UnityEngine.TestTools;
 public class Tutorial_test
 {
     [Test]
-    public void TutorialStartIndex()
+    public void TutorialStartIndex() //testing that the tutorial starts in the first page
     {
         Tutorial tutorial = new Tutorial();
         Assert.AreEqual(expected: 0, actual: tutorial.index);
     }
 
     [Test]
-    public void TutorialPause()
+    public void TutorialPause() //testing that the game is paused during the tutorial
     {
         /*Game_Master game_Master = new Game_Master();
         game_Master.Tutorial.SetActive(true);*/
@@ -25,18 +25,19 @@ public class Tutorial_test
     }
 
     [Test]
-    public void TutorialResume()
+    public void TutorialResume() //testing that ending the tutorial resumes the game
     {
         /*Game_Master game_Master = new Game_Master();
         game_Master.Tutorial.SetActive(false);*/
 
         Tutorial tutorial = new Tutorial();
-        tutorial.OpenTutorial();
+        tutorial.transform.gameObject.SetActive(false);
+        //tutorial.OpenTutorial();
         Assert.AreEqual(expected: 1f, actual: Time.timeScale);
     }
 
     [Test]
-    public void TutorialNextPage()
+    public void TutorialNextPage() //testing that the next button advances the tutorial
     {
         Tutorial tutorial = new Tutorial();
         tutorial.OpenTutorial();
@@ -45,7 +46,7 @@ public class Tutorial_test
     }
 
     [Test]
-    public void TutorialPreviousPage()
+    public void TutorialPreviousPage() //tests that the previous button goes one page back properly
     {
         Tutorial tutorial = new Tutorial();
         tutorial.OpenTutorial();

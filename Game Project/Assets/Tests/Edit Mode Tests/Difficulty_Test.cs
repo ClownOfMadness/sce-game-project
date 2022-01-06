@@ -7,21 +7,21 @@ using UnityEngine.TestTools;
 public class Difficulty_Test
 {
     [Test]
-    public void IsParent()
+    public void IsParent() //Testing that the user doesn't accidently start with parent access
     {
         Screen_Parent screen_Parent = new Screen_Parent();
         Assert.IsTrue(!screen_Parent.ParentOptions);
     }
 
     [Test]
-    public void DifficultyDefault()
+    public void DifficultyDefault() //testing the default difficulty
     {
         Game_Master game_Master = new Game_Master();
         Assert.AreEqual(expected: 1, actual: game_Master.difficulty);
     }
 
     [Test]
-    public void DifficultySave()
+    public void DifficultySave() //testing the difficulty is saved
     {
         Menu_Main menu_Main = new Menu_Main();
         Assert.AreEqual(expected: 1, actual: menu_Main.difficulty);

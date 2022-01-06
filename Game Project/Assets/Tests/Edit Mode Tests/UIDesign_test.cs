@@ -8,14 +8,14 @@ public class UIDesign_test
 {
 
     [Test]
-    public void IsPremium()
+    public void IsPremium() //ui design option should appear only for premium users 
     {
         Game_Master game_Master = new Game_Master();
         Assert.IsTrue(!game_Master.premiumUser);
     }
 
     [Test]
-    public void UIDesignCount()
+    public void UIDesignCount() //testing how many design options are there
     {
         Menu_Pause menu_Pause = new Menu_Pause();
         Assert.AreEqual(expected: 2, actual: menu_Pause.UIDesignDrop.options.Count);
@@ -23,7 +23,7 @@ public class UIDesign_test
     }
 
     [Test]
-    public void UIDesignOptionDefault()
+    public void UIDesignOptionDefault() //testing the default design
     {
         Menu_Pause menu_Pause = new Menu_Pause();
         Assert.AreEqual(expected: "Default", actual: menu_Pause.UIDesignDrop.options[0].text);
@@ -31,7 +31,7 @@ public class UIDesign_test
     }
 
     [Test]
-    public void UIDesignOptionGolden()
+    public void UIDesignOptionGolden() //testing the golden design
     {
         Menu_Pause menu_Pause = new Menu_Pause();
         Assert.AreEqual(expected: "Golden", actual: menu_Pause.UIDesignDrop.options[1].text);
@@ -39,7 +39,7 @@ public class UIDesign_test
     }
 
     [Test]
-    public void UIDesignValue()
+    public void UIDesignValue() //testing the design dropdown value
     {
         Menu_Pause menu_Pause = new Menu_Pause();
         Assert.AreEqual(expected: 0, actual: menu_Pause.UIDesignDrop.value);
@@ -47,7 +47,7 @@ public class UIDesign_test
     }
 
     [Test]
-    public void UIDesignHDefaultSprites()
+    public void UIDesignHDefaultSprites() //testing that the sprites are not null 
     {
         Menu_Pause menu_Pause = new Menu_Pause();
         Assert.IsNotNull(menu_Pause.Hint1);
@@ -55,7 +55,7 @@ public class UIDesign_test
     }
 
     [Test]
-    public void UIDesignHGoldenSprites()
+    public void UIDesignHGoldenSprites() //testing that the golden designs are fine
     {
         Menu_Pause menu_Pause = new Menu_Pause();
         Assert.IsNotNull(menu_Pause.Hint2);

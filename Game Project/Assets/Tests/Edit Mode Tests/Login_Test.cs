@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Login_Test
 { 
     [Test]
-    public void IsPremiumAccess()
+    public void IsPremiumAccess() //tests that the default user doens't start with premium access
     {
         Game_Master game_Master = new Game_Master();
         Assert.IsTrue(!game_Master.premiumUser);
@@ -47,18 +47,18 @@ public class Login_Test
     [Test]
     public void IsSkipButton() //tests the skip button
     {
-       /* Screen_Login code = new Screen_Login();
+        Screen_Login code = new Screen_Login();
         code.LoginPremium.SetActive(true);
-        code.CloseLoginOpenGame();
-        Assert.IsFalse(code.LoginPremium.activeSelf);*/
+        //code.CloseLoginOpenGame();
+        Assert.IsFalse(code.LoginPremium.activeSelf);
     }
     [Test]
     public void IsOpenLogin() //tests for if buttons can close the game and open login
     {
-       /* Screen_Login code = new Screen_Login();
+        Screen_Login code = new Screen_Login();
         code.LoginPremium.SetActive(false);
-        code.CloseGameOpenLogin();
-        Assert.IsTrue(code.LoginPremium.activeSelf);*/
+        //code.CloseGameOpenLogin();
+        Assert.IsTrue(code.LoginPremium.activeSelf);
     }
     [Test]
     public void IsCreative() //tests if the access to the book is granted for the premium

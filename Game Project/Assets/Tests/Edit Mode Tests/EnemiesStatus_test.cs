@@ -7,21 +7,21 @@ using UnityEngine.TestTools;
 public class EnemiesStatus_test
 {
     [Test]
-    public void IsParent()
+    public void IsParent() //enemies status should only be allowed for parent user
     {
         Screen_Parent screen_Parent = new Screen_Parent();
         Assert.IsTrue(!screen_Parent.ParentOptions);
     }
 
     [Test]
-    public void Test_enemiesOn()
+    public void Test_enemiesOn() //testing that it doesn't turn off the enemies accidently
     {
         Game_Master game_Master = new Game_Master();
         Assert.IsFalse(game_Master.enemiesOff);
     }
 
     [Test]
-    public void Test_MapSpawnEnemies()
+    public void Test_MapSpawnEnemies() //testing that it doesn't spawn the enemies
     {
         Map_SpawnControl map_SpawnControl = new Map_SpawnControl();
         Assert.IsFalse(map_SpawnControl.EnemySpawn);

@@ -8,14 +8,14 @@ using UnityEngine.UI;
 public class Keybinding_test
 {
     [Test]
-    public void IsPremium()
+    public void IsPremium() //keybinds is also active for premium users and is deactivated for default users
     {
         Game_Master game_Master = new Game_Master();
         Assert.IsTrue(!game_Master.premiumUser);
     }
 
     [Test]
-    public void KeybindingCreativeDText()
+    public void KeybindingCreativeDText() //testing that the game shows the correct button for the keybinds
     {
         KeyBinding keyBinding = new KeyBinding();
         Assert.AreEqual(expected: "C", actual: keyBinding.Keys["Creative"].ToString());
@@ -23,7 +23,7 @@ public class Keybinding_test
     }
 
     [Test]
-    public void KeybindingCreativeDButton()
+    public void KeybindingCreativeDButton() //testing that the keycode for the button is correct
     {
         KeyBinding keyBinding = new KeyBinding();
         Assert.AreEqual(expected: KeyCode.C, actual: keyBinding.Keys["Creative"]);
@@ -31,7 +31,7 @@ public class Keybinding_test
     }
 
     [Test]
-    public void KeybindingGetKeyTest()
+    public void KeybindingGetKeyTest() //testing if it returns the correct key
     { 
         KeyBinding keyBinding = new KeyBinding();
         string k=keyBinding.GetKey("Jobs");

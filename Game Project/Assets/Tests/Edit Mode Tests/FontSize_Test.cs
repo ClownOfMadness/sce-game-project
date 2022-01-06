@@ -8,20 +8,20 @@ using UnityEngine.UI;
 public class FontSize_Test
 {
     [Test]
-    public void IsParent()
+    public void IsParent() //font size is under parent access
     {
         Screen_Parent screen_Parent = new Screen_Parent();
         Assert.IsTrue(!screen_Parent.ParentOptions);
     }
 
     [Test]
-    public void FontSizeDefault()
+    public void FontSizeDefault() //testing that the font starts from the intended value
     {
         Assert.AreEqual(expected: 0, actual: PlayerPrefs.GetInt("ChangeFont",0));
     }
 
     [Test]
-    public void DefaultFontSizeTest()
+    public void DefaultFontSizeTest() //load default font test
     {
         Game_Master game_Master = new Game_Master();
         game_Master.LoadDefaultFont();
@@ -31,7 +31,7 @@ public class FontSize_Test
     }
 
     [Test]
-    public void BigFontSizeTest()
+    public void BigFontSizeTest() //load the big font test
     {
         Game_Master game_Master = new Game_Master();
         game_Master.LoadBigFont();
